@@ -3,8 +3,7 @@
     package="com.sebastianfiser.fitnesscoach">
 
     <application
-        android:label="FitnessCoach"
-        android:theme="@style/Theme.DeviceDefault">
+        android:label="FitnessCoach">
         <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
