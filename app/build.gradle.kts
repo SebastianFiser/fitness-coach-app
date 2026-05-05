@@ -14,6 +14,11 @@ android {
     namespace = "com.sebastianfiser.fitnesscoach"
     compileSdk = 34
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
     defaultConfig {
         applicationId = "com.sebastianfiser.fitnesscoach"
         minSdk = 26
@@ -24,10 +29,6 @@ android {
 
     buildFeatures {
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
     }
 }
 
