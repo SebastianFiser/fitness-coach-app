@@ -10,7 +10,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            Text("Hello app")
-        }
+           androidx.compose.material3.MaterialTheme {
+              androidx.compose.material3.Text("FitnessCoach funguje!")
+             }
+         }
     }
 }
