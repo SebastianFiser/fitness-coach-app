@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrais.kotlin.plugin.compose")
 }
 
 kotlin {
@@ -12,11 +13,6 @@ kotlin {
 android {
     namespace = "com.sebastianfiser.fitnesscoach"
     compileSdk = 34
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
 
     defaultConfig {
         applicationId = "com.sebastianfiser.fitnesscoach"
