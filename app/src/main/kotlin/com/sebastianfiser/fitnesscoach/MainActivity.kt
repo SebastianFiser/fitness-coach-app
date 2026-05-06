@@ -20,6 +20,8 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.Alignment
+import androidx.compose.foundation.border
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +43,7 @@ fun StartContent() {
     ) {
         BottomNav(modifier = Modifier
         .align(Alignment.BottomCenter)
-        .background(Color.Black))
+        .border(1.dp, Color.Gray))
     }
 }
 
@@ -53,24 +55,48 @@ fun BottomNav(modifier: Modifier = Modifier) {
             label = { Text("Overview") },
             selected = true,
             onClick = {},
+            colors = NavigationBarItemDefaults.colors(
+                selectedIconColor = Color.White,
+                unselectedIconColor = Color.Gray,
+                selectedTextColor = Color.White,
+                unselectedTextColor = Color.Gray,
+            )
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.DateRange, contentDescription = null) },
             label = { Text("schedule") },
             selected = false,
             onClick = {},
+            colors = NavigationBarItemDefaults.colors(
+                selectedIconColor = Color.White,
+                unselectedIconColor = Color.Gray,
+                selectedTextColor = Color.White,
+                unselectedTextColor = Color.Gray,
+            )
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Star, contentDescription = null) },
             label = { Text("leaderboard") },
             selected = false,
             onClick = {},
+            colors = NavigationBarItemDefaults.colors(
+                selectedIconColor = Color.White,
+                unselectedIconColor = Color.Gray,
+                selectedTextColor = Color.White,
+                unselectedTextColor = Color.Gray,
+            )
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Person, contentDescription = null) },
             label = { Text("profile") },
             selected = false,
             onClick = {},
+            colors = NavigationBarItemDefaults.colors(
+                selectedIconColor = Color.White,
+                unselectedIconColor = Color.Gray,
+                selectedTextColor = Color.White,
+                unselectedTextColor = Color.Gray,
+            )
         )
     }
 }
