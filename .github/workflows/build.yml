@@ -33,7 +33,7 @@ jobs:
       - name: Build release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: debug-{{ github.run_number }}
+          tag_name: debug-${{ github.run_number }}-${{ github.sha }}
           name: Debug Build
           files: app/build/outputs/apk/debug/*.apk
           prerelease: true
