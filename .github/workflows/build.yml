@@ -27,6 +27,14 @@ jobs:
       - name: Build s Gradle
         run: ./gradlew assembleDebug
 
+      - name: Build release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: debug-{{ github.run_number }}
+          name: Debug Build
+          files: app/build/outputs/apk/debug/*.apk
+          prerelease: true
+          
       - name: Upload APK jako artefakt
         uses: actions/upload-artifact@v4
         with:
