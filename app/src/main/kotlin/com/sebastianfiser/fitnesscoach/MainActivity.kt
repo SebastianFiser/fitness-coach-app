@@ -38,13 +38,13 @@ fun StartContent() {
         .background(Color.Gray)
         
     ) {
-        
+        BottomNav(modifier = Modifier.align(Alignment.BottomCenter))
     }
 }
 
 @Composable
-fun BottomNav() {
-    NavigationBar {
+fun BottomNav(modifier: Modifier = Modifier) {
+    NavigationBar(modifier = modifier) {
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = null) },
             label = { Text("Overview") },
