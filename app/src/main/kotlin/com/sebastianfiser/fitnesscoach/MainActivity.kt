@@ -36,10 +36,12 @@ fun StartContent() {
     Box (
         modifier = Modifier
         .fillMaxSize()
-        .background(Color.Gray)
+        .background(Color.Black)
         
     ) {
-        BottomNav(modifier = Modifier.align(Alignment.BottomCenter))
+        BottomNav(modifier = Modifier
+        .align(Alignment.BottomCenter)
+        .background(Color.Black))
     }
 }
 
