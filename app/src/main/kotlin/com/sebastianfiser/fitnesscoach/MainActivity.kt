@@ -44,6 +44,7 @@ fun StartContent() {
     ) {
         BottomNav(modifier = Modifier
         .align(Alignment.BottomCenter)
+        .background(Color.Black)
         .border(1.dp, Color.Gray))
     }
 }
