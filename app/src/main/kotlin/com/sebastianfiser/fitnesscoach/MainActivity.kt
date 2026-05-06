@@ -15,17 +15,22 @@ import androidx.compose.ui.graphics.Color
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        setDecorFitsSystemWindows(Window)
         setContent {
            StartContent()
          }
     }
 
+    java-static fun setDecorFitsSystemWindows(
+        window: Window,
+        decorFitsSystemWindows: Boolean
+    ): Unit
+
     @Composable
     fun StartContent() {
         Box (
             modifier = Modifier
-            .fillMaxSize
+            .fillMaxSize()
             .background(Color.Gray)
             
         ) {
