@@ -74,12 +74,13 @@ fun StartContent() {
 
 @Composable
 fun MainWorkoutCard(exercises: List<Exercise>) {
-    Column {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 30.dp)
-        ) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 15.dp),
+        contentAlignment = Alignment.CenterHorizontally
+    )  {
+        Column{
             
             Box(
                 modifier = Modifier
@@ -158,7 +159,7 @@ fun ExerciseRow(exercise: Exercise) {
             checked = exercise.isDone,
             onCheckedChange = null, // Tady by v budoucnu byla logika kliknutí
             colors = CheckboxDefaults.colors(
-                checkedColor = Color(0xFFBBF246),
+                checkedColor = Color.White,
                 uncheckedColor = Color.Gray,
                 checkmarkColor = Color.Black
             )
