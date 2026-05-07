@@ -74,15 +74,16 @@ fun StartContent() {
 
 @Composable
 fun MainWorkoutCard(exercises: List<Exercise>) {
-    Column(
-        modifier = Modifier
-            .padding(top = 15.dp),
-    )  {
-        Column{
+    Column {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 15.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .size(150.dp)
                     .clip(CircleShape)
                     .background(Color.White),
