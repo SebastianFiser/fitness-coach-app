@@ -19,6 +19,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.Column
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +48,12 @@ fun StartContent() {
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
+        )
+
+        BuildOverviewScreen(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(bottom = 56.dp) // Přidáme padding, aby obsah nebyl pod navigací
         )
     }
 }
@@ -111,3 +122,29 @@ fun navigationBarColors() = NavigationBarItemDefaults.colors(
     unselectedTextColor = Color.Gray,
     indicatorColor = Color.Transparent
 )
+
+@Composable
+fun BuildOverviewScreen() {
+    Column {
+        val Dayscore = 1100
+        Box(
+            modifier = Modifier
+                .size(150.dp)
+                .clip(CircleShape)
+                .background(Color.Red)
+        ) {
+           Text("dayscore: ${Dayscore}", color = Color.White, modifier = Modifier.align(Alignment.Center))
+        }
+        LazyColumn {
+            item {
+                Text(text = "Bench press 12x4")
+            }
+            item {
+                Text(text = "Squats 20x3")
+            }
+            item {
+                Text(text = "Deadlift 10x4")
+            }
+        }
+    }
+}
