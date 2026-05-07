@@ -124,8 +124,8 @@ fun navigationBarColors() = NavigationBarItemDefaults.colors(
 )
 
 @Composable
-fun BuildOverviewScreen() {
-    Column {
+fun BuildOverviewScreen(modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
         val Dayscore = 1100
         Box(
             modifier = Modifier
