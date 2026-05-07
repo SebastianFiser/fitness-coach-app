@@ -62,6 +62,7 @@ fun BottomNav(modifier: Modifier = Modifier) {
                 unselectedIconColor = Color.Gray,
                 selectedTextColor = Color.White,
                 unselectedTextColor = Color.Gray,
+                indicatorColor = Color.Transparent,
             )
         )
         NavigationBarItem(
@@ -74,6 +75,7 @@ fun BottomNav(modifier: Modifier = Modifier) {
                 unselectedIconColor = Color.Gray,
                 selectedTextColor = Color.White,
                 unselectedTextColor = Color.Gray,
+                indicatorColor = Color.Transparent,
             )
         )
         NavigationBarItem(
@@ -86,6 +88,7 @@ fun BottomNav(modifier: Modifier = Modifier) {
                 unselectedIconColor = Color.Gray,
                 selectedTextColor = Color.White,
                 unselectedTextColor = Color.Gray,
+                indicatorColor = Color.Transparent,
             )
         )
         NavigationBarItem(
@@ -98,6 +101,7 @@ fun BottomNav(modifier: Modifier = Modifier) {
                 unselectedIconColor = Color.Gray,
                 selectedTextColor = Color.White,
                 unselectedTextColor = Color.Gray,
+                indicatorColor = Color.Transparent,
             )
         )
     }
