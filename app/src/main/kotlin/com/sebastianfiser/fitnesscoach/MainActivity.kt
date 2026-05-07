@@ -2,62 +2,69 @@ package com.sebastianfiser.fitnesscoach
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.compose.material3.Text
 import androidx.activity.compose.setContent
-import androidx.core.view.WindowCompat
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.ui.Alignment
-import androidx.compose.foundation.border
-import androidx.compose.ui.unit.dp
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.foundation.layout.*
-
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Toto zajistí, že aplikace jde až pod stavový řádek (Edge-to-Edge)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-           StartContent()
-         }
+            StartContent()
+        }
     }
 }
 
 @Composable
 fun StartContent() {
-    Box (
+    Box(
         modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Black)
-        
+            .fillMaxSize()
+            .background(Color.Black)
     ) {
-        BottomNav(modifier = Modifier
-        .align(Alignment.BottomCenter)
-        .background(Color.Black)
-        .fillMaxWidth()
-        .border(1.dp, Color.Gray))
+        // Voláme navigaci a zarovnáme ji dospod
+        BottomNav(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+        )
     }
 }
 
 @Composable
 fun BottomNav(modifier: Modifier = Modifier) {
     NavigationBar(
-        modifier = modifier,
+        modifier = modifier.drawBehind {
+            // Vykreslíme šedou linku pouze na horní hranu (Y = 0)
+            val strokeWidth = 0.5.dp.toPx()
+            drawLine(
+                color = Color.Gray,
+                start = Offset(0f, 0f),
+                end = Offset(size.width, 0f),
+                strokeWidth = strokeWidth
+            )
+        },
         containerColor = Color.Black,
-) {
+        tonalElevation = 0.dp,
+        // windowInsets zajistí, že navigace nebude "nalepená" úplně na spodní hraně displeje
+        windowInsets = NavigationBarDefaults.windowInsets 
+    ) {
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = null) },
             label = { Text("Overview") },
@@ -68,47 +75,39 @@ fun BottomNav(modifier: Modifier = Modifier) {
                 unselectedIconColor = Color.Gray,
                 selectedTextColor = Color.White,
                 unselectedTextColor = Color.Gray,
-                indicatorColor = Color.Transparent,
+                indicatorColor = Color.DarkGray // Barva "kolečka" kolem vybrané ikony
             )
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.DateRange, contentDescription = null) },
-            label = { Text("schedule") },
+            label = { Text("Schedule") },
             selected = false,
             onClick = {},
-            colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = Color.White,
-                unselectedIconColor = Color.Gray,
-                selectedTextColor = Color.White,
-                unselectedTextColor = Color.Gray,
-                indicatorColor = Color.Transparent,
-            )
+            colors = navigationBarColors()
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Star, contentDescription = null) },
-            label = { Text("leaderboard") },
+            label = { Text("Leaderboard") },
             selected = false,
             onClick = {},
-            colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = Color.White,
-                unselectedIconColor = Color.Gray,
-                selectedTextColor = Color.White,
-                unselectedTextColor = Color.Gray,
-                indicatorColor = Color.Transparent,
-            )
+            colors = navigationBarColors()
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Person, contentDescription = null) },
-            label = { Text("profile") },
+            label = { Text("Profile") },
             selected = false,
             onClick = {},
-            colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = Color.White,
-                unselectedIconColor = Color.Gray,
-                selectedTextColor = Color.White,
-                unselectedTextColor = Color.Gray,
-                indicatorColor = Color.Transparent,
-            )
+            colors = navigationBarColors()
         )
     }
 }
+
+// Pomocná funkce pro barvy, abys nemusel ten dlouhý blok kopírovat u každé položky
+@Composable
+fun navigationBarColors() = NavigationBarItemDefaults.colors(
+    selectedIconColor = Color.White,
+    unselectedIconColor = Color.Gray,
+    selectedTextColor = Color.White,
+    unselectedTextColor = Color.Gray,
+    indicatorColor = Color.Transparent
+)
