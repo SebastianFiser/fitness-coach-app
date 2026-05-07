@@ -22,6 +22,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.xompose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.Canvas
 
 // 1. DATA MODEL (Co je to za data)
 data class Exercise(val name: String, val isDone: Boolean)
@@ -84,21 +87,39 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
             
             Box(
                 modifier = Modifier
-                    .size(150.dp)
-                    .clip(CircleShape)
-                    .background(Color.White),
                 contentAlignment = Alignment.Center
             ) {
+                Canvas(
+                    modifier = Modifier
+                        .size(200.dp)
+                        .padding(20.dp)
+                ) {
+                    drawArc(
+                        color = DarkGray,
+                        startAngle = 180f,
+                        sweepAngle = 180f,
+                        useCenter = false,
+                        style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
+                    )
+
+                    drawArc(
+                        color = Color.White,
+                        startAngle = 180f,
+                        sweepAngle = 90f, // 50% dokončeno
+                        useCenter = false,
+                        style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
+                    )
+                }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        "750",
-                        color = Color.Black,
-                        style = MaterialTheme.typography.headlineMedium
+                        "760",
+                        color = Color.Gray,
+                        style = MaterialTheme.typography.headlineLarge
                     )
                     Text(
                         "Day Score",
-                        color = Color.Black,
-                        style = MaterialTheme.typography.bodyMedium
+                        color = Color.White,
+                        style = MaterialTheme.typography.labelMedium
                     )
                 }
             }
