@@ -88,7 +88,7 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
                     .background(Color.White),
                 contentAlignment = Alignment.Center
             ) {
-                Column(horizontalAligment = Alignment.CentrHorizontaly) {
+                Column(horizontalAlignment = Alignment.CenterHorizontaly) {
                     Text(
                         "750",
                         color = Color.Black,
