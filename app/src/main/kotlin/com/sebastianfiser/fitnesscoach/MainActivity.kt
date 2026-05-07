@@ -22,9 +22,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import androidx.compose.foundation.Canvas
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.xompose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.Canvas
+
 
 // 1. DATA MODEL (Co je to za data)
 data class Exercise(val name: String, val isDone: Boolean)
@@ -86,7 +87,7 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
         ) {
             
             Box(
-                modifier = Modifier
+                modifier = Modifier,
                 contentAlignment = Alignment.Center
             ) {
                 Canvas(
@@ -95,7 +96,7 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
                         .padding(20.dp)
                 ) {
                     drawArc(
-                        color = DarkGray,
+                        color = Color.DarkGray,
                         startAngle = 180f,
                         sweepAngle = 180f,
                         useCenter = false,
