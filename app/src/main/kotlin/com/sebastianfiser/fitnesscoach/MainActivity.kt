@@ -52,8 +52,8 @@ fun StartContent() {
 @Composable
 fun BottomNav(modifier: Modifier = Modifier) {
     NavigationBar(
-       modifier = modifier
-       containerColor = Color.Black
+        modifier = modifier
+        containerColor = Color.Black
 ) {
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = null) },
