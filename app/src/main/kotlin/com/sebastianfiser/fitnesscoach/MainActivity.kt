@@ -74,54 +74,70 @@ fun StartContent() {
 
 @Composable
 fun MainWorkoutCard(exercises: List<Exercise>) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
-        shape = RoundedCornerShape(28.dp)
-    ) {
-        Column(modifier = Modifier.padding(20.dp)) {
-            // HLAVIČKA KARTY (Nadpis a Score)
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+    Column {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 30.dp)
+        ) {
+            
+            Box(
+                modifier = Modifier
+                    .size(150.dp)
+                    .clip(CircleShape)
+                    .background(Color.White),
+                contentAlignment = Alignment.Center
             ) {
-                Column {
+                Column(horizontalAligment = Alignment.CentrHorizontaly) {
                     Text(
-                        "Workout Plan", 
-                        color = Color.White, 
-                        style = MaterialTheme.typography.titleLarge
+                        "750",
+                        color = Color.Black,
+                        style = MaterialTheme.typography.headlineMedium
                     )
                     Text(
-                        "8:00 AM - 9:00 AM", 
-                        color = Color.Gray, 
+                        "Day Score",
+                        color = Color.Black,
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
-
-                // Day Score kroužek
-                Box(
-                    modifier = Modifier
-                        .size(45.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xFFBBF246)), // Neonová zelená
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        "85", 
-                        color = Color.Black, 
-                        style = MaterialTheme.typography.labelLarge
-                    )
-                }
             }
+        }
+        Column{
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                shape = RoundedCornerShape(28.dp)
+            ) {
+                Column(modifier = Modifier.padding(20.dp),) {
+                    // HLAVIČKA KARTY (Nadpis a Score)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column {
+                            Text(
+                                "Workout Plan", 
+                                color = Color.White, 
+                                style = MaterialTheme.typography.titleLarge
+                            )
+                            Text(
+                                "8:00 AM - 9:00 AM", 
+                                color = Color.Gray, 
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                    }
 
-            Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
 
-            // SEZNAM CVIKŮ UVNITŘ KARTY
-            exercises.forEach { exercise ->
-                ExerciseRow(exercise)
+                    // SEZNAM CVIKŮ UVNITŘ KARTY
+                    exercises.forEach { exercise ->
+                        ExerciseRow(exercise)
+                    }
+                }
             }
         }
     }
