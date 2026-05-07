@@ -23,6 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.foundation.border
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.foundation.layout.*
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
