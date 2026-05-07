@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
@@ -14,21 +16,20 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.ui.draw.clip
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.layout.Column
+
+// 1. DATA MODEL (Co je to za data)
+data class Exercise(val name: String, val isDone: Boolean)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Toto zajistí, že aplikace jde až pod stavový řádek (Edge-to-Edge)
+        // Edge-to-edge režim (pod hodiny a navigaci)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             StartContent()
@@ -38,22 +39,113 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun StartContent() {
+    // Testovací data pro tvůj plán
+    val exercises = listOf(
+        Exercise("Bench press 12x4", false),
+        Exercise("Squats 20x3", true),
+        Exercise("Deadlift 10x4", false)
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        // Voláme navigaci a zarovnáme ji dospod
+        // Hlavní obsah obrazovky
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 80.dp) // Prostor pro BottomNav
+        ) {
+            Spacer(modifier = Modifier.height(60.dp)) // Mezera shora (pod status barem)
+            
+            // VOLÁME HLAVNÍ KARTU
+            MainWorkoutCard(exercises = exercises)
+        }
+
+        // SPODNÍ NAVIGACE
         BottomNav(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
         )
+    }
+}
 
-        BuildOverviewScreen(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(bottom = 56.dp) // Přidáme padding, aby obsah nebyl pod navigací
+@Composable
+fun MainWorkoutCard(exercises: List<Exercise>) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+        shape = RoundedCornerShape(28.dp)
+    ) {
+        Column(modifier = Modifier.padding(20.dp)) {
+            // HLAVIČKA KARTY (Nadpis a Score)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text(
+                        "Workout Plan", 
+                        color = Color.White, 
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Text(
+                        "8:00 AM - 9:00 AM", 
+                        color = Color.Gray, 
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+
+                // Day Score kroužek
+                Box(
+                    modifier = Modifier
+                        .size(45.dp)
+                        .clip(CircleShape)
+                        .background(Color(0xFFBBF246)), // Neonová zelená
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "85", 
+                        color = Color.Black, 
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            // SEZNAM CVIKŮ UVNITŘ KARTY
+            exercises.forEach { exercise ->
+                ExerciseRow(exercise)
+            }
+        }
+    }
+}
+
+@Composable
+fun ExerciseRow(exercise: Exercise) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = exercise.name, color = Color.White)
+        
+        Checkbox(
+            checked = exercise.isDone,
+            onCheckedChange = null, // Tady by v budoucnu byla logika kliknutí
+            colors = CheckboxDefaults.colors(
+                checkedColor = Color(0xFFBBF246),
+                uncheckedColor = Color.Gray,
+                checkmarkColor = Color.Black
+            )
         )
     }
 }
@@ -62,7 +154,6 @@ fun StartContent() {
 fun BottomNav(modifier: Modifier = Modifier) {
     NavigationBar(
         modifier = modifier.drawBehind {
-            // Vykreslíme šedou linku pouze na horní hranu (Y = 0)
             val strokeWidth = 0.5.dp.toPx()
             drawLine(
                 color = Color.Gray,
@@ -73,7 +164,6 @@ fun BottomNav(modifier: Modifier = Modifier) {
         },
         containerColor = Color.Black,
         tonalElevation = 0.dp,
-        // windowInsets zajistí, že navigace nebude "nalepená" úplně na spodní hraně displeje
         windowInsets = NavigationBarDefaults.windowInsets 
     ) {
         NavigationBarItem(
@@ -86,65 +176,41 @@ fun BottomNav(modifier: Modifier = Modifier) {
                 unselectedIconColor = Color.Gray,
                 selectedTextColor = Color.White,
                 unselectedTextColor = Color.Gray,
-                indicatorColor = Color.DarkGray // Barva "kolečka" kolem vybrané ikony
+                indicatorColor = Color.DarkGray
             )
         )
+        // Pomocná funkce pro barvy položek (vytvořená dole)
+        val colors = navItemColors()
+        
         NavigationBarItem(
             icon = { Icon(Icons.Default.DateRange, contentDescription = null) },
             label = { Text("Schedule") },
             selected = false,
             onClick = {},
-            colors = navigationBarColors()
+            colors = colors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Star, contentDescription = null) },
             label = { Text("Leaderboard") },
             selected = false,
             onClick = {},
-            colors = navigationBarColors()
+            colors = colors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Person, contentDescription = null) },
             label = { Text("Profile") },
             selected = false,
             onClick = {},
-            colors = navigationBarColors()
+            colors = colors
         )
     }
 }
 
-// Pomocná funkce pro barvy, abys nemusel ten dlouhý blok kopírovat u každé položky
 @Composable
-fun navigationBarColors() = NavigationBarItemDefaults.colors(
+fun navItemColors() = NavigationBarItemDefaults.colors(
     selectedIconColor = Color.White,
     unselectedIconColor = Color.Gray,
     selectedTextColor = Color.White,
     unselectedTextColor = Color.Gray,
     indicatorColor = Color.Transparent
 )
-
-@Composable
-fun BuildOverviewScreen(modifier: Modifier = Modifier) {
-    Column(modifier = modifier) {
-        val Dayscore = 1100
-        Box(
-            modifier = Modifier
-                .size(150.dp)
-                .clip(CircleShape)
-                .background(Color.Red)
-        ) {
-           Text("dayscore: ${Dayscore}", color = Color.White, modifier = Modifier.align(Alignment.Center))
-        }
-        LazyColumn {
-            item {
-                Text(text = "Bench press 12x4")
-            }
-            item {
-                Text(text = "Squats 20x3")
-            }
-            item {
-                Text(text = "Deadlift 10x4")
-            }
-        }
-    }
-}
