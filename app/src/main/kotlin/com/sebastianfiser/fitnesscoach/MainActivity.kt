@@ -78,7 +78,6 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 15.dp),
-        contentAlignment = Alignment.Center
     )  {
         Column{
             
