@@ -76,13 +76,13 @@ fun StartContent() {
 fun MainWorkoutCard(exercises: List<Exercise>) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
             .padding(top = 15.dp),
     )  {
         Column{
             
             Box(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .size(150.dp)
                     .clip(CircleShape)
                     .background(Color.White),
