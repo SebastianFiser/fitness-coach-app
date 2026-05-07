@@ -4,6 +4,7 @@
 
     <application
         android:label="FitnessCoach">
+        android:theme="@android:style/Theme.NoTitleBar"
         <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
