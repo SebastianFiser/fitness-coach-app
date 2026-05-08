@@ -25,6 +25,10 @@ import androidx.core.view.WindowCompat
 import androidx.compose.foundation.Canvas
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
 
 
 // 1. DATA MODEL (Co je to za data)
@@ -43,6 +47,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun StartContent() {
+    var selectedTab by remember { mutableStateOf(0)}
     // Testovací data pro tvůj plán
     val exercises = listOf(
         Exercise("Bench press 12x4", false),
@@ -56,37 +61,19 @@ fun StartContent() {
             .background(Color.Black)
     ) {
         // Hlavní obsah obrazovky
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 80.dp) // Prostor pro BottomNav
-        ) {
-            Spacer(modifier = Modifier.height(30.dp)) // Mezera shora (pod status barem)
-            Column {
-                Text(
-                    "Good Morning, User!",
-                    color = Color.White,
-                    style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
-                Text(
-                    "Here's your workout plan for today",
-                    color = Color.Gray,
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
-            }
-
-
-            // VOLÁME HLAVNÍ KARTU
-            MainWorkoutCard(exercises = exercises)
+        when(selectedTab) {
+            0 -> MainWorkoutCard(exercises)
+            1 -> scheduleScreen()
+            2-> Text("Leaderboard Screen", color = Color.White, modifier = Modifier.align(Alignment.Center))
+            3-> Text("Profile Screen", color = Color.White, modifier = Modifier.align(Alignment.Center))
         }
-
         // SPODNÍ NAVIGACE
         BottomNav(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            selectedTab = selectedTab,
+            onTabSelected = { selectedTab = it }
         )
     }
 }
@@ -100,7 +87,32 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
                 .padding(top = 15.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            
+            Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 80.dp) // Prostor pro BottomNav
+        ) {
+            Spacer(modifier = Modifier.height(30.dp)) // Mezera shora (pod status barem)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 15.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    "Good Morning, User!",
+                    color = Color.White,
+                    style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+                Text(
+                    "Here's your workout plan for today",
+                    color = Color.LightGray,
+                    style = MaterialTheme.typography.HeadlineSmall,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
+
             Box(
                 modifier = Modifier,
                 contentAlignment = Alignment.Center
@@ -205,7 +217,58 @@ fun ExerciseRow(exercise: Exercise) {
 }
 
 @Composable
-fun BottomNav(modifier: Modifier = Modifier) {
+fun schduleScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            "Your Schedule",
+            color = Color.White,
+            style = MaterialTheme.typography.headlineMedium
+        )
+
+        DrawDayrow()
+
+    }
+}
+
+@Composable
+fun DrawDayrow() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp),
+        horizontalArrangement = Arrangement.SpaceAround,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        listOf( "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+            .forEach { day ->
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        day,
+                        color = Color.Black,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(10.dp)
+                            .clip(CircleShape)
+                            .background(Color.White)
+                    )
+                }
+            }
+    }
+}
+
+@Composable
+fun BottomNav(modifier: Modifier = Modifier, selectedTab : Int, onTabSelected: (Int) -> Unit) {
     NavigationBar(
         modifier = modifier.drawBehind {
             val strokeWidth = 0.5.dp.toPx()
@@ -223,8 +286,8 @@ fun BottomNav(modifier: Modifier = Modifier) {
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = null) },
             label = { Text("Overview") },
-            selected = true,
-            onClick = {},
+            selected = selectedTab == 0,
+            onClick = { onTabSelected(0) },
             colors = NavigationBarItemDefaults.colors(
                 selectedIconColor = Color.White,
                 unselectedIconColor = Color.Gray,
@@ -240,21 +303,21 @@ fun BottomNav(modifier: Modifier = Modifier) {
             icon = { Icon(Icons.Default.DateRange, contentDescription = null) },
             label = { Text("Schedule") },
             selected = false,
-            onClick = {},
+            onClick = { onTabSelected(1) },
             colors = colors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Star, contentDescription = null) },
             label = { Text("Leaderboard") },
             selected = false,
-            onClick = {},
+            onClick = { onTabSelected(2) },
             colors = colors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Person, contentDescription = null) },
             label = { Text("Profile") },
             selected = false,
-            onClick = {},
+            onClick = { onTabSelected(3) },
             colors = colors
         )
     }
