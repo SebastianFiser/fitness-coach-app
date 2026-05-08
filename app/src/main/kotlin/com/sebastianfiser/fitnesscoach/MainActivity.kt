@@ -63,7 +63,7 @@ fun StartContent() {
         // Hlavní obsah obrazovky
         when(selectedTab) {
             0 -> MainWorkoutCard(exercises)
-            1 -> scheduleScreen()
+            1 -> schduleScreen()
             2-> Text("Leaderboard Screen", color = Color.White, modifier = Modifier.align(Alignment.Center))
             3-> Text("Profile Screen", color = Color.White, modifier = Modifier.align(Alignment.Center))
         }
@@ -80,113 +80,102 @@ fun StartContent() {
 
 @Composable
 fun MainWorkoutCard(exercises: List<Exercise>) {
-    Column {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 80.dp)
+    ) {
+        Spacer(modifier = Modifier.height(30.dp))
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 15.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 80.dp) // Prostor pro BottomNav
+            Text(
+                "Good Morning, User!",
+                color = Color.White,
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+            Text(
+                "Here's your workout plan for today",
+                color = Color.LightGray,
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        }
+
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
         ) {
-            Spacer(modifier = Modifier.height(30.dp)) // Mezera shora (pod status barem)
-            Column(
+            Canvas(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 15.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .size(200.dp)
+                    .padding(20.dp)
             ) {
-                Text(
-                    "Good Morning, User!",
-                    color = Color.White,
-                    style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                drawArc(
+                    color = Color.DarkGray,
+                    startAngle = 180f,
+                    sweepAngle = 180f,
+                    useCenter = false,
+                    style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
                 )
-                Text(
-                    "Here's your workout plan for today",
-                    color = Color.LightGray,
-                    style = MaterialTheme.typography.HeadlineSmall,
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                drawArc(
+                    color = Color.White,
+                    startAngle = 180f,
+                    sweepAngle = 90f,
+                    useCenter = false,
+                    style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
                 )
             }
-
-            Box(
-                modifier = Modifier,
-                contentAlignment = Alignment.Center
-            ) {
-                Canvas(
-                    modifier = Modifier
-                        .size(200.dp)
-                        .padding(20.dp)
-                ) {
-                    drawArc(
-                        color = Color.DarkGray,
-                        startAngle = 180f,
-                        sweepAngle = 180f,
-                        useCenter = false,
-                        style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
-                    )
-
-                    drawArc(
-                        color = Color.White,
-                        startAngle = 180f,
-                        sweepAngle = 90f, // 50% dokončeno
-                        useCenter = false,
-                        style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
-                    )
-                }
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        "760",
-                        color = Color.Gray,
-                        style = MaterialTheme.typography.headlineLarge
-                    )
-                    Text(
-                        "Day Score",
-                        color = Color.White,
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                }
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    "760",
+                    color = Color.Gray,
+                    style = MaterialTheme.typography.headlineLarge
+                )
+                Text(
+                    "Day Score",
+                    color = Color.White,
+                    style = MaterialTheme.typography.labelMedium
+                )
             }
         }
-        Column{
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
-                shape = RoundedCornerShape(28.dp)
-            ) {
-                Column(modifier = Modifier.padding(20.dp),) {
-                    // HLAVIČKA KARTY (Nadpis a Score)
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column {
-                            Text(
-                                "Workout Plan", 
-                                color = Color.White, 
-                                style = MaterialTheme.typography.titleLarge
-                            )
-                            Text(
-                                "8:00 AM - 9:00 AM", 
-                                color = Color.Gray, 
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                        }
-                    }
 
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    // SEZNAM CVIKŮ UVNITŘ KARTY
-                    exercises.forEach { exercise ->
-                        ExerciseRow(exercise)
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+            shape = RoundedCornerShape(28.dp)
+        ) {
+            Column(modifier = Modifier.padding(20.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column {
+                        Text(
+                            "Workout Plan",
+                            color = Color.White,
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                        Text(
+                            "8:00 AM - 9:00 AM",
+                            color = Color.Gray,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
                     }
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                exercises.forEach { exercise ->
+                    ExerciseRow(exercise)
                 }
             }
         }
