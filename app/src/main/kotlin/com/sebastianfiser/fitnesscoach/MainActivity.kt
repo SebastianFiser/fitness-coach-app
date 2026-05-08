@@ -61,8 +61,23 @@ fun StartContent() {
                 .fillMaxSize()
                 .padding(bottom = 80.dp) // Prostor pro BottomNav
         ) {
-            Spacer(modifier = Modifier.height(60.dp)) // Mezera shora (pod status barem)
-            
+            Spacer(modifier = Modifier.height(30.dp)) // Mezera shora (pod status barem)
+            Column {
+                Text(
+                    "Good Morning, User!",
+                    color = Color.White,
+                    style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+                Text(
+                    "Here's your workout plan for today",
+                    color = Color.Gray,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
+
+
             // VOLÁME HLAVNÍ KARTU
             MainWorkoutCard(exercises = exercises)
         }
