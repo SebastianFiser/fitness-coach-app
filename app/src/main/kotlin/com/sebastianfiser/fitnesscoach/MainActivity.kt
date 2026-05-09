@@ -211,15 +211,21 @@ fun schduleScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(16.dp),
+            .padding(top = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            "Your Schedule",
-            color = Color.White,
-            style = MaterialTheme.typography.headlineMedium
-        )
+        Box (
+            modifier = Modifier
+            .clip(RoundedCornerShape(16.dp))
+            .background(Color.DarkGray)
+        ) {
+            Text(
+                "Your Schedule",
+                color = Color.White,
+                style = MaterialTheme.typography.headlineMedium
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+        }
 
         DrawDayrow()
 
