@@ -100,13 +100,13 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
             Text(
                 "Good Morning, User!",
                 color = Color.White,
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
             Text(
                 "Here's your workout plan for today",
                 color = Color.LightGray,
-                style = MaterialTheme.typography.headlineSmall,
+                style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
@@ -483,5 +483,5 @@ fun navItemColors() = NavigationBarItemDefaults.colors(
     unselectedIconColor = Color.Gray,
     selectedTextColor = Color.White,
     unselectedTextColor = Color.Gray,
-    indicatorColor = Color.Transparent
+    indicatorColor = Color.DarkGray
 )
