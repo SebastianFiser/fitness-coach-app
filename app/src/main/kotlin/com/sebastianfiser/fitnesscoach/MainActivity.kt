@@ -409,25 +409,47 @@ fun LeaderboardScreen() {
                     style = MaterialTheme.typography.headlineMedium
                 )
             }
+            Spacer(modifier = Modifier.height(16.dp))
+
             ShowLeaderboard()
         }
     }
 }
 
+data class LeaderBoardEntry(
+    var rank: Int,
+    var username: String,
+    var Lift: String,
+    var Weight: Float,
+)
+
 @Composable
 fun ShowLeaderboard() {
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
-        Text("1. User123 - Deadlift 501.5kg", color = Color.White, style = MaterialTheme.typography.bodyLarge)
-        Spacer(modifier = Modifier.height(8.dp))
-        Text("2. FitFanatic - Deadlift 500kg", color = Color.White, style = MaterialTheme.typography.bodyLarge)
-        Spacer(modifier = Modifier.height(8.dp))
+        item {
+            LeaderboardRow(LeaderBoardEntry(1, "User1", "deadlift", 500.5f))
+        }
+        item {
+            LeaderboardRow(LeaderBoardEntry(2, "User2", "squat", 450.0f))
+        }
     }
+}
+
+@Composable
+fun LeaderboardRow(entry: LeaderBoardEntry) {
+    // Implementation for displaying a single leaderboard entry
+    Text(
+        "${entry.rank}. ${entry.username} - ${entry.Lift}: ${entry.Weight}",
+        color = Color.White,
+        modifier = Modifier
+        .fillMaxWidth()
+        .padding(8.dp)
+    )
 }
 
 @Composable
