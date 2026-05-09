@@ -32,6 +32,7 @@ import androidx.compose.runtime.mutableStateOf
 import java.time.LocalDate
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.HorizontalDivider
 
 
 // 1. DATA MODEL (Co je to za data)
@@ -444,14 +445,36 @@ fun ShowLeaderboard() {
 
 @Composable
 fun LeaderboardRow(entry: LeaderBoardEntry) {
-    // Implementation for displaying a single leaderboard entry
-    Text(
-        "${entry.rank}. ${entry.username} - ${entry.Lift}: ${entry.Weight}",
-        color = Color.White,
-        modifier = Modifier
-        .fillMaxWidth()
-        .padding(8.dp)
-    )
+    Column() {
+        HorizontalDivider(
+            color = Color.Gray,
+            thickness = 0.5.dp,
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text(
+                "${entry.rank}. ${entry.username}",
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                .padding(8.dp)
+            )
+
+            Text(
+                "${entry.Lift}. ${entry.Weight} kg",
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                .padding(8.dp)
+            )
+        }
+    }
 }
 
 @Composable
