@@ -65,7 +65,7 @@ fun StartContent() {
         when(selectedTab) {
             0 -> MainWorkoutCard(exercises)
             1 -> schduleScreen()
-            2 -> Text("Leaderboard Screen", color = Color.White, modifier = Modifier.align(Alignment.Center))
+            2 -> LeaderboardScreen()
             3 -> Text("Profile Screen", color = Color.White, modifier = Modifier.align(Alignment.Center))
         }
         // SPODNÍ NAVIGACE
@@ -297,7 +297,7 @@ fun displayDaySchedule(exercise: List<Exercise> = listOf(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text (
-                "{$day, $dayNuminMonth.$month.}",
+                "$day, $dayNuminMonth.$month.",
                 color = Color.White,
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
@@ -363,6 +363,70 @@ fun BottomNav(modifier: Modifier = Modifier, selectedTab : Int, onTabSelected: (
             onClick = { onTabSelected(3) },
             colors = colors
         )
+    }
+}
+
+@Composable
+fun LeaderboardScreen() {
+    Column ( 
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+            .padding(top = 48.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Box (
+            modifier = Modifier
+                .clip(RoundedCornerShape(16.dp))
+                .background(Color.DarkGray)
+        ) {
+            Text(
+                "Leaderboard",
+                color = Color.White,
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Text("Top Users", color = Color.White, style = MaterialTheme.typography.headlineSmall)
+
+        Card (
+            modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+            shape = RoundedCornerShape(28.dp)
+        ) {
+            Box (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    "World Leaderboard",
+                    color = Color.White,
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
+            ShowLeaderboard()
+        }
+    }
+}
+
+@Composable
+fun ShowLeaderboard() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(16.dp))
+        Text("1. User123 - Deadlift 501.5kg", color = Color.White, style = MaterialTheme.typography.bodyLarge)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text("2. FitFanatic - Deadlift 500kg", color = Color.White, style = MaterialTheme.typography.bodyLarge)
+        Spacer(modifier = Modifier.height(8.dp))
     }
 }
 
