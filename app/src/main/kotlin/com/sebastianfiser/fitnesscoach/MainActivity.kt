@@ -256,7 +256,7 @@ fun DrawDayrow() {
 
             days.forEach { (shortName, fullName) ->
                 val isToday = fullName.uppercase(Locale) == dayToday.name
-                val color = if (isToday) Color.White else Color.LightGray
+                val color = if (isToday) Color.White else Color.DarktGray
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -286,7 +286,7 @@ fun displayDaySchedule(exercise: List<Exercise> = listOf(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.Gray),
+        colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
         shape = RoundedCornerShape(28.dp)
     ) {
         Column(
