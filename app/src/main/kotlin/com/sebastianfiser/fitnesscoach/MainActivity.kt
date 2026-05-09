@@ -222,7 +222,7 @@ fun schduleScreen() {
             Text(
                 "Your Schedule",
                 color = Color.White,
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
             )
         }
