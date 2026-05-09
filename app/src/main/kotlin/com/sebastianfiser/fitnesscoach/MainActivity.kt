@@ -69,7 +69,7 @@ fun StartContent() {
             0 -> MainWorkoutCard(exercises)
             1 -> schduleScreen()
             2 -> LeaderboardScreen()
-            3 -> Text("Profile Screen", color = Color.White, modifier = Modifier.align(Alignment.Center))
+            3 -> ProfileScreen()
         }
         // SPODNÍ NAVIGACE
         BottomNav(
@@ -485,3 +485,77 @@ fun navItemColors() = NavigationBarItemDefaults.colors(
     unselectedTextColor = Color.Gray,
     indicatorColor = Color.DarkGray
 )
+
+@Composable
+fun ProfileScreen() {
+    Column (
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+            .padding(top = 48.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Box (
+            modifier = Modifier
+                .clip(RoundedCornerShape(16.dp))
+                .background(Color.DarkGray)
+        ) {
+            Text(
+                "Profile",
+                color = Color.White,
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+        }
+        Column {
+            HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 16.dp))
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                icon = Icons.Default.Settings
+                Text(
+                    "Settings",
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
+            HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 16.dp))
+             Row (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                icon = Icons.Default.Person
+                Text(
+                    "Profile",
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
+            HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 16.dp))
+             Row (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                icon = Icons.Default.ExitToApp
+                Text(
+                    "Logout",
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
+        }
+    }
+}
