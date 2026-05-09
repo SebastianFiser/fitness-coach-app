@@ -211,12 +211,12 @@ fun schduleScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(top = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box (
             modifier = Modifier
             .clip(RoundedCornerShape(16.dp))
+            .padding(top = 30.dp)
             .background(Color.DarkGray)
         ) {
             Text(
