@@ -210,13 +210,13 @@ fun schduleScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black),
+            .background(Color.Black)
+            .padding(top = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box (
             modifier = Modifier
             .clip(RoundedCornerShape(16.dp))
-            .padding(top = 30.dp)
             .background(Color.DarkGray)
         ) {
             Text(
@@ -248,12 +248,12 @@ fun DrawDayrow() {
                 ) {
                     Text(
                         day,
-                        color = Color.Black,
+                        color = Color.White,
                         style = MaterialTheme.typography.bodyMedium
                     )
                     Box(
                         modifier = Modifier
-                            .size(10.dp)
+                            .size(36.dp)
                             .clip(CircleShape)
                             .background(Color.White)
                     )
