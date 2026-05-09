@@ -229,6 +229,7 @@ fun schduleScreen() {
         }
 
         DrawDayrow()
+        displayDaySchedule()
 
     }
 }
@@ -272,6 +273,35 @@ fun DrawDayrow() {
                     )
                 }
             }
+    }
+}
+
+@Composable
+fun displayDaySchedule(exercise: List<Exercise> = listOf(
+    Exercise("Bench press 12x4", false),
+    Exercise("Squats 20x3", true),
+    Exercise("Deadlift 10x4", false)
+)) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text (
+                "Monday, 1st Jan.",
+                color = Color.White,
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            exercises.forEach { exercise ->
+                    ExerciseRow(exercise)
+                }
+        }
     }
 }
 
