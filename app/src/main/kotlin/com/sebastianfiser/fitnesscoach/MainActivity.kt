@@ -65,8 +65,8 @@ fun StartContent() {
         when(selectedTab) {
             0 -> MainWorkoutCard(exercises)
             1 -> schduleScreen()
-            2-> Text("Leaderboard Screen", color = Color.White, modifier = Modifier.align(Alignment.Center))
-            3-> Text("Profile Screen", color = Color.White, modifier = Modifier.align(Alignment.Center))
+            2 -> Text("Leaderboard Screen", color = Color.White, modifier = Modifier.align(Alignment.Center))
+            3 -> Text("Profile Screen", color = Color.White, modifier = Modifier.align(Alignment.Center))
         }
         // SPODNÍ NAVIGACE
         BottomNav(
@@ -244,15 +244,23 @@ fun DrawDayrow() {
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        listOf( "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
-            .forEach { day ->
-                val isToday = day.uppercase(Locale) == dayToday.name
+        val days = mapOf(
+            "Mon" to "Monday",
+            "Tue" to "Tuesday",
+            "Wed" to "Wednesday",
+            "Thu" to "Thursday",
+            "Fri" to "Friday",
+            "Sat" to "Saturday",
+            "Sun" to "Sunday")
+
+            days.forEach { (shortName, fullName) ->
+                val isToday = fullName.uppercase(Locale) == dayToday.name
                 val color = if (isToday) Color.White else Color.LightGray
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        day,
+                        shortName,
                         color = color,
                         style = MaterialTheme.typography.bodyMedium
                     )
