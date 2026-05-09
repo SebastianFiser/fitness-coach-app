@@ -33,6 +33,8 @@ import java.time.LocalDate
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material.ions.filled.ExitToApp
+import androidx.compose.material.icons.filled.Settings
 
 
 // 1. DATA MODEL (Co je to za data)
@@ -516,7 +518,7 @@ fun ProfileScreen() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                icon = Icons.Default.Settings
+                Icon(Icons.Default.Settings, contentDescription = null, tint = Color.White)
                 Text(
                     "Settings",
                     color = Color.White,
@@ -532,7 +534,7 @@ fun ProfileScreen() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                icon = Icons.Default.Person
+                Icon(Icons.Default.Person, contentDescription = null, tint = Color.White)
                 Text(
                     "Profile",
                     color = Color.White,
@@ -548,7 +550,7 @@ fun ProfileScreen() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                icon = Icons.Default.ExitToApp
+                Icon(Icons.Default.ExitToApp, contentDescription = null, tint = Color.White)
                 Text(
                     "Logout",
                     color = Color.White,
