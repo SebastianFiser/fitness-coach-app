@@ -282,11 +282,14 @@ fun displayDaySchedule(exercise: List<Exercise> = listOf(
     Exercise("Squats 20x3", true),
     Exercise("Deadlift 10x4", false)
 )) {
+    var day = LocalDate.now().dayOfWeek
+    var dayNuminMonth = LocalDate.now().dayOfMonth
+    var month = LocalDate.now().monthValue 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
         shape = RoundedCornerShape(28.dp)
     ) {
         Column(
@@ -294,7 +297,7 @@ fun displayDaySchedule(exercise: List<Exercise> = listOf(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text (
-                "Monday, 1st Jan.",
+                "{$day, $dayNuminMonth.$month.}",
                 color = Color.White,
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
