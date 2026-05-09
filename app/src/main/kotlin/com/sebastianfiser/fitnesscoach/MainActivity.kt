@@ -234,6 +234,8 @@ fun schduleScreen() {
 
 @Composable
 fun DrawDayrow() {
+    val dayToday = LocalDate.now().dayOfWeek
+    val Locale = java.util.Locale.getDefault()
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -241,21 +243,23 @@ fun DrawDayrow() {
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        listOf( "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+        listOf( "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
             .forEach { day ->
+                val isToday = day.uppercase(Locale) == dayToday.name
+                val color = if (isToday) Color.White else Color.LightGray
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         day,
-                        color = Color.White,
+                        color = color,
                         style = MaterialTheme.typography.bodyMedium
                     )
                     Box(
                         modifier = Modifier
                             .size(36.dp)
                             .clip(CircleShape)
-                            .background(Color.White)
+                            .background(color)
                     )
                 }
             }
@@ -297,21 +301,21 @@ fun BottomNav(modifier: Modifier = Modifier, selectedTab : Int, onTabSelected: (
         NavigationBarItem(
             icon = { Icon(Icons.Default.DateRange, contentDescription = null) },
             label = { Text("Schedule") },
-            selected = false,
+            selected = selectedTab == 1,
             onClick = { onTabSelected(1) },
             colors = colors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Star, contentDescription = null) },
             label = { Text("Leaderboard") },
-            selected = false,
+            selected = selectedTab == 2,
             onClick = { onTabSelected(2) },
             colors = colors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Person, contentDescription = null) },
             label = { Text("Profile") },
-            selected = false,
+            selected = selectedTab == 3,
             onClick = { onTabSelected(3) },
             colors = colors
         )
