@@ -210,7 +210,7 @@ fun schduleScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box (
