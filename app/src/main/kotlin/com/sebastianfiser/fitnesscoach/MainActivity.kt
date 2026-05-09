@@ -256,7 +256,7 @@ fun DrawDayrow() {
 
             days.forEach { (shortName, fullName) ->
                 val isToday = fullName.uppercase(Locale) == dayToday.name
-                val color = if (isToday) Color.White else Color.DarktGray
+                val color = if (isToday) Color.White else Color.DarkGray
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
