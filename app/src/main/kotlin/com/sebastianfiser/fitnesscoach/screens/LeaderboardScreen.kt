@@ -1,7 +1,5 @@
 package com.sebastianfiser.fitnesscoach.screens
 
-import androidx.compose.runtime.Composable
-import com.sebastianfiser.fitnesscoach.models.LeaderBoardEntry
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,6 +12,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import com.sebastianfiser.fitnesscoach.models.LeaderBoardEntry
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.shape.CircleShape
+import java.time.LocalDate
+import com.sebastianfiser.fitnesscoach.models.Exercise
 
 @Composable
 fun LeaderboardScreen() {
