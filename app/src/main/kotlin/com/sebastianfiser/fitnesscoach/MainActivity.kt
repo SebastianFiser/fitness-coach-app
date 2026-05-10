@@ -125,7 +125,7 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
                 drawArc(
                     color = Color.DarkGray,
                     startAngle = 135f,
-                    sweepAngle = 225f,
+                    sweepAngle = 265f,
                     useCenter = false,
                     style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
                 )
@@ -139,7 +139,7 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .offset(y = (-20).dp)
+                    .offset(y = (-10).dp)
                 ) {
                 Text(
                     "760",
@@ -178,12 +178,10 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
                             color = Color.Gray,
                             style = MaterialTheme.typography.bodyMedium
                         )
-
-                        ElevatedButton(onClick = { }) {
+                    }
+                    ElevatedButton(onClick = { }) {
                             Text("Start")
                         }
-
-                    }
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -198,6 +196,7 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
 
 @Composable
 fun ExerciseRow(exercise: Exercise) {
+    HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 8.dp))
     Row(
         modifier = Modifier
             .fillMaxWidth()
