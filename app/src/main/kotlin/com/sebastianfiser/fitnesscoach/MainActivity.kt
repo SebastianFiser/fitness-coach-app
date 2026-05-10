@@ -96,7 +96,7 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 15.dp),
+                .padding(top = 15.dp, bottom = 30.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -124,20 +124,23 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
             ) {
                 drawArc(
                     color = Color.DarkGray,
-                    startAngle = 180f,
-                    sweepAngle = 180f,
+                    startAngle = 135f,
+                    sweepAngle = 225f,
                     useCenter = false,
                     style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
                 )
                 drawArc(
                     color = Color.White,
-                    startAngle = 180f,
-                    sweepAngle = 90f,
+                    startAngle = 135f,
+                    sweepAngle = 113f,
                     useCenter = false,
                     style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
                 )
             }
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .offset(y = (-20).dp)
+                ) {
                 Text(
                     "760",
                     color = Color.Gray,
@@ -175,6 +178,11 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
                             color = Color.Gray,
                             style = MaterialTheme.typography.bodyMedium
                         )
+
+                        ElevatedButton(onClick = { }) {
+                            Text("Start")
+                        }
+
                     }
                 }
 
