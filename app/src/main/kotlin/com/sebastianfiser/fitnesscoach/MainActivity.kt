@@ -38,7 +38,7 @@ import androidx.compose.material.icons.filled.Settings
 
 
 // 1. DATA MODEL (Co je to za data)
-data class Exercise(val name: String, val isDone: Boolean)
+data class Exercise(val name: String,val Weight: Float?, val isDone: Boolean = false)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +57,7 @@ fun StartContent() {
     // Testovací data pro tvůj plán
     val exercises = listOf(
         Exercise("Bench press 12x4", false),
-        Exercise("Squats 20x3", true),
+        Exercise("Squats 20x3", false),
         Exercise("Deadlift 10x4", false)
     )
 
@@ -132,7 +132,7 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
                 drawArc(
                     color = Color.White,
                     startAngle = 135f,
-                    sweepAngle = 113f,
+                    sweepAngle = 115f,
                     useCenter = false,
                     style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
                 )
@@ -208,16 +208,28 @@ fun ExerciseRow(exercise: Exercise) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(text = exercise.name, color = Color.White)
-        
-        Checkbox(
-            checked = exercise.isDone,
-            onCheckedChange = null, // Tady by v budoucnu byla logika kliknutí
-            colors = CheckboxDefaults.colors(
-                checkedColor = Color.White,
-                uncheckedColor = Color.Gray,
-                checkmarkColor = Color.Black
-            )
-        )
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            if(exercise.Weight != null) {
+                Text(
+                    "${exercise.Weight} kg",
+                    color = Color.Gray,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+            } else {
+                Checkbox(
+                    checked = exercise.isDone,
+                    onCheckedChange = null, // Tady by v budoucnu byla logika kliknutí
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = Color.White,
+                        uncheckedColor = Color.Gray,
+                        checkmarkColor = Color.Black
+                    )
+                )
+            }
+            
+        }
     }
 }
 
@@ -293,9 +305,9 @@ fun DrawDayrow() {
 
 @Composable
 fun displayDaySchedule(exercise: List<Exercise> = listOf(
-    Exercise("Bench press 12x4", false),
-    Exercise("Squats 20x3", true),
-    Exercise("Deadlift 10x4", false)
+    Exercise("Bench press 12x4",105.0f),
+    Exercise("Squats 20x3",135.0f),
+    Exercise("Deadlift 10x4",185.0f)
 )) {
     var day = LocalDate.now().dayOfWeek
     var dayNuminMonth = LocalDate.now().dayOfMonth
