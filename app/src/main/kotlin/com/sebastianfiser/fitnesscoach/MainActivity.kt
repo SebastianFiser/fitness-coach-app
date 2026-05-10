@@ -179,7 +179,10 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
-                    ElevatedButton(onClick = { }) {
+                    ElevatedButton(
+                        onClick = { }
+                        colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White, contentColor = Color.Black)
+                        ) {
                             Text("Start")
                         }
                 }
