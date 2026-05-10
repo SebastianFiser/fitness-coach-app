@@ -180,7 +180,7 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
                         )
                     }
                     ElevatedButton(
-                        onClick = { }
+                        onClick = { },
                         colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White, contentColor = Color.Black)
                         ) {
                             Text("Start")
