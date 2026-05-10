@@ -144,9 +144,9 @@ fun ExerciseRow(exercise: Exercise) {
         Text(text = exercise.name, color = Color.White)
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            if(exercise.Weight != null) {
+            if(exercise.weight != null) {
                 Text(
-                    "${exercise.Weight} kg",
+                    "${exercise.weight} kg",
                     color = Color.Gray,
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(end = 8.dp)
