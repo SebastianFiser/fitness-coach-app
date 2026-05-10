@@ -108,7 +108,7 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
             )
 
             Text(
-                "${entry.Lift}. ${entry.Weight} kg",
+                "${entry.lift}. ${entry.Weight} kg",
                 color = Color.White,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier

@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import java.time.LocalDate
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.CircleShape
-import com.sebastianfiser.fitnesscoach.models.Exercise
 
 @Composable
 fun schduleScreen() {

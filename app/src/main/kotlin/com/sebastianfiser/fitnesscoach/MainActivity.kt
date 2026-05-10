@@ -40,10 +40,7 @@ import com.sebastianfiser.fitnesscoach.screens.MainWorkoutCard
 import com.sebastianfiser.fitnesscoach.screens.schduleScreen
 import com.sebastianfiser.fitnesscoach.screens.LeaderboardScreen
 import com.sebastianfiser.fitnesscoach.screens.ProfileScreen
-import com.sebastianfiser.fitnesscoach.models.Excercise
-
-// 1. DATA MODEL (Co je to za data)
-data class Exercise(val name: String,val Weight: Float?, val isDone: Boolean = false)
+import com.sebastianfiser.fitnesscoach.models.Exercise
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
