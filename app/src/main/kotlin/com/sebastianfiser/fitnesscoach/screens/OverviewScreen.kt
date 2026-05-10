@@ -1,7 +1,7 @@
 package com.sebastianfiser.fitnesscoach.screens
 
 import androidx.compose.runtime.Composable
-import com.sebastianfiser.fitnesscoach.models.Excercise
+import com.sebastianfiser.fitnesscoach.models.Exercise
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,7 +16,9 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.foundation.shape.CircleShape
-import com.sebastianfiser.fitnesscoach.models.Exercise
+import androidx.compose.ui.draw.clip
+import java.time.LocalDate
+
 
 @Composable
 fun MainWorkoutCard(exercises: List<Exercise>) {
