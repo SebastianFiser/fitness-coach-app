@@ -1,6 +1,5 @@
 package com.sebastianfiser.fitnesscoach.screens
 
-import androidx.compose.runtime.Composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.ui.draw.clip
 
 @Composable
 fun ProfileScreen() {
