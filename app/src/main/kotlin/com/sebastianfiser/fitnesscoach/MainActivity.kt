@@ -56,9 +56,9 @@ fun StartContent() {
     var selectedTab by remember { mutableStateOf(0)}
     // Testovací data pro tvůj plán
     val exercises = listOf(
-        Exercise("Bench press 12x4", false),
-        Exercise("Squats 20x3", false),
-        Exercise("Deadlift 10x4", false)
+        Exercise("Bench press 12x4", 105.0f),
+        Exercise("Squats 20x3", 160.5f),
+        Exercise("Deadlift 10x4", 167.0f)
     )
 
     Box(
