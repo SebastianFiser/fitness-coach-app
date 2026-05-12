@@ -59,7 +59,7 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
                 drawArc(
                     color = Color.DarkGray,
                     startAngle = 135f,
-                    sweepAngle = 265f,
+                    sweepAngle = 270f,
                     useCenter = false,
                     style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
                 )
@@ -73,7 +73,7 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .offset(y = (-10).dp)
+                    .offset(y = (-7).dp)
                 ) {
                 Text(
                     "760",
