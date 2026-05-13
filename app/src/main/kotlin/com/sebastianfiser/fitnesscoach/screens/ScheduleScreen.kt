@@ -14,31 +14,74 @@ import java.time.LocalDate
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.CircleShape
 
+val weekData = listOf(
+    Day("monday", listOf(
+        Exercise("Bench press 12x4",105.0f),
+        Exercise("Peck deck 20x3",50.0f),
+        Exercise("Dumbell flyes 10x4",35.0f),
+        Exercise("Cable cross 15x3",40.0f),
+    )),
+    Day("tuesday", listOf(
+        Exercise("Squats 20x3",135.0f),
+        Exercise("Leg press 15x4",180.0f),
+        Exercise("Lunges 12x3",60.0f)
+    )),
+    Day("wednesday", listOf(
+        Exercise("Deadlift 10x4",185.0f),
+        Exercise("Barbell row 12x3",95.0f),
+        Exercise("Lat pulldown 15x4",70.0f)
+    )),
+    Day("thursday", listOf(
+        Exercise("Overhead press 12x4",60.0f),
+        Exercise("Lateral raises 15x3",20.0f),
+        Exercise("Front raises 10x4",25.0f)
+    )),
+    Day("friday", listOf(
+        Exercise("Barbell curls 12x4",40.0f),
+        Exercise("Hammer curls 15x3",30.0f),
+        Exercise("Preacher curls 10x4",35.0f)
+    )),
+    Day("saturday", listOf(
+        Exercise("Tricep pushdown 12x4",50.0f),
+        Exercise("Overhead tricep extension 15x3",40.0f),
+        Exercise("Dips 10x4", 0.0f)
+    )),
+    Day("sunday", listOf(
+        Exercise("Rest day", 0.0f)
+    ))
+)
+
 @Composable
 fun schduleScreen() {
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
             .padding(top = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box (
-            modifier = Modifier
-            .clip(RoundedCornerShape(16.dp))
-            .background(Color.DarkGray)
-        ) {
-            Text(
-                "Your Schedule",
-                color = Color.White,
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-            )
+        item {
+            Box (
+                modifier = Modifier
+                .clip(RoundedCornerShape(16.dp))
+                .background(Color.DarkGray)
+            ) {
+                Text(
+                    "Your Schedule",
+                    color = Color.White,
+                    style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+            }
         }
-
-        DrawDayrow()
-        displayDaySchedule()
-
+        item {
+            DrawDayrow()
+        }
+        item {
+            items(weekData) { day ->
+                displayDaySchedule(day.exercises)
+            }
+        }
     }
 }
 
@@ -85,11 +128,7 @@ fun DrawDayrow() {
 }
 
 @Composable
-fun displayDaySchedule(exercise: List<Exercise> = listOf(
-    Exercise("Bench press 12x4",105.0f),
-    Exercise("Squats 20x3",135.0f),
-    Exercise("Deadlift 10x4",185.0f)
-)) {
+fun displayDaySchedule(exercise: List<Exercise>) {
     var day = LocalDate.now().dayOfWeek
     var dayNuminMonth = LocalDate.now().dayOfMonth
     var month = LocalDate.now().monthValue 
