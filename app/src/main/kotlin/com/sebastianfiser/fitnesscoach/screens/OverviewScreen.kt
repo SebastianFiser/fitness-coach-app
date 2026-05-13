@@ -144,25 +144,12 @@ fun ExerciseRow(exercise: Exercise) {
         Text(text = exercise.name, color = Color.White)
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            if(exercise.weight != null) {
-                Text(
-                    "${exercise.weight} kg",
-                    color = Color.Gray,
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(end = 8.dp)
-                )
-            } else {
-                Checkbox(
-                    checked = exercise.isDone,
-                    onCheckedChange = null, // Tady by v budoucnu byla logika kliknutí
-                    colors = CheckboxDefaults.colors(
-                        checkedColor = Color.White,
-                        uncheckedColor = Color.Gray,
-                        checkmarkColor = Color.Black
-                    )
-                )
-            }
-            
+            Text(
+                "${exercise.weight} kg",
+                color = Color.Gray,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(end = 8.dp)
+            )
         }
     }
 }
