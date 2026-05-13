@@ -129,7 +129,7 @@ fun DrawDayrow() {
 }
 
 @Composable
-fun displayDaySchedule(exercise: List<Exercise>, var day: String) {
+fun displayDaySchedule(exercise: List<Exercise>, day: String) {
     //var day = LocalDate.now().dayOfWeek
     //var dayNuminMonth = LocalDate.now().dayOfMonth
     var month = LocalDate.now().monthValue 
