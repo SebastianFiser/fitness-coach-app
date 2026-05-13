@@ -1,6 +1,7 @@
 package com.sebastianfiser.fitnesscoach.screens
 
 import com.sebastianfiser.fitnesscoach.models.Exercise
+import com.sebastianfiser.fitnesscoach.models.Day
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import java.time.LocalDate
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 
 val weekData = listOf(
     Day("monday", listOf(
