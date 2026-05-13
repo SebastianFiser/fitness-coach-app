@@ -81,7 +81,7 @@ fun schduleScreen() {
             DrawDayrow()
         }
         items(weekData) { day ->
-            displayDaySchedule(day.exercises)
+            displayDaySchedule(day.exercises, day.day)
         }
     }
 }
@@ -129,9 +129,9 @@ fun DrawDayrow() {
 }
 
 @Composable
-fun displayDaySchedule(exercise: List<Exercise>) {
-    var day = LocalDate.now().dayOfWeek
-    var dayNuminMonth = LocalDate.now().dayOfMonth
+fun displayDaySchedule(exercise: List<Exercise>, var day: String) {
+    //var day = LocalDate.now().dayOfWeek
+    //var dayNuminMonth = LocalDate.now().dayOfMonth
     var month = LocalDate.now().monthValue 
     Card(
         modifier = Modifier
@@ -142,10 +142,10 @@ fun displayDaySchedule(exercise: List<Exercise>) {
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.Start
         ) {
             Text (
-                "$day, $dayNuminMonth.$month.",
+                "$day",
                 color = Color.White,
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
