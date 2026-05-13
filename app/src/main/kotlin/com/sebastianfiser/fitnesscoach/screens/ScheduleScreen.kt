@@ -80,10 +80,8 @@ fun schduleScreen() {
         item {
             DrawDayrow()
         }
-        item {
-            items(weekData) { day ->
-                displayDaySchedule(day.exercises)
-            }
+        items(weekData) { day ->
+            displayDaySchedule(day.exercises)
         }
     }
 }
