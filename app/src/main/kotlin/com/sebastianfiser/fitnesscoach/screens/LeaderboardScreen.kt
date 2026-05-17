@@ -29,6 +29,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.foundation.border
+import androidx.compose.ui.unit.DpOffset
 
 @Composable
 fun LeaderboardScreen() {
@@ -89,7 +90,7 @@ fun LeaderboardScreen() {
 @Composable
 fun ShowFilterDropdown() {
     var filterOpen by remember { mutableStateOf(false) }
-
+    var submenuOpen by remember { mutableStateOf<String?>(null)}
     Box{
         Button(
             onClick = { filterOpen = !filterOpen },
@@ -111,29 +112,159 @@ fun ShowFilterDropdown() {
         ) { 
             DropdownMenuItem(
                 text = { Text("Gender") },
-                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
+                onClick = { submenuOpen = "Gender" },
                 colors = MenuDefaults.itemColors(textColor = Color.White)
             )
+            if (submenuOpen == "Gender"){
+                DropdownMenu(
+                    expanded = submenuOpen == "Gender",
+                    onDismissRequest = { submenuOpen = null },
+                    offset = DpOffset(x = 150.dp, y = (-48).dp),
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Male") },
+                        onClick = { /* Handle Male filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Female") },
+                        onClick = { /* Handle Female Filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Other") },
+                        onClick = { /* Handle Other Filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                }
+            }
             DropdownMenuItem(
                 text = { Text("Age Group") },
-                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
+                onClick = { submenuOpen = "Age" },
                 colors = MenuDefaults.itemColors(textColor = Color.White)
             )
+            if (submenuOpen == "Age"){
+                DropdownMenu(
+                    expanded = submenuOpen == "Age",
+                    onDismissRequest = { submenuOpen = null },
+                    offset = DpOffset(x = 150.dp, y = (-48).dp),
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Under 18") },
+                        onClick = { /* Handle Under 18 filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                    DropdownMenuItem(
+                        text = { Text("18-25") },
+                        onClick = { /* Handle 18-25 filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                    DropdownMenuItem(
+                        text = { Text("26-35") },
+                        onClick = { /* Handle 26-35 Filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                    DropdownMenuItem(
+                        text = { Text("36-45") },
+                        onClick = { /* Handle 36-45 Filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                    DropdownMenuItem(
+                        text = { Text("46+") },
+                        onClick = { /* Handle 46+ Filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                }
+            }
             DropdownMenuItem(
                 text = { Text("Natural/Enhanced") },
-                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
+                onClick = { submenuOpen = "Natty" },
                 colors = MenuDefaults.itemColors(textColor = Color.White)
             )
+            if (submenuOpen == "Natty"){
+                DropdownMenu(
+                    expanded = submenuOpen == "Natty",
+                    onDismissRequest = { submenuOpen = null },
+                    offset = DpOffset(x = 150.dp, y = (-48).dp),
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Natural") },
+                        onClick = { /* Handle Natural Filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Enhanced") },
+                        onClick = { /* Handle Enhanced Filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                }
+            }
             DropdownMenuItem(
                 text = { Text("Nationality") },
-                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
+                onClick = { submenuOpen = "Nationality" },
                 colors = MenuDefaults.itemColors(textColor = Color.White)
             )
+            if (submenuOpen == "Nationality") {
+                DropdownMenu(
+                    expanded = submenuOpen == "Nationality",
+                    onDismissRequest = { submenuOpen = null },
+                    offset = DpOffset(x = 150.dp, y = (-48).dp),
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Czech Republic") },
+                        onClick = { /* Handle Czech Republic Filter */ },
+                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                    DropdownMenuItem(
+                        text = { Text("United States") },
+                        onClick = { /* Handle United States Filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Germany") },
+                        onClick = { /* Handle Germany Filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                    DropdownMenuItem(
+                        text = { Text("United Kingdom") },
+                        onClick = { /* Handle United Kingdom Filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Other") },
+                        onClick = { /* Handle Other Filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                }
+            }
             DropdownMenuItem(
                 text = { Text("Lift") },
-                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
+                onClick = { submenuOpen = "Lift" },
                 colors = MenuDefaults.itemColors(textColor = Color.White)
             )
+            if (submenuOpen == "Lift") {
+                DropdownMenu(
+                    expanded = submenuOpen == "Lift",
+                    onDismissRequest = { submenuOpen = null },
+                    offset = DpOffset(x = 150.dp, y = (-48).dp),
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Squat") },
+                        onClick = { /* Handle Squat Filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Bench Press") },
+                        onClick = { /* Handle Bench Press Filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Deadlift") },
+                        onClick = { /* Handle Deadlift Filter */ },
+                        colors = MenuDefaults.itemColors(textColor = Color.White)
+                    )
+                }
+            }
         }
     }
 }
