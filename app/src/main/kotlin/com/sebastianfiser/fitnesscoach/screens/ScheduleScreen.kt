@@ -64,7 +64,7 @@ fun schduleScreen() {
             .background(Color.Black)
             .padding(top = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        contentPadding = PaddingValues(bottom = 80.dp),
+        contentPadding = PaddingValues(bottom = 90.dp),
     ) {
         item {
             Box (
@@ -93,41 +93,48 @@ fun schduleScreen() {
 fun DrawDayrow() {
     val dayToday = LocalDate.now().dayOfWeek
     val Locale = java.util.Locale.getDefault()
-    Row(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp),
-        horizontalArrangement = Arrangement.SpaceAround,
-        verticalAlignment = Alignment.CenterVertically
+            .background(Color(0xFF1C1C1E))
+            .padding(vertical = 8.dp)
     ) {
-        val days = mapOf(
-            "Mon" to "Monday",
-            "Tue" to "Tuesday",
-            "Wed" to "Wednesday",
-            "Thu" to "Thursday",
-            "Fri" to "Friday",
-            "Sat" to "Saturday",
-            "Sun" to "Sunday")
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val days = mapOf(
+                "Mon" to "Monday",
+                "Tue" to "Tuesday",
+                "Wed" to "Wednesday",
+                "Thu" to "Thursday",
+                "Fri" to "Friday",
+                "Sat" to "Saturday",
+                "Sun" to "Sunday")
 
-            days.forEach { (shortName, fullName) ->
-                val isToday = fullName.uppercase(Locale) == dayToday.name
-                val color = if (isToday) Color.White else Color.DarkGray
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        shortName,
-                        color = color,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    Box(
-                        modifier = Modifier
-                            .size(36.dp)
-                            .clip(CircleShape)
-                            .background(color)
-                    )
+                days.forEach { (shortName, fullName) ->
+                    val isToday = fullName.uppercase(Locale) == dayToday.name
+                    val color = if (isToday) Color.White else Color.DarkGray
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            shortName,
+                            color = color,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(36.dp)
+                                .clip(CircleShape)
+                                .background(color)
+                        )
+                    }
                 }
-            }
+        }
     }
 }
 
