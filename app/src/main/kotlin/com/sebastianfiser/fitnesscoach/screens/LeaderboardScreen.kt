@@ -68,13 +68,11 @@ fun LeaderboardScreen() {
             }
             Box (
                 modifier = Modifier
-                    .padding(16.dp)
                     .fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
                 ShowFilterDropdown()
             }
-            Spacer(modifier = Modifier.height(16.dp))
 
             ShowLeaderboard()
         }
@@ -86,32 +84,41 @@ fun ShowFilterDropdown() {
     var filterOpen by remember { mutableStateOf(false) }
 
     Box{
-        Button(onClick = { filterOpen = !filterOpen }) {
+        Button(
+            onClick = { filterOpen = !filterOpen }
+            colors = ButtonDefaults.ButtonColors(containerColor = Color(0xFF1C1C1E), contentColor = Color.White)
+            ) {
             Text("Filter")
         }
         DropdownMenu(
             expanded = filterOpen,
-            onDismissRequest = { filterOpen = false }
+            onDismissRequest = { filterOpen = false },
+            modifier = Modifier.background(Color(0xFF1C1C1E))
         ) { 
             DropdownMenuItem(
                 text = { Text("Gender") },
-                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/}
+                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
+                colors = MenuDefaults.itemColors(contentColor = Color.White)
             )
             DropdownMenuItem(
                 text = { Text("Age Group") },
-                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/}
+                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
+                colors = MenuDefaults.itemColors(contentColor = Color.White)
             )
             DropdownMenuItem(
                 text = { Text("Natural/Enhanced") },
-                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/}
+                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
+                colors = MenuDefaults.itemColors(contentColor = Color.White)
             )
             DropdownMenuItem(
                 text = { Text("Nationality") },
-                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/}
+                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
+                colors = MenuDefaults.itemColors(contentColor = Color.White)
             )
             DropdownMenuItem(
                 text = { Text("Lift") },
-                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/}
+                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
+                colors = MenuDefaults.itemColors(contentColor = Color.White)
             )
 
         }
