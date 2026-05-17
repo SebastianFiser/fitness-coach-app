@@ -20,6 +20,8 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Composable
 fun LeaderboardScreen() {
@@ -66,8 +68,9 @@ fun LeaderboardScreen() {
             }
             Box (
                 modifier = Modifier
-                    .fillMaxWidth()
-                    contentAlignment = Alignment.Center
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
             ) {
                 ShowFilterDropdown()
             }
@@ -124,10 +127,10 @@ fun ShowLeaderboard() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
-            LeaderboardRow(LeaderBoardEntry(1, "User1", "deadlift", 500.5f))
+            LeaderboardRow(LeaderBoardEntry(1, "User1", "deadlift", 500.5f, 1, true, 25, "CZ"))
         }
         item {
-            LeaderboardRow(LeaderBoardEntry(2, "User2", "squat", 450.0f))
+            LeaderboardRow(LeaderBoardEntry(2, "User2", "squat", 450.0f, 2, false, 30, "US"))
         }
     }
 }
