@@ -20,6 +20,8 @@ import java.time.LocalDate
 
 @Composable
 fun MainWorkoutCard(exercises: List<Exercise>) {
+    var day = LocalDate.now().dayOfWeek.toString()
+    val Locale = java.util.Locale.getDefault()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -123,7 +125,9 @@ fun MainWorkoutCard(exercises: List<Exercise>) {
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                exercises.forEach { exercise ->
+                val currentDay = weekData.find { it.day == day }
+
+                currentDay?.exercises?.forEach { exercise ->
                     ExerciseRow(exercise)
                 }
             }
