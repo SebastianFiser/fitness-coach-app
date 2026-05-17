@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.ExperimentalFoundationApi
 
 val weekData = listOf(
     Day("Monday", listOf(
@@ -55,6 +56,7 @@ val weekData = listOf(
 )
 
 @Composable
+@OptIn(ExperimentalFoundationApi::class)
 fun schduleScreen() {
     LazyColumn(
         modifier = Modifier
