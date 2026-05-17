@@ -89,7 +89,7 @@ fun ShowFilterDropdown() {
     Box{
         Button(
             onClick = { filterOpen = !filterOpen }
-            colors = ButtonDefaults.ButtonColors(containerColor = Color(0xFF1C1C1E), contentColor = Color.White)
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1C1C1E), contentColor = Color.White)
             ) {
             Text("Filter")
         }
