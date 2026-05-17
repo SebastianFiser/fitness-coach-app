@@ -88,7 +88,7 @@ fun ShowFilterDropdown() {
 
     Box{
         Button(
-            onClick = { filterOpen = !filterOpen }
+            onClick = { filterOpen = !filterOpen },
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1C1C1E), contentColor = Color.White)
             ) {
             Text("Filter")
@@ -101,29 +101,28 @@ fun ShowFilterDropdown() {
             DropdownMenuItem(
                 text = { Text("Gender") },
                 onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
-                colors = MenuDefaults.itemColors(contentColor = Color.White)
+                colors = MenuDefaults.itemColors(textColor = Color.White)
             )
             DropdownMenuItem(
                 text = { Text("Age Group") },
                 onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
-                colors = MenuDefaults.itemColors(contentColor = Color.White)
+                colors = MenuDefaults.itemColors(textColor = Color.White)
             )
             DropdownMenuItem(
                 text = { Text("Natural/Enhanced") },
                 onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
-                colors = MenuDefaults.itemColors(contentColor = Color.White)
+                colors = MenuDefaults.itemColors(textColor = Color.White)
             )
             DropdownMenuItem(
                 text = { Text("Nationality") },
                 onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
-                colors = MenuDefaults.itemColors(contentColor = Color.White)
+                colors = MenuDefaults.itemColors(textColor = Color.White)
             )
             DropdownMenuItem(
                 text = { Text("Lift") },
                 onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/},
-                colors = MenuDefaults.itemColors(contentColor = Color.White)
+                colors = MenuDefaults.itemColors(textColor = Color.White)
             )
-
         }
     }
 }
