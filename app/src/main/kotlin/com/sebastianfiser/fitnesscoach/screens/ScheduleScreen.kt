@@ -78,7 +78,7 @@ fun schduleScreen() {
                 )
             }
         }
-        item {
+        stickyHeader {
             DrawDayrow()
         }
         items(weekData) { day ->
