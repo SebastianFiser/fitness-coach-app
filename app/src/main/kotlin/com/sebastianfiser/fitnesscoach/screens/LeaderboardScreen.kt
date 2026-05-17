@@ -25,6 +25,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.foundation.border
 
 @Composable
 fun LeaderboardScreen() {
@@ -89,14 +93,21 @@ fun ShowFilterDropdown() {
     Box{
         Button(
             onClick = { filterOpen = !filterOpen },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1C1C1E), contentColor = Color.White)
-            ) {
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
+        ) {
+            Icon(
+                imageVector = Icons.Default.FilterList,
+                contentDescription = null,
+                tint = Color.White
+            )
             Text("Filter")
         }
         DropdownMenu(
             expanded = filterOpen,
             onDismissRequest = { filterOpen = false },
-            modifier = Modifier.background(Color(0xFF1C1C1E))
+            modifier = Modifier
+                .background(Color(0xFF1C1C1E))
+                .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
         ) { 
             DropdownMenuItem(
                 text = { Text("Gender") },
