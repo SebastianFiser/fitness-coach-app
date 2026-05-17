@@ -16,6 +16,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.CircleShape
 import java.time.LocalDate
 import com.sebastianfiser.fitnesscoach.models.Exercise
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 @Composable
 fun LeaderboardScreen() {
@@ -60,9 +64,53 @@ fun LeaderboardScreen() {
                     style = MaterialTheme.typography.headlineMedium
                 )
             }
+            Box (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    contentAlignment = Alignment.Center
+            ) {
+                ShowFilterDropdown()
+            }
             Spacer(modifier = Modifier.height(16.dp))
 
             ShowLeaderboard()
+        }
+    }
+}
+
+@Composable
+fun ShowFilterDropdown() {
+    var filterOpen by remember { mutableStateOf(false) }
+
+    Box{
+        Button(onClick = { filterOpen = !filterOpen }) {
+            Text("Filter")
+        }
+        DropdownMenu(
+            expanded = filterOpen,
+            onDismissRequest = { filterOpen = false }
+        ) { 
+            DropdownMenuItem(
+                text = { Text("Gender") },
+                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/}
+            )
+            DropdownMenuItem(
+                text = { Text("Age Group") },
+                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/}
+            )
+            DropdownMenuItem(
+                text = { Text("Natural/Enhanced") },
+                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/}
+            )
+            DropdownMenuItem(
+                text = { Text("Nationality") },
+                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/}
+            )
+            DropdownMenuItem(
+                text = { Text("Lift") },
+                onClick = {/*Handle, showing another dropdown which by selecting THEN closes the main and subsequent dropdown*/}
+            )
+
         }
     }
 }
@@ -108,7 +156,7 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
             )
 
             Text(
-                "${entry.lift}. ${entry.Weight} kg",
+                "${entry.lift}. ${entry.weight} kg",
                 color = Color.White,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier
