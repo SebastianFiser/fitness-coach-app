@@ -106,6 +106,7 @@ fun ShowFilterDropdown() {
         DropdownMenu(
             expanded = filterOpen,
             onDismissRequest = { filterOpen = false },
+            offset = DpOffset(x = (-50).dp, y = 0.dp),
             modifier = Modifier
                 .background(Color(0xFF1C1C1E))
                 .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
@@ -119,7 +120,10 @@ fun ShowFilterDropdown() {
                 DropdownMenu(
                     expanded = submenuOpen == "Gender",
                     onDismissRequest = { submenuOpen = null },
-                    offset = DpOffset(x = 150.dp, y = (-48).dp),
+                    offset = DpOffset(x = 150.dp, y = 0.dp),
+                    modifier = Modifier
+                        .background(Color(0xFF1C1C1E))
+                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
                 ) {
                     DropdownMenuItem(
                         text = { Text("Male") },
@@ -147,7 +151,10 @@ fun ShowFilterDropdown() {
                 DropdownMenu(
                     expanded = submenuOpen == "Age",
                     onDismissRequest = { submenuOpen = null },
-                    offset = DpOffset(x = 150.dp, y = (-48).dp),
+                    offset = DpOffset(x = 150.dp, y = 0.dp),
+                    modifier = Modifier
+                        .background(Color(0xFF1C1C1E))
+                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
                 ) {
                     DropdownMenuItem(
                         text = { Text("Under 18") },
@@ -185,7 +192,10 @@ fun ShowFilterDropdown() {
                 DropdownMenu(
                     expanded = submenuOpen == "Natty",
                     onDismissRequest = { submenuOpen = null },
-                    offset = DpOffset(x = 150.dp, y = (-48).dp),
+                    offset = DpOffset(x = 150.dp, y = 0.dp),
+                    modifier = Modifier
+                        .background(Color(0xFF1C1C1E))
+                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
                 ) {
                     DropdownMenuItem(
                         text = { Text("Natural") },
@@ -208,7 +218,10 @@ fun ShowFilterDropdown() {
                 DropdownMenu(
                     expanded = submenuOpen == "Nationality",
                     onDismissRequest = { submenuOpen = null },
-                    offset = DpOffset(x = 150.dp, y = (-48).dp),
+                    offset = DpOffset(x = 150.dp, y = 0.dp),
+                    modifier = Modifier
+                        .background(Color(0xFF1C1C1E))
+                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
                 ) {
                     DropdownMenuItem(
                         text = { Text("Czech Republic") },
@@ -246,7 +259,10 @@ fun ShowFilterDropdown() {
                 DropdownMenu(
                     expanded = submenuOpen == "Lift",
                     onDismissRequest = { submenuOpen = null },
-                    offset = DpOffset(x = 150.dp, y = (-48).dp),
+                    offset = DpOffset(x = 150.dp, y = 0.dp),
+                    modifier = Modifier
+                        .background(Color(0xFF1C1C1E))
+                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
                 ) {
                     DropdownMenuItem(
                         text = { Text("Squat") },
