@@ -117,17 +117,17 @@ fun ShowFilterDropdown() {
             )
             if (submenuOpen == "Gender"){
                 DropdownMenuItem(
-                    text = { Text("Male") },
+                    text = { Text(" • Male") },
                     onClick = { /* Handle Male filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
-                    text = { Text("Female") },
+                    text = { Text(" • Female") },
                     onClick = { /* Handle Female Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
-                    text = { Text("Other") },
+                    text = { Text(" • Other") },
                     onClick = { /* Handle Other Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
@@ -139,27 +139,27 @@ fun ShowFilterDropdown() {
             )
             if (submenuOpen == "Age") {
                 DropdownMenuItem(
-                    text = { Text("Under 18") },
+                    text = { Text(" • Under 18") },
                     onClick = { /* Handle Under 18 filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
-                    text = { Text("18-25") },
+                    text = { Text(" • 18-25") },
                     onClick = { /* Handle 18-25 filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
-                    text = { Text("26-35") },
+                    text = { Text(" • 26-35") },
                     onClick = { /* Handle 26-35 Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
-                    text = { Text("36-45") },
+                    text = { Text(" • 36-45") },
                     onClick = { /* Handle 36-45 Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
-                    text = { Text("46+") },
+                    text = { Text(" • 46+") },
                     onClick = { /* Handle 46+ Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
@@ -171,12 +171,12 @@ fun ShowFilterDropdown() {
             )
             if (submenuOpen == "Natty"){
                 DropdownMenuItem(
-                    text = { Text("Natural") },
+                    text = { Text(" • Natural") },
                     onClick = { /* Handle Natural Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
-                    text = { Text("Enhanced") },
+                    text = { Text(" • Enhanced") },
                     onClick = { /* Handle Enhanced Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
@@ -188,27 +188,27 @@ fun ShowFilterDropdown() {
             )
             if (submenuOpen == "Nationality") {
                 DropdownMenuItem(
-                    text = { Text("Czech Republic") },
+                    text = { Text(" • Czech Republic") },
                     onClick = { /* Handle Czech Republic Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
-                    text = { Text("United States") },
+                    text = { Text(" • United States") },
                     onClick = { /* Handle United States Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
-                    text = { Text("Germany") },
+                    text = { Text(" • Germany") },
                     onClick = { /* Handle Germany Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
-                    text = { Text("United Kingdom") },
+                    text = { Text(" • United Kingdom") },
                     onClick = { /* Handle United Kingdom Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
-                    text = { Text("Other") },
+                    text = { Text(" • Other") },
                     onClick = { /* Handle Other Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
@@ -220,17 +220,17 @@ fun ShowFilterDropdown() {
             )
             if (submenuOpen == "Lift") {
                 DropdownMenuItem(
-                    text = { Text("Squat") },
+                    text = { Text(" • Squat") },
                     onClick = { /* Handle Squat Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
-                    text = { Text("Bench Press") },
+                    text = { Text(" • Bench Press") },
                     onClick = { /* Handle Bench Press Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
-                    text = { Text("Deadlift") },
+                    text = { Text(" • Deadlift") },
                     onClick = { /* Handle Deadlift Filter */ },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
