@@ -272,24 +272,48 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .padding(horizontal = 16.dp, vertical = 2.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text(
-                "${entry.rank}. ${entry.username}",
-                color = Color.White,
-                style = MaterialTheme.typography.bodyLarge,
+            Box(
                 modifier = Modifier
-                .padding(8.dp)
-            )
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(Color.White),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    "${entry.rank}",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier
+                    .padding(4.dp)
+                )
+            }
 
             Text(
-                "${entry.lift}. ${entry.weight} kg",
+                entry.name,
                 color = Color.White,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier
-                .padding(8.dp)
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(2.dp)
             )
+
+            Column(horizontalAlignment = Alignment.End) {
+                Text(
+                    "${entry.lift}",
+                    color = Color.LightGray,
+                    style = MaterialTheme.typography.Small,
+                    modifier = Modifier
+                    .padding(top = 8.dp, bottom = 2.dp)
+                )
+                Text(
+                    "${entry.weight} kg",
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier
+                    .padding(top = 2.dp, bottom = 8.dp)
+                )
+            }
         }
     }
 }

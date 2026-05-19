@@ -19,7 +19,7 @@ fun generateFakeLeaderboardData(i: Int): LeaderBoardEntry {
     var name = "User${Random.nextInt(1, 1000)}"
     var lift = listOf("Squat", "Bench Press", "Deadlift").random()
     var weight = Random.nextFloat() * 300
-    val RoundedWeight = weight.toString().toBigDecimal().setScale(2, RoundingMode.HALF_EVEN).toFloat()
+    val RoundedWeight = weight.toString().toBigDecimal().setScale(1, RoundingMode.HALF_EVEN).toFloat()
     var gender = Random.nextInt(1, 4)
     var natural = Random.nextBoolean()
     var age = Random.nextInt(15, 60)
