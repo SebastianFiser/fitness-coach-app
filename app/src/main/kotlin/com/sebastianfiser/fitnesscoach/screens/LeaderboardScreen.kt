@@ -34,56 +34,61 @@ import com.sebastianfiser.fitnesscoach.models.GenerateFewTimesLeaderBoardData
 
 @Composable
 fun LeaderboardScreen() {
-    Column ( 
+    LazyColumn ( 
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
             .padding(top = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box (
-            modifier = Modifier
-                .clip(RoundedCornerShape(16.dp))
-                .background(Color.DarkGray)
-        ) {
-            Text(
-                "Leaderboard",
-                color = Color.White,
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-            )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Text("Top Users", color = Color.White, style = MaterialTheme.typography.headlineSmall)
-
-        Card (
-            modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
-            shape = RoundedCornerShape(28.dp)
-        ) {
+        item {
             Box (
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                contentAlignment = Alignment.Center
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color.DarkGray)
             ) {
                 Text(
-                    "World Leaderboard",
+                    "Leaderboard",
                     color = Color.White,
-                    style = MaterialTheme.typography.headlineMedium
+                    style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
             }
-            Box (
+        }
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+            Text("Top Users", color = Color.White, style = MaterialTheme.typography.headlineSmall)
+        }
+        item {
+            Card (
                 modifier = Modifier
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center
+                .fillMaxWidth()
+                .padding(16.dp),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                shape = RoundedCornerShape(28.dp)
             ) {
-                ShowFilterDropdown()
-            }
+                Box (
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "World Leaderboard",
+                        color = Color.White,
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                }
+                Box (
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    ShowFilterDropdown()
+                }
 
-            ShowLeaderboard()
+                ShowLeaderboard()
+            }
         }
     }
 }
@@ -243,13 +248,13 @@ fun ShowFilterDropdown() {
 @Composable
 fun ShowLeaderboard() {
     val data = GenerateFewTimesLeaderBoardData()
-    LazyColumn(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(data.take(20)) { entry ->
+        data.take(20).forEach { entry ->
             LeaderboardRow(entry)
         }
     }
