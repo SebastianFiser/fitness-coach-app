@@ -292,7 +292,7 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
             }
 
             Text(
-                entry.name,
+                "${entry.username}",
                 color = Color.White,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(2.dp)
@@ -302,7 +302,7 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
                 Text(
                     "${entry.lift}",
                     color = Color.LightGray,
-                    style = MaterialTheme.typography.Small,
+                    style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier
                     .padding(top = 8.dp, bottom = 2.dp)
                 )
