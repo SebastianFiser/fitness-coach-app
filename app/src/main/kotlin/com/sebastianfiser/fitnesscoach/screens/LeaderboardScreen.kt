@@ -31,6 +31,8 @@ import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.foundation.border
 import androidx.compose.ui.unit.DpOffset
 import com.sebastianfiser.fitnesscoach.models.GenerateFewTimesLeaderBoardData
+import androidx.compose.ui.text.font.FontWeight
+
 
 @Composable
 fun LeaderboardScreen() {
@@ -38,7 +40,7 @@ fun LeaderboardScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(top = 48.dp),
+            .padding(top = 48.dp, bottom = 80.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         item {
@@ -277,15 +279,17 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
         ) {
             Box(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(20.dp)
                     .clip(CircleShape)
                     .background(Color.White),
+                    verticalAlignment = Alignment.CenterVertically,
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     "${entry.rank}",
                     color = Color.Black,
-                    style = MaterialTheme.typography.headlineLarge,
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier
                     .padding(4.dp)
                 )
@@ -295,6 +299,7 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
                 "${entry.username}",
                 color = Color.White,
                 style = MaterialTheme.typography.bodyMedium,
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(2.dp)
             )
 
@@ -302,6 +307,7 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
                 Text(
                     "${entry.lift}",
                     color = Color.LightGray,
+                    verticalAlignment = Alignment.CenterVertically,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier
                     .padding(top = 8.dp, bottom = 2.dp)
@@ -309,6 +315,7 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
                 Text(
                     "${entry.weight} kg",
                     color = Color.White,
+                    verticalAlignment = Alignment.CenterVertically,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
                     .padding(top = 2.dp, bottom = 8.dp)
