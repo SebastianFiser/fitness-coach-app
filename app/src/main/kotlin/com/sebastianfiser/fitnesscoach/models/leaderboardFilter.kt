@@ -4,7 +4,7 @@ import com.sebastianfiser.fitnesscoach.models.GenerateFewTimesLeaderBoardData
 
 fun FilterData(parameter: String?): List<LeaderBoardEntry> {
     val data = GenerateFewTimesLeaderBoardData()
-    if (parameter == null) return data
+    if (parameter == null) return data.take(20)
     val filteredData = when(parameter) {
         "Squat" -> data.filter { it.lift == "Squat" }
         "Bench Press" -> data.filter { it.lift == "Bench Press" }
