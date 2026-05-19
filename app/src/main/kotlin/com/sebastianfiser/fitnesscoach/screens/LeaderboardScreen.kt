@@ -30,12 +30,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.foundation.border
 import androidx.compose.ui.unit.DpOffset
-import com.sebastianfiser.fitnesscoach.models.GenerateFewTimesLeaderBoardData
 import androidx.compose.ui.text.font.FontWeight
+import com.sebastianfiser.fitnesscoach.models.FilterData
 
 
 @Composable
 fun LeaderboardScreen() {
+    var selectedParameter by remember { mutableStateOf<String?>(null) }
+    ShowFilterDropdown(onFilterSelected = { selecteddParameter = it })
+    ShowLeaderboard(selectedParameter = selectedParameter)
     LazyColumn ( 
         modifier = Modifier
             .fillMaxSize()
@@ -96,7 +99,7 @@ fun LeaderboardScreen() {
 }
 
 @Composable
-fun ShowFilterDropdown() {
+fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
     var filterOpen by remember { mutableStateOf(false) }
     var submenuOpen by remember { mutableStateOf<String?>(null)}
     Box{
@@ -229,17 +232,23 @@ fun ShowFilterDropdown() {
             if (submenuOpen == "Lift") {
                 DropdownMenuItem(
                     text = { Text(" • Squat") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("Squat") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Bench Press") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("Bench Press") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Deadlift") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("Deadlift") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
             }
@@ -248,15 +257,15 @@ fun ShowFilterDropdown() {
 }
 
 @Composable
-fun ShowLeaderboard() {
-    val data = GenerateFewTimesLeaderBoardData()
+fun ShowLeaderboard(selectedParameter: String?) {
+    val dataFiltered = FilterData(selectedParameter)
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        data.take(20).forEach { entry ->
+        dataFiltered.forEach { entry ->
             LeaderboardRow(entry)
         }
     }
