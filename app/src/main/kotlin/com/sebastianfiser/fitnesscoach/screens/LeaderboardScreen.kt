@@ -288,7 +288,7 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
                 Text(
                     "${entry.rank}",
                     color = Color.Black,
-                    style = MaterialTheme.typography.headlineMedium,
+                    style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                     .padding(4.dp)
@@ -298,7 +298,7 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
             Text(
                 "${entry.username}",
                 color = Color.White,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.Small,
                 modifier = Modifier
                     .padding(2.dp)
             )
@@ -315,7 +315,6 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
                 Text(
                     "${entry.weight} kg",
                     color = Color.White,
-                    verticalAlignment = Alignment.CenterVertically,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
                     .padding(top = 2.dp, bottom = 8.dp)
