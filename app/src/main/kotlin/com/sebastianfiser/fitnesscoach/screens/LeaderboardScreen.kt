@@ -30,6 +30,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.foundation.border
 import androidx.compose.ui.unit.DpOffset
+import com.sebasianfiser.fitnesscoach.models.GenerateFewTimesLeaderBoardData
 
 @Composable
 fun LeaderboardScreen() {
@@ -118,17 +119,17 @@ fun ShowFilterDropdown() {
             if (submenuOpen == "Gender"){
                 DropdownMenuItem(
                     text = { Text(" • Male") },
-                    onClick = { /* Handle Male filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Female") },
-                    onClick = { /* Handle Female Filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Other") },
-                    onClick = { /* Handle Other Filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
             }
@@ -140,17 +141,17 @@ fun ShowFilterDropdown() {
             if (submenuOpen == "Age") {
                 DropdownMenuItem(
                     text = { Text(" • Under 18") },
-                    onClick = { /* Handle Under 18 filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • 18-25") },
-                    onClick = { /* Handle 18-25 filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • 26-35") },
-                    onClick = { /* Handle 26-35 Filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
@@ -160,7 +161,7 @@ fun ShowFilterDropdown() {
                 )
                 DropdownMenuItem(
                     text = { Text(" • 46+") },
-                    onClick = { /* Handle 46+ Filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
             }
@@ -172,12 +173,12 @@ fun ShowFilterDropdown() {
             if (submenuOpen == "Natty"){
                 DropdownMenuItem(
                     text = { Text(" • Natural") },
-                    onClick = { /* Handle Natural Filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Enhanced") },
-                    onClick = { /* Handle Enhanced Filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
             }
@@ -189,27 +190,27 @@ fun ShowFilterDropdown() {
             if (submenuOpen == "Nationality") {
                 DropdownMenuItem(
                     text = { Text(" • Czech Republic") },
-                    onClick = { /* Handle Czech Republic Filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • United States") },
-                    onClick = { /* Handle United States Filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Germany") },
-                    onClick = { /* Handle Germany Filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • United Kingdom") },
-                    onClick = { /* Handle United Kingdom Filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Other") },
-                    onClick = { /* Handle Other Filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
             }
@@ -221,17 +222,17 @@ fun ShowFilterDropdown() {
             if (submenuOpen == "Lift") {
                 DropdownMenuItem(
                     text = { Text(" • Squat") },
-                    onClick = { /* Handle Squat Filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Bench Press") },
-                    onClick = { /* Handle Bench Press Filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Deadlift") },
-                    onClick = { /* Handle Deadlift Filter */ },
+                    onClick = { filterOpen = false },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
             }
@@ -241,17 +242,15 @@ fun ShowFilterDropdown() {
 
 @Composable
 fun ShowLeaderboard() {
+    val data = GenerateFewTimesLeaderBoardData()
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        item {
-            LeaderboardRow(LeaderBoardEntry(1, "User1", "deadlift", 500.5f, 1, true, 25, "CZ"))
-        }
-        item {
-            LeaderboardRow(LeaderBoardEntry(2, "User2", "squat", 450.0f, 2, false, 30, "US"))
+        items(data.take(20)) { entry ->
+            LeaderboardRow(entry)
         }
     }
 }
