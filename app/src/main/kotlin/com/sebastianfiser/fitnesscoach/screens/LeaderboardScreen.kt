@@ -280,7 +280,7 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
         ) {
             Box(
                 modifier = Modifier
-                    .size(20.dp)
+                    .size(30.dp)
                     .clip(CircleShape)
                     .background(Color.White),
                 contentAlignment = Alignment.Center
@@ -298,7 +298,7 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
             Text(
                 "${entry.username}",
                 color = Color.White,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
                     .padding(2.dp)
             )
