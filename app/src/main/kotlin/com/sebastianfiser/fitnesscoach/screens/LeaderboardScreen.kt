@@ -37,7 +37,7 @@ import com.sebastianfiser.fitnesscoach.models.FilterData
 @Composable
 fun LeaderboardScreen() {
     var selectedParameter by remember { mutableStateOf<String?>(null) }
-    ShowFilterDropdown(onFilterSelected = { selecteddParameter = it })
+    ShowFilterDropdown(onFilterSelected = { selectedParameter = it })
     ShowLeaderboard(selectedParameter = selectedParameter)
     LazyColumn ( 
         modifier = Modifier
@@ -89,10 +89,10 @@ fun LeaderboardScreen() {
                         .fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    ShowFilterDropdown()
+                    ShowFilterDropdown( onFilterSelected = { selectedParameter = it })
                 }
 
-                ShowLeaderboard()
+                ShowLeaderboard(selectedParameter = selectedParameter)
             }
         }
     }
