@@ -30,7 +30,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.foundation.border
 import androidx.compose.ui.unit.DpOffset
-import com.sebasianfiser.fitnesscoach.models.GenerateFewTimesLeaderBoardData
+import com.sebastianfiser.fitnesscoach.models.GenerateFewTimesLeaderBoardData
 
 @Composable
 fun LeaderboardScreen() {

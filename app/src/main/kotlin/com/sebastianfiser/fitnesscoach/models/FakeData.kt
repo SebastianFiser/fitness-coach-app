@@ -1,4 +1,4 @@
-com.sebastianfiser.fitnesscoach.models
+package com.sebastianfiser.fitnesscoach.models
 
 import com.sebastianfiser.fitnesscoach.models.LeaderBoardEntry
 import kotlin.random.Random
