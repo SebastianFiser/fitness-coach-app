@@ -276,13 +276,13 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 2.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier
                     .size(20.dp)
                     .clip(CircleShape)
                     .background(Color.White),
-                    verticalAlignment = Alignment.CenterVertically,
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -299,8 +299,8 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
                 "${entry.username}",
                 color = Color.White,
                 style = MaterialTheme.typography.bodyMedium,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(2.dp)
+                modifier = Modifier
+                    .padding(2.dp)
             )
 
             Column(horizontalAlignment = Alignment.End) {
