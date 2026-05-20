@@ -37,8 +37,9 @@ import com.sebastianfiser.fitnesscoach.models.FilterData
 @Composable
 fun LeaderboardScreen() {
     var selectedParameter by remember { mutableStateOf<String?>(null) }
+    val data = remember { GenerateFewTimesLeaderBoardData() }
     ShowFilterDropdown(onFilterSelected = { selectedParameter = it })
-    ShowLeaderboard(selectedParameter = selectedParameter)
+    ShowLeaderboard(selectedParameter = selectedParameter, data = data)
     LazyColumn ( 
         modifier = Modifier
             .fillMaxSize()
@@ -92,7 +93,7 @@ fun LeaderboardScreen() {
                     ShowFilterDropdown( onFilterSelected = { selectedParameter = it })
                 }
 
-                ShowLeaderboard(selectedParameter = selectedParameter)
+                ShowLeaderboard(selectedParameter = selectedParameter, data = data)
             }
         }
     }
@@ -257,8 +258,8 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
 }
 
 @Composable
-fun ShowLeaderboard(selectedParameter: String?) {
-    val dataFiltered = FilterData(selectedParameter)
+fun ShowLeaderboard(selectedParameter: String?, data: List<LeaderBoardEntry>) {
+    val dataFiltered = FilterData(selectedParameter, data)
     Column(
         modifier = Modifier
             .fillMaxWidth()
