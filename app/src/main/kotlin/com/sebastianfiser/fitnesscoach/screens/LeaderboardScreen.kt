@@ -32,12 +32,13 @@ import androidx.compose.foundation.border
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.text.font.FontWeight
 import com.sebastianfiser.fitnesscoach.models.FilterData
+import com.sebastianfiser.fitnesscoach.models.GenerateFewTimesLeaderBoardData
 
 
 @Composable
 fun LeaderboardScreen() {
     var selectedParameter by remember { mutableStateOf<String?>(null) }
-    val data = remember { GenerateFewTimesLeaderBoardData() }
+    val data: List<LeaderBoardEntry> = remember {GenerateFewTimesLeaderBoardData()}
     ShowFilterDropdown(onFilterSelected = { selectedParameter = it })
     ShowLeaderboard(selectedParameter = selectedParameter, data = data)
     LazyColumn ( 
