@@ -39,8 +39,6 @@ import com.sebastianfiser.fitnesscoach.models.GenerateFewTimesLeaderBoardData
 fun LeaderboardScreen() {
     var selectedParameter by remember { mutableStateOf<String?>(null) }
     val data: List<LeaderBoardEntry> = remember {GenerateFewTimesLeaderBoardData()}
-    ShowFilterDropdown(onFilterSelected = { selectedParameter = it })
-    ShowLeaderboard(selectedParameter = selectedParameter, data = data)
     LazyColumn ( 
         modifier = Modifier
             .fillMaxSize()
