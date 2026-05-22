@@ -30,7 +30,7 @@ fun SortAndReturnTop20(data: List<LeaderBoardEntry>, parameter: String): List<Le
             }
         }
     }
-    return sortedDataList
+    return sortedDataList.sortedByDescending { it.weight }
 }
 
 fun matchesFilter(entry: LeaderBoardEntry, parameter: String): Boolean {
