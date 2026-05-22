@@ -129,17 +129,23 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
             if (submenuOpen == "Gender"){
                 DropdownMenuItem(
                     text = { Text(" • Male") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("Male") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Female") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("Female") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Other") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("OtherGen") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
             }
@@ -151,27 +157,37 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
             if (submenuOpen == "Age") {
                 DropdownMenuItem(
                     text = { Text(" • Under 18") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("Under 18") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • 18-25") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("18-25") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • 26-35") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("26-35") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • 36-45") },
-                    onClick = { /* Handle 36-45 Filter */ },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("36-45")},
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • 46+") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("46+") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
             }
@@ -183,12 +199,16 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
             if (submenuOpen == "Natty"){
                 DropdownMenuItem(
                     text = { Text(" • Natural") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("Natural") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Enhanced") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("Enhanced") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
             }
@@ -200,27 +220,37 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
             if (submenuOpen == "Nationality") {
                 DropdownMenuItem(
                     text = { Text(" • Czech Republic") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("CZ") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • United States") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("USA") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Germany") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("GE") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • United Kingdom") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("UK") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Other") },
-                    onClick = { filterOpen = false },
+                    onClick = { 
+                        filterOpen = false
+                        onFilterSelected("Other") },
                     colors = MenuDefaults.itemColors(textColor = Color.White)
                 )
             }

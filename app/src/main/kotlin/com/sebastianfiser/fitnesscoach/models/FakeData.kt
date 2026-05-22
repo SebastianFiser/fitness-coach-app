@@ -23,6 +23,6 @@ fun generateFakeLeaderboardData(i: Int): LeaderBoardEntry {
     var gender = Random.nextInt(1, 4)
     var natural = Random.nextBoolean()
     var age = Random.nextInt(15, 60)
-    var nationality = listOf("USA", "UK", "Germany", "France", "Czechia", "Other").random()
+    var nationality = listOf("USA", "UK", "GE", "CZ", "Other").random()
     return LeaderBoardEntry(rank, name, lift, RoundedWeight, gender, natural, age, nationality)
 }

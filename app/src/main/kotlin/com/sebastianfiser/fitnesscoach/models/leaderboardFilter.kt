@@ -17,15 +17,62 @@ fun SortAndReturnTop20(data: List<LeaderBoardEntry>, parameter: String): List<Le
     val sortedDataList = mutableListOf<LeaderBoardEntry>()
     data.forEach { entry ->
         if (sortedDataList.size < 20) {
-            if(entry.lift == parameter) {
-                sortedDataList.add(entry)
+            if (parameter in listOf("Squat", "Bench Press", "Deadlift")) {
+                if(entry.lift == parameter) {
+                    sortedDataList.add(entry)
+                }
+            } else if (parameter in listOf("Under 18", "18-25", "26-35", "36-45", "46+")) {
+                if(entry.ageGroup == parameter) {
+                    sortedDataList.add(entry)
+                }
+            } else if (parameter in listOf("Male", "Female", "OtherGen")) {
+                if(parameter == "Male" && entry.gender == 1) {
+                    sortedDataList.add(entry)
+                } else if(parameter == "Female" && entry.gender == 2) {
+                    sortedDataList.add(entry)
+                } else if(parameter == "OtherGen" && entry.gender == 3) {
+                    sortedDataList.add(entry)
+                }
+            } else if (parameter in listOf("Natural", "Enhanced")) {
+                if(parameter == "Natural" && entry.isNatural) {
+                    sortedDataList.add(entry)
+                } else if(parameter == "Enhanced" && !entry.isNatural) {
+                    sortedDataList.add(entry)
+                }
+            } else if (parameter in listOf("USA", "UK", "GE", "CZ", "Other")) {
+                if(entry.nationality == parameter) {
+                    sortedDataList.add(entry)
+                }
             }
         } else {
             val min = sortedDataList.minByOrNull { it.weight }
             if (min != null && entry.weight > min.weight) {
-                if(entry.lift == parameter) {
-                    sortedDataList.remove(min)
-                    sortedDataList.add(entry)
+                if (parameter in listOf("Squat", "Bench Press", "Deadlift")) {
+                    if(entry.lift == parameter) {
+                        sortedDataList.add(entry)
+                    }
+                } else if (parameter in listOf("Under 18", "18-25", "26-35", "36-45", "46+")) {
+                    if(entry.ageGroup == parameter) {
+                        sortedDataList.add(entry)
+                    }
+                } else if (parameter in listOf("Male", "Female", "OtherGen")) {
+                    if(parameter == "Male" && entry.gender == 1) {
+                        sortedDataList.add(entry)
+                    } else if(parameter == "Female" && entry.gender == 2) {
+                        sortedDataList.add(entry)
+                    } else if(parameter == "OtherGen" && entry.gender == 3) {
+                        sortedDataList.add(entry)
+                    }
+                } else if (parameter in listOf("Natural", "Enhanced")) {
+                    if(parameter == "Natural" && entry.isNatural) {
+                        sortedDataList.add(entry)
+                    } else if(parameter == "Enhanced" && !entry.isNatural) {
+                        sortedDataList.add(entry)
+                    }
+                } else if (parameter in listOf("USA", "UK", "GE", "CZ", "Other")) {
+                    if(entry.nationality == parameter) {
+                        sortedDataList.add(entry)
+                    }
                 }
             }
         }
