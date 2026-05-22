@@ -17,8 +17,9 @@ fun SortAndReturnTop20(data: List<LeaderBoardEntry>, parameter: String): List<Le
     val sortedDataList = mutableListOf<LeaderBoardEntry>()
     data.forEach { entry ->
         if (sortedDataList.size < 20) {
-        if (matchesFilter(entry, parameter)) {
-            sortedDataList.add(entry)
+            if (matchesFilter(entry, parameter)) {
+                sortedDataList.add(entry)
+            }
         } else {
             val min = sortedDataList.minByOrNull { it.weight }
             if (min != null && entry.weight > min.weight) {
