@@ -60,9 +60,9 @@ fun SortAndReturnTop20(data: List<LeaderBoardEntry>, parameter: String): List<Le
                 } else if (parameter in listOf("Under 18", "18-25", "26-35", "36-45", "46+")) {
                 val matchesAge = when(parameter) {
                     "Under 18" -> entry.age < 18
-                    "18-25" -> entry.age 18..25
-                    "26-35" -> entry.age 26..35
-                    "36-45" -> entry.age 36..45
+                    "18-25" -> entry.age in 18..25
+                    "26-35" -> entry.age in 26..35
+                    "36-45" -> entry.age in 36..45
                     "46+" -> entry.age > 46
                     else -> false
                 }
