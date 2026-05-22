@@ -22,9 +22,15 @@ fun SortAndReturnTop20(data: List<LeaderBoardEntry>, parameter: String): List<Le
                     sortedDataList.add(entry)
                 }
             } else if (parameter in listOf("Under 18", "18-25", "26-35", "36-45", "46+")) {
-                if(entry.age == parameter) {
-                    sortedDataList.add(entry)
+                val matchesAge = when(parameter) {
+                    "Under 18" -> entry.age < 18
+                    "18-25" -> entry.age 18..25
+                    "26-35" -> entry.age 26..35
+                    "36-45" -> entry.age 36..45
+                    "46+" -> entry.age > 46
+                    else -> false
                 }
+                if (matchesAge) sortedDataList.add(entry)
             } else if (parameter in listOf("Male", "Female", "OtherGen")) {
                 if(parameter == "Male" && entry.gender == 1) {
                     sortedDataList.add(entry)
@@ -52,9 +58,15 @@ fun SortAndReturnTop20(data: List<LeaderBoardEntry>, parameter: String): List<Le
                         sortedDataList.add(entry)
                     }
                 } else if (parameter in listOf("Under 18", "18-25", "26-35", "36-45", "46+")) {
-                    if(entry.age == parameter) {
-                        sortedDataList.add(entry)
-                    }
+                val matchesAge = when(parameter) {
+                    "Under 18" -> entry.age < 18
+                    "18-25" -> entry.age 18..25
+                    "26-35" -> entry.age 26..35
+                    "36-45" -> entry.age 36..45
+                    "46+" -> entry.age > 46
+                    else -> false
+                }
+                if (matchesAge) sortedDataList.add(entry)
                 } else if (parameter in listOf("Male", "Female", "OtherGen")) {
                     if(parameter == "Male" && entry.gender == 1) {
                         sortedDataList.add(entry)
