@@ -22,7 +22,7 @@ fun SortAndReturnTop20(data: List<LeaderBoardEntry>, parameter: String): List<Le
                     sortedDataList.add(entry)
                 }
             } else if (parameter in listOf("Under 18", "18-25", "26-35", "36-45", "46+")) {
-                if(entry.ageGroup == parameter) {
+                if(entry.age == parameter) {
                     sortedDataList.add(entry)
                 }
             } else if (parameter in listOf("Male", "Female", "OtherGen")) {
@@ -34,9 +34,9 @@ fun SortAndReturnTop20(data: List<LeaderBoardEntry>, parameter: String): List<Le
                     sortedDataList.add(entry)
                 }
             } else if (parameter in listOf("Natural", "Enhanced")) {
-                if(parameter == "Natural" && entry.isNatural) {
+                if(parameter == "Natural" && entry.natural) {
                     sortedDataList.add(entry)
-                } else if(parameter == "Enhanced" && !entry.isNatural) {
+                } else if(parameter == "Enhanced" && !entry.natural) {
                     sortedDataList.add(entry)
                 }
             } else if (parameter in listOf("USA", "UK", "GE", "CZ", "Other")) {
@@ -52,7 +52,7 @@ fun SortAndReturnTop20(data: List<LeaderBoardEntry>, parameter: String): List<Le
                         sortedDataList.add(entry)
                     }
                 } else if (parameter in listOf("Under 18", "18-25", "26-35", "36-45", "46+")) {
-                    if(entry.ageGroup == parameter) {
+                    if(entry.age == parameter) {
                         sortedDataList.add(entry)
                     }
                 } else if (parameter in listOf("Male", "Female", "OtherGen")) {
@@ -64,9 +64,9 @@ fun SortAndReturnTop20(data: List<LeaderBoardEntry>, parameter: String): List<Le
                         sortedDataList.add(entry)
                     }
                 } else if (parameter in listOf("Natural", "Enhanced")) {
-                    if(parameter == "Natural" && entry.isNatural) {
+                    if(parameter == "Natural" && entry.natural) {
                         sortedDataList.add(entry)
-                    } else if(parameter == "Enhanced" && !entry.isNatural) {
+                    } else if(parameter == "Enhanced" && !entry.natural) {
                         sortedDataList.add(entry)
                     }
                 } else if (parameter in listOf("USA", "UK", "GE", "CZ", "Other")) {
