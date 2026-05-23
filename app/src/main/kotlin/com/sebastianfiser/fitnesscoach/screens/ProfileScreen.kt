@@ -18,6 +18,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.BarChart
 
 @Composable
 fun ProfileScreen() {
@@ -32,12 +34,12 @@ fun ProfileScreen() {
         Column {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.end
+                horizontalArrangement = Arrangement.End
             ) {
                 TextButton(
                     onClick = {}
                 ) {
-                    Icon(Icons.Default.Edit , ContentDescription = null, tint = Color.White)
+                    Icon(Icons.Default.Create , contentDescription = null, tint = Color.White)
                     Text("Edit Profile", color = Color.White)
                 }
             }
@@ -53,7 +55,7 @@ fun ProfileScreen() {
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text("User", color = Color.White, style = MaterialTheme.typography.headlineSmall)
-            Text("user.email@email.com", Color.LightGray, style = MaterialTheme.typography.bodyMedium)
+            Text("user.email@email.com", color = Color.LightGray, style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(16.dp))
             Box(
                 modifier = Modifier
@@ -74,17 +76,17 @@ fun ProfileScreen() {
                             .fillMaxWidth()
                             .padding(16.dp)
                     ) {
-                        Row(
+                        Row {
                             Icon(Icons.Default.BarChart, contentDescription = null, tint = Color.White),
                             Spacer(modifier = Modifier.width(8.dp)),
                             Text("My Stats", color = Color.White, style = MaterialTheme.typography.bodyMedium)
-                        )
+                        }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
-                        Row(
+                        Row {
                             Icon(Icons.Default.Settings, contentDescription = null, tint = Color.White),
                             Spacer(modifier = Modifier.width(8.dp)),
                             Text("Settings", color = Color.White, style = MaterialTheme.typography.bodyMedium)
-                        )
+                        }
                     }
                 }
             }
