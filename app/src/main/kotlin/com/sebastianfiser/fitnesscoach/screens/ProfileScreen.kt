@@ -62,7 +62,7 @@ fun ProfileScreen() {
             Text("User", color = Color.White, style = MaterialTheme.typography.headlineSmall)
             Text("user.email@email.com", color = Color.LightGray, style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(16.dp))
-            Box(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
