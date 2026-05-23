@@ -43,7 +43,7 @@ fun ProfileScreen() {
         }
         Column {
             HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 16.dp))
-            TabRow(selectedTabIndex = selectedTab, contentColor = Color.White) {
+            TabRow(selectedTabIndex = selectedTab, contentColor = Color.White, containerColor = Color.Black) {
                 Tab(
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 },
