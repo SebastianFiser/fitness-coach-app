@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.foundation.shape.CircleShape
 
 @Composable
 fun ProfileScreen() {
@@ -77,14 +78,14 @@ fun ProfileScreen() {
                             .padding(16.dp)
                     ) {
                         Row {
-                            Icon(Icons.Default.BarChart, contentDescription = null, tint = Color.White),
-                            Spacer(modifier = Modifier.width(8.dp)),
+                            Icon(Icons.Default.BarChart, contentDescription = null, tint = Color.White)
+                            Spacer(modifier = Modifier.width(8.dp))
                             Text("My Stats", color = Color.White, style = MaterialTheme.typography.bodyMedium)
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
                         Row {
-                            Icon(Icons.Default.Settings, contentDescription = null, tint = Color.White),
-                            Spacer(modifier = Modifier.width(8.dp)),
+                            Icon(Icons.Default.Settings, contentDescription = null, tint = Color.White)
+                            Spacer(modifier = Modifier.width(8.dp))
                             Text("Settings", color = Color.White, style = MaterialTheme.typography.bodyMedium)
                         }
                     }
