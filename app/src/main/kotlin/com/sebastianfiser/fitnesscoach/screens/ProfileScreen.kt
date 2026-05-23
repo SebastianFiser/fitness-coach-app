@@ -32,7 +32,9 @@ fun ProfileScreen() {
             .padding(top = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Column {
+        Column(
+            horizontalAlignmenr = Alignment.CenterHorizontally
+        ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
@@ -49,10 +51,11 @@ fun ProfileScreen() {
                 modifier = Modifier
                     .size(120.dp)
                     .clip(CircleShape)
+                    .border(2.dp, Color.Gray, CircleShape)
                     .background(Color.Gray),
                 contentAlignment = Alignment.Center
             ) {
-                Text("U", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                Text("U", color = Color.White, style = MaterialTheme.typography.headlineLarge)
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text("User", color = Color.White, style = MaterialTheme.typography.headlineSmall)
@@ -68,9 +71,8 @@ fun ProfileScreen() {
                 Card (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
-                    shape = RoundedCornerShape(28.dp)
+                    shape = RoundedCornerShape(14.dp)
                 ) {
                     Column(
                         modifier = Modifier
