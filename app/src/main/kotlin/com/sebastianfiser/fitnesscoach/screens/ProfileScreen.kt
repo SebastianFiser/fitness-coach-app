@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.border
 
 @Composable
 fun ProfileScreen() {
@@ -33,7 +34,7 @@ fun ProfileScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(
-            horizontalAlignmenr = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -70,7 +71,7 @@ fun ProfileScreen() {
                 Spacer(modifier = Modifier.height(8.dp))
                 Card (
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(14.dp)
                 ) {
