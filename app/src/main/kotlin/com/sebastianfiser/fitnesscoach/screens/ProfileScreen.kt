@@ -43,7 +43,7 @@ fun ProfileScreen() {
         }
         Column {
             HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 16.dp))
-            TabRow(selectedTabIndex = selectedTab, backgroundColor = Color.Transparent, contentColor = Color.White) {
+            TabRow(selectedTabIndex = selectedTab, contentColor = Color.White) {
                 Tab(
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 },
@@ -131,4 +131,14 @@ fun LogoutScreen() {
             }
         }
     }
+}
+
+@Composable
+fun SettingsScreen() {
+
+}
+
+@Composable
+fun ProfileDetailsScreen() {
+    
 }
