@@ -29,95 +29,65 @@ fun ProfileScreen() {
             .padding(top = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box (
-            modifier = Modifier
-                .clip(RoundedCornerShape(16.dp))
-                .background(Color.DarkGray)
-        ) {
-            Text(
-                "Profile",
-                color = Color.White,
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-            )
-        }
         Column {
-            HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 16.dp))
-            TabRow(selectedTabIndex = selectedTab, contentColor = Color.White, containerColor = Color.Black) {
-                Tab(
-                    selected = selectedTab == 0,
-                    onClick = { selectedTab = 0 },
-                    text = { Text("Settings") },
-                    icon = { Icon(Icons.Default.Settings, contentDescription = null, tint = Color.White) }
-                )
-                Tab(
-                    selected = selectedTab == 1,
-                    onClick = { selectedTab = 1 },
-                    text = { Text("Profile") },
-                    icon = { Icon(Icons.Default.Person, contentDescription = null, tint = Color.White)  }
-                )
-                Tab(
-                    selected = selectedTab == 2,
-                    onClick = { selectedTab = 2 },
-                    text = { Text("Logout") },
-                    icon = { Icon(Icons.Default.ExitToApp, contentDescription = null, tint = Color.White) }
-                )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.end
+            ) {
+                TextButton(
+                    onClick = {}
+                ) {
+                    Icon(Icons.Default.Edit , ContentDescription = null, tint = Color.White)
+                    Text("Edit Profile", color = Color.White)
+                }
             }
-            when(selectedTab) {
-                0 -> SettingsScreen()
-                1 -> ProfileDetailsScreen()
-                2 -> LogoutScreen()
-            }            
+            Spacer(modifier = Modifier.height(8.dp))
+            Box(
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(CircleShape)
+                    .background(Color.Gray),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("U", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Text("User", color = Color.White, style = MaterialTheme.typography.headlineSmall)
+            Text("user.email@email.com", Color.LightGray, style = MaterialTheme.typography.bodyMedium)
+            Spacer(modifier = Modifier.height(16.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            ) {
+                Text("PERSONAL & APP ACTIVITY", color = Color.LightGray, style = MaterialTheme.typography.bodyMedium)
+                Spacer(modifier = Modifier.height(8.dp))
+                Card (
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    shape = RoundedCornerShape(28.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        Row(
+                            Icon(Icons.Default.BarChart, contentDescription = null, tint = Color.White),
+                            Spacer(modifier = Modifier.width(8.dp)),
+                            Text("My Stats", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                        )
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
+                        Row(
+                            Icon(Icons.Default.Settings, contentDescription = null, tint = Color.White),
+                            Spacer(modifier = Modifier.width(8.dp)),
+                            Text("Settings", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                        )
+                    }
+                }
+            }
         }
     }
-}
-
-@Composable
-fun LogoutScreen() {
-    Column (
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black)
-            .padding(top = 48.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 16.dp))
-        Row (
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text("Logout", color = Color.White)
-        }
-        HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 16.dp))
-        Row (
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text("Switch Account", color = Color.White)
-        }
-        HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 16.dp))
-        Row (
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text("Add Account", color = Color.White)
-        }
-        HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 16.dp))
-        Row (
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text("Delete Account", color = Color.White)
-        }
-    }
-}
-
-@Composable
-fun SettingsScreen() {
-
-}
-
-@Composable
-fun ProfileDetailsScreen() {
-    
 }
