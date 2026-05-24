@@ -25,7 +25,7 @@ import androidx.compose.foundation.border
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import Icons.Default.ChevronRight
+import Icons.Default.KeyboardArrowRight
 
 @Composable
 fun ProfileScreen() {
@@ -94,7 +94,7 @@ fun ProfileScreen() {
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("My Stats", color = Color.White, style = MaterialTheme.typography.bodyMedium)
                             Spacer(modifier = Modifier.weight(1f))
-                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = Color.LightGray)
+                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = Color.LightGray)
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
                         Row (
@@ -105,7 +105,7 @@ fun ProfileScreen() {
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("Settings", color = Color.White, style = MaterialTheme.typography.bodyMedium)
                             Spacer(modifier = Modifier.weight(1f))
-                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = Color.LightGray)
+                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = Color.LightGray)
                         }
                     }
                 }
@@ -139,7 +139,7 @@ fun ProfileScreen() {
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("Switch Account", color = Color.White, style = MaterialTheme.typography.bodyMedium)
                             Spacer(modifier = Modifier.weight(1f))
-                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = Color.LightGray)
+                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = Color.LightGray)
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
                         Row (
@@ -150,7 +150,7 @@ fun ProfileScreen() {
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("Add Account", color = Color.White, style = MaterialTheme.typography.bodyMedium)
                             Spacer(modifier = Modifier.weight(1f))
-                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = Color.LightGray)
+                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = Color.LightGray)
                         }
                     }
                 }
@@ -185,7 +185,7 @@ fun ProfileScreen() {
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("Logout", color = Color.White, style = MaterialTheme.typography.bodyMedium)
                             Spacer(modifier = Modifier.weight(1f))
-                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = Color.LightGray)
+                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = Color.LightGray)
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
                         Row (
@@ -196,7 +196,7 @@ fun ProfileScreen() {
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("Delete Account", color = Color(0xFFFF6B6B), style = MaterialTheme.typography.bodyMedium)
                             Spacer(modifier = Modifier.weight(1f))
-                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = Color.LightGray)
+                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = Color.LightGray)
                         }
                     }
                 }
