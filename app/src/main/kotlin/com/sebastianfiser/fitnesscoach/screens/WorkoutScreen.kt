@@ -32,12 +32,14 @@ fun WorkoutScreen(onFinish: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
+            .padding(bottom = 80.dp, top = 48.dp)
     ) {
         Card (
             modifier = Modifier
                 .fillMaxWidth()
+                .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp))
                 .padding(16.dp),
-            colors = CardDefaults.cardColors(Color.DarkGray),
+            colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
             shape = RoundedCornerShape(16.dp)
         ) {
             Row (
