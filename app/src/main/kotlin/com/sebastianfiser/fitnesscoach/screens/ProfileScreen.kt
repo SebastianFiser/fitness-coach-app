@@ -22,6 +22,8 @@ import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.border
+import androidx.compose.material.icons.filled.Sync
+import androidx.material.icons.filled.Add
 
 @Composable
 fun ProfileScreen() {
@@ -91,6 +93,40 @@ fun ProfileScreen() {
                             Icon(Icons.Default.Settings, contentDescription = null, tint = Color.White)
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("Settings", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                        }
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            ) {
+                Text("ACCOUNT OPTIONS", color = Color.LightGray, style = MaterialTheme.typography.bodyMedium)
+                Spacer(modifier = Modifier.height(8.dp))
+                Card (
+                    modifier = Modifier
+                        .padding(vertical = 4.dp)
+                        .fillMaxWidth(),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    shape = RoundedCornerShape(14.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        Row {
+                            Icon(Icons.Default.Sync, contentDescription = null, tint = Color.White)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Switch Account", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                        }
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
+                        Row {
+                            Icon(Icons.Default.Add, contentDescription = null, tint = Color.White)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Add Account", color = Color.White, style = MaterialTheme.typography.bodyMedium)
                         }
                     }
                 }
