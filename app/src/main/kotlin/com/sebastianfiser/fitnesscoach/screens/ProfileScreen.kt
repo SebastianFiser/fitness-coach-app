@@ -25,7 +25,7 @@ import androidx.compose.foundation.border
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import Icons.Default.KeyboardArrowRight
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 
 @Composable
 fun ProfileScreen() {
