@@ -54,9 +54,9 @@ fun ProfileScreen() {
             Spacer(modifier = Modifier.height(8.dp))
             Box(
                 modifier = Modifier
-                    .size(120.dp)
+                    .size(80.dp)
                     .clip(CircleShape)
-                    .border(2.dp, Color.LightGray, CircleShape)
+                    .border(3.dp, Color(0xFFD4B896), CircleShape)
                     .background(Color.Gray),
                 contentAlignment = Alignment.Center
             ) {
@@ -166,7 +166,7 @@ fun ProfileScreen() {
                 Card (
                     modifier = Modifier
                         .padding(vertical = 4.dp)
-                        .padding(bottom = 85.dp)
+                        .padding(bottom = 95.dp)
                         .border(2.dp, Color(0xFFFF6B6B), RoundedCornerShape(14.dp))
                         .fillMaxWidth(),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
