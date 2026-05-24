@@ -25,6 +25,7 @@ import androidx.compose.foundation.border
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import Icons.Default.ChevronRight
 
 @Composable
 fun ProfileScreen() {
@@ -85,16 +86,26 @@ fun ProfileScreen() {
                             .fillMaxWidth()
                             .padding(16.dp)
                     ) {
-                        Row {
+                        Row (
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Icon(Icons.Default.BarChart, contentDescription = null, tint = Color.White)
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("My Stats", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                            Spacer(modifier = Modifier.weight(1f))
+                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = Color.LightGray)
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
-                        Row {
+                        Row (
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Icon(Icons.Default.Settings, contentDescription = null, tint = Color.White)
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("Settings", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                            Spacer(modifier = Modifier.weight(1f))
+                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = Color.LightGray)
                         }
                     }
                 }
@@ -120,16 +131,26 @@ fun ProfileScreen() {
                             .fillMaxWidth()
                             .padding(16.dp)
                     ) {
-                        Row {
+                        Row (
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Icon(Icons.Default.Sync, contentDescription = null, tint = Color.White)
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("Switch Account", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                            Spacer(modifier = Modifier.weight(1f))
+                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = Color.LightGray)
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
-                        Row {
+                        Row (
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Icon(Icons.Default.Add, contentDescription = null, tint = Color.White)
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("Add Account", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                            Spacer(modifier = Modifier.weight(1f))
+                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = Color.LightGray)
                         }
                     }
                 }
@@ -145,8 +166,8 @@ fun ProfileScreen() {
                 Card (
                     modifier = Modifier
                         .padding(vertical = 4.dp)
-                        .padding(bottom = 45.dp)
-                        .border(2.dp, Color(0xFF8B0000), RoundedCornerShape(14.dp))
+                        .padding(bottom = 85.dp)
+                        .border(2.dp, Color(0xFFFF6B6B), RoundedCornerShape(14.dp))
                         .fillMaxWidth(),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(14.dp)
@@ -156,16 +177,26 @@ fun ProfileScreen() {
                             .fillMaxWidth()
                             .padding(16.dp)
                     ) {
-                        Row {
+                        Row (
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Icon(Icons.Default.ExitToApp, contentDescription = null, tint = Color.White)
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("Logout", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                            Spacer(modifier = Modifier.weight(1f))
+                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = Color.LightGray)
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
-                        Row {
-                            Icon(Icons.Default.Delete, contentDescription = null, tint = Color(0xFF8B0000))
+                        Row (
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(Icons.Default.Delete, contentDescription = null, tint = Color(0xFFFF6B6B))
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Delete Account", color = Color(0xFF8B0000), style = MaterialTheme.typography.bodyMedium)
+                            Text("Delete Account", color = Color(0xFFFF6B6B), style = MaterialTheme.typography.bodyMedium)
+                            Spacer(modifier = Modifier.weight(1f))
+                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = Color.LightGray)
                         }
                     }
                 }
