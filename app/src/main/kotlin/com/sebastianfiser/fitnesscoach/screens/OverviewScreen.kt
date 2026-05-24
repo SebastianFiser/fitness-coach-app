@@ -21,7 +21,8 @@ import java.time.LocalDate
 
 
 @Composable
-fun MainWorkoutCard() {
+fun MainWorkoutCard(onStartWorkout: () -> Unit) {
+    var day = LocalDate.now().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }
     var day = LocalDate.now().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }
     val Locale = java.util.Locale.getDefault()
     Column(
@@ -118,7 +119,7 @@ fun MainWorkoutCard() {
                         )
                     }
                     ElevatedButton(
-                        onClick = { },
+                        onClick = { onstartWorkout() },
                         colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White, contentColor = Color.Black)
                         ) {
                             Text("Start")
