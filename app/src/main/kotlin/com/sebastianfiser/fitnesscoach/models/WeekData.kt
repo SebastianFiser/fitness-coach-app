@@ -5,37 +5,37 @@ import com.sebastianfiser.fitnesscoach.models.Day
 
 val weekData = listOf(
     Day("Monday", listOf(
-        Exercise("Bench press 12x4",105.0f),
-        Exercise("Peck deck 20x3",50.0f),
-        Exercise("Dumbell flyes 10x4",35.0f),
-        Exercise("Cable cross 15x3",40.0f),
+        Exercise("Bench press",105.0f, 4, 10),
+        Exercise("Peck deck 20x3",50.0f, 20, 3),
+        Exercise("Dumbell flyes 10x4",35.0f, 10, 4),
+        Exercise("Cable cross 15x3",40.0f, 15, 3),
     )),
     Day("Tuesday", listOf(
-        Exercise("Squats 20x3",135.0f),
-        Exercise("Leg press 15x4",180.0f),
-        Exercise("Lunges 12x3",60.0f)
+        Exercise("Squats",135.0f, 20, 3),
+        Exercise("Leg press",180.0f, 15, 4),
+        Exercise("Lunges",60.0f, 12, 3)
     )),
     Day("Wednesday", listOf(
-        Exercise("Deadlift 10x4",185.0f),
-        Exercise("Barbell row 12x3",95.0f),
-        Exercise("Lat pulldown 15x4",70.0f)
+        Exercise("Deadlift",185.0f, 10, 4),
+        Exercise("Barbell row",95.0f, 12, 3),
+        Exercise("Lat pulldown",70.0f, 15, 4)
     )),
     Day("Thursday", listOf(
-        Exercise("Overhead press 12x4",60.0f),
-        Exercise("Lateral raises 15x3",20.0f),
-        Exercise("Front raises 10x4",25.0f)
+        Exercise("Overhead press",60.0f, 12, 4),
+        Exercise("Lateral raises",20.0f, 15, 3),
+        Exercise("Front raises",25.0f, 10, 4)
     )),
     Day("Friday", listOf(
-        Exercise("Barbell curls 12x4",40.0f),
-        Exercise("Hammer curls 15x3",30.0f),
-        Exercise("Preacher curls 10x4",35.0f)
+        Exercise("Barbell curls",40.0f, 12, 4),
+        Exercise("Hammer curls",30.0f, 8, 2),
+        Exercise("Preacher curls",35.0f, 10, 4)
     )),
     Day("Saturday", listOf(
-        Exercise("Tricep pushdown 12x4",50.0f),
-        Exercise("Overhead tricep extension 15x3",40.0f),
-        Exercise("Dips 10x4", 0.0f)
+        Exercise("Tricep pushdown",50.0f, 12, 4),
+        Exercise("Overhead tricep extension",40.0f, 15, 3),
+        Exercise("Dips 10x4", 0.0f, 8, 4)
     )),
     Day("Sunday", listOf(
-        Exercise("Rest day", 0.0f)
+        Exercise("Rest day", 0.0f, 0, 0)
     ))
 )
