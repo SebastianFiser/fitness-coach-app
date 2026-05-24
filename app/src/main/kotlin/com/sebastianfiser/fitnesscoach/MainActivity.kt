@@ -56,27 +56,29 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun StartContent() {
     var selectedTab by remember { mutableStateOf(0)}
-
+    var showWorkout by remember {mutableStateOf(false)}
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        // Hlavní obsah obrazovky
-        when(selectedTab) {
-            0 -> MainWorkoutCard()
-            1 -> schduleScreen()
-            2 -> LeaderboardScreen()
-            3 -> ProfileScreen()
+        if (showWorkout) {
+           WorkoutScreen(onFinish = { showWorkout = false }) 
+        } else {
+            when(selectedTab) {
+                0 -> MainWorkoutCard(onStartWorkout = { showWorkout = true })
+                1 -> schduleScreen()
+                2 -> LeaderboardScreen()
+                3 -> ProfileScreen()
+            }
+            BottomNav(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth(),
+                selectedTab = selectedTab,
+                onTabSelected = { selectedTab = it }
+            )
         }
-        // SPODNÍ NAVIGACE
-        BottomNav(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth(),
-            selectedTab = selectedTab,
-            onTabSelected = { selectedTab = it }
-        )
     }
 }
 
