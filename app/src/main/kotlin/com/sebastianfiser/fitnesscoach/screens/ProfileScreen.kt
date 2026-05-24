@@ -163,9 +163,9 @@ fun ProfileScreen() {
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
                         Row {
-                            Icon(Icons.Default.Delete, contentDescription = null, tint = Color.Color(0xFF8B0000))
+                            Icon(Icons.Default.Delete, contentDescription = null, tint = Color(0xFF8B0000))
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Delete Account", color = Color.Color(0xFF8B0000), style = MaterialTheme.typography.bodyMedium)
+                            Text("Delete Account", color = Color(0xFF8B0000), style = MaterialTheme.typography.bodyMedium)
                         }
                     }
                 }
