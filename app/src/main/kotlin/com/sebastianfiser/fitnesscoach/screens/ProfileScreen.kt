@@ -144,8 +144,9 @@ fun ProfileScreen() {
                 Spacer(modifier = Modifier.height(8.dp))
                 Card (
                     modifier = Modifier
-                        .padding(vertical = 4.dp, bottom = 45.dp)
-                        .border(2.dp, Color.DarkRed, RoundedCornerShape(14.dp))
+                        .padding(vertical = 4.dp)
+                        .padding(bottom = 45.dp)
+                        .border(2.dp, Color(0xFF8B0000), RoundedCornerShape(14.dp))
                         .fillMaxWidth(),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(14.dp)
@@ -162,9 +163,9 @@ fun ProfileScreen() {
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
                         Row {
-                            Icon(Icons.Default.Delete, contentDescription = null, tint = Color.DarkRed)
+                            Icon(Icons.Default.Delete, contentDescription = null, tint = Color.Color(0xFF8B0000))
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Delete Account", color = Color.DarkRed, style = MaterialTheme.typography.bodyMedium)
+                            Text("Delete Account", color = Color.Color(0xFF8B0000), style = MaterialTheme.typography.bodyMedium)
                         }
                     }
                 }
