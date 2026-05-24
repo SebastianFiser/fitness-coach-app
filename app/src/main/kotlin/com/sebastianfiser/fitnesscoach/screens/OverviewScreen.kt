@@ -21,7 +21,7 @@ import java.time.LocalDate
 
 
 @Composable
-fun MainWorkoutCard(exercises: List<Exercise>) {
+fun MainWorkoutCard() {
     var day = LocalDate.now().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }
     val Locale = java.util.Locale.getDefault()
     Column(

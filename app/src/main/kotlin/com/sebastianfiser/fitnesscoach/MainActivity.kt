@@ -56,12 +56,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun StartContent() {
     var selectedTab by remember { mutableStateOf(0)}
-    // Testovací data pro tvůj plán
-    val exercises = listOf(
-        Exercise("Bench press 12x4", 105.0f),
-        Exercise("Squats 20x3", 160.5f),
-        Exercise("Deadlift 10x4", 167.0f)
-    )
 
     Box(
         modifier = Modifier
@@ -70,7 +64,7 @@ fun StartContent() {
     ) {
         // Hlavní obsah obrazovky
         when(selectedTab) {
-            0 -> MainWorkoutCard(exercises)
+            0 -> MainWorkoutCard()
             1 -> schduleScreen()
             2 -> LeaderboardScreen()
             3 -> ProfileScreen()
