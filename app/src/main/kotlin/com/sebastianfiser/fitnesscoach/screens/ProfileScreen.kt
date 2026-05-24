@@ -23,7 +23,7 @@ import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.border
 import androidx.compose.material.icons.filled.Sync
-import androidx.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Add
 
 @Composable
 fun ProfileScreen() {
