@@ -84,7 +84,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                                 style = MaterialTheme.typography.bodyMedium
                             )
                             Text(
-                                "@ ${currentExercise?.weight?} kg",
+                                "@ ${currentExercise?.weight} kg",
                                 color = Color.LightGray,
                                 style = MaterialTheme.typography.bodyMedium
                             )
@@ -93,7 +93,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                             onClick = {},
                             colors = ButtonDefaults.textButtonColors(contentColor = Color.LightGray)
                         ) {
-                            Icon(Icons.Default.MenuBookmark, contentDescription = null, tint = Color.LightGray)
+                            Icon(Icons.Default.MenuBook, contentDescription = null, tint = Color.LightGray)
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(text = "Show Form Guide", style = MaterialTheme.typography.bodyMedium)
                         }
