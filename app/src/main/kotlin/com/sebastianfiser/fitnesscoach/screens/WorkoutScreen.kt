@@ -28,6 +28,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.Check
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -134,7 +135,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                     OutlinedTextField(
                         value = weight,
                         onValueChange = { setData[setIndex] = Pair(it, reps) },
-                        placeholder = { Text("Weight (kg)", color = Color.LightGray) },
+                        placeholder = { Text("Weight (kg)", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -146,12 +147,12 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                             unfocusedLabelColor = Color.DarkGray,
                             cursorColor = Color.White
                         ),
-                        modifier = Modifier.width(100.dp)
+                        modifier = Modifier.width(125.dp)
                     )
                     OutlinedTextField(
                         value = reps,
                         onValueChange = { setData[setIndex] = Pair(weight, it) },
-                        placeholder = { Text("Reps", color = Color.LightGray) },
+                        placeholder = { Text("Reps", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -163,8 +164,14 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                             unfocusedLabelColor = Color.DarkGray,
                             cursorColor = Color.White
                         ),
-                        modifier = Modifier.width(100.dp)
+                        modifier = Modifier.width(125.dp)
                     )
+                    Button(
+                        onClick = { /* TODO: implement set completion logic */ },
+                        colors = ButtonDefaults.buttonColors(contentColor = Color.White)
+                    ) {
+                        Icon(Icons.Default.Check, contentDescription = null)
+                    }
                 }
             }
         }
