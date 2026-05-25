@@ -27,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.material.icons.filled.Book
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -139,13 +140,13 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             focusedTextColor = Color.White,
                             unfocusedTextColor = Color.White,
-                            focusedBorderColor = Color.DarkGray,
-                            unfocusedBorderColor = Color.DarkGray,
+                            focusedBorderColor = Color.LightGray,
+                            unfocusedBorderColor = Color.LightGray,
                             focusedLabelColor = Color.Gray,
                             unfocusedLabelColor = Color.DarkGray,
                             cursorColor = Color.White
                         ),
-                        modifier = Modifier.width(150.dp)
+                        modifier = Modifier.width(100.dp)
                     )
                     OutlinedTextField(
                         value = reps,
@@ -156,15 +157,45 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             focusedTextColor = Color.White,
                             unfocusedTextColor = Color.White,
-                            focusedBorderColor = Color.DarkGray,
-                            unfocusedBorderColor = Color.DarkGray,
+                            focusedBorderColor = Color.LightGray,
+                            unfocusedBorderColor = Color.LightGray,
                             focusedLabelColor = Color.Gray,
                             unfocusedLabelColor = Color.DarkGray,
                             cursorColor = Color.White
                         ),
-                        modifier = Modifier.width(150.dp)
+                        modifier = Modifier.width(100.dp)
                     )
                 }
+            }
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            TextButton(
+                onClick = { /* TODO: implement selecting different exercise */ },
+                colors = ButtonDefaults.textButtonColors(contentColor = Color.LightGray),
+                modifier = Modifier
+                    .border(1.dp, Color.White, RoundedCornerShape(8.dp))
+                    .padding(horizontal = 12.dp, vertical = 8.dp)
+            ) { 
+                Text("Select different exerxise", style = MaterialTheme.typography.bodyMedium)
+                Spacer(modifier = Modifier.width(4.dp))
+                Icon(Icons.Default.Book, contentDescription = null, tint = Color.LightGray)
+            }
+            ElevatedButton(
+                onClick = { 
+                    if (currentExerciseIndex < totalExercises - 1) {
+                        currentExerciseIndex++
+                    } else {
+                        onFinish()
+                    }
+                },
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White, contentColor = Color.Black)
+            ) {
+                Text(if (currentExerciseIndex < totalExercises - 1) "Next Exercise" else "Finish Workout")
             }
         }
     }
