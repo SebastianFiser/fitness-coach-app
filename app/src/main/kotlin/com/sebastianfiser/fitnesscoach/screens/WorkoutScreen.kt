@@ -89,7 +89,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                             )
                         }
                         TextButton(
-                            onClick = {}
+                            onClick = {},
                             colors = ButtonDefaults.textButtonColors(contentColor = Color.LightGray)
                         ) {
                             Icon(Icons.Default.MenuBookmark, contentDescription = null, tint = Color.LightGray)
