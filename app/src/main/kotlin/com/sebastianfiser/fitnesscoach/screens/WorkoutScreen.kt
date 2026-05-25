@@ -24,6 +24,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.Icons
+import androidx.compose.ui.text.input.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.runtime.mutableStateListOf
+
 
 @Composable
 fun WorkoutScreen(onFinish: () -> Unit) {
@@ -32,6 +36,9 @@ fun WorkoutScreen(onFinish: () -> Unit) {
     var currentExerciseIndex by remember { mutableStateOf(0) }
     val currentExercise = currentDay?.exercises?.getOrNull(currentExerciseIndex)
     val totalExercises = currentDay?.exercises?.size ?: 0
+    val setData = remember(currentExercise) {
+        mutableStateListOf(*Array(currentExercise?.sets ?:0) {Pair("", "") })
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -98,6 +105,61 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(text = "Show Form Guide", style = MaterialTheme.typography.bodyMedium)
                     }
+                }
+            }
+        }
+        repeat (currentExercise?.sets ?: 0) { setIndex ->
+            val (weight, reps) = setData[setIndex]
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp))
+                    .padding(16.dp),
+                colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        "Set ${setIndex + 1}",
+                        color = Color.White,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    OutlinedTextField(
+                        value = weight,
+                        onValueChange = { weight = it },
+                        label = { Text("Weight (kg)", color = Color.LightGray) },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            textColor = Color.White,
+                            focusedBorderColor = Color.Gray,
+                            unfocusedBorderColor = Color.DarkGray,
+                            focusedLabelColor = Color.Gray,
+                            unfocusedLabelColor = Color.DarkGray,
+                            cursorColor = Color.White
+                        ),
+                        modifier = Modifier.width(150.dp)
+                    )
+                    OutlinedTextField(
+                        value = reps,
+                        onValueChange = { reps = it },
+                        label = { Text("Reps", color = Color.LightGray) },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            textColor = Color.White,
+                            focusedBorderColor = Color.Gray,
+                            unfocusedBorderColor = Color.DarkGray,
+                            focusedLabelColor = Color.Gray,
+                            unfocusedLabelColor = Color.DarkGray,
+                            cursorColor = Color.White
+                        ),
+                        modifier = Modifier.width(150.dp)
+                    )
                 }
             }
         }
