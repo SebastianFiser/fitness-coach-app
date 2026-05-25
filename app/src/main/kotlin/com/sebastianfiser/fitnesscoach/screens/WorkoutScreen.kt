@@ -24,11 +24,11 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.Icons
-import androidx.compose.ui.text.input.KeyboardOptions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.runtime.mutableStateListOf
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WorkoutScreen(onFinish: () -> Unit) {
     var day = LocalDate.now().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }
@@ -151,7 +151,8 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         label = { Text("Reps", color = Color.LightGray) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
-                            textColor = Color.White,
+                            focusedTextColor = Color.White,
+                            unfocusedTextColor = Color.White,
                             focusedBorderColor = Color.Gray,
                             unfocusedBorderColor = Color.DarkGray,
                             focusedLabelColor = Color.Gray,
