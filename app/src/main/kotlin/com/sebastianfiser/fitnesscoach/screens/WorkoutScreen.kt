@@ -65,38 +65,38 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
-                    Text(
-                        currentExercise?.name ?: "No exercise",
-                        color = Color.White,
-                        style = MaterialTheme.typography.headlineLarge,
-                        modifier = Modifier.padding(horizontal = 16.dp)
-                    )
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 4.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                }
+                Text(
+                    currentExercise?.name ?: "No exercise",
+                    color = Color.White,
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 4.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Text(
+                            "Goal: ${currentExercise?.sets} Sets x ${currentExercise?.reps} Reps ",
+                            color = Color.LightGray,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Text(
+                            "@ ${currentExercise?.weight} kg",
+                            color = Color.LightGray,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                    TextButton(
+                        onClick = {},
+                        colors = ButtonDefaults.textButtonColors(contentColor = Color.LightGray)
                     ) {
-                        Column {
-                            Text(
-                                "Goal: ${currentExercise?.sets} Sets x ${currentExercise?.reps} Reps ",
-                                color = Color.LightGray,
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                            Text(
-                                "@ ${currentExercise?.weight} kg",
-                                color = Color.LightGray,
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                        }
-                        TextButton(
-                            onClick = {},
-                            colors = ButtonDefaults.textButtonColors(contentColor = Color.LightGray)
-                        ) {
-                            Icon(Icons.Default.MenuBook, contentDescription = null, tint = Color.LightGray)
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(text = "Show Form Guide", style = MaterialTheme.typography.bodyMedium)
-                        }
+                        Icon(Icons.Default.MenuBook, contentDescription = null, tint = Color.LightGray)
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(text = "Show Form Guide", style = MaterialTheme.typography.bodyMedium)
                     }
                 }
             }
