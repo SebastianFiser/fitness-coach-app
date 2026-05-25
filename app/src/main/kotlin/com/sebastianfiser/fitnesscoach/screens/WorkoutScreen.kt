@@ -48,8 +48,8 @@ fun WorkoutScreen(onFinish: () -> Unit) {
         Card (
             modifier = Modifier
                 .fillMaxWidth()
-                .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp))
-                .padding(16.dp),
+                .padding(16.dp)
+                .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp)),
             colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
             shape = RoundedCornerShape(16.dp)
         ) {
@@ -113,8 +113,8 @@ fun WorkoutScreen(onFinish: () -> Unit) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp))
-                    .padding(16.dp),
+                    .padding(16.dp)
+                    .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp)),
                 colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
                 shape = RoundedCornerShape(16.dp)
             ) {
@@ -133,7 +133,8 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                     OutlinedTextField(
                         value = weight,
                         onValueChange = { setData[setIndex] = Pair(it, reps) },
-                        label = { Text("Weight (kg)", color = Color.LightGray) },
+                        placeholder = { Text("Weight (kg)", color = Color.LightGray) },
+                        singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             focusedTextColor = Color.White,
@@ -149,7 +150,8 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                     OutlinedTextField(
                         value = reps,
                         onValueChange = { setData[setIndex] = Pair(weight, it) },
-                        label = { Text("Reps", color = Color.LightGray) },
+                        placeholder = { Text("Reps", color = Color.LightGray) },
+                        singleLine = true 
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             focusedTextColor = Color.White,
