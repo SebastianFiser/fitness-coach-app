@@ -29,6 +29,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Check
+import androidx.
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,78 +42,19 @@ fun WorkoutScreen(onFinish: () -> Unit) {
     val setData = remember(currentExercise) {
         mutableStateListOf(*Array(currentExercise?.sets ?:0) {Pair("", "") })
     }
+    var scrollState = rememberScrollState
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
             .padding(bottom = 80.dp, top = 48.dp)
     ) {
-        Card (
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp)),
-            colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
-            shape = RoundedCornerShape(16.dp)
+                .weight(1f)
+                .verticalScroll(scrollState),
         ) {
-            Column {
-                Row (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Column {
-                        LinearProgressIndicator(
-                            progress = { currentExerciseIndex.toFloat() / totalExercises.toFloat() },
-                            modifier = Modifier.fillMaxWidth(),
-                            color = Color.White,
-                            trackColor = Color.DarkGray
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            "Excercise ${currentExerciseIndex + 1} of $totalExercises",
-                            color = Color.LightGray,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
-                }
-                Text(
-                    currentExercise?.name ?: "No exercise",
-                    color = Color.White,
-                    style = MaterialTheme.typography.headlineLarge,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 4.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Text(
-                            "Goal: ${currentExercise?.sets} Sets x ${currentExercise?.reps} Reps ",
-                            color = Color.LightGray,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                        Text(
-                            "@ ${currentExercise?.weight} kg",
-                            color = Color.LightGray,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
-                    TextButton(
-                        onClick = {},
-                        colors = ButtonDefaults.textButtonColors(contentColor = Color.LightGray)
-                    ) {
-                        Icon(Icons.Default.MenuBook, contentDescription = null, tint = Color.LightGray)
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(text = "Show Form Guide", style = MaterialTheme.typography.bodyMedium)
-                    }
-                }
-            }
-        }
-        repeat (currentExercise?.sets ?: 0) { setIndex ->
-            val (weight, reps) = setData[setIndex]
-            Card(
+            Card (
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
@@ -120,57 +62,123 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                 colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
                 shape = RoundedCornerShape(16.dp)
             ) {
-                Row(
+                Column {
+                    Row (
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Column {
+                            LinearProgressIndicator(
+                                progress = { currentExerciseIndex.toFloat() / totalExercises.toFloat() },
+                                modifier = Modifier.fillMaxWidth(),
+                                color = Color.White,
+                                trackColor = Color.DarkGray
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                "Excercise ${currentExerciseIndex + 1} of $totalExercises",
+                                color = Color.LightGray,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                    }
+                    Text(
+                        currentExercise?.name ?: "No exercise",
+                        color = Color.White,
+                        style = MaterialTheme.typography.headlineLarge,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 4.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column {
+                            Text(
+                                "Goal: ${currentExercise?.sets} Sets x ${currentExercise?.reps} Reps ",
+                                color = Color.LightGray,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                            Text(
+                                "@ ${currentExercise?.weight} kg",
+                                color = Color.LightGray,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                        TextButton(
+                            onClick = {},
+                            colors = ButtonDefaults.textButtonColors(contentColor = Color.LightGray)
+                        ) {
+                            Icon(Icons.Default.MenuBook, contentDescription = null, tint = Color.LightGray)
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(text = "Show Form Guide", style = MaterialTheme.typography.bodyMedium)
+                        }
+                    }
+                }
+            }
+            repeat (currentExercise?.sets ?: 0) { setIndex ->
+                val (weight, reps) = setData[setIndex]
+                Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                        .padding(16.dp)
+                        .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp)),
+                    colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
+                    shape = RoundedCornerShape(16.dp)
                 ) {
-                    Text(
-                        "Set ${setIndex + 1}",
-                        color = Color.White,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    OutlinedTextField(
-                        value = weight,
-                        onValueChange = { setData[setIndex] = Pair(it, reps) },
-                        placeholder = { Text("Weight (kg)", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White,
-                            focusedBorderColor = Color.LightGray,
-                            unfocusedBorderColor = Color.LightGray,
-                            focusedLabelColor = Color.Gray,
-                            unfocusedLabelColor = Color.DarkGray,
-                            cursorColor = Color.White
-                        ),
-                        modifier = Modifier.width(125.dp)
-                    )
-                    OutlinedTextField(
-                        value = reps,
-                        onValueChange = { setData[setIndex] = Pair(weight, it) },
-                        placeholder = { Text("Reps", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White,
-                            focusedBorderColor = Color.LightGray,
-                            unfocusedBorderColor = Color.LightGray,
-                            focusedLabelColor = Color.Gray,
-                            unfocusedLabelColor = Color.DarkGray,
-                            cursorColor = Color.White
-                        ),
-                        modifier = Modifier.width(125.dp)
-                    )
-                    Button(
-                        onClick = { /* TODO: implement set completion logic */ },
-                        colors = ButtonDefaults.buttonColors(contentColor = Color.White)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(Icons.Default.Check, contentDescription = null)
+                        Text(
+                            "Set ${setIndex + 1}",
+                            color = Color.White,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        OutlinedTextField(
+                            value = weight,
+                            onValueChange = { setData[setIndex] = Pair(it, reps) },
+                            placeholder = { Text("Weight (kg)", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                focusedTextColor = Color.White,
+                                unfocusedTextColor = Color.White,
+                                focusedBorderColor = Color.LightGray,
+                                unfocusedBorderColor = Color.LightGray,
+                                focusedLabelColor = Color.Gray,
+                                unfocusedLabelColor = Color.DarkGray,
+                                cursorColor = Color.White
+                            ),
+                            modifier = Modifier.width(125.dp)
+                        )
+                        OutlinedTextField(
+                            value = reps,
+                            onValueChange = { setData[setIndex] = Pair(weight, it) },
+                            placeholder = { Text("Reps", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                focusedTextColor = Color.White,
+                                unfocusedTextColor = Color.White,
+                                focusedBorderColor = Color.LightGray,
+                                unfocusedBorderColor = Color.LightGray,
+                                focusedLabelColor = Color.Gray,
+                                unfocusedLabelColor = Color.DarkGray,
+                                cursorColor = Color.White
+                            ),
+                            modifier = Modifier.width(125.dp)
+                        )
+                        Button(
+                            onClick = { /* TODO: implement set completion logic */ },
+                            colors = ButtonDefaults.buttonColors(contentColor = Color.White)
+                        ) {
+                            Icon(Icons.Default.Check, contentDescription = null)
+                        }
                     }
                 }
             }
