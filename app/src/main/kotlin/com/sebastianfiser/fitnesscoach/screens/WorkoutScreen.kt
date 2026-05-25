@@ -151,7 +151,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         value = reps,
                         onValueChange = { setData[setIndex] = Pair(weight, it) },
                         placeholder = { Text("Reps", color = Color.LightGray) },
-                        singleLine = true 
+                        singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             focusedTextColor = Color.White,
