@@ -43,7 +43,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
     val setData = remember(currentExercise) {
         mutableStateListOf(*Array(currentExercise?.sets ?:0) {Pair("", "") })
     }
-    var scrollState = rememberScrollState
+    var scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .fillMaxSize()
