@@ -29,7 +29,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Check
-import androidx.
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -154,7 +155,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                                 unfocusedLabelColor = Color.DarkGray,
                                 cursorColor = Color.White
                             ),
-                            modifier = Modifier.width(125.dp)
+                            modifier = Modifier.width(90.dp)
                         )
                         OutlinedTextField(
                             value = reps,
@@ -171,7 +172,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                                 unfocusedLabelColor = Color.DarkGray,
                                 cursorColor = Color.White
                             ),
-                            modifier = Modifier.width(125.dp)
+                            modifier = Modifier.width(90.dp)
                         )
                         Button(
                             onClick = { /* TODO: implement set completion logic */ },
