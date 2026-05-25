@@ -21,6 +21,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.filled.MenuBook
 
 @Composable
 fun WorkoutScreen(onFinish: () -> Unit) {
@@ -43,26 +45,58 @@ fun WorkoutScreen(onFinish: () -> Unit) {
             colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
             shape = RoundedCornerShape(16.dp)
         ) {
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Column(
+            Column {
+                Row (
                     modifier = Modifier
-                        .padding(16.dp)
+                        .fillMaxWidth()
                 ) {
-                    LinearProgressIndicator(
-                        progress = { currentExerciseIndex.toFloat() / totalExercises.toFloat() },
-                        modifier = Modifier.fillMaxWidth(),
-                        color = Color.Green,
-                        trackColor = Color.DarkGray
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Column {
+                        LinearProgressIndicator(
+                            progress = { currentExerciseIndex.toFloat() / totalExercises.toFloat() },
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.White,
+                            trackColor = Color.DarkGray
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            "Excercise ${currentExerciseIndex + 1} of $totalExercises",
+                            color = Color.LightGray,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
                     Text(
-                        "Excercise ${currentExerciseIndex + 1} of $totalExercises",
-                        color = Color.LightGray,
-                        style = MaterialTheme.typography.bodyMedium
+                        currentExcercise?.name ?: "No exercise",
+                        color = Color.White,
+                        style = MaterialTheme.typography.headlineLarge,
+                        modifier = Modifier.padding(horizontal = 16.dp)
                     )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 4.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column {
+                            Text(
+                                "Goal: ${currentExercise?.sets?} Sets x ${currentExercise?.reps?} Reps ",
+                                color = Color.LightGray,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                            Text(
+                                "@ ${currentExercise?.weight?} kg",
+                                color = Color.LightGray,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                        TextButton(
+                            onClick = {}
+                            colors = ButtonDefaults.textButtonColors(contentColor = Color.LightGray)
+                        ) {
+                            Icon(Icons.Default.MenuBookmark, contentDescription = null, tint = Color.LightGray)
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(text = "Show Form Guide", style = MaterialTheme.typography.bodyMedium)
+                        }
+                    }
                 }
             }
         }
