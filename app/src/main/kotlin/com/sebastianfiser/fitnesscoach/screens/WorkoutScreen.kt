@@ -30,7 +30,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
     var day = LocalDate.now().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }
     val currentDay = weekData.find { it.day == day }
     var currentExerciseIndex by remember { mutableStateOf(0) }
-    val currentExcercise = currentDay?.exercises?.getOrNull(currentExerciseIndex)
+    val currentExercise = currentDay?.exercises?.getOrNull(currentExerciseIndex)
     val totalExercises = currentDay?.exercises?.size ?: 0
     Column(
         modifier = Modifier
