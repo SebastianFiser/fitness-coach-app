@@ -23,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.Icons
 
 @Composable
 fun WorkoutScreen(onFinish: () -> Unit) {
@@ -65,7 +66,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         )
                     }
                     Text(
-                        currentExcercise?.name ?: "No exercise",
+                        currentExercise?.name ?: "No exercise",
                         color = Color.White,
                         style = MaterialTheme.typography.headlineLarge,
                         modifier = Modifier.padding(horizontal = 16.dp)
@@ -78,7 +79,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                     ) {
                         Column {
                             Text(
-                                "Goal: ${currentExercise?.sets?} Sets x ${currentExercise?.reps?} Reps ",
+                                "Goal: ${currentExercise?.sets} Sets x ${currentExercise?.reps} Reps ",
                                 color = Color.LightGray,
                                 style = MaterialTheme.typography.bodyMedium
                             )
