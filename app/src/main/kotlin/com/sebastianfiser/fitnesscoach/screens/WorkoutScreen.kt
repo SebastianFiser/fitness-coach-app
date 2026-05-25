@@ -132,12 +132,13 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                     )
                     OutlinedTextField(
                         value = weight,
-                        onValueChange = { weight = it },
+                        onValueChange = { setData[setIndex] = Pair(it, reps) },
                         label = { Text("Weight (kg)", color = Color.LightGray) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
-                            textColor = Color.White,
-                            focusedBorderColor = Color.Gray,
+                            focusedTextColor = Color.White,
+                            unfocusedTextColor = Color.White,
+                            focusedBorderColor = Color.DarkGray,
                             unfocusedBorderColor = Color.DarkGray,
                             focusedLabelColor = Color.Gray,
                             unfocusedLabelColor = Color.DarkGray,
@@ -147,13 +148,13 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                     )
                     OutlinedTextField(
                         value = reps,
-                        onValueChange = { reps = it },
+                        onValueChange = { setData[setIndex] = Pair(weight, it) },
                         label = { Text("Reps", color = Color.LightGray) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             focusedTextColor = Color.White,
                             unfocusedTextColor = Color.White,
-                            focusedBorderColor = Color.Gray,
+                            focusedBorderColor = Color.DarkGray,
                             unfocusedBorderColor = Color.DarkGray,
                             focusedLabelColor = Color.Gray,
                             unfocusedLabelColor = Color.DarkGray,
