@@ -3,7 +3,9 @@
 
     <application
         android:label="FitnessCoach"
-        android:theme="@android:style/Theme.DeviceDefault.NoActionBar"> 
+        android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round">
         
         <activity android:name=".MainActivity"
             android:exported="true">
@@ -15,5 +17,3 @@
     </application>
 
 </manifest>
-
-
