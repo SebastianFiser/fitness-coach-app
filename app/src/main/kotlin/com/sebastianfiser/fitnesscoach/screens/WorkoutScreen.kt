@@ -63,10 +63,16 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                 colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
                 shape = RoundedCornerShape(16.dp)
             ) {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Row (
                         modifier = Modifier
                             .fillMaxWidth()
+                            .padding(4.dp),
                     ) {
                         Column {
                             LinearProgressIndicator(
@@ -155,7 +161,9 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                                 unfocusedLabelColor = Color.DarkGray,
                                 cursorColor = Color.White
                             ),
-                            modifier = Modifier.width(90.dp)
+                            modifier = Modifier
+                                .width(90.dp)
+                                .border(1.dp, Color.White, RoundedCornerShape(8.dp))
                         )
                         OutlinedTextField(
                             value = reps,
@@ -172,9 +180,11 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                                 unfocusedLabelColor = Color.DarkGray,
                                 cursorColor = Color.White
                             ),
-                            modifier = Modifier.width(90.dp)
+                            modifier = Modifier
+                                .width(90.dp)
+                                .border(1.dp, Color.White, RoundedCornerShape(8.dp))
                         )
-                        Button(
+                        TextButton(
                             onClick = { /* TODO: implement set completion logic */ },
                             colors = ButtonDefaults.buttonColors(contentColor = Color.White)
                         ) {
@@ -190,9 +200,9 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            TextButton(
+        ElevatedButton(
                 onClick = { /* TODO: implement selecting different exercise */ },
-                colors = ButtonDefaults.textButtonColors(contentColor = Color.LightGray),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Black, contentColor = Color.LightGray),
                 modifier = Modifier
                     .border(1.dp, Color.White, RoundedCornerShape(8.dp))
                     .padding(horizontal = 12.dp, vertical = 8.dp)
