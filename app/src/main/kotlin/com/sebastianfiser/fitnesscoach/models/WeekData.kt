@@ -5,35 +5,35 @@ import com.sebastianfiser.fitnesscoach.models.Day
 
 val weekData = listOf(
     Day("Monday", listOf(
-        Exercise("Bench press",105.0f, 4, 10),
-        Exercise("Peck deck 20x3",50.0f, 20, 3),
-        Exercise("Dumbell flyes 10x4",35.0f, 10, 4),
-        Exercise("Cable cross 15x3",40.0f, 15, 3),
+        Exercise("Bench press",105.0f, 10, 4),
+        Exercise("Peck deck 20x3",50.0f, 3, 20),
+        Exercise("Dumbell flyes 10x4",35.0f, 4, 10),
+        Exercise("Cable cross 15x3",40.0f, 3, 15),
     )),
     Day("Tuesday", listOf(
-        Exercise("Squats",135.0f, 20, 3),
-        Exercise("Leg press",180.0f, 15, 4),
-        Exercise("Lunges",60.0f, 12, 3)
+        Exercise("Squats",135.0f, 3, 20),
+        Exercise("Leg press",180.0f, 4, 15),
+        Exercise("Lunges",60.0f, 3, 12)
     )),
     Day("Wednesday", listOf(
-        Exercise("Deadlift",185.0f, 10, 4),
-        Exercise("Barbell row",95.0f, 12, 3),
-        Exercise("Lat pulldown",70.0f, 15, 4)
+        Exercise("Deadlift",185.0f, 4, 10),
+        Exercise("Barbell row",95.0f, 3, 12),
+        Exercise("Lat pulldown",70.0f, 4, 15)
     )),
     Day("Thursday", listOf(
-        Exercise("Overhead press",60.0f, 12, 4),
-        Exercise("Lateral raises",20.0f, 15, 3),
-        Exercise("Front raises",25.0f, 10, 4)
+        Exercise("Overhead press",60.0f, 4, 12),
+        Exercise("Lateral raises",20.0f, 3, 15),
+        Exercise("Front raises",25.0f, 4, 10)
     )),
     Day("Friday", listOf(
-        Exercise("Barbell curls",40.0f, 12, 4),
-        Exercise("Hammer curls",30.0f, 8, 2),
-        Exercise("Preacher curls",35.0f, 10, 4)
+        Exercise("Barbell curls",40.0f, 4, 12),
+        Exercise("Hammer curls",30.0f, 2, 8),
+        Exercise("Preacher curls",35.0f, 4, 10)
     )),
     Day("Saturday", listOf(
-        Exercise("Tricep pushdown",50.0f, 12, 4),
-        Exercise("Overhead tricep extension",40.0f, 15, 3),
-        Exercise("Dips 10x4", 0.0f, 8, 4)
+        Exercise("Tricep pushdown",50.0f, 4, 12),
+        Exercise("Overhead tricep extension",40.0f, 3, 15),
+        Exercise("Dips 10x4", 0.0f, 4, 8)
     )),
     Day("Sunday", listOf(
         Exercise("Rest day", 0.0f, 0, 0)

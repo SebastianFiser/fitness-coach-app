@@ -67,7 +67,6 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Row (
                         modifier = Modifier
@@ -186,7 +185,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         )
                         TextButton(
                             onClick = { /* TODO: implement set completion logic */ },
-                            colors = ButtonDefaults.buttonColors(contentColor = Color.White)
+                            colors = ButtonDefaults.buttonColors(contentColor = Color.White, containerColor = Color.Transparent)
                         ) {
                             Icon(Icons.Default.Check, contentDescription = null)
                         }
@@ -200,9 +199,9 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-        ElevatedButton(
+            OutlinedButton(
                 onClick = { /* TODO: implement selecting different exercise */ },
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Black, contentColor = Color.LightGray),
+                colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Black, contentColor = Color.LightGray),
                 modifier = Modifier
                     .border(1.dp, Color.White, RoundedCornerShape(8.dp))
                     .padding(horizontal = 12.dp, vertical = 8.dp)
