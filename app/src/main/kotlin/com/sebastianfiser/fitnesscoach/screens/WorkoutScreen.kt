@@ -92,7 +92,6 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         currentExercise?.name ?: "No exercise",
                         color = Color.White,
                         style = MaterialTheme.typography.headlineLarge,
-                        modifier = Modifier.padding(horizontal = 16.dp)
                     )
                     Row(
                         modifier = Modifier
@@ -203,10 +202,9 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                 onClick = { /* TODO: implement selecting different exercise */ },
                 colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Black, contentColor = Color.LightGray),
                 modifier = Modifier
-                    .border(1.dp, Color.White, RoundedCornerShape(8.dp))
                     .padding(horizontal = 12.dp, vertical = 8.dp)
             ) { 
-                Text("Select different exerxise", style = MaterialTheme.typography.bodyMedium)
+                Text("Different exerxise", style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.width(4.dp))
                 Icon(Icons.Default.Book, contentDescription = null, tint = Color.LightGray)
             }
