@@ -161,7 +161,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                             ),
                             modifier = Modifier
                                 .width(90.dp)
-                                .border(1.dp, Color.White, RoundedCornerShape(8.dp))
+                                .border(1.dp, Color.White, RoundedCornerShape(4.dp))
                         )
                         OutlinedTextField(
                             value = reps,
@@ -180,7 +180,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                             ),
                             modifier = Modifier
                                 .width(90.dp)
-                                .border(1.dp, Color.White, RoundedCornerShape(8.dp))
+                                .border(1.dp, Color.White, RoundedCornerShape(4.dp))
                         )
                         TextButton(
                             onClick = { /* TODO: implement set completion logic */ },
@@ -201,8 +201,6 @@ fun WorkoutScreen(onFinish: () -> Unit) {
             OutlinedButton(
                 onClick = { /* TODO: implement selecting different exercise */ },
                 colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Black, contentColor = Color.LightGray),
-                modifier = Modifier
-                    .padding(horizontal = 12.dp, vertical = 8.dp)
             ) { 
                 Text("Different exerxise", style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.width(4.dp))
