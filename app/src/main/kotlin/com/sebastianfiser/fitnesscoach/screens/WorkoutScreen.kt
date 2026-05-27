@@ -255,34 +255,32 @@ fun TimerCard(
     val minutes = restTimeSeconds / 60
     val seconds = restTimeSeconds % 60
     Column() {
-        if (isRestTimerActive) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color(0xFF1C1C1E), RoundedCornerShape(16.dp))
-                    .padding(16.dp),
-                contentAlignment = Alignment.Center
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFF1C1C1E), RoundedCornerShape(16.dp))
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth(),
+                ElevatedButton(
+                    onClick = {/*Implement skip timer*/ },
+                    colors =  ButtonDefaults.elevatedButtonColors(containerColor = Color.Transparent, contentColor = Color.White )
                 ) {
-                    ElevatedButton(
-                        onClick = {/*Implement skip timer*/ },
-                        colors =  ButtonDefaults.elevatedButtonColors(containerColor = Color.Transparent, contentColor = Color.White )
-                    ) {
-                        Icon(Icons.Default.Close, contentDescription = null)
-                    }
-                    Box() {
-                        //Create circle timer
-                    }
-                    ElevatedButton(
-                        onClick = {/*  Implement adding 30 Seconds */}, 
-                        colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Transparent, contentColor = Color.White)
-                    ) {
-                        Icon(Icons.Default.Add, contentDescription = null)
-                    }
+                    Icon(Icons.Default.Close, contentDescription = null)
+                }
+                Box() {
+                    //Create circle timer
+                }
+                ElevatedButton(
+                    onClick = {/*  Implement adding 30 Seconds */}, 
+                    colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Transparent, contentColor = Color.White)
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = null)
                 }
             }
         }
