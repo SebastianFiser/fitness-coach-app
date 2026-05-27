@@ -36,6 +36,8 @@ import androidx.compose.material.icons.filled.Add
 import kotlinx.coroutines.delay
 import androidx.compose.runtime.LaunchedEffect
 import com.sebastianfiser.fitnesscoach.models.SetEntry
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.draw.alpha
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,7 +55,6 @@ fun WorkoutScreen(onFinish: () -> Unit) {
     }
     val focusManager = LocalFocusManager.current
     var scrollState = rememberScrollState()
-    val isSetActive = (setIndex == 0 || setData[setIndex - 1].isDone) && timerRunningForSet == -1
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -128,12 +129,13 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                             Icon(Icons.Default.MenuBook, contentDescription = null, tint = Color.LightGray)
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(text = "Show Form Guide", style = MaterialTheme.typography.bodyMedium)
-                        }
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
                     }
                 }
             }
             repeat (currentExercise?.sets ?: 0) { setIndex ->
                 val (weight, reps, isDone) = setData[setIndex]
+                val isSetActive = (setIndex == 0 || setData[setIndex - 1].isDone) && timerRunningForSet == -1
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
