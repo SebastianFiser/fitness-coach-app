@@ -136,7 +136,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
-                        .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp)),
+                        .border(2.dp, if (isDone) Color.Green else Color.DarkGray, RoundedCornerShape(14.dp)),
                     colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(16.dp)
                 ) {
@@ -191,6 +191,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                                 .width(90.dp)
                         )
                         TextButton(
+                            enabled = weight.isNotEmpty() && reps.isNotEmpty() && !isDone && (setIndex == 0 || setData[setIndex - 1].isDone ) && timerRunningForSet == -1,
                             onClick = { restTimeSeconds = 90; timerRunningForSet = setIndex; setData[setIndex] = setData[setIndex].copy(isDone = true) },
                             colors = ButtonDefaults.buttonColors(contentColor = Color.White, containerColor = Color.Transparent)
                         ) {
@@ -276,7 +277,7 @@ fun TimerCard(
                 }
                 Box(
                     modifier = Modifier
-                        .background(Color.Black, RoundedCornerShape(180.dp))
+                        .background(Color.White, RoundedCornerShape(180.dp))
                         .padding(horizontal = 24.dp, vertical = 12.dp),
                     contentAlignment = Alignment.Center
                 ) {
