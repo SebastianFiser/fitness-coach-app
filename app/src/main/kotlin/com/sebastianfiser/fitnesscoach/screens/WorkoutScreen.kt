@@ -40,6 +40,8 @@ fun WorkoutScreen(onFinish: () -> Unit) {
     var currentExerciseIndex by remember { mutableStateOf(0) }
     val currentExercise = currentDay?.exercises?.getOrNull(currentExerciseIndex)
     val totalExercises = currentDay?.exercises?.size ?: 0
+    var isRestTimerActive by remember { mutableStateOf(false) }
+    var restTimeSeconds by remember {mutableStateOf(90) } //Seconds
     val setData = remember(currentExercise) {
         mutableStateListOf(*Array(currentExercise?.sets ?:0) {Pair("", "") })
     }
@@ -147,9 +149,10 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         OutlinedTextField(
                             value = weight,
                             onValueChange = { setData[setIndex] = Pair(it, reps) },
-                            placeholder = { Text("Weight (kg)", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
+                            label = { Text("Weight (kg)", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            shape = RoundedCornerShape(14.dp),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 focusedTextColor = Color.White,
                                 unfocusedTextColor = Color.White,
@@ -166,9 +169,10 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         OutlinedTextField(
                             value = reps,
                             onValueChange = { setData[setIndex] = Pair(weight, it) },
-                            placeholder = { Text("Reps", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
+                            label = { Text("Reps", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            shape = RoundedCornerShape(14.dp),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 focusedTextColor = Color.White,
                                 unfocusedTextColor = Color.White,
@@ -219,5 +223,15 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                 Text(if (currentExerciseIndex < totalExercises - 1) "Next Exercise" else "Finish Workout")
             }
         }
+    }
+}
+
+LaunchedEffect(isRestTimerActive) {
+    if (isRestTimerActive) {
+        while (restTimeSeconds > 0){
+            delay(1000L) //One sec
+            restTimeSeconds--
+        }
+        isRestTimerActive = false
     }
 }
