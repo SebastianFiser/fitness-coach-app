@@ -225,17 +225,15 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                 Text(if (currentExerciseIndex < totalExercises - 1) "Next Exercise" else "Finish Workout")
             }
         }
-    }
-}
-
-@Composable
-LaunchedEffect(isRestTimerActive) {
-    if (isRestTimerActive) {
-        while (restTimeSeconds > 0){
-            delay(1000L) //One sec
-            restTimeSeconds--
+        LaunchedEffect(isRestTimerActive) {
+            if (isRestTimerActive) {
+                while (restTimeSeconds > 0){
+                    delay(1000L) //One sec
+                    restTimeSeconds--
+                }
+                isRestTimerActive = false
+            }
         }
-        isRestTimerActive = false
     }
 }
 
@@ -255,7 +253,7 @@ fun TimerCard {
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth,
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     ElevatedButton(
                         onClick = {/*Implement skip timer*/ },
