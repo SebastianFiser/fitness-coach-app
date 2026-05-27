@@ -170,7 +170,6 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                             ),
                             modifier = Modifier
                                 .width(90.dp)
-                                .border(1.dp, Color.White, RoundedCornerShape(4.dp))
                         )
                         OutlinedTextField(
                             value = reps,
@@ -190,7 +189,6 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                             ),
                             modifier = Modifier
                                 .width(90.dp)
-                                .border(1.dp, Color.White, RoundedCornerShape(4.dp))
                         )
                         TextButton(
                             onClick = { restTimeSeconds = 90; timerRunningForSet = setIndex; setData[setIndex] = setData[setIndex].copy(isDone = true) },
@@ -276,8 +274,17 @@ fun TimerCard(
                 ) {
                     Icon(Icons.Default.Close, contentDescription = null)
                 }
-                Box() {
-                    //Create circle timer
+                Box(
+                    modifier = Modifier
+                        .background(Color.Black, RoundedCornerShape(180.dp))
+                        .padding(horizontal = 24.dp, vertical = 12.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        String.format("%02d:%02d", minutes, seconds),
+                        color = Color.Black,
+                        style = MaterialTheme.typography.headlineMedium
+                    )
                 }
                 ElevatedButton(
                     onClick = { onAdd30Seconds() }, 
