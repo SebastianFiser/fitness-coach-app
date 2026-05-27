@@ -35,6 +35,8 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Add
 import kotlinx.coroutines.delay
 import androidx.compose.runtime.LaunchedEffect
+import com.sebastianfiser.fitnesscoach.models.SetEntry
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,10 +46,10 @@ fun WorkoutScreen(onFinish: () -> Unit) {
     var currentExerciseIndex by remember { mutableStateOf(0) }
     val currentExercise = currentDay?.exercises?.getOrNull(currentExerciseIndex)
     val totalExercises = currentDay?.exercises?.size ?: 0
-    var isRestTimerActive by remember { mutableStateOf(false) }
+    var timerRunningForSet by remember { mutableStateOf(-1) }
     var restTimeSeconds by remember { mutableStateOf(90) } //Seconds
     val setData = remember(currentExercise) {
-        mutableStateListOf(*Array(currentExercise?.sets ?:0) {Pair("", "") })
+        mutableStateListOf(*Array(currentExercise?.sets ?:0) {SetEntry(weight = "", reps = "")})
     }
     var scrollState = rememberScrollState()
     Column(
@@ -129,7 +131,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                 }
             }
             repeat (currentExercise?.sets ?: 0) { setIndex ->
-                val (weight, reps) = setData[setIndex]
+                val (weight, reps, isDone) = setData[setIndex]
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -152,7 +154,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         )
                         OutlinedTextField(
                             value = weight,
-                            onValueChange = { setData[setIndex] = Pair(it, reps) },
+                            onValueChange = { setData[setIndex] = setData[setIndex].copy(weight = it) },
                             label = { Text("Weight (kg)", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -172,7 +174,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         )
                         OutlinedTextField(
                             value = reps,
-                            onValueChange = { setData[setIndex] = Pair(weight, it) },
+                            onValueChange = { setData[setIndex] = setData[setIndex].copy(reps = it) },
                             label = { Text("Reps", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -191,17 +193,17 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                                 .border(1.dp, Color.White, RoundedCornerShape(4.dp))
                         )
                         TextButton(
-                            onClick = { restTimeSeconds = 90; isRestTimerActive = true },
+                            onClick = { restTimeSeconds = 90; timerRunningForSet = setIndex; setData[setIndex] = setData[setIndex].copy(isDone = true) },
                             colors = ButtonDefaults.buttonColors(contentColor = Color.White, containerColor = Color.Transparent)
                         ) {
                             Icon(Icons.Default.Check, contentDescription = null)
                         }
                     }
                 }
-                if(isRestTimerActive) {
+                if(timerRunningForSet == setIndex) {
                     TimerCard(
                         restTimeSeconds = restTimeSeconds,
-                        onClose = { isRestTimerActive = false },
+                        onClose = { timerRunningForSet = -1 },
                         onAdd30Seconds = { restTimeSeconds += 30 }
                     )
                 }
@@ -229,18 +231,19 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         onFinish()
                     }
                 },
+                enabled = setData.all { it.isDone },
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White, contentColor = Color.Black)
             ) {
                 Text(if (currentExerciseIndex < totalExercises - 1) "Next Exercise" else "Finish Workout")
             }
         }
-        LaunchedEffect(isRestTimerActive) {
-            if (isRestTimerActive) {
+        LaunchedEffect(timerRunningForSet) {
+            if (timerRunningForSet != -1) {
                     while (restTimeSeconds > 0){
                     delay(1000L) //One sec
                     restTimeSeconds--
                 }
-                isRestTimerActive = false
+                timerRunningForSet = -1
             }
         }
     }
@@ -268,7 +271,7 @@ fun TimerCard(
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 ElevatedButton(
-                    onClick = {/*Implement skip timer*/ },
+                    onClick = onClose,
                     colors =  ButtonDefaults.elevatedButtonColors(containerColor = Color.Transparent, contentColor = Color.White )
                 ) {
                     Icon(Icons.Default.Close, contentDescription = null)
@@ -277,7 +280,7 @@ fun TimerCard(
                     //Create circle timer
                 }
                 ElevatedButton(
-                    onClick = {/*  Implement adding 30 Seconds */}, 
+                    onClick = { onAdd30Seconds() }, 
                     colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Transparent, contentColor = Color.White)
                 ) {
                     Icon(Icons.Default.Add, contentDescription = null)
