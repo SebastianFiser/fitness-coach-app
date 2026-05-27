@@ -198,6 +198,13 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         }
                     }
                 }
+                if(isRestTimerActive) {
+                    TimerCard(
+                        restTimeSeconds = restTimeSeconds,
+                        onClose = { isRestTimerActive = false },
+                        onAdd30Seconds = { restTimeSeconds += 30 }
+                    )
+                }
             }
         }
         Row(
@@ -229,7 +236,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
         }
         LaunchedEffect(isRestTimerActive) {
             if (isRestTimerActive) {
-                while (restTimeSeconds > 0){
+                    while (restTimeSeconds > 0){
                     delay(1000L) //One sec
                     restTimeSeconds--
                 }
@@ -240,11 +247,11 @@ fun WorkoutScreen(onFinish: () -> Unit) {
 }
 
 @Composable
-fun TimerCard() {
+fun TimerCard(
     restTimeSeconds: Int,
     onClose: () -> Unit,
-    onAdd30Seconds: () -> Unit,
-    isRestTimerActive: Boolean
+    onAdd30Seconds: () -> Unit
+    ) {
     val minutes = restTimeSeconds / 60
     val seconds = restTimeSeconds % 60
     Column() {
