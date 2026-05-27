@@ -172,7 +172,9 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                                 unfocusedBorderColor = Color.LightGray,
                                 focusedLabelColor = Color.Gray,
                                 unfocusedLabelColor = Color.DarkGray,
-                                cursorColor = Color.White
+                                cursorColor = Color.White,
+                                disabledUnfocusedTextColor = Color.LightGray,
+                                disabledUnfocusedBorderColor = Color.DarkGray
                             ),
                             modifier = Modifier
                                 .width(90.dp)
@@ -192,7 +194,9 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                                 unfocusedBorderColor = Color.LightGray,
                                 focusedLabelColor = Color.Gray,
                                 unfocusedLabelColor = Color.DarkGray,
-                                cursorColor = Color.White
+                                cursorColor = Color.White,
+                                disabledUnfocusedTextColor = Color.LightGray,
+                                disabledUnfocusedBorderColor = Color.DarkGray
                             ),
                             modifier = Modifier
                                 .width(90.dp)
@@ -243,7 +247,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         onFinish()
                     }
                 },
-                enabled = setData.all { it.isDone },
+                enabled = (setData.all { it.isDone } && timerRunningForSet == -1),
                 colors = ButtonDefaults.elevatedButtonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black,
