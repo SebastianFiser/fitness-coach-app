@@ -159,7 +159,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         )
                         OutlinedTextField(
                             value = weight,
-                            enabled = isSetActive,
+                            readOnly = !isSetActive,
                             onValueChange = { setData[setIndex] = setData[setIndex].copy(weight = it) },
                             label = { Text("Weight (kg)", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
                             singleLine = true,
@@ -172,16 +172,14 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                                 unfocusedBorderColor = Color.LightGray,
                                 focusedLabelColor = Color.Gray,
                                 unfocusedLabelColor = Color.DarkGray,
-                                cursorColor = Color.White,
-                                disabledUnfocusedTextColor = Color.LightGray,
-                                disabledUnfocusedBorderColor = Color.DarkGray
+                                cursorColor = Color.White
                             ),
                             modifier = Modifier
                                 .width(90.dp)
                         )
                         OutlinedTextField(
                             value = reps,
-                            enabled = isSetActive,
+                            readOnly = !isSetActive,
                             onValueChange = { setData[setIndex] = setData[setIndex].copy(reps = it) },
                             label = { Text("Reps", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
                             singleLine = true,
@@ -194,9 +192,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                                 unfocusedBorderColor = Color.LightGray,
                                 focusedLabelColor = Color.Gray,
                                 unfocusedLabelColor = Color.DarkGray,
-                                cursorColor = Color.White,
-                                disabledUnfocusedTextColor = Color.LightGray,
-                                disabledUnfocusedBorderColor = Color.DarkGray
+                                cursorColor = Color.White
                             ),
                             modifier = Modifier
                                 .width(90.dp)
