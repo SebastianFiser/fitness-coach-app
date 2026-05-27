@@ -159,6 +159,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         )
                         OutlinedTextField(
                             value = weight,
+                            enabled = isSetActive,
                             onValueChange = { setData[setIndex] = setData[setIndex].copy(weight = it) },
                             label = { Text("Weight (kg)", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
                             singleLine = true,
@@ -178,6 +179,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         )
                         OutlinedTextField(
                             value = reps,
+                            enabled = isSetActive,
                             onValueChange = { setData[setIndex] = setData[setIndex].copy(reps = it) },
                             label = { Text("Reps", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
                             singleLine = true,
@@ -235,6 +237,8 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                 onClick = { 
                     if (currentExerciseIndex < totalExercises - 1) {
                         currentExerciseIndex++
+                        timerRunningForSet = -1
+                        restTimeSeconds = 90
                     } else {
                         onFinish()
                     }
