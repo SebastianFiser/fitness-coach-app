@@ -33,6 +33,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Add
+import kotlinx.coroutines.delay
+import androidx.compose.runtime.LaunchedEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -189,7 +191,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                                 .border(1.dp, Color.White, RoundedCornerShape(4.dp))
                         )
                         TextButton(
-                            onClick = { /* TODO: implement set completion logic */ },
+                            onClick = { restTimeSeconds = 90; isRestTimerActive = true },
                             colors = ButtonDefaults.buttonColors(contentColor = Color.White, containerColor = Color.Transparent)
                         ) {
                             Icon(Icons.Default.Check, contentDescription = null)
@@ -238,9 +240,13 @@ fun WorkoutScreen(onFinish: () -> Unit) {
 }
 
 @Composable
-fun TimerCard {
+fun TimerCard() {
+    restTimeSeconds: Int,
+    onClose: () -> Unit,
+    onAdd30Seconds: () -> Unit,
+    isRestTimerActive: Boolean
     val minutes = restTimeSeconds / 60
-    val Seconds = restTimeSeconds % 60
+    val seconds = restTimeSeconds % 60
     Column() {
         if (isRestTimerActive) {
             Box(
