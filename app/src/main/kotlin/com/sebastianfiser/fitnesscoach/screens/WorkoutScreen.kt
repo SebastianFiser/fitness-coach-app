@@ -51,7 +51,9 @@ fun WorkoutScreen(onFinish: () -> Unit) {
     val setData = remember(currentExercise) {
         mutableStateListOf(*Array(currentExercise?.sets ?:0) {SetEntry(weight = "", reps = "")})
     }
+    val focusManager = LocalFocusManager.current
     var scrollState = rememberScrollState()
+    val isSetActive = (setIndex == 0 || setData[setIndex - 1].isDone) && timerRunningForSet == -1
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -136,6 +138,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
+                        .alpha(if (isSetActive) 1f else 0.4f)
                         .border(2.dp, if (isDone) Color.Green else Color.DarkGray, RoundedCornerShape(14.dp)),
                     colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(16.dp)
@@ -192,8 +195,12 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                         )
                         TextButton(
                             enabled = weight.isNotEmpty() && reps.isNotEmpty() && !isDone && (setIndex == 0 || setData[setIndex - 1].isDone ) && timerRunningForSet == -1,
-                            onClick = { restTimeSeconds = 90; timerRunningForSet = setIndex; setData[setIndex] = setData[setIndex].copy(isDone = true) },
-                            colors = ButtonDefaults.buttonColors(contentColor = Color.White, containerColor = Color.Transparent)
+                            onClick = { restTimeSeconds = 90; timerRunningForSet = setIndex; setData[setIndex] = setData[setIndex].copy(isDone = true); focusManager.clearFocus() },
+                            colors = ButtonDefaults.buttonColors(
+                                contentColor = Color.White,
+                                containerColor = Color.Transparent,
+                                disabledContentColor = Color.Gray
+                                )
                         ) {
                             Icon(Icons.Default.Check, contentDescription = null)
                         }
@@ -231,7 +238,12 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                     }
                 },
                 enabled = setData.all { it.isDone },
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White, contentColor = Color.Black)
+                colors = ButtonDefaults.elevatedButtonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Black,
+                    disabledContainerColor = Color.DarkGray,
+                    disabledContentColor = Color.Gray
+                    )
             ) {
                 Text(if (currentExerciseIndex < totalExercises - 1) "Next Exercise" else "Finish Workout")
             }
