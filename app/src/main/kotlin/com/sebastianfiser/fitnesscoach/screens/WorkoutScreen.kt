@@ -32,6 +32,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Add
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,7 +43,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
     val currentExercise = currentDay?.exercises?.getOrNull(currentExerciseIndex)
     val totalExercises = currentDay?.exercises?.size ?: 0
     var isRestTimerActive by remember { mutableStateOf(false) }
-    var restTimeSeconds by remember {mutableStateOf(90) } //Seconds
+    var restTimeSeconds by remember { mutableStateOf(90) } //Seconds
     val setData = remember(currentExercise) {
         mutableStateListOf(*Array(currentExercise?.sets ?:0) {Pair("", "") })
     }
@@ -227,6 +228,7 @@ fun WorkoutScreen(onFinish: () -> Unit) {
     }
 }
 
+@Composable
 LaunchedEffect(isRestTimerActive) {
     if (isRestTimerActive) {
         while (restTimeSeconds > 0){
@@ -247,7 +249,7 @@ fun TimerCard {
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color(0xFF1C1C1E), RoundedCornerShape(16.dp))
-                    .padding(16.dp)
+                    .padding(16.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Row(
@@ -275,3 +277,4 @@ fun TimerCard {
         }
     }
 }
+//I hope that people who created jetpack compose get hit by a bus (On accident ofc)
