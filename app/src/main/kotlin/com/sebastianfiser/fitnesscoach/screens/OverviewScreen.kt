@@ -19,10 +19,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.draw.clip
 import java.time.LocalDate
 import androidx.compose.ui.draw.alpha
-
+import androidx.compose.foundation.border
 
 @Composable
-fun MainWorkoutCard(onStartWorkout: () -> Unit, isWokroutDone: Boolean) {
+fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean) {
     var day = LocalDate.now().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }
     val Locale = java.util.Locale.getDefault()
     Column(
@@ -121,7 +121,7 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWokroutDone: Boolean) {
                         )
                     }
                     ElevatedButton(
-                        enabled = !isWorkoutDone
+                        enabled = !isWorkoutDone,
                         onClick = { onStartWorkout() },
                         colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White, contentColor = Color.Black, disabledContainerColor = Color.Gray, disabledContentColor = Color.DarkGray),
                         ) {
