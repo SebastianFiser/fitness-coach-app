@@ -48,6 +48,7 @@ fun ProfileScreen() {
                     onClick = {}
                 ) {
                     Icon(Icons.Default.Create , contentDescription = null, tint = Color.White)
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text("Edit Profile", color = Color.White)
                 }
             }
