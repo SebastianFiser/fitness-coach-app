@@ -42,6 +42,10 @@ import com.sebastianfiser.fitnesscoach.screens.LeaderboardScreen
 import com.sebastianfiser.fitnesscoach.screens.ProfileScreen
 import com.sebastianfiser.fitnesscoach.models.Exercise
 import com.sebastianfiser.fitnesscoach.screens.WorkoutScreen
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.sebastianfiser.fitnesscoach.navigation.Screen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,33 +63,33 @@ fun StartContent() {
     var selectedTab by remember { mutableStateOf(0)}
     var showWorkout by remember {mutableStateOf(false)}
     var isWorkoutDone by remember {mutableStateOf(false)}
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black)
-    ) {
-        if (showWorkout) {
-           WorkoutScreen(onFinish = { showWorkout = false; isWorkoutDone = true }) 
-        } else {
-            when(selectedTab) {
-                0 -> MainWorkoutCard(onStartWorkout = { showWorkout = true }, isWorkoutDone = isWorkoutDone)
-                1 -> schduleScreen()
-                2 -> LeaderboardScreen()
-                3 -> ProfileScreen()
+    val navController = rememberNavController()
+    val currentRoute= navController.currentBackStackEntryAsState().value?.destination?.route
+    Scaffold(
+        bottomBar = {
+            if (currentRoute != Screen.Workout.route) {
+                BottomNav(navController = navController)
             }
-            BottomNav(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth(),
-                selectedTab = selectedTab,
-                onTabSelected = { selectedTab = it }
-            )
         }
+    ) { paddingValues ->
+        NavHost(
+            navController = navController,
+            startDestination = Screen.Overview.route,
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            composable(Screen.Overview.route) { MainWorkoutCard(onStartWorkout = { navController.navigate(Screen.Workout.route) }, isWorkoutDone = isWorkoutDone) }
+            composable(Screen.Workout.route) { WorkoutScreen(onFinish = { isWorkoutDone = true; navController.popBackStack() }) }
+            composable(Screen.Schedule.route) { schduleScreen() }
+            composable(Screen.Leaderboard.route) { LeaderboardScreen() }
+            composable(Screen.Profile.route) { ProfileScreen() }
+        }
+
     }
 }
 
 @Composable
-fun BottomNav(modifier: Modifier = Modifier, selectedTab : Int, onTabSelected: (Int) -> Unit) {
+fun BottomNav(modifier: Modifier = Modifier, navController: NavController) {
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     NavigationBar(
         modifier = modifier.drawBehind {
             val strokeWidth = 0.5.dp.toPx()
@@ -103,8 +107,8 @@ fun BottomNav(modifier: Modifier = Modifier, selectedTab : Int, onTabSelected: (
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = null) },
             label = { Text("Overview") },
-            selected = selectedTab == 0,
-            onClick = { onTabSelected(0) },
+            selected = currentRoute == Screen.Overview.route,
+            onClick = { navController.navigate(Screen.Overview.route) },
             colors = NavigationBarItemDefaults.colors(
                 selectedIconColor = Color.White,
                 unselectedIconColor = Color.Gray,
@@ -119,22 +123,22 @@ fun BottomNav(modifier: Modifier = Modifier, selectedTab : Int, onTabSelected: (
         NavigationBarItem(
             icon = { Icon(Icons.Default.DateRange, contentDescription = null) },
             label = { Text("Schedule") },
-            selected = selectedTab == 1,
-            onClick = { onTabSelected(1) },
+            selected = currentRoute == Screen.Schedule.route,
+            onClick = { navController.navigate(Screen.Schedule.route) },
             colors = colors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Star, contentDescription = null) },
             label = { Text("Leaderboard") },
-            selected = selectedTab == 2,
-            onClick = { onTabSelected(2) },
+            selected = currentRoute == Screen.Leaderboard.route,
+            onClick = { navController.navigate(Screen.Leaderboard.route) },
             colors = colors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Person, contentDescription = null) },
             label = { Text("Profile") },
-            selected = selectedTab == 3,
-            onClick = { onTabSelected(3) },
+            selected = currentRoute == Screen.Profile.route,
+            onClick = { navController.navigate(Screen.Profile.route) },
             colors = colors
         )
     }
