@@ -58,16 +58,17 @@ class MainActivity : ComponentActivity() {
 fun StartContent() {
     var selectedTab by remember { mutableStateOf(0)}
     var showWorkout by remember {mutableStateOf(false)}
+    var isWorkoutDone by remember {mutableStateOf(false)}
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
         if (showWorkout) {
-           WorkoutScreen(onFinish = { showWorkout = false }) 
+           WorkoutScreen(onFinish = { showWorkout = false; isWorkoutDone = true }) 
         } else {
             when(selectedTab) {
-                0 -> MainWorkoutCard(onStartWorkout = { showWorkout = true })
+                0 -> MainWorkoutCard(onStartWorkout = { showWorkout = true }, isWorkoutDone = isWorkoutDone)
                 1 -> schduleScreen()
                 2 -> LeaderboardScreen()
                 3 -> ProfileScreen()

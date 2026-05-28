@@ -18,10 +18,11 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.draw.clip
 import java.time.LocalDate
+import androidx.compose.ui.draw.alpha
 
 
 @Composable
-fun MainWorkoutCard(onStartWorkout: () -> Unit) {
+fun MainWorkoutCard(onStartWorkout: () -> Unit, isWokroutDone: Boolean) {
     var day = LocalDate.now().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }
     val Locale = java.util.Locale.getDefault()
     Column(
@@ -95,9 +96,11 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(16.dp)
+                .border(2.dp, if (isWorkoutDone) Color.Green else Color.DarkGray, RoundedCornerShape(14.dp))
+                .alpha(if (isWorkoutDone) 0.4f else 1f),
             colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
-            shape = RoundedCornerShape(28.dp)
+            shape = RoundedCornerShape(14.dp)
         ) {
             Column(modifier = Modifier.padding(20.dp)) {
                 Row(
@@ -118,8 +121,9 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit) {
                         )
                     }
                     ElevatedButton(
+                        enabled = !isWorkoutDone
                         onClick = { onStartWorkout() },
-                        colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White, contentColor = Color.Black)
+                        colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White, contentColor = Color.Black, disabledContainerColor = Color.Gray, disabledContentColor = Color.DarkGray),
                         ) {
                             Text("Start")
                         }
