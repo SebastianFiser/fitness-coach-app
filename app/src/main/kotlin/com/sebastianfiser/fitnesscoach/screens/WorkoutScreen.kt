@@ -58,7 +58,6 @@ fun WorkoutScreen(onFinish: () -> Unit) {
     val focusManager = LocalFocusManager.current
     var scrollState = rememberScrollState()
     BackHandler { showExitDialog = true }
-    AlertDialog
     Column(
         modifier = Modifier
             .fillMaxSize()
