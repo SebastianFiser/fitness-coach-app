@@ -66,6 +66,9 @@ fun WorkoutScreen(onFinish: () -> Unit) {
     ) {
         if (showExitDialog) {
             AlertDialog(
+                color = Color.Black,
+                border = BorderStroke(2.dp, Color.DarkGray),
+                shape = RoundedCornerShape(16.dp),
                 onDismissRequest = { showExitDialog = false },
                 title = { Text("Exit Workout") },
                 text = { Text("Are you sure you want to exit the workout?") },
@@ -73,17 +76,17 @@ fun WorkoutScreen(onFinish: () -> Unit) {
                     TextButton(
                         onClick = {
                             showExitDialog = false
-                            onFinish()
+                            navController.popBackStack()
                         }
                     ) {
-                        Text("Yes")
+                        Text("Yes", color = Color.Red)
                     }
                 },
                 dismissButton = {
                     TextButton(
                         onClick = { showExitDialog = false }
                     ) {
-                        Text("No")
+                        Text("No", color = Color.Green)
                     }
                 }
             )
