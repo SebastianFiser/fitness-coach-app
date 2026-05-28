@@ -68,16 +68,17 @@ fun StartContent() {
     val navController = rememberNavController()
     val currentRoute= navController.currentBackStackEntryAsState().value?.destination?.route
     Scaffold(
+        containerColor = Color.Black,
         bottomBar = {
             if (currentRoute != Screen.Workout.route) {
                 BottomNav(navController = navController)
             }
         }
+        containerColor = Color.Black
     ) { paddingValues ->
         NavHost(
             navController = navController,
             startDestination = Screen.Overview.route,
-            modifier = Modifier.padding(paddingValues)
         ) {
             composable(Screen.Overview.route) { MainWorkoutCard(onStartWorkout = { navController.navigate(Screen.Workout.route) }, isWorkoutDone = isWorkoutDone) }
             composable(Screen.Workout.route) { WorkoutScreen(onFinish = { isWorkoutDone = true; navController.popBackStack() }) }
