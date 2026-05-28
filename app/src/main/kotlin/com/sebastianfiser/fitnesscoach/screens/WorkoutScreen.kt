@@ -38,6 +38,7 @@ import androidx.compose.runtime.LaunchedEffect
 import com.sebastianfiser.fitnesscoach.models.SetEntry
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.draw.alpha
+import androidx.activity.compose.BackHandler
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,17 +51,44 @@ fun WorkoutScreen(onFinish: () -> Unit) {
     val totalExercises = currentDay?.exercises?.size ?: 0
     var timerRunningForSet by remember { mutableStateOf(-1) }
     var restTimeSeconds by remember { mutableStateOf(90) } //Seconds
+    var showExitDialog by remember { mutableStateOf(false) }
     val setData = remember(currentExercise) {
         mutableStateListOf(*Array(currentExercise?.sets ?:0) {SetEntry(weight = "", reps = "")})
     }
     val focusManager = LocalFocusManager.current
     var scrollState = rememberScrollState()
+    BackHandler { showExitDialog = true }
+    AlertDialog
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
             .padding(bottom = 80.dp, top = 48.dp)
     ) {
+        if (showExitDialog) {
+            AlertDialog(
+                onDismissRequest = { showExitDialog = false },
+                title = { Text("Exit Workout") },
+                text = { Text("Are you sure you want to exit the workout?") },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            showExitDialog = false
+                            onFinish()
+                        }
+                    ) {
+                        Text("Yes")
+                    }
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = { showExitDialog = false }
+                    ) {
+                        Text("No")
+                    }
+                }
+            )
+        }
         Column(
             modifier = Modifier
                 .weight(1f)
