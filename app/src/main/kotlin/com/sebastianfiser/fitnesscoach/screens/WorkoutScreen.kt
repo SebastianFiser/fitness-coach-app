@@ -39,6 +39,7 @@ import com.sebastianfiser.fitnesscoach.models.SetEntry
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.draw.alpha
 import androidx.activity.compose.BackHandler
+import androidx.navigation.NavController
 
 
 @OptIn(ExperimentalMaterial3Api::class)
