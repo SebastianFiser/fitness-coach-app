@@ -67,7 +67,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController) {
     ) {
         if (showExitDialog) {
             AlertDialog(
-                containerColorolor = Color(0xFF1A1A1A),
+                containerColor = Color(0xFF1A1A1A),
                 shape = RoundedCornerShape(16.dp),
                 onDismissRequest = { showExitDialog = false },
                 title = { Text("Exit Workout") },
