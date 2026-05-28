@@ -62,8 +62,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun StartContent() {
-    var selectedTab by remember { mutableStateOf(0)}
-    var showWorkout by remember {mutableStateOf(false)}
     var isWorkoutDone by remember {mutableStateOf(false)}
     val navController = rememberNavController()
     val currentRoute= navController.currentBackStackEntryAsState().value?.destination?.route
@@ -74,7 +72,6 @@ fun StartContent() {
                 BottomNav(navController = navController)
             }
         }
-        containerColor = Color.Black
     ) { paddingValues ->
         NavHost(
             navController = navController,
