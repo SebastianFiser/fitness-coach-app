@@ -43,7 +43,7 @@ import androidx.activity.compose.BackHandler
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WorkoutScreen(onFinish: () -> Unit) {
+fun WorkoutScreen(onFinish: () -> Unit, navController: NavController) {
     var day = LocalDate.now().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }
     val currentDay = weekData.find { it.day == day }
     var currentExerciseIndex by remember { mutableStateOf(0) }
@@ -58,39 +58,38 @@ fun WorkoutScreen(onFinish: () -> Unit) {
     val focusManager = LocalFocusManager.current
     var scrollState = rememberScrollState()
     BackHandler { showExitDialog = true }
+    if (showExitDialog) {
+        AlertDialog(
+            color = Color(0xFF1A1A1A),
+            shape = RoundedCornerShape(16.dp),
+            onDismissRequest = { showExitDialog = false },
+            title = { Text("Exit Workout") },
+            text = { Text("Are you sure you want to exit the workout?") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showExitDialog = false
+                        navController.popBackStack()
+                    }
+                ) {
+                    Text("Yes", color = Color.Red)
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showExitDialog = false }
+                ) {
+                    Text("No", color = Color.Green)
+                }
+            }
+        )
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
             .padding(bottom = 80.dp, top = 48.dp)
     ) {
-        if (showExitDialog) {
-            AlertDialog(
-                color = Color.Black,
-                border = BorderStroke(2.dp, Color.DarkGray),
-                shape = RoundedCornerShape(16.dp),
-                onDismissRequest = { showExitDialog = false },
-                title = { Text("Exit Workout") },
-                text = { Text("Are you sure you want to exit the workout?") },
-                confirmButton = {
-                    TextButton(
-                        onClick = {
-                            showExitDialog = false
-                            navController.popBackStack()
-                        }
-                    ) {
-                        Text("Yes", color = Color.Red)
-                    }
-                },
-                dismissButton = {
-                    TextButton(
-                        onClick = { showExitDialog = false }
-                    ) {
-                        Text("No", color = Color.Green)
-                    }
-                }
-            )
-        }
         Column(
             modifier = Modifier
                 .weight(1f)
