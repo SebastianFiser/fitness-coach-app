@@ -51,7 +51,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
     val currentExercise = currentDay?.exercises?.getOrNull(currentExerciseIndex)
     val totalExercises = currentDay?.exercises?.size ?: 0
     var timerRunningForSet by remember { mutableStateOf(-1) }
-    var restTimeSeconds by remember { mutableStateOf(viewModel.restTime) } //Seconds
+    var restTimeSeconds = viewModel.RestTime //Seconds
     var showExitDialog by remember { mutableStateOf(false) }
     val setData = remember(currentExercise) {
         mutableStateListOf(*Array(currentExercise?.sets ?:0) {SetEntry(weight = "", reps = "")})
