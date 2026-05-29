@@ -44,14 +44,14 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WorkoutScreen(onFinish: () -> Unit, navController: NavController) {
+fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel: AppViewModel) {
     var day = LocalDate.now().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }
     val currentDay = weekData.find { it.day == day }
     var currentExerciseIndex by remember { mutableStateOf(0) }
     val currentExercise = currentDay?.exercises?.getOrNull(currentExerciseIndex)
     val totalExercises = currentDay?.exercises?.size ?: 0
     var timerRunningForSet by remember { mutableStateOf(-1) }
-    var restTimeSeconds by remember { mutableStateOf(90) } //Seconds
+    var restTimeSeconds by remember { mutableStateOf(viewModel.restTime) } //Seconds
     var showExitDialog by remember { mutableStateOf(false) }
     val setData = remember(currentExercise) {
         mutableStateListOf(*Array(currentExercise?.sets ?:0) {SetEntry(weight = "", reps = "")})

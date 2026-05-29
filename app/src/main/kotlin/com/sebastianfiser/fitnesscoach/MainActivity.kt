@@ -48,6 +48,8 @@ import androidx.navigation.compose.rememberNavController
 import com.sebastianfiser.fitnesscoach.navigation.Screen
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sebastianfiser.fitnesscoach.models.AppViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,13 +57,14 @@ class MainActivity : ComponentActivity() {
         // Edge-to-edge režim (pod hodiny a navigaci)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            StartContent()
+            val viewModel: AppViewModel = viewModel()
+            StartContent(viewModel = viewModel)
         }
     }
 }
 
 @Composable
-fun StartContent() {
+fun StartContent(viewModel: AppViewModel) {
     var isWorkoutDone by remember {mutableStateOf(false)}
     val navController = rememberNavController()
     val currentRoute= navController.currentBackStackEntryAsState().value?.destination?.route
@@ -78,7 +81,7 @@ fun StartContent() {
             startDestination = Screen.Overview.route,
         ) {
             composable(Screen.Overview.route) { MainWorkoutCard(onStartWorkout = { navController.navigate(Screen.Workout.route) }, isWorkoutDone = isWorkoutDone) }
-            composable(Screen.Workout.route) { WorkoutScreen(onFinish = { isWorkoutDone = true; navController.popBackStack() }, navController = navController) }
+            composable(Screen.Workout.route) { WorkoutScreen(onFinish = { isWorkoutDone = true; navController.popBackStack() }, navController = navController, viewModel = viewModel) }
             composable(Screen.Schedule.route) { schduleScreen() }
             composable(Screen.Leaderboard.route) { LeaderboardScreen() }
             composable(Screen.Profile.route) { ProfileScreen() }
