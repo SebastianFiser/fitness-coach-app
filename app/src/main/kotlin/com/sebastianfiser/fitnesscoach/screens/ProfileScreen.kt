@@ -26,9 +26,12 @@ import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.foundation.clickable
+import androidx.navigation.NavController
+import com.sebastianfiser.fitnesscoach.models.AppViewModel
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(navController : NavController) {
     var selectedTab by remember { mutableStateOf(0) }
     Column (
         modifier = Modifier
@@ -99,7 +102,9 @@ fun ProfileScreen() {
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
                         Row (
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .clickable { navController.navigate(Screen.Settings.route) }
+                                .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(Icons.Default.Settings, contentDescription = null, tint = Color.White)

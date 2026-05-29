@@ -84,7 +84,8 @@ fun StartContent(viewModel: AppViewModel) {
             composable(Screen.Workout.route) { WorkoutScreen(onFinish = { isWorkoutDone = true; navController.popBackStack() }, navController = navController, viewModel = viewModel) }
             composable(Screen.Schedule.route) { schduleScreen() }
             composable(Screen.Leaderboard.route) { LeaderboardScreen() }
-            composable(Screen.Profile.route) { ProfileScreen() }
+            composable(Screen.Profile.route) { ProfileScreen(navController = navController) }
+            composable(Screen.Settings.route) { SettingsScreen(viewModel = viewModel, navController = navController) }
         }
 
     }
