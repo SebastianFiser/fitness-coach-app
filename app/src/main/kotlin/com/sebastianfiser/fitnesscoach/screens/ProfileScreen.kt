@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.foundation.clickable
 import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
+import com.sebastianfiser.fitnesscoach.navigation.Screen
 
 @Composable
 fun ProfileScreen(navController : NavController) {
