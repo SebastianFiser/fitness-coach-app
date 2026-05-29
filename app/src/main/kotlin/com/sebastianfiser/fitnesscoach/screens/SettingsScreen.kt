@@ -89,7 +89,6 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     modifier = Modifier
                         .padding(4.dp)
                         .weight(1f),
-                    contentAlignment = Alignment.CenterStart,
                     shape = RoundedCornerShape(16.dp),
                     colors = CardDefaults.cardColors(Color(0xFF1C1C1E))
                 ) {
