@@ -40,6 +40,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.draw.alpha
 import androidx.activity.compose.BackHandler
 import androidx.navigation.NavController
+import com.sebastianfiser.fitnesscoach.models.AppViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,7 +52,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
     val currentExercise = currentDay?.exercises?.getOrNull(currentExerciseIndex)
     val totalExercises = currentDay?.exercises?.size ?: 0
     var timerRunningForSet by remember { mutableStateOf(-1) }
-    var restTimeSeconds = viewModel.RestTime //Seconds
+    var restTimeSeconds = viewModel.restTime //Seconds
     var showExitDialog by remember { mutableStateOf(false) }
     val setData = remember(currentExercise) {
         mutableStateListOf(*Array(currentExercise?.sets ?:0) {SetEntry(weight = "", reps = "")})
