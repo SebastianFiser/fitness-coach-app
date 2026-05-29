@@ -70,8 +70,8 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController) {
                 containerColor = Color(0xFF1A1A1A),
                 shape = RoundedCornerShape(16.dp),
                 onDismissRequest = { showExitDialog = false },
-                title = { Text("Exit Workout"); color = Color.White },
-                text = { Text("Are you sure you want to exit the workout?"), color = Color.LightGrays },
+                title = { Text("Exit Workout", color = Color.White) },
+                text = { Text("Are you sure you want to exit the workout?", color = Color.LightGray) },
                 confirmButton = {
                     TextButton(
                         onClick = {
