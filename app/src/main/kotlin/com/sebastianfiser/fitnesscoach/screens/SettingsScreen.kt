@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import androidx.navigation.NavController
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 
 @Composable
 fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
@@ -24,8 +26,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
         Row(
-            verticalAlignment = Alignment.Start,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.Start
         ) {
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(Icons.Default.KeyboardArrowRight, contentDescription = "Back", tint = Color.White)
