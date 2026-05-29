@@ -15,6 +15,7 @@ import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import androidx.navigation.NavController
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.foundation.clickable
 
 
 @Composable
@@ -36,7 +37,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
             }
         }
         Column (
-            horizontalArrangement = Arrangement.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text("Settings", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White)
 
@@ -52,19 +53,17 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     modifier = Modifier
                         .padding(4.dp)
                         .weight(1f),
-                    contentAlignment = Alignment.Center,
-                    RoundedCornerShape(16.dp),
+                    shape = RoundedCornerShape(16.dp),
                     colors = CardDefaults.cardColors(Color(0xFF1C1C1E))
                 ) {
                     Row(
                         modifier = Modifier
-                            .fillmaxWidth()
+                            .fillMaxWidth()
                             .background(Color(0xFF1A1A1A), RoundedCornerShape(16.dp))
                     ) {
                         Box(
                             modifier = Modifier
                                 .weight(1f),
-                            contentAlignment = Alignment.center
                         ) {
                             Text("+", color = Color.White, fontSize = 24.sp, modifier = Modifier.clickable { viewModel.restTime += 5 })
                         }
@@ -79,7 +78,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                         Box(
                             modifier = Modifier
                                 .weight(1f),
-                            contentAlignment = Alignment.center
+                            contentAlignment = Alignment.Center
                         ) {
                             Text("-", color = Color.White, fontSize = 24.sp, modifier = Modifier.clickable { viewModel.restTime -= 5 })
                         }
@@ -91,7 +90,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                         .padding(4.dp)
                         .weight(1f),
                     contentAlignment = Alignment.CenterStart,
-                    RoundedCornerShape(16.dp),
+                    shape = RoundedCornerShape(16.dp),
                     colors = CardDefaults.cardColors(Color(0xFF1C1C1E))
                 ) {
 
