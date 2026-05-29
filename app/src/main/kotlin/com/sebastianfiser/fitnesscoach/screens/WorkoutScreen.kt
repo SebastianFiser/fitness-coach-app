@@ -269,7 +269,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                     if (currentExerciseIndex < totalExercises - 1) {
                         currentExerciseIndex++
                         timerRunningForSet = -1
-                        restTimeSeconds = 90
+                        restTimeSeconds = viewModel.restTime
                     } else {
                         onFinish()
                     }

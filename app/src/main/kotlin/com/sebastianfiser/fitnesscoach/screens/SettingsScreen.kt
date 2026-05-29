@@ -14,10 +14,13 @@ import androidx.compose.ui.unit.sp
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import androidx.navigation.NavController
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+
 
 @Composable
 fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
+    val minutes = viewModel.restTime / 60
+    val seconds = viewModel.restTime % 60
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -29,75 +32,94 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
             horizontalArrangement = Arrangement.Start
         ) {
             IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.Default.KeyboardArrowRight, contentDescription = "Back", tint = Color.White)
+                Icon(Icons.Default.KeyboardArrowLeft, contentDescription = "Back", tint = Color.White)
             }
         }
-        Text("Settings", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Column (
+            horizontalArrangement = Arrangement.CenterHorizontally,
+        ) {
+            Text("Settings", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White)
 
-        //Rest time
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text("Rest Time", color = Color.Gray, fontSize = 14.sp)
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                TextButton(
-                    onClick = { if (viewModel.restTime > 10) viewModel.restTime -= 5},
-                    colors = ButtonDefaults.textButtonColors(contentColor = Color.White, disabledContentColor = Color.DarkGray)
-                ) {
-                    Text("-5s", color = Color.White, fontSize = 16.sp) }
-                
-                Text("${viewModel.restTime}s", color = Color.White, fontSize = 20.sp)
-
-                TextButton(
-                    onClick = { viewModel.restTime += 5 },
-                    colors = ButtonDefaults.textButtonColors(contentColor = Color.White)
-                ) {
-                    Text("+5s", color = Color.White, fontSize = 16.sp) }
-            }
-        }
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text("Units", color = Color.Gray, fontSize = 14.sp)
             Row(
                 modifier = Modifier
-                    .background(Color(0xFF1A1A1A), RoundedCornerShape(8.dp))
-                    .padding(4.dp)
+                    .fillMaxWidth()
+                    .padding(top = 24.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                listOf("kg", "lbs").forEach { option ->
-                    val selected = viewModel.unit == option
-                    TextButton(
-                        onClick = { viewModel.unit = option },
-                        colors = ButtonDefaults.textButtonColors(
-                            containerColor = if (selected) Color.White else Color.Transparent,
-                            contentColor = if (selected) Color.Black else Color.White
-                        ),
-                        shape = RoundedCornerShape(50)
+                //Rest time
+                Card(
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .weight(1f),
+                    contentAlignment = Alignment.Center,
+                    RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(Color(0xFF1C1C1E))
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillmaxWidth()
+                            .background(Color(0xFF1A1A1A), RoundedCornerShape(16.dp))
                     ) {
-                        Text(option, color = if (selected) Color.Black else Color.Gray)
+                        Box(
+                            modifier = Modifier
+                                .weight(1f),
+                            contentAlignment = Alignment.center
+                        ) {
+                            Text("+", color = Color.White, fontSize = 24.sp, modifier = Modifier.clickable { viewModel.restTime += 5 })
+                        }
+                        Divider(modifier = Modifier.fillMaxHeight().width(1.dp), color = Color.DarkGray)
+                        Box(
+                            modifier = Modifier.weight(2f),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("${minutes}:${seconds.toString().padStart(2, '0')}", color = Color.White, fontSize = 16.sp)
+                        }
+                        Divider(modifier = Modifier.fillMaxHeight().width(1.dp), color = Color.DarkGray)
+                        Box(
+                            modifier = Modifier
+                                .weight(1f),
+                            contentAlignment = Alignment.center
+                        ) {
+                            Text("-", color = Color.White, fontSize = 24.sp, modifier = Modifier.clickable { viewModel.restTime -= 5 })
+                        }
                     }
                 }
+                //Unit select
+                Card(
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .weight(1f),
+                    contentAlignment = Alignment.CenterStart,
+                    RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(Color(0xFF1C1C1E))
+                ) {
+
+                }
             }
-        }
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text("Theme", color = Color.Gray, fontSize = 14.sp)
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            //Theme select in work
+            /* 
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text("Dark Mode", color = Color.White, fontSize = 16.sp)
-                Switch(
-                    checked = viewModel.isDarkTheme,
-                    onCheckedChange = { viewModel.isDarkTheme = it },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = Color.White,
-                        uncheckedThumbColor = Color.Gray,
-                        checkedTrackColor = Color.White.copy(alpha = 0.5f),
-                        uncheckedTrackColor = Color.Gray.copy(alpha = 0.5f)
+                Text("Theme", color = Color.Gray, fontSize = 14.sp)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Text("Dark Mode", color = Color.White, fontSize = 16.sp)
+                    Switch(
+                        checked = viewModel.isDarkTheme,
+                        onCheckedChange = { viewModel.isDarkTheme = it },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = Color.White,
+                            uncheckedThumbColor = Color.Gray,
+                            checkedTrackColor = Color.White.copy(alpha = 0.5f),
+                            uncheckedTrackColor = Color.Gray.copy(alpha = 0.5f)
+                        )
                     )
-                )
-            }
+                }
+            }*/
         }
     }
 }
