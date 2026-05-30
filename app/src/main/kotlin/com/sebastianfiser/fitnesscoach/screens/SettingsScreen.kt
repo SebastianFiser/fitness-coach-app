@@ -17,6 +17,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.border
+import androidx.compose.material.icons.filled.KeyboardArrowUpward
+import androidx.compose.material.icons.filled.KeyboardArrowDownward
 
 
 @Composable
@@ -80,31 +82,34 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
+                                        .clickable {viewModel.restTime += 5}
+                                        .background(Color.DarkGray)
                                         .weight(1f),
                                     horizontalArrangement = Arrangement.Center
                                 ) {
-                                    Text("^", color = Color.White, fontSize = 24.sp, modifier = Modifier.clickable {
-                                        viewModel.restTime += 5
-                                    })
+                                    Icon(Icons.Default.KeyboardArrowUpward, tint = Color.White)
                                 }
+                                Divider(color = Color.DarkGray, thickness = 1.dp)
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
+                                        .background(Color.Black)
                                         .weight(1f)
                                         .padding(vertical = 8.dp),
                                     horizontalArrangement = Arrangement.Center
                                 ) {
                                     Text(String.format("%02d:%02d", minutes, seconds), color = Color.White, fontSize = 24.sp)
                                 }
+                                Divider(color = Color.DarkGray, thickness = 1.dp)
                                 Row(
                                     modifier = Modifier                                        
                                         .fillMaxWidth()
+                                        .clickable {viewModel.restTime -= 5}
+                                        .background(Color.DarkGray)
                                         .weight(1f),
                                     horizontalArrangement = Arrangement.Center
                                 ) {
-                                    Text("v", color = Color.White, fontSize = 24.sp, modifier = Modifier.clickable {
-                                        viewModel.restTime -= 5
-                                    })
+                                    Icon(Icons.Default.KeyboardArrowDownward, tint = Color.White.clickable)
                                 }
                             }
                         }
