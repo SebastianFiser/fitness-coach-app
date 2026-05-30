@@ -16,3 +16,9 @@ data class SetEntry (
     val reps: String,
     var isDone: Boolean = false
 )
+
+data class ExerciseStat(
+    val name: String,
+    val pr: Float,
+    val weeklyGain: Float
+)
