@@ -42,7 +42,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
         ) {
             Text("Settings", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White)
 
-            Row(
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
@@ -74,7 +74,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     )
                 }
             }
-            Row(
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
