@@ -134,7 +134,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                         .weight(1f)
                         .fillMaxSize()
                         .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
-                    colors = CardDefaults.cardColors(Color.(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(14.dp)
                 ) {
                     Text(
