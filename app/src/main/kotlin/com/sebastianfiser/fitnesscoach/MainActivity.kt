@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
             val viewModel: AppViewModel = viewModel()
             val isDark = viewModel.isDarkTheme ?: isSystemInDarkTheme()
             MaterialTheme(
-                colorScheme = if (isDarkTheme == true) darkColorScheme() else lightColorScheme(),
+                colorScheme = if (isDark == true) darkColorScheme() else lightColorScheme(),
             ) {
                 StartContent(viewModel = viewModel)
             }
