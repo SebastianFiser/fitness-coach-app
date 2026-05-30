@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             val viewModel: AppViewModel = viewModel()
-            val isDark = viewModel.isDarkTheme ?: isSystemInDarkTheme()
+            val isDark = isSystemInDarkTheme()
             MaterialTheme(
                 colorScheme = if (isDark == true) darkColorScheme() else lightColorScheme(),
             ) {
