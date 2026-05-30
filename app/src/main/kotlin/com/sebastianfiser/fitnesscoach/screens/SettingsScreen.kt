@@ -74,6 +74,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                         Card(
                             modifier = Modifier
                                 .fillMaxSize()
+                                .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
                         ) {
                             Column(
                                 modifier = Modifier
@@ -127,7 +128,38 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(14.dp)
                 ) {
-
+                    Column(
+                        modifier = Modifier.fillMaxSize()
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text("Unit System", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        
+                    //Unit sider
+                        Card(
+                            modifier = Modifier
+                                .padding(horizontal = 24.dp, vertical = 48.dp)
+                                .fillMaxSize()
+                                .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
+                            shape = RoundedCornerShape(50),
+                            colors = CardDefaults.cardColors(Color.DarkGray)
+                        ) {
+                            listOf("kg", "lbs").forEach { unit ->
+                                val selected = viewModel.unit == unit
+                                TextButton(
+                                    onClick = { viewModel.unit = unit },
+                                    colors = ButtonDefaults.textButtonColors(
+                                        contentColor = if (selected) Color.White else Color.Gray
+                                    ),
+                                    modifier = Modifier.fillMaxWidth(),
+                                    shape = RoundedCornerShape(50)
+                                ) {
+                                    Text(unit, fontSize = 18.sp, color = if (selected) Color.White else Color.Gray)
+                                }
+                            }
+                        }
+                    }
                 }
             }
             Row(
