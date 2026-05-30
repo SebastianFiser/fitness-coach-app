@@ -58,7 +58,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                         .fillMaxSize()
                         .padding(end = 2.dp)
                         .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
-                    colors = CardDefaults.cardColors(Color.(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(14.dp)
                 ) {
                     Column(
@@ -74,17 +74,17 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                 .fillMaxSize()
                         ) {
                             Column(
-                                Modifier = modifier
-                                    .fillMaxSize
+                                modifier = Modifier
+                                    .fillMaxSize()
                             ) {
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .weight(1f)
+                                        .weight(1f),
                                     horizontalArrangement = Arrangement.Center
                                 ) {
                                     Text("^", color = Color.White, fontSize = 24.sp, modifier = Modifier.clickable {
-                                        viewModel.increaseRestTime()
+                                        viewModel.restTime += 5
                                     })
                                 }
                                 Row(
@@ -103,7 +103,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                     horizontalArrangement = Arrangement.Center
                                 ) {
                                     Text("v", color = Color.White, fontSize = 24.sp, modifier = Modifier.clickable {
-                                        viewModel.decreaseRestTime()
+                                        viewModel.restTime -= 5
                                     })
                                 }
                             }
@@ -116,7 +116,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                         .fillMaxSize()
                         .padding(start = 2.dp)
                         .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
-                    colors = CardDefaults.cardColors(Color.(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(14.dp)
                 ) {
 
