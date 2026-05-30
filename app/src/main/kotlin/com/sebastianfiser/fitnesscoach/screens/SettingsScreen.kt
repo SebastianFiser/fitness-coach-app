@@ -19,15 +19,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.border
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-
+import androidx.compose.material.icons.filled.WbSunny
+import androidx.compose.material.icons.filled.NightlightRound
+import androidx.compose.material.icons.filled.Settngs
 
 @Composable
 fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
     val minutes = viewModel.restTime / 60
     val seconds = viewModel.restTime % 60
     val themes = listOf(
-        Triple("Light", Icons.Default.Sun, false),
-        Triple("Dark", Icons.Default.Moon, true),
+        Triple("Light", Icons.Default.WbSunny, false),
+        Triple("Dark", Icons.Default.NightlightRound, true),
         Triple("System", Icons.Default.Settings, null)
     )
     Column(
@@ -185,7 +187,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                 ) {
                     Column(
                         modifier = Modifier
-                            .fillmaxSize()
+                            .fillMaxSize()
                             .padding(16.dp)
                             .background(Color(0xFF1C1C1E)),
                         horizontalAlignment = Alignment.CenterHorizontally,
