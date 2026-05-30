@@ -17,6 +17,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.Icons
+import androidx.navigation.NavController
 
 @Composable
 fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
@@ -36,9 +38,9 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Start
         ) {
-            Icon( onClick = { navController.popBackStack() },) {
+            Icon( onClick = { navController.popBackStack() }) {
                 imageVector = Icons.Default.KeyboardArrowLeft,
-                contentDescription = "Back"
+                contentDescription = "Back",
                 tint = Color.White
             }
         }
