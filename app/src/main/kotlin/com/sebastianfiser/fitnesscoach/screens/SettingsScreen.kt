@@ -27,7 +27,8 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(horizontal = 24.dp, vertical = 48.dp)
+            .padding(horizontal = 12.dp)
+            .padding(top = 16.dp, bottom = 24.dp)
             .padding(bottom = 90.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
