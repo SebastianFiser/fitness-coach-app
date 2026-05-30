@@ -38,11 +38,13 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Start
         ) {
-            Icon( onClick = { navController.popBackStack() }) {
-                imageVector = Icons.Default.KeyboardArrowLeft,
-                contentDescription = "Back",
-                tint = Color.White
-            }
+           IconButton (onClick = { navController.popBackStack() }) {     
+                Icon{
+                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    contentDescription = "Back",
+                    tint = Color.White
+                }
+           }
         }
         Text("Your Progress", fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(16.dp))
