@@ -87,7 +87,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                         .weight(1f),
                                     horizontalArrangement = Arrangement.Center
                                 ) {
-                                    Icon(Icons.Default.KeyboardArrowUp, tint = Color.White)
+                                    Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Increase time", tint = Color.White)
                                 }
                                 Divider(color = Color.DarkGray, thickness = 1.dp)
                                 Row(
@@ -109,7 +109,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                         .weight(1f),
                                     horizontalArrangement = Arrangement.Center
                                 ) {
-                                    Icon(Icons.Default.KeyboardArrowDown, tint = Color.White)
+                                    Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Decrease Rest Time", tint = Color.White)
                                 }
                             }
                         }
