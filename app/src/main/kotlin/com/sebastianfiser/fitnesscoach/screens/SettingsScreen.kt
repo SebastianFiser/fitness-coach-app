@@ -25,16 +25,22 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
     val minutes = viewModel.restTime / 60
     val seconds = viewModel.restTime % 60
+    val themes = listOf(
+        Triple("Light", Icons.Default.Sun, false),
+        Triple("Dark", Icons.Default.Moon, true),
+        Triple("System", Icons.Default.Settings, null)
+    )
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
             .padding(horizontal = 12.dp)
-            .padding(top = 24.dp, bottom = 24.dp)
-            .padding(bottom = 90.dp),
-        verticalArrangement = Arrangement.spacedBy(32.dp)
+            .padding(top = 24.dp, bottom = 114.dp),
     ) {
         Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 24.dp, top = 12.dp),
             horizontalArrangement = Arrangement.Start
         ) {
             IconButton(onClick = { navController.popBackStack() }) {
@@ -66,7 +72,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(16.dp),
+                            .padding(horizontal = 28.dp, vertical = 40.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Text("Rest Time", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
@@ -96,8 +102,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .background(Color.Black)
-                                        .weight(3f)
-                                        .padding(vertical = 8.dp),
+                                        .weight(3f),
                                     horizontalArrangement = Arrangement.Center,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
@@ -150,13 +155,13 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                 TextButton(
                                     onClick = { viewModel.unit = unit },
                                     colors = ButtonDefaults.textButtonColors(
-                                        contentColor = if (selected) Color.Black else Color.Gray,
+                                        contentColor = if (selected) Color.Black else Color.White,
                                         containerColor = if (selected) Color.White else Color.DarkGray
                                     ),
                                     modifier = Modifier.fillMaxSize().weight(1f),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
-                                    Text(unit, fontSize = 18.sp, color = if (selected) Color.White else Color.Gray)
+                                    Text(unit, fontSize = 18.sp, color = if (selected) Color.Black else Color.White)
                                 }
                             }
                         }
@@ -178,10 +183,53 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(14.dp)
                 ) {
-                    Text(
-                        "Color select placeholder",
-                        color = Color.White,
-                    )
+                    Column(
+                        modifier = Modifier
+                            .fillmaxSize()
+                            .padding(16.dp)
+                            .background(Color(0xFF1C1C1E)),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            Text("Color Themes", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 12.dp),
+                            horizontalArrangement = Arrangement.SpacedBy(8.dp),
+                        ) {
+                            themes.forEach { (name, icon, isDark) ->
+                                val selected = viewModel.isDarkTheme == isDark
+                                Card(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .fillMaxHeight()
+                                        .clickable { viewModel.isDarkTheme = isDark }
+                                        .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = if (selected) Color.White else Color.DarkGray,
+                                        contentColor = if (selected) Color.Black else Color.White
+                                    ),
+                                    shape = RoundedCornerShape(8.dp)
+                                ) {
+                                    Column(
+                                        modifier = Modifier.fillMaxSize(),
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.Center
+                                    ) {
+                                        Icon(icon, contentDescription = name, tint = if (selected) Color.Black else Color.White)
+                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Text(name, fontSize = 14.sp, color = if (selected) Color.Black else Color.White)
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
