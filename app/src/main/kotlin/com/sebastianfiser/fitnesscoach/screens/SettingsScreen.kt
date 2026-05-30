@@ -203,7 +203,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 12.dp),
-                            horizontalArrangement = Arrangement.SpacedBy(8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             themes.forEach { (name, icon, isDark) ->
                                 val selected = viewModel.isDarkTheme == isDark
