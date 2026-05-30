@@ -2,7 +2,7 @@ package com.sebastianfiser.fitnesscoach.screens
 
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import com.sebastianfiser.fitnesscoach.models.ExerciseStat
-import androidx.compose.foundation.rememScrollState
+import androidx.compose.foundation.remememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -39,7 +39,7 @@ fun StatsScreen(viewModel: AppViewModel) {
             modifier = Modifier
                 .background(Color(0xFF1C1C1E))
                 .fillMaxWidth(),
-            elevation = 4.dp,
+            elevation = CardDefaults.cardElevation(defaultElevation(4.dp)),
             shape = RoundedCornerShape(8.dp)
         ) {
             Column(
