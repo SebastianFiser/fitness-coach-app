@@ -52,6 +52,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
+import androidx.compose.foundation.isSystemInDarkTheme
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +62,12 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             val viewModel: AppViewModel = viewModel()
-            StartContent(viewModel = viewModel)
+            val isDark = viewModel.isDarkTheme ?: isSystemInDarkTheme()
+            MaterialTheme(
+                colorScheme = if (isDarkTheme == true) darkColorScheme() else lightColorScheme(),
+            ) {
+                StartContent(viewModel = viewModel)
+            }
         }
     }
 }
@@ -71,7 +78,6 @@ fun StartContent(viewModel: AppViewModel) {
     val navController = rememberNavController()
     val currentRoute= navController.currentBackStackEntryAsState().value?.destination?.route
     Scaffold(
-        containerColor = Color.Black,
         bottomBar = {
             if (currentRoute != Screen.Workout.route) {
                 BottomNav(navController = navController)
