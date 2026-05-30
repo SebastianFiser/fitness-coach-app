@@ -44,80 +44,55 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 24.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    .weight(1f)
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.Center
             ) {
-                //Rest time
                 Card(
                     modifier = Modifier
-                        .padding(4.dp)
-                        .weight(1f),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(Color(0xFF1C1C1E))
+                        .weight(1f)
+                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
+                    colors = CardDefaults.cardColors(Color.DarkGray),
+                    shape = RoundedCornerShape(14.dp)
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(Color(0xFF1A1A1A), RoundedCornerShape(16.dp))
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .weight(1f),
-                        ) {
-                            Text("+", color = Color.White, fontSize = 24.sp, modifier = Modifier.clickable { viewModel.restTime += 5 })
-                        }
-                        Divider(modifier = Modifier.fillMaxHeight().width(1.dp), color = Color.DarkGray)
-                        Box(
-                            modifier = Modifier.weight(2f),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("${minutes}:${seconds.toString().padStart(2, '0')}", color = Color.White, fontSize = 16.sp)
-                        }
-                        Divider(modifier = Modifier.fillMaxHeight().width(1.dp), color = Color.DarkGray)
-                        Box(
-                            modifier = Modifier
-                                .weight(1f),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("-", color = Color.White, fontSize = 24.sp, modifier = Modifier.clickable { viewModel.restTime -= 5 })
-                        }
-                    }
-                }
-                //Unit select
-                Card(
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .weight(1f),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(Color(0xFF1C1C1E))
-                ) {
-
-                }
-            }
-            //Theme select in work
-            /* 
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text("Theme", color = Color.Gray, fontSize = 14.sp)
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    Text("Dark Mode", color = Color.White, fontSize = 16.sp)
-                    Switch(
-                        checked = viewModel.isDarkTheme,
-                        onCheckedChange = { viewModel.isDarkTheme = it },
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = Color.White,
-                            uncheckedThumbColor = Color.Gray,
-                            checkedTrackColor = Color.White.copy(alpha = 0.5f),
-                            uncheckedTrackColor = Color.Gray.copy(alpha = 0.5f)
-                        )
+                    Text(
+                        "Rest time selecter placeholder",
+                        color = COlor.White,
                     )
                 }
-            }*/
+                Card(
+                    modifier = Modifier
+                        .weight(1f)
+                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
+                    colors = CardDefaults.cardColors(Color.DarkGray),
+                    shape = RoundedCornerShape(14.dp)
+                ) {
+                    Text(
+                        "Unit selecter placeholder",
+                        color = COlor.White,
+                    )
+                }
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(4.dp),
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                Card(
+                    modifier = Modifier
+                        .weight(1f)
+                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
+                    colors = CardDefaults.cardColors(Color.DarkGray),
+                    shape = RoundedCornerShape(14.dp)
+                ) {
+                    Text(
+                        "Color select placeholder",
+                        color = COlor.White,
+                    )
+                }
+            }
         }
     }
 }
