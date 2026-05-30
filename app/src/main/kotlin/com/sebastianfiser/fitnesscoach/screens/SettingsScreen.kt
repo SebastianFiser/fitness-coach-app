@@ -42,9 +42,10 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
         ) {
             Text("Settings", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White)
 
-            Box(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .fillMaxHeight()
                     .weight(1f)
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.Center
@@ -52,6 +53,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                 Card(
                     modifier = Modifier
                         .weight(1f)
+                        .fillMaxSize()
                         .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
                     colors = CardDefaults.cardColors(Color.DarkGray),
                     shape = RoundedCornerShape(14.dp)
@@ -64,6 +66,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                 Card(
                     modifier = Modifier
                         .weight(1f)
+                        .fillMaxSize()
                         .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
                     colors = CardDefaults.cardColors(Color.DarkGray),
                     shape = RoundedCornerShape(14.dp)
@@ -74,9 +77,10 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     )
                 }
             }
-            Box(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .fillMaxHeight()
                     .weight(1f)
                     .padding(4.dp),
                 horizontalArrangement = Arrangement.Center,
@@ -84,6 +88,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                 Card(
                     modifier = Modifier
                         .weight(1f)
+                        .fillMaxSize()
                         .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
                     colors = CardDefaults.cardColors(Color.DarkGray),
                     shape = RoundedCornerShape(14.dp)
