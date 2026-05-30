@@ -17,8 +17,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.border
-import androidx.compose.material.icons.filled.KeyboardArrowUpward
-import androidx.compose.material.icons.filled.KeyboardArrowDownward
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 
 
 @Composable
@@ -87,7 +87,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                         .weight(1f),
                                     horizontalArrangement = Arrangement.Center
                                 ) {
-                                    Icon(Icons.Default.KeyboardArrowUpward, tint = Color.White)
+                                    Icon(Icons.Default.KeyboardArrowUp, tint = Color.White)
                                 }
                                 Divider(color = Color.DarkGray, thickness = 1.dp)
                                 Row(
@@ -109,7 +109,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                         .weight(1f),
                                     horizontalArrangement = Arrangement.Center
                                 ) {
-                                    Icon(Icons.Default.KeyboardArrowDownward, tint = Color.White.clickable)
+                                    Icon(Icons.Default.KeyboardArrowDown, tint = Color.White)
                                 }
                             }
                         }
