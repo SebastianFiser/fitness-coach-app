@@ -27,7 +27,8 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(horizontal = 24.dp, vertical = 48.dp),
+            .padding(horizontal = 24.dp, vertical = 48.dp)
+            .padding(bottom = 90.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
         Row(
@@ -47,14 +48,15 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     .fillMaxWidth()
                     .fillMaxHeight()
                     .weight(1f)
-                    .padding(8.dp),
+                    .padding(4.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
                 Card(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxSize()
-                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
+                        .padding(right = 2.dp)
+                        .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                     colors = CardDefaults.cardColors(Color.DarkGray),
                     shape = RoundedCornerShape(14.dp)
                 ) {
@@ -67,7 +69,8 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxSize()
-                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
+                        .padding(left = 2.dp)
+                        .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                     colors = CardDefaults.cardColors(Color.DarkGray),
                     shape = RoundedCornerShape(14.dp)
                 ) {
@@ -81,15 +84,14 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .weight(1f)
-                    .padding(4.dp),
+                    .weight(1f),
                 horizontalArrangement = Arrangement.Center,
             ) {
                 Card(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxSize()
-                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
+                        .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                     colors = CardDefaults.cardColors(Color.DarkGray),
                     shape = RoundedCornerShape(14.dp)
                 ) {
