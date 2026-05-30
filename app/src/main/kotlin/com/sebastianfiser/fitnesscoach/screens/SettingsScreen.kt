@@ -28,7 +28,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
             .fillMaxSize()
             .background(Color.Black)
             .padding(horizontal = 12.dp)
-            .padding(top = 16.dp, bottom = 24.dp)
+            .padding(top = 24.dp, bottom = 24.dp)
             .padding(bottom = 90.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
@@ -57,28 +57,69 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                         .weight(1f)
                         .fillMaxSize()
                         .padding(end = 2.dp)
-                        .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                    colors = CardDefaults.cardColors(Color.DarkGray),
+                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
+                    colors = CardDefaults.cardColors(Color.(0xFF1C1C1E)),
                     shape = RoundedCornerShape(14.dp)
                 ) {
-                    Text(
-                        "Rest time selecter placeholder",
-                        color = Color.White,
-                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text("Rest Time", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Card(
+                            modifier = Modifier
+                                .fillMaxSize()
+                        ) {
+                            Column(
+                                Modifier = modifier
+                                    .fillMaxSize
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .weight(1f)
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Text("^", color = Color.White, fontSize = 24.sp, modifier = Modifier.clickable {
+                                        viewModel.increaseRestTime()
+                                    })
+                                }
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .weight(1f)
+                                        .padding(vertical = 8.dp),
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Text(String.format("%02d:%02d", minutes, seconds), color = Color.White, fontSize = 24.sp)
+                                }
+                                Row(
+                                    modifier = Modifier                                        
+                                        .fillMaxWidth()
+                                        .weight(1f),
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Text("v", color = Color.White, fontSize = 24.sp, modifier = Modifier.clickable {
+                                        viewModel.decreaseRestTime()
+                                    })
+                                }
+                            }
+                        }
+                    }
                 }
                 Card(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxSize()
                         .padding(start = 2.dp)
-                        .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                    colors = CardDefaults.cardColors(Color.DarkGray),
+                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
+                    colors = CardDefaults.cardColors(Color.(0xFF1C1C1E)),
                     shape = RoundedCornerShape(14.dp)
                 ) {
-                    Text(
-                        "Unit selecter placeholder",
-                        color = Color.White,
-                    )
+
                 }
             }
             Row(
@@ -92,8 +133,8 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxSize()
-                        .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                    colors = CardDefaults.cardColors(Color.DarkGray),
+                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
+                    colors = CardDefaults.cardColors(Color.(0xFF1C1C1E)),
                     shape = RoundedCornerShape(14.dp)
                 ) {
                     Text(
