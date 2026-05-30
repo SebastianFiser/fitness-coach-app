@@ -124,7 +124,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                         .weight(1f)
                         .fillMaxSize()
                         .padding(start = 2.dp)
-                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
+                        .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
                     colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(14.dp)
                 ) {
@@ -139,7 +139,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     //Unit sider
                         Card(
                             modifier = Modifier
-                                .padding(horizontal = 24.dp, vertical = 48.dp)
+                                .padding(horizontal = 12.dp, vertical = 24.dp)
                                 .fillMaxSize()
                                 .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
                             shape = RoundedCornerShape(50),
@@ -150,10 +150,11 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                 TextButton(
                                     onClick = { viewModel.unit = unit },
                                     colors = ButtonDefaults.textButtonColors(
-                                        contentColor = if (selected) Color.White else Color.Gray
+                                        contentColor = if (selected) Color.Black else Color.Gray,
+                                        containerColor = if (selected) Color.White else Color.Gray
                                     ),
                                     modifier = Modifier.fillMaxWidth(),
-                                    shape = RoundedCornerShape(50)
+                                    shape = RoundedCornerShape(8.dp)
                                 ) {
                                     Text(unit, fontSize = 18.sp, color = if (selected) Color.White else Color.Gray)
                                 }
