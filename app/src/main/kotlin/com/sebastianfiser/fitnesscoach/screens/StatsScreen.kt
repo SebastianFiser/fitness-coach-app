@@ -47,7 +47,7 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
                 )
             }
         }
-        Text("Your Progress", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Coloír.White)
+        Text("Your Progress", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
         Spacer(modifier = Modifier.height(16.dp))
 
         stats.forEach { stat ->
@@ -56,7 +56,7 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
                 .background(Color(0xFF1C1C1E))
                 .fillMaxWidth()
                 .padding(top = 4.dp, bottom = 4.dp),
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(8.dp),
             colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
         ) {
             Column(
