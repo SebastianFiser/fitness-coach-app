@@ -21,7 +21,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.filled.NightlightRound
-import androidx.compose.material.icons.filled.Settngs
+import androidx.compose.material.icons.filled.Settings
 
 @Composable
 fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
@@ -194,7 +194,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     ) {
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth()
+                                .fillMaxWidth(),
                             horizontalArrangement = Arrangement.Center,
                         ) {
                             Text("Color Themes", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)

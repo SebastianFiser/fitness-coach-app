@@ -8,5 +8,5 @@ import androidx.compose.runtime.setValue
 class AppViewModel : ViewModel() {
     var restTime by mutableStateOf(90)
     var unit by mutableStateOf("kg")
-    var isDarkTheme by mutableStateOf(false)
+    var isDarkTheme by mutableStateOf<Boolean?>(false)
 }
