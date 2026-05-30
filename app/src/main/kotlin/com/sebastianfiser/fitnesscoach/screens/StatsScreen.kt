@@ -31,7 +31,8 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
+            .padding(16.dp)
+            .padding(top = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
@@ -46,16 +47,17 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
                 )
             }
         }
-        Text("Your Progress", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Text("Your Progress", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Coloír.White)
         Spacer(modifier = Modifier.height(16.dp))
 
         stats.forEach { stat ->
         Card(
             modifier = Modifier
                 .background(Color(0xFF1C1C1E))
-                .fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(4.dp),
+                .fillMaxWidth()
+                .padding(top = 4.dp, bottom = 4.dp),
             shape = RoundedCornerShape(8.dp)
+            colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
         ) {
             Column(
                 modifier = Modifier
@@ -64,10 +66,10 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
                     .border(1.dp, Color.Gray, RoundedCornerShape(8.dp))
                     .padding(16.dp)
             ) {
-                Text(stat.name, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
+                Text(stat.name, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("PR: ${stat.pr} ${viewModel.unit}", fontSize = 16.sp)
-                Text("Weekly Gain: ${stat.weeklyGain} ${viewModel.unit}", fontSize = 16.sp)
+                Text("PR: ${stat.pr} ${viewModel.unit}", fontSize = 16.sp, color = Color.White)
+                Text("Weekly Gain: ${stat.weeklyGain} ${viewModel.unit}", fontSize = 16.sp, color = Color.White)
             }
             Spacer(modifier = Modifier.height(12.dp))
             }
