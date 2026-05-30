@@ -59,7 +59,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                         .weight(1f)
                         .fillMaxSize()
                         .padding(end = 2.dp)
-                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
+                        .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
                     colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(14.dp)
                 ) {
@@ -86,21 +86,23 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                         .background(Color.DarkGray)
                                         .weight(1f),
                                     horizontalArrangement = Arrangement.Center
+                                    verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Increase time", tint = Color.White)
                                 }
-                                Divider(color = Color.DarkGray, thickness = 1.dp)
+                                Divider(color = Color.Gray, thickness = 1.dp)
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .background(Color.Black)
-                                        .weight(1f)
+                                        .weight(3f)
                                         .padding(vertical = 8.dp),
                                     horizontalArrangement = Arrangement.Center
+                                    verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Text(String.format("%02d:%02d", minutes, seconds), color = Color.White, fontSize = 24.sp)
+                                    Text(String.format("%02d:%02d", minutes, seconds), color = Color.White, fontSize = 32.sp)
                                 }
-                                Divider(color = Color.DarkGray, thickness = 1.dp)
+                                Divider(color = Color.Gray, thickness = 1.dp)
                                 Row(
                                     modifier = Modifier                                        
                                         .fillMaxWidth()
@@ -108,6 +110,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                         .background(Color.DarkGray)
                                         .weight(1f),
                                     horizontalArrangement = Arrangement.Center
+                                    verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Decrease Rest Time", tint = Color.White)
                                 }
