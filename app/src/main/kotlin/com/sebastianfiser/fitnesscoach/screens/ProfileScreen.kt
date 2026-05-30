@@ -92,7 +92,9 @@ fun ProfileScreen(navController : NavController) {
                             .padding(16.dp)
                     ) {
                         Row (
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .clickable { navController.navigate(Screen.Stats.route) }
+                                .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(Icons.Default.BarChart, contentDescription = null, tint = Color.White)

@@ -16,9 +16,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 
 @Composable
-fun StatsScreen(viewModel: AppViewModel) {
+fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
     val stats = listOf(
         ExerciseStat("Bench Press", 100f, 5f),
         ExerciseStat("Squat", 150f, 10f),
@@ -31,6 +32,16 @@ fun StatsScreen(viewModel: AppViewModel) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Icon( onClick = { navController.popBackStack() },) {
+                imageVector = Icons.Default.KeyboardArrowLeft,
+                contentDescription = "Back"
+                tint = Color.White
+            }
+        }
         Text("Your Progress", fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(16.dp))
 

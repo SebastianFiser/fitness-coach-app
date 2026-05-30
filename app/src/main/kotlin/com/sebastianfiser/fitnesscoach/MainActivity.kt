@@ -43,6 +43,7 @@ import com.sebastianfiser.fitnesscoach.screens.ProfileScreen
 import com.sebastianfiser.fitnesscoach.models.Exercise
 import com.sebastianfiser.fitnesscoach.screens.WorkoutScreen
 import com.sebastianfiser.fitnesscoach.screens.SettingsScreen
+import com.sebastianfiser.fitnesscoach.navigation.StatsScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -87,6 +88,7 @@ fun StartContent(viewModel: AppViewModel) {
             composable(Screen.Leaderboard.route) { LeaderboardScreen() }
             composable(Screen.Profile.route) { ProfileScreen(navController = navController) }
             composable(Screen.Settings.route) { SettingsScreen(viewModel = viewModel, navController = navController) }
+            composable(Screen.Stats.route) { StatsScreen(viewModel = viewModel, navController = navController) }
         }
 
     }
