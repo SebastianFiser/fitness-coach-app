@@ -142,7 +142,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                 .padding(horizontal = 12.dp, vertical = 24.dp)
                                 .fillMaxSize()
                                 .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
-                            shape = RoundedCornerShape(50),
+                            shape = RoundedCornerShape(8.dp),
                             colors = CardDefaults.cardColors(Color.DarkGray)
                         ) {
                             listOf("kg", "lbs").forEach { unit ->
@@ -151,9 +151,9 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                     onClick = { viewModel.unit = unit },
                                     colors = ButtonDefaults.textButtonColors(
                                         contentColor = if (selected) Color.Black else Color.Gray,
-                                        containerColor = if (selected) Color.White else Color.Gray
+                                        containerColor = if (selected) Color.White else Color.DarkGray
                                     ),
-                                    modifier = Modifier.fillMaxWidth(),
+                                    modifier = Modifier.fillMaxSize().weight(1f),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
                                     Text(unit, fontSize = 18.sp, color = if (selected) Color.White else Color.Gray)
