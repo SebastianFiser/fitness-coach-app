@@ -55,7 +55,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxSize()
-                        .padding(right = 2.dp)
+                        .padding(end = 2.dp)
                         .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                     colors = CardDefaults.cardColors(Color.DarkGray),
                     shape = RoundedCornerShape(14.dp)
@@ -69,7 +69,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxSize()
-                        .padding(left = 2.dp)
+                        .padding(start = 2.dp)
                         .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                     colors = CardDefaults.cardColors(Color.DarkGray),
                     shape = RoundedCornerShape(14.dp)
