@@ -85,7 +85,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                         .clickable {viewModel.restTime += 5}
                                         .background(Color.DarkGray)
                                         .weight(1f),
-                                    horizontalArrangement = Arrangement.Center
+                                    horizontalArrangement = Arrangement.Center,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Increase time", tint = Color.White)
@@ -97,7 +97,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                         .background(Color.Black)
                                         .weight(3f)
                                         .padding(vertical = 8.dp),
-                                    horizontalArrangement = Arrangement.Center
+                                    horizontalArrangement = Arrangement.Center,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(String.format("%02d:%02d", minutes, seconds), color = Color.White, fontSize = 32.sp)
@@ -109,7 +109,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                         .clickable {viewModel.restTime -= 5}
                                         .background(Color.DarkGray)
                                         .weight(1f),
-                                    horizontalArrangement = Arrangement.Center
+                                    horizontalArrangement = Arrangement.Center,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Decrease Rest Time", tint = Color.White)
