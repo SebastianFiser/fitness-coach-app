@@ -16,6 +16,7 @@ import androidx.navigation.NavController
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.border
 
 
 @Composable
@@ -57,7 +58,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                 ) {
                     Text(
                         "Rest time selecter placeholder",
-                        color = COlor.White,
+                        color = Color.White,
                     )
                 }
                 Card(
@@ -69,7 +70,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                 ) {
                     Text(
                         "Unit selecter placeholder",
-                        color = COlor.White,
+                        color = Color.White,
                     )
                 }
             }
@@ -89,7 +90,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                 ) {
                     Text(
                         "Color select placeholder",
-                        color = COlor.White,
+                        color = Color.White,
                     )
                 }
             }
