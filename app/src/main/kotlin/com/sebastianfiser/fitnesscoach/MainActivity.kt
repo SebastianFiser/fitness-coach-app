@@ -90,8 +90,7 @@ fun StartContent(viewModel: AppViewModel) {
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = if (!log
-            edIn) Screen.Login.route else Screen.Overview.route,
+            startDestination = if (!logedIn) Screen.Login.route else Screen.Overview.route,
         ) {
             composable(Screen.Overview.route) { MainWorkoutCard(onStartWorkout = { navController.navigate(Screen.Workout.route) }, isWorkoutDone = isWorkoutDone) }
             composable(Screen.Workout.route) { WorkoutScreen(onFinish = { isWorkoutDone = true; navController.popBackStack() }, navController = navController, viewModel = viewModel) }
