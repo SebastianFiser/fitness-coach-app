@@ -15,11 +15,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.navigation.Screen
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
+import com.sebastianfiser.fitnesscoach.models.Appwrite
+import com.sebastianfiser.fitnesscoach.screens.OverviewScreen
+import kotlinx.coroutines.launch
+
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,7 +66,9 @@ fun LoginScreen() {
         )
         Spacer(modifier = Modifier.height(24.dp))
         Button(
-            onClick = { /* TODO: Handle login */ },
+            onClick = { scope.launch {
+                Appwrite.login(email, password)
+            } navController.navigate(Screen.Overview.route) },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(Color.White)
         ) {

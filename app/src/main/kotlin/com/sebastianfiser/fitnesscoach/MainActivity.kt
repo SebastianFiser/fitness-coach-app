@@ -82,7 +82,7 @@ fun StartContent(viewModel: AppViewModel) {
     val currentRoute= navController.currentBackStackEntryAsState().value?.destination?.route
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.Workout.route) {
+            if (currentRoute != Screen.Workout.route && currentRoute != Screen.Login.route) {
                 BottomNav(navController = navController)
             }
         }
@@ -98,6 +98,7 @@ fun StartContent(viewModel: AppViewModel) {
             composable(Screen.Profile.route) { ProfileScreen(navController = navController) }
             composable(Screen.Settings.route) { SettingsScreen(viewModel = viewModel, navController = navController) }
             composable(Screen.Stats.route) { StatsScreen(viewModel = viewModel, navController = navController) }
+            composable(Screen.Login.route) { LoginScreen(navController = navController) }
         }
 
     }
