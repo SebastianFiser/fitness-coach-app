@@ -55,6 +55,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import androidx.compose.foundation.isSystemInDarkTheme
 import com.sebastianfiser.fitnesscoach.models.Appwrite
+import androidx.compose.runtime.LaunchedEffect
 
 
 class MainActivity : ComponentActivity() {
@@ -80,7 +81,7 @@ fun StartContent(viewModel: AppViewModel) {
     var isWorkoutDone by remember {mutableStateOf(false)}
     val navController = rememberNavController()
     val currentRoute= navController.currentBackStackEntryAsState().value?.destination?.route
-    val loggedIn by remember { mutableStateOf<Boolean?>(null)}
+    var loggedIn by remember { mutableStateOf<Boolean?>(null)}
     LaunchedEffect(Unit) {
         loggedIn = Appwrite.onCheckSession()
     }
@@ -93,7 +94,7 @@ fun StartContent(viewModel: AppViewModel) {
         }
     ) { paddingValues ->
         if (loggedIn == null) {
-            Box(MNodfiier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Box(Modfiier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
         } else {
