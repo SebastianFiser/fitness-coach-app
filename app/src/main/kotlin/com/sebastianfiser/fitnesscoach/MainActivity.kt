@@ -110,6 +110,7 @@ fun StartContent(viewModel: AppViewModel) {
                 composable(Screen.Settings.route) { SettingsScreen(viewModel = viewModel, navController = navController) }
                 composable(Screen.Stats.route) { StatsScreen(viewModel = viewModel, navController = navController) }
                 composable(Screen.Login.route) { LoginScreen(navController = navController) }
+                composable(Screen.Register.route) { RegisterScreen(navController = navController) }
             }
         }
     }
