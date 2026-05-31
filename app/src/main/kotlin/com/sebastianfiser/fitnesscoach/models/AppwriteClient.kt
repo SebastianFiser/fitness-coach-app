@@ -55,6 +55,6 @@ object Appwrite {
     }
 
     suspend fun deleteAccount() {
-        account.delete()
+        /*Todo */
     }
 }
