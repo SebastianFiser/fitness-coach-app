@@ -94,7 +94,7 @@ fun StartContent(viewModel: AppViewModel) {
         }
     ) { paddingValues ->
         if (loggedIn == null) {
-            Box(Modfiier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Box(Modfier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
         } else {
