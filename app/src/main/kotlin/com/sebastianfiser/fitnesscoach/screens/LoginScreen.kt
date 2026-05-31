@@ -34,7 +34,7 @@ fun LoginScreen() {
             onValueChange = { email = it },
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.outlinedTextFieldColors(
+            colors = OutlinedTextFieldDefaults.colors(
                 textColor = Color.White,
                 focusedBorderColor = Color.White,
                 unfocusedBorderColor = Color.Gray,
@@ -48,7 +48,7 @@ fun LoginScreen() {
             onValueChange = { password = it },
             label = { Text("Password") },
             modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.outlinedTextFieldColors(
+            colors = OutlinedTextFieldDefaults.colors(
                 textColor = Color.White,
                 focusedBorderColor = Color.White,
                 unfocusedBorderColor = Color.Gray,
