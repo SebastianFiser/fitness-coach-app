@@ -37,7 +37,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 @Composable
 fun ProfileScreen(navController : NavController) {
     var selectedTab by remember { mutableStateOf(0) }
-    val scope = rememberCoroutineScope
+    val scope = rememberCoroutineScope()
     Column (
         modifier = Modifier
             .fillMaxSize()
