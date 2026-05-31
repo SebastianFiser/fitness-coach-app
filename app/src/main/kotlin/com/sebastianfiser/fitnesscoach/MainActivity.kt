@@ -44,6 +44,7 @@ import com.sebastianfiser.fitnesscoach.models.Exercise
 import com.sebastianfiser.fitnesscoach.screens.WorkoutScreen
 import com.sebastianfiser.fitnesscoach.screens.SettingsScreen
 import com.sebastianfiser.fitnesscoach.screens.StatsScreen
+import com.sebastianfiser.fitnesscoach.screens.LoginScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -88,7 +89,7 @@ fun StartContent(viewModel: AppViewModel) {
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Overview.route,
+            startDestination = Screen.Login.route,
         ) {
             composable(Screen.Overview.route) { MainWorkoutCard(onStartWorkout = { navController.navigate(Screen.Workout.route) }, isWorkoutDone = isWorkoutDone) }
             composable(Screen.Workout.route) { WorkoutScreen(onFinish = { isWorkoutDone = true; navController.popBackStack() }, navController = navController, viewModel = viewModel) }
