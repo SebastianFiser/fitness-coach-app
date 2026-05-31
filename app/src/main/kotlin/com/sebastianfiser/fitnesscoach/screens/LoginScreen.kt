@@ -79,6 +79,20 @@ fun LoginScreen(navController: NavController) {
         ) {
             Text("Login", color = Color.Black)
         }
+        TextButton(
+            onClick = { scope.launch {
+                try {
+                    Appwrite.onRegister(email, password)
+                    Appwrite.onLogin(email, password)
+                    navController.navigate(Screen.Overview.route)
+                } catch (e: Throwable) {
+                    errorMessage = "Registration failed: ${e.message}"
+                }
+            } },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Don't have an account? Register", color = Color.White)
+        }
         if (errorMessage.isNotEmpty()) {
             Text(
                 text = errorMessage,
