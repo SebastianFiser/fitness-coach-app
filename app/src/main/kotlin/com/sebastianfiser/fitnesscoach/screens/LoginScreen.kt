@@ -24,6 +24,7 @@ fun LoginScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
+    var errorMessage by remember { mutableStateOf("")}
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -66,13 +67,24 @@ fun LoginScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(24.dp))
         Button(
             onClick = { scope.launch {
-                Appwrite.onLogin(email, password)
-                navController.navigate(Screen.Overview.route)
+                try {
+                    Appwrite.onLogin(email, password)
+                    navController.navigate(Screen.Overview.route)
+                } catch (e: Throwable) {
+                    errorMessage = "Login failed: ${e.message}"
+                }
             } },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(Color.White)
         ) {
             Text("Login", color = Color.Black)
+        }
+        if (errorMessage.isNotEmpty()) {
+            Text(
+                text = errorMessage,
+                color = Color.Red,
+                fontSize = 14.sp
+            )
         }
     }
 }
