@@ -16,7 +16,6 @@ import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.navigation.Screen
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import com.sebastianfiser.fitnesscoach.models.Appwrite
-import com.sebastianfiser.fitnesscoach.screens.OverviewScreen
 import kotlinx.coroutines.launch
 
 
@@ -67,8 +66,9 @@ fun LoginScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(24.dp))
         Button(
             onClick = { scope.launch {
-                Appwrite.login(email, password)
-            } navController.navigate(Screen.Overview.route) },
+                Appwrite.onLogin(email, password)
+                navController.navigate(Screen.Overview.route)
+            } },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(Color.White)
         ) {
