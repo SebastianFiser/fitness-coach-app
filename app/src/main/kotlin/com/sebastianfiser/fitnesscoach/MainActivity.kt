@@ -53,11 +53,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import androidx.compose.foundation.isSystemInDarkTheme
+iport com.sebastianfiser.fitnesscoach.models.
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Appwrite.init(applicationContext)
         // Edge-to-edge režim (pod hodiny a navigaci)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
