@@ -51,4 +51,8 @@ object Appwrite {
             false
         }
     }
+
+    suspend fun deleteAccount() {
+        account.delete()
+    }
 }

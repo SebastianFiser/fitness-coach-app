@@ -38,6 +38,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 fun ProfileScreen(navController : NavController) {
     var selectedTab by remember { mutableStateOf(0) }
     val scope = rememberCoroutineScope()
+    var showAlert by remember { mutableStateOf(false) }
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -213,9 +214,37 @@ fun ProfileScreen(navController : NavController) {
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
                         Row (
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .clickable { showAlert = true }
+                                .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
+                            if(showAlert) {
+                                 AlertDialog(
+                                    containerColor = Color(0xFF1A1A1A),
+                                    shape = RoundedCornerShape(16.dp),
+                                    onDismissRequest = { showAlert = false },
+                                    title = { Text("Delete Account", color = Color.Red) },
+                                    text = { Text("Are you sure you want to delete your account?", color = Color.LightGray) },
+                                    confirmButton = {
+                                        TextButton(
+                                            onClick = {
+                                                showAlert = false
+                                                Appwrite.deleteAccount()
+                                            }
+                                        ) {
+                                            Text("Yes", color = Color.Red)
+                                        }
+                                    },
+                                    dismissButton = {
+                                        TextButton(
+                                            onClick = { showAlert = false }
+                                        ) {
+                                            Text("No", color = Color.Green)
+                                        }
+                                    }
+                                )
+                            }
                             Icon(Icons.Default.Delete, contentDescription = null, tint = Color(0xFFFF6B6B))
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("Delete Account", color = Color(0xFFFF6B6B), style = MaterialTheme.typography.bodyMedium)
