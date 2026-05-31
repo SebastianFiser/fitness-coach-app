@@ -53,7 +53,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import androidx.compose.foundation.isSystemInDarkTheme
-iport com.sebastianfiser.fitnesscoach.models.
+import com.sebastianfiser.fitnesscoach.models.Appwrite
 
 
 class MainActivity : ComponentActivity() {
