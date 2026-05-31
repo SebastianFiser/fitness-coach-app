@@ -45,6 +45,7 @@ import com.sebastianfiser.fitnesscoach.screens.WorkoutScreen
 import com.sebastianfiser.fitnesscoach.screens.SettingsScreen
 import com.sebastianfiser.fitnesscoach.screens.StatsScreen
 import com.sebastianfiser.fitnesscoach.screens.LoginScreen
+import com.sebastianfiser.fitnesscoach.screens.RegisterScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
