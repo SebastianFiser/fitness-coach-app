@@ -35,7 +35,8 @@ fun LoginScreen() {
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-                textColor = Color.White,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
                 focusedBorderColor = Color.White,
                 unfocusedBorderColor = Color.Gray,
                 focusedLabelColor = Color.White,
@@ -49,7 +50,8 @@ fun LoginScreen() {
             label = { Text("Password") },
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-                textColor = Color.White,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
                 focusedBorderColor = Color.White,
                 unfocusedBorderColor = Color.Gray,
                 focusedLabelColor = Color.White,
