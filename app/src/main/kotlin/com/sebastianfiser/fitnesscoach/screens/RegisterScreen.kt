@@ -92,6 +92,7 @@ fun RegisterScreen(navController: NavController) {
                 }
             },
             modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(Color.White)
         ) {
             Text("Register", color = Color.Black)
         }
