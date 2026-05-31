@@ -42,4 +42,13 @@ object Appwrite {
     suspend fun onLogout() {
         account.deleteSession("current")
     }
+
+    suspend fun onCheckSession() : Boolean {
+        return try {
+            account.get()
+            true
+        } catch (e: Throwable) {
+            false
+        }
+    }
 }

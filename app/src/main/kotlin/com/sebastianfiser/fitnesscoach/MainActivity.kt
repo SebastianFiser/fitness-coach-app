@@ -80,6 +80,7 @@ fun StartContent(viewModel: AppViewModel) {
     var isWorkoutDone by remember {mutableStateOf(false)}
     val navController = rememberNavController()
     val currentRoute= navController.currentBackStackEntryAsState().value?.destination?.route
+    val logedIn by produceState(initialValue = false) { value = Appwrite.onCheckSession() }
     Scaffold(
         bottomBar = {
             if (currentRoute != Screen.Workout.route && currentRoute != Screen.Login.route) {
@@ -89,7 +90,8 @@ fun StartContent(viewModel: AppViewModel) {
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Login.route,
+            startDestination = if (!log
+            edIn) Screen.Login.route else Screen.Overview.route,
         ) {
             composable(Screen.Overview.route) { MainWorkoutCard(onStartWorkout = { navController.navigate(Screen.Workout.route) }, isWorkoutDone = isWorkoutDone) }
             composable(Screen.Workout.route) { WorkoutScreen(onFinish = { isWorkoutDone = true; navController.popBackStack() }, navController = navController, viewModel = viewModel) }
