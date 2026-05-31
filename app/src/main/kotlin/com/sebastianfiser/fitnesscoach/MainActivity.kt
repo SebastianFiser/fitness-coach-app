@@ -80,7 +80,11 @@ fun StartContent(viewModel: AppViewModel) {
     var isWorkoutDone by remember {mutableStateOf(false)}
     val navController = rememberNavController()
     val currentRoute= navController.currentBackStackEntryAsState().value?.destination?.route
-    val logedIn by produceState(initialValue = false) { value = Appwrite.onCheckSession() }
+    val loggedIn by remember { mutableStateOf<Boolean?>(null)}
+    LaunchedEffect(Unit) {
+        loggedIn = Appwrite.onCheckSession()
+    }
+    
     Scaffold(
         bottomBar = {
             if (currentRoute != Screen.Workout.route && currentRoute != Screen.Login.route) {
@@ -88,20 +92,25 @@ fun StartContent(viewModel: AppViewModel) {
             }
         }
     ) { paddingValues ->
-        NavHost(
-            navController = navController,
-            startDestination = if (!logedIn) Screen.Login.route else Screen.Overview.route,
-        ) {
-            composable(Screen.Overview.route) { MainWorkoutCard(onStartWorkout = { navController.navigate(Screen.Workout.route) }, isWorkoutDone = isWorkoutDone) }
-            composable(Screen.Workout.route) { WorkoutScreen(onFinish = { isWorkoutDone = true; navController.popBackStack() }, navController = navController, viewModel = viewModel) }
-            composable(Screen.Schedule.route) { schduleScreen() }
-            composable(Screen.Leaderboard.route) { LeaderboardScreen() }
-            composable(Screen.Profile.route) { ProfileScreen(navController = navController) }
-            composable(Screen.Settings.route) { SettingsScreen(viewModel = viewModel, navController = navController) }
-            composable(Screen.Stats.route) { StatsScreen(viewModel = viewModel, navController = navController) }
-            composable(Screen.Login.route) { LoginScreen(navController = navController) }
+        if (loggedIn == null) {
+            Box(MNodfiier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        } else {
+            NavHost(
+                navController = navController,
+                startDestination = if (loggedIn == true) Screen.Overview.route else Screen.Login.route,
+            ) {
+                composable(Screen.Overview.route) { MainWorkoutCard(onStartWorkout = { navController.navigate(Screen.Workout.route) }, isWorkoutDone = isWorkoutDone) }
+                composable(Screen.Workout.route) { WorkoutScreen(onFinish = { isWorkoutDone = true; navController.popBackStack() }, navController = navController, viewModel = viewModel) }
+                composable(Screen.Schedule.route) { schduleScreen() }
+                composable(Screen.Leaderboard.route) { LeaderboardScreen() }
+                composable(Screen.Profile.route) { ProfileScreen(navController = navController) }
+                composable(Screen.Settings.route) { SettingsScreen(viewModel = viewModel, navController = navController) }
+                composable(Screen.Stats.route) { StatsScreen(viewModel = viewModel, navController = navController) }
+                composable(Screen.Login.route) { LoginScreen(navController = navController) }
+            }
         }
-
     }
 }
 
