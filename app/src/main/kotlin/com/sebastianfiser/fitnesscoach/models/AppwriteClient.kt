@@ -31,11 +31,13 @@ object Appwrite {
     suspend fun onRegister(
         email: String,
         password: String,
+        name: String? = null,
     ): User<Map<String, Any>> {
         return account.create(
             userId = ID.unique(),
             email,
             password,
+            name = name
         )
     }
 

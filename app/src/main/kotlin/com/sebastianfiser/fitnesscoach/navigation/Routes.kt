@@ -2,6 +2,7 @@ package com.sebastianfiser.fitnesscoach.navigation
 
 sealed class Screen(val route: String) {
     object Login : Screen("login")
+    object Register : Screen("register")
     object Overview : Screen("overview")
     object Workout : Screen("workout")
     object Schedule : Screen("schedule")

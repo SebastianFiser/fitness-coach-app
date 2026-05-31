@@ -230,7 +230,9 @@ fun ProfileScreen(navController : NavController) {
                                         TextButton(
                                             onClick = {
                                                 showAlert = false
-                                                Appwrite.deleteAccount()
+                                                scope.launch{
+                                                    Appwrite.deleteAccount()
+                                                } 
                                             }
                                         ) {
                                             Text("Yes", color = Color.Red)

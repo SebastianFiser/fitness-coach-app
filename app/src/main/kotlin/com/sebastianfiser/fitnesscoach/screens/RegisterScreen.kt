@@ -7,24 +7,21 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import com.sebastianfiser.fitnesscoach.models.Appwrite
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.graphics.Color 
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.navigation.Screen
-import com.sebastianfiser.fitnesscoach.models.AppViewModel
-import com.sebastianfiser.fitnesscoach.models.Appwrite
 import kotlinx.coroutines.launch
 
-
 @Composable
-fun LoginScreen(navController: NavController) {
+fun RegisterScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    val scope = rememberCoroutineScope()
-    var errorMessage by remember { mutableStateOf("")}
+    var name by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -32,8 +29,23 @@ fun LoginScreen(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Welcome", fontSize = 42.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Text("Create Account", fontSize = 42.sp, fontWeight = FontWeight.Bold, color = Color.White)
         Spacer(modifier = Modifier.height(32.dp))
+        OutlinedTextField(
+            value = name,
+            onValueChange = { name = it },
+            label = { Text("Name") },
+            modifier = Modifier.fillMaxWidth(),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
+                focusedBorderColor = Color.White,
+                unfocusedBorderColor = Color.Gray,
+                focusedLabelColor = Color.White,
+                unfocusedLabelColor = Color.Gray
+            )
+        )
+        Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -62,35 +74,26 @@ fun LoginScreen(navController: NavController) {
                 focusedLabelColor = Color.White,
                 unfocusedLabelColor = Color.Gray
             ),
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
         )
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(32.dp))
+        val scope = rememberCoroutineScope()
         Button(
-            onClick = { scope.launch {
-                try {
-                    Appwrite.onLogin(email, password)
-                    navController.navigate(Screen.Overview.route)
-                } catch (e: Throwable) {
-                    errorMessage = "Login failed: ${e.message}"
+            onClick = {
+                scope.launch {
+                    try {
+                        Appwrite.onRegister(email, password, name)
+                        Appwrite.onLogin(email, password)
+                        navController.navigate(Screen.Overview.route)
+                    } catch (e: Throwable) {
+                        // Handle
+                    }
                 }
-            } },
+            },
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(Color.White)
         ) {
-            Text("Login", color = Color.Black)
+            Text("Register", color = Color.Black)
         }
-        TextButton(
-            onClick = { navController.navigate(Screen.Register.route) },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Don't have an account? Register", color = Color.White)
-        }
-        if (errorMessage.isNotEmpty()) {
-            Text(
-                text = errorMessage,
-                color = Color.Red,
-                fontSize = 14.sp
-            )
-        }
-    }
+    } 
 }
