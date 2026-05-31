@@ -30,10 +30,14 @@ import androidx.compose.foundation.clickable
 import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import com.sebastianfiser.fitnesscoach.navigation.Screen
+import com.sebastianfiser.fitnesscoach.models.Appwrite
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.rememberCoroutineScope
 
 @Composable
 fun ProfileScreen(navController : NavController) {
     var selectedTab by remember { mutableStateOf(0) }
+    val scope = rememberCoroutineScope
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -152,7 +156,8 @@ fun ProfileScreen(navController : NavController) {
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
                         Row (
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(Icons.Default.Add, contentDescription = null, tint = Color.White)
@@ -187,7 +192,17 @@ fun ProfileScreen(navController : NavController) {
                             .padding(16.dp)
                     ) {
                         Row (
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .clickable { navController.navigate(Screen.Login.route) 
+                                    try {
+                                        scope.launch {
+                                            Appwrite.onLogout()
+                                        }
+                                    } catch (e: Throwable) {
+                                        // Handle logout error if needed
+                                    }
+                                }
+                                .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(Icons.Default.ExitToApp, contentDescription = null, tint = Color.White)
