@@ -11,15 +11,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.graphics.Colorn 
+import androidx.compose.ui.graphics.Color 
 import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.navigation.Screen
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 
 @Composable
 fun LoginScreen() {
-    val email by remember { mutableStateOf("") }
-    val password by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,7 +34,7 @@ fun LoginScreen() {
             onValueChange = { email = it },
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
+            colors = OutlinedTextFieldDefaults.outlinedTextFieldColors(
                 textColor = Color.White,
                 focusedBorderColor = Color.White,
                 unfocusedBorderColor = Color.Gray,
@@ -48,7 +48,7 @@ fun LoginScreen() {
             onValueChange = { password = it },
             label = { Text("Password") },
             modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
+            colors = OutlinedTextFieldDefaults.outlinedTextFieldColors(
                 textColor = Color.White,
                 focusedBorderColor = Color.White,
                 unfocusedBorderColor = Color.Gray,
