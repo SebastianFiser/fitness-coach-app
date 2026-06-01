@@ -97,7 +97,8 @@ fun LoginScreen(navController: NavController) {
                         navController.navigate(Screen.Overview.route)
                     } catch (e: Throwable) {
                         scope.launch {
-                            snackbarHostState.showSnackbar("Login failed: ${e.message}")
+                            var errorMsg = Appwrite.ParseErrorMsg(e.message ?: "Unknown error")
+                            snackbarHostState.showSnackbar("Login failed: ${errorMsg}")
                         }
                     }
                 } },

@@ -57,4 +57,12 @@ object Appwrite {
     suspend fun deleteAccount() {
         /*Todo */
     }
+
+    suspend fun ParseErrorMsg(errorMsg: String): String {
+        return when {
+            errorMsg.contains("Invalid email or password") -> "Invalid email or password"
+            errorMsg.contains("User already exists") -> "User with this email already exists"
+            else -> "Unknown error: $errorMsg"
+        }
+    }
 }

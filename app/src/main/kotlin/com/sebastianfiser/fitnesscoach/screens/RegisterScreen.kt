@@ -113,7 +113,8 @@ fun RegisterScreen(navController: NavController) {
                             navController.navigate(Screen.Overview.route)
                         } catch (e: Throwable) {
                             scope.launch {
-                                snackbarHostState.showSnackbar("Registration failed: ${e.message}")
+                                var errorMsg = Appwrite.ParseErrorMsg(e.message ?: "Unknown error") 
+                                snackbarHostState.showSnackbar("Registration failed: ${errorMsg}")
                             }
                         }
                     }
