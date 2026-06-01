@@ -75,7 +75,9 @@ fun LoginScreen(navController: NavController) {
                         Appwrite.onLogin(email, password)
                         navController.navigate(Screen.Overview.route)
                     } catch (e: Throwable) {
-                        errorMessage = "Login failed: ${e.message}"
+                        scope.launch {
+                            snackbarHostState.showSnackbar("Login failed: ${e.message}")
+                        }
                     }
                 } },
                 modifier = Modifier.fillMaxWidth(),
@@ -88,13 +90,6 @@ fun LoginScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Don't have an account? Register", color = Color.White)
-            }
-            if (errorMessage.isNotEmpty()) {
-                Text(
-                    text = errorMessage,
-                    color = Color.Red,
-                    fontSize = 14.sp
-                )
             }
         }
     }

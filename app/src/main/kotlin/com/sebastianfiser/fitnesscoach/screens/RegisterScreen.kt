@@ -91,7 +91,9 @@ fun RegisterScreen(navController: NavController) {
                             Appwrite.onLogin(email, password)
                             navController.navigate(Screen.Overview.route)
                         } catch (e: Throwable) {
-                            // Handle
+                            scope.launch {
+                                snackbarHostState.showSnackbar("Registration failed: ${e.message}")
+                            }
                         }
                     }
                 },
