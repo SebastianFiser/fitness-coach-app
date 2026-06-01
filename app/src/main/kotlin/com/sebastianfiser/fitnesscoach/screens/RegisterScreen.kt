@@ -28,9 +28,12 @@ fun RegisterScreen(navController: NavController) {
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) { data ->
             Surface(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
-                border = BorderStroke(1.dp, Color.White),
-                color = Color.Black,
+                border = BorderStroke(3.dp, Color.White),
+                color = Color(0xFFa84444),
             ) {
                 Snackbar(
                     snackbarData = data,

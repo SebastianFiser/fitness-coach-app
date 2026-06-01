@@ -31,9 +31,12 @@ fun LoginScreen(navController: NavController) {
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) { data ->
             Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 shape = RoundedCornerShape(8.dp),
                 border = BorderStroke(1.dp, Color.White),
-                color = Color.Black,
+                color = Color(0xFFa84444),
             ) {
                 Snackbar(
                     snackbarData = data,
