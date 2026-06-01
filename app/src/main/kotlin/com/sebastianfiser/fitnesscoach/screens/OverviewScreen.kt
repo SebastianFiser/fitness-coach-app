@@ -20,7 +20,7 @@ import androidx.compose.ui.draw.clip
 import java.time.LocalDate
 import androidx.compose.ui.draw.alpha
 import androidx.compose.foundation.border
-import
+import androidx.activity.compose.BackHandler
 
 @Composable
 fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean) {
