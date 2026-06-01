@@ -19,13 +19,13 @@ import com.sebastianfiser.fitnesscoach.models.Appwrite
 import kotlinx.coroutines.launch
 
 
-
 @Composable
 fun LoginScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     var errorMessage by remember { mutableStateOf("")}
+    val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { paddingValues ->
