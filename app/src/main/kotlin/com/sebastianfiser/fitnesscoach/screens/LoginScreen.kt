@@ -19,6 +19,7 @@ import com.sebastianfiser.fitnesscoach.models.Appwrite
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.BorderStroke
+import androidx.activity.compose.BackHandler
 
 
 @Composable
@@ -28,6 +29,9 @@ fun LoginScreen(navController: NavController) {
     val scope = rememberCoroutineScope()
     var errorMessage by remember { mutableStateOf("")}
     val snackbarHostState = remember { SnackbarHostState() }
+    BackHandler(enabled = true) {
+        //ignore the action
+    }
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) { data ->
             Surface(

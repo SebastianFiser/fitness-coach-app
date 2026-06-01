@@ -20,11 +20,15 @@ import androidx.compose.ui.draw.clip
 import java.time.LocalDate
 import androidx.compose.ui.draw.alpha
 import androidx.compose.foundation.border
+import
 
 @Composable
 fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean) {
     var day = LocalDate.now().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }
     val Locale = java.util.Locale.getDefault()
+    BackHandler(enabled = true) {
+        //ignore the action
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()

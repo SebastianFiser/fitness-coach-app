@@ -18,6 +18,7 @@ import com.sebastianfiser.fitnesscoach.navigation.Screen
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.BorderStroke
+import androidx.activity.compose.BackHandler
 
 @Composable
 fun RegisterScreen(navController: NavController) {
@@ -25,6 +26,9 @@ fun RegisterScreen(navController: NavController) {
     var password by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
     val snackbarHostState = remember { SnackbarHostState() }
+    BackHandler(enabled = true) {
+        navController.popBackStack()
+    }
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) { data ->
             Surface(
