@@ -35,10 +35,11 @@ fun LoginScreen(navController: NavController) {
                 border = BorderStroke(1.dp, Color.White),
                 color = Color.Black,
             ) {
-                SnackbarData = data,
-                containerColor = Color.Transparent,
-                contentColor = Color.White,
-                actionColor = Color.White,
+                Snackbar(
+                    snackbarData = data,
+                    containerColor = Color.Transparent,
+                    contentColor = Color.White,
+                )
             }
         }}
     ) { paddingValues ->
