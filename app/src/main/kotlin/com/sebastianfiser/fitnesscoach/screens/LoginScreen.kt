@@ -17,6 +17,8 @@ import com.sebastianfiser.fitnesscoach.navigation.Screen
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import com.sebastianfiser.fitnesscoach.models.Appwrite
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.BorderStroke
 
 
 @Composable
@@ -27,7 +29,18 @@ fun LoginScreen(navController: NavController) {
     var errorMessage by remember { mutableStateOf("")}
     val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) }
+        snackbarHost = { SnackbarHost(snackbarHostState) { data ->
+            Surface(
+                shape = RoundedCornerShape(8.dp),
+                border = BorderStroke(1.dp, Color.White),
+                color = Color.Black,
+            ) {
+                SnackbarData = data,
+                containerColor = Color.Transparent,
+                contentColor = Color.White,
+                actionColor = Color.White,
+            }
+        }}
     ) { paddingValues ->
         Column(
             modifier = Modifier

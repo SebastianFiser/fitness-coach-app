@@ -16,6 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.navigation.Screen
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.BorderStroke
 
 @Composable
 fun RegisterScreen(navController: NavController) {
@@ -24,7 +26,18 @@ fun RegisterScreen(navController: NavController) {
     var name by remember { mutableStateOf("") }
     val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) }
+        snackbarHost = { SnackbarHost(snackbarHostState) { data ->
+            Surface(
+                shape = RoundedCornerShape(8.dp),
+                border = BorderStroke(1.dp, Color.White),
+                color = Color.Black,
+            ) {
+                SnackbarData = data,
+                containerColor = Color.Transparent,
+                contentColor = Color.White,
+                actionColor = Color.White,
+            }
+        }}
     ) { paddingValues ->
         Column(
             modifier = Modifier
