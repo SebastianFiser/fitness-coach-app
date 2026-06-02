@@ -41,6 +41,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.activity.compose.BackHandler
 import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
+import androidx.compose.runtime.rememberCoroutineScope
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -239,10 +240,11 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                         TextButton(
                             enabled = weight.isNotEmpty() && reps.isNotEmpty() && !isDone && (setIndex == 0 || setData[setIndex - 1].isDone ) && timerRunningForSet == -1,
                             onClick = { restTimeSeconds = 90; timerRunningForSet = setIndex; setData[setIndex] = setData[setIndex].copy(isDone = true); focusManager.clearFocus(); scope.launch {
+                                val userId = Appwrite.account.get().id
                                 viewModel.saveSet(
                                     workoutId = workoutId,
                                     exerciseName = currentExercise?.name ?: "Unknown Exercise",
-                                    weight = weight.toFloatOrNull() ?: 0,
+                                    weight = weight.toFloatOrNull() ?: 0f,
                                     reps = reps.toIntOrNull() ?: 0
                                 )
                             } },
