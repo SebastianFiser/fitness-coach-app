@@ -42,6 +42,8 @@ import androidx.activity.compose.BackHandler
 import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+import com.sebastianfiser.fitnesscoach.models.Appwrite
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -243,6 +245,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                                 val userId = Appwrite.account.get().id
                                 viewModel.saveSet(
                                     workoutId = workoutId,
+                                    userId = userId,
                                     exerciseName = currentExercise?.name ?: "Unknown Exercise",
                                     weight = weight.toFloatOrNull() ?: 0f,
                                     reps = reps.toIntOrNull() ?: 0
