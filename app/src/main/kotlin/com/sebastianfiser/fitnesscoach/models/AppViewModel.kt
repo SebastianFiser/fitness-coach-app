@@ -9,7 +9,9 @@ import android.util.Log
 
 class AppViewModel : ViewModel() {
     private val repository = WorkoutRepository(Appwrite.client)
-    var workouts by mutableStateOf<List<Document>>(emptyList())
+    var workouts by mutableStateOf<List<Document<Map<String, Any>>>>(
+        emptyList()
+    )
     var restTime by mutableStateOf(90)
     var unit by mutableStateOf("kg")
     var isDarkTheme by mutableStateOf<Boolean?>(false)

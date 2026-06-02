@@ -1,15 +1,16 @@
 package com.sebastianfiser.fitnesscoach.models
 
-import android.content.Context
 import io.appwrite.Client
 import io.appwrite.ID
-import io.appwrite.services.Database
 import io.appwrite.models.Document
 import io.appwrite.models.*
 import io.appwrite.services.*
+import io.appwrite.Permission
+import io.appwrite.Role
+import io.appwrite.Query
 
-class AppwriteDB(private valclient: Client) {
-    private val database = Databases(client)
+class AppwriteDB(private val client: Client) {
+    private val databases = Databases(client)
 
     companion object {
         private const val DB_ID = "fitness-coach-db"
@@ -18,7 +19,7 @@ class AppwriteDB(private valclient: Client) {
         private const val SETS_COL_ID = "sets"
     }
 
-    suspend fun saveWorkout(userId: String, date: String): Result<Document> {
+    suspend fun saveWorkout(userId: String, date: String): Result<Document<Map<String, Any>>> {
         return runCatching {
             databases.createDocument(
                 databaseId = DB_ID,
@@ -37,7 +38,7 @@ class AppwriteDB(private valclient: Client) {
         }
     }
 
-    suspend fun saveSet(workoutId: String, userId: String, exerciseName: String, weight: Float, reps: Int) : Result<Document> {
+    suspend fun saveSet(workoutId: String, userId: String, exerciseName: String, weight: Float, reps: Int) : Result<Document<Map<String, Any>>> {
         return runCatching {
             databases.createDocument(
                 databaseId = DB_ID,
@@ -59,7 +60,7 @@ class AppwriteDB(private valclient: Client) {
         }
     }
 
-    suspend fun getSets(workoutId: String): Result<List<Document>> {
+    suspend fun getSets(workoutId: String): Result<List<Document<Map<String, Any>>>> {
         return runCatching {
             val response = databases.listDocuments(
                 databaseId = DB_ID,
@@ -72,7 +73,7 @@ class AppwriteDB(private valclient: Client) {
         }
     }
 
-    suspend fun getWorkouts(userId: String): Result<List<Document>> {
+    suspend fun getWorkouts(userId: String): Result<List<Document<Map<String, Any>>>> {
         return runCatching {
             val response = databases.listDocuments(
                 databaseId = DB_ID,

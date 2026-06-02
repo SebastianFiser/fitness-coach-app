@@ -54,19 +54,6 @@ object Appwrite {
         }
     }
 
-    suspend fun deleteAccount(): Result<Unit> {
-        return withContext(Dispatchers.IO) {
-            try {
-                functions.createExecution(
-                    functionId = "deleteUser"
-                )
-                Result.success(Unit)
-            } catch (e: Throwable) {
-                Result.failure(e)
-            }
-        }
-    }
-
     suspend fun ParseErrorMsg(errorMsg: String): String {
         return when {
             errorMsg.contains("Invalid email or password") -> "Invalid email or password"
