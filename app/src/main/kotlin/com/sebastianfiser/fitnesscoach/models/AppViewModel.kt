@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import io.appwrite.models.Document
 import android.util.Log
+import java.time.LocalDate
 
 class AppViewModel : ViewModel() {
     private val repository = WorkoutRepository(Appwrite.client)
@@ -31,5 +32,14 @@ class AppViewModel : ViewModel() {
     suspend fun saveSet(workoutId: String, userId: String, exerciseName: String, weight: Float, reps: Int) {
         repository.saveSet(workoutId, userId, exerciseName, weight, reps)
             .onFailure { e -> Log.d("AppViewModel", "Failed to save set: ${e.message}") }
+    }
+
+    suspend fun createWorkout(): String? {
+        val userId = Appwrite.account.get().id
+        val date = LocalDate.now().toString()
+        return repository.saveWorkout(userId, date)
+            .onSuccess { loadWorkouts(userId) }
+            .onFailure { e -> Log.d("AppViewModel", "Failed to create workout: ${e.message}") }
+            .getOrNull()?.id
     }
 }

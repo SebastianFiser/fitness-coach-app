@@ -59,6 +59,14 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
     }
     val focusManager = LocalFocusManager.current
     var scrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
+    var workoutId by remember { mutableStateOf("") }
+    LaunchedEffect(Unit) {
+        val id = viewModel.createWorkout()
+        if (id != null) {
+            workoutId = id
+        }
+    }
     BackHandler { showExitDialog = true }
     Column(
         modifier = Modifier
@@ -230,7 +238,14 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                         )
                         TextButton(
                             enabled = weight.isNotEmpty() && reps.isNotEmpty() && !isDone && (setIndex == 0 || setData[setIndex - 1].isDone ) && timerRunningForSet == -1,
-                            onClick = { restTimeSeconds = 90; timerRunningForSet = setIndex; setData[setIndex] = setData[setIndex].copy(isDone = true); focusManager.clearFocus() },
+                            onClick = { restTimeSeconds = 90; timerRunningForSet = setIndex; setData[setIndex] = setData[setIndex].copy(isDone = true); focusManager.clearFocus(); scope.launch {
+                                viewModel.saveSet(
+                                    workoutId = workoutId,
+                                    exerciseName = currentExercise?.name ?: "Unknown Exercise",
+                                    weight = weight.toFloatOrNull() ?: 0,
+                                    reps = reps.toIntOrNull() ?: 0
+                                )
+                            } },
                             colors = ButtonDefaults.buttonColors(
                                 contentColor = Color.White,
                                 containerColor = Color.Transparent,
