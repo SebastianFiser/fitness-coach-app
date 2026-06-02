@@ -54,8 +54,17 @@ object Appwrite {
         }
     }
 
-    suspend fun deleteAccount() {
-        /*Todo */
+    suspend fun deleteAccount(): Result<Unit> {
+        return withContext(Dispatchers.IO) {
+            try {
+                functions.createExecution(
+                    functionId = "deleteUser"
+                )
+                Result.success(Unit)
+            } catch (e: Throwable) {
+                Result.failure(e)
+            }
+        }
     }
 
     suspend fun ParseErrorMsg(errorMsg: String): String {
