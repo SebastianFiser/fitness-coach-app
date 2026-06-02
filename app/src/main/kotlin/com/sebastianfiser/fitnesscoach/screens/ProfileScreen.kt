@@ -231,7 +231,7 @@ fun ProfileScreen(navController : NavController) {
                                             onClick = {
                                                 showAlert = false
                                                 scope.launch{
-                                                    Appwrite.deleteAccount()
+                                                    /*Todo */
                                                 } 
                                             }
                                         ) {
