@@ -89,7 +89,7 @@ fun StartContent(viewModel: AppViewModel) {
     Scaffold(
         bottomBar = {
             val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-            if (loggedIn == true && currentRoute != Screen.Workout.route && currentRoute != Screen.Login.route && currentRoute != Screen.Register.route) {
+            if (currentRoute != Screen.Workout.route && currentRoute != Screen.Login.route && currentRoute != Screen.Register.route && currentRoute != null) {
                 BottomNav(navController = navController)
             }
         }
