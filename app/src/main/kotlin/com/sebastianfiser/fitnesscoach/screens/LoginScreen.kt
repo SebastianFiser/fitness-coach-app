@@ -95,7 +95,7 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
                     try {
                         Appwrite.onLogin(email, password)
                         val currentUser = Appwrite.getCurrentUser()
-                        userId = currentUser?.id ?: return@launch
+                        val userId = currentUser?.id ?: return@launch
                         viewModel.seedSchedule(userId)
                         viewModel.loadSchedule(userId)
                         navController.navigate(Screen.Overview.route)
