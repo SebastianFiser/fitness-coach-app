@@ -81,7 +81,6 @@ class MainActivity : ComponentActivity() {
 fun StartContent(viewModel: AppViewModel) {
     var isWorkoutDone by remember {mutableStateOf(false)}
     val navController = rememberNavController()
-    val currentRoute= navController.currentBackStackEntryAsState().value?.destination?.route
     var loggedIn by remember { mutableStateOf<Boolean?>(null)}
     LaunchedEffect(Unit) {
         loggedIn = Appwrite.onCheckSession()
@@ -89,7 +88,8 @@ fun StartContent(viewModel: AppViewModel) {
     
     Scaffold(
         bottomBar = {
-            if (loggedIn == true && currentRoute != Screen.Workout.route && currentRoute != Screen.Login.route && currentRoute != Screen.Register.route && currentRoute != null) {
+            val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+            if (loggedIn == true && currentRoute != Screen.Workout.route && currentRoute != Screen.Login.route && currentRoute != Screen.Register.route &&) {
                 BottomNav(navController = navController)
             }
         }
