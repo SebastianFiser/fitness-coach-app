@@ -89,7 +89,7 @@ fun StartContent(viewModel: AppViewModel) {
     
     Scaffold(
         bottomBar = {
-            if (loggedIn == true && currentRoute != Screen.Workout.route && currentRoute != Screen.Login.route && currentRoute != Screen.Register.route) {
+            if (loggedIn == true && currentRoute != Screen.Workout.route && currentRoute != Screen.Login.route && currentRoute != Screen.Register.route && currentRoute != null) {
                 BottomNav(navController = navController)
             }
         }
