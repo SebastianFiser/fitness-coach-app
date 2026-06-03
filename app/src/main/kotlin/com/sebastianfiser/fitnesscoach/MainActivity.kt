@@ -84,6 +84,11 @@ fun StartContent(viewModel: AppViewModel) {
     var loggedIn by remember { mutableStateOf<Boolean?>(null)}
     LaunchedEffect(Unit) {
         loggedIn = Appwrite.onCheckSession()
+        if (loggedIn == true) {
+            val currentUser = Appwrite.getCurrentUser()
+            val userId = currentUser?.id ?: return@LaunchedEffect
+            viewModel.loadSchedule(userId)
+        }
     }
     
     Scaffold(

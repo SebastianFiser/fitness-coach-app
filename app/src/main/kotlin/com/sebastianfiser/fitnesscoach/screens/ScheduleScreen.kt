@@ -145,7 +145,7 @@ fun scheduleExerciseRow(exercise: Document<Map<String, Any>>) {
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                "${exercise.data["weight"] as Float} kg",
+                "${(exercise.data["weight"] as? Double)?.toFloat() ?: exercise.data["weight"] as Float} kg",
                 color = Color.Gray,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(end = 8.dp)
