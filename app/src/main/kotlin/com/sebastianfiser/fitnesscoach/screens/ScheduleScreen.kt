@@ -16,7 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.ExperimentalFoundationApi
 import io.appwrite.models.Document
-import com.sebastian.fitnesscoach.models.AppviewModel
+import com.sebastianfiser.fitnesscoach.models.AppViewModel
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)

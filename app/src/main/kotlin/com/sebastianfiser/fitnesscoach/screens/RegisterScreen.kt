@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.BorderStroke
 import androidx.activity.compose.BackHandler
+import com.sebastianfiser.fitnesscoach.models.AppViewModel
 
 @Composable
 fun RegisterScreen(navController: NavController, viewModel: AppViewModel) {

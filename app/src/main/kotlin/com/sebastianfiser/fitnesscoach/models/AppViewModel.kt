@@ -19,7 +19,7 @@ class AppViewModel : ViewModel() {
     var restTime by mutableStateOf(90)
     var unit by mutableStateOf("kg")
     var isDarkTheme by mutableStateOf<Boolean?>(false)
-    val scheduleByDay: Map<String, List<Document<Map<String, Any>>>>>
+    val scheduleByDay: Map<String, List<Document<Map<String, Any>>>>
         get() = schedule.groupBy { it.data["day"] as String }
 
     suspend fun loadWorkouts(userId: String) {
