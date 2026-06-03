@@ -133,6 +133,12 @@ fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String) 
 
 @Composable
 fun scheduleExerciseRow(exercise: Document<Map<String, Any>>) {
+    val weight = when (val w = exercise.data["weight"]) {
+        is Double -> w.toFloat()
+        is Long -> w.toFloat()
+        is Float -> w
+        else -> 0f
+    }
     HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 8.dp))
     Row(
         modifier = Modifier
@@ -145,7 +151,7 @@ fun scheduleExerciseRow(exercise: Document<Map<String, Any>>) {
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                "${(exercise.data["weight"] as? Double)?.toFloat() ?: exercise.data["weight"] as Float} kg",
+                "$weight kg",
                 color = Color.Gray,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(end = 8.dp)
