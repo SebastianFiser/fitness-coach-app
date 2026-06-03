@@ -23,7 +23,7 @@ import androidx.activity.compose.BackHandler
 
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
@@ -94,6 +94,8 @@ fun LoginScreen(navController: NavController) {
                 onClick = { scope.launch {
                     try {
                         Appwrite.onLogin(email, password)
+                        val currentUser = Appwrite.getCurrentUser()
+                        viewModel.seedSchedule(currentUser?.id ?: return@launch)
                         navController.navigate(Screen.Overview.route)
                     } catch (e: Throwable) {
                         scope.launch {

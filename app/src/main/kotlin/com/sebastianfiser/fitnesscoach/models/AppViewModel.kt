@@ -13,9 +13,14 @@ class AppViewModel : ViewModel() {
     var workouts by mutableStateOf<List<Document<Map<String, Any>>>>(
         emptyList()
     )
+    var schedule by mutableStateOf<List<Document<Map<String, Any>>>>(
+        emptyList()
+    )
     var restTime by mutableStateOf(90)
     var unit by mutableStateOf("kg")
     var isDarkTheme by mutableStateOf<Boolean?>(false)
+    val scheduleByDay: Map<String, List<Document<Map<String, Any>>>>>
+        get() = schedule.groupBy { it.data["day"] as String }
 
     suspend fun loadWorkouts(userId: String) {
         repository.getWorkouts(userId)
@@ -42,4 +47,39 @@ class AppViewModel : ViewModel() {
             .onFailure { e -> Log.d("AppViewModel", "Failed to create workout: ${e.message}") }
             .getOrNull()?.id
     }
+
+    suspend fun loadSchedule(userId: String) {
+        repository.getSchedule(userId)
+            .onSuccess { schedule -> this.schedule = schedule }
+            .onFailure { e -> Log.d("AppViewModel", "Failed to load schedule: ${e.message}") }
+    }
+
+    suspend fun seedSchedule(userId: String) {
+        val dayAbbreviations = mapOf(
+            "Monday" to "Mo",
+            "Tuesday" to "Tu",
+            "Wednesday" to "We",
+            "Thursday" to "Th",
+            "Friday" to "Fr",
+            "Saturday" to "Sa",
+            "Sunday" to "Su"
+        )
+        loadSchedule(userId)
+        if (schedule.isEmpty()) {
+            weekData.forEach { day ->
+                day.exercises.forEach { exercise ->
+                    repository.saveScheduleItem(
+                        userId = userId,
+                        day = dayAbbreviations[day.day] ?: day.day,
+                        exerciseName = exercise.name,
+                        sets = exercise.sets,
+                        reps = exercise.reps,
+                        weight = exercise.weight
+                    )
+                }
+            }
+        }
+    }
+
+
 }

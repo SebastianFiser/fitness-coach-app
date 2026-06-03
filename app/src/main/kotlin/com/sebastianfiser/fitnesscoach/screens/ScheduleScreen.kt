@@ -1,8 +1,5 @@
 package com.sebastianfiser.fitnesscoach.screens
 
-import com.sebastianfiser.fitnesscoach.models.Exercise
-import com.sebastianfiser.fitnesscoach.models.Day
-import com.sebastianfiser.fitnesscoach.models.weekData
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,10 +15,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.ExperimentalFoundationApi
+import io.appwrite.models.Document
+import com.sebastian.fitnesscoach.models.AppviewModel
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
-fun schduleScreen() {
+fun schduleScreen( viewModel: AppViewModel ) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -47,8 +46,8 @@ fun schduleScreen() {
         stickyHeader {
             DrawDayrow()
         }
-        items(weekData) { day ->
-            displayDaySchedule(day.exercises, day.day)
+        items(viewModel.scheduleByDay.entries.toList()) { day ->
+            displayDaySchedule(day.value, day.key)
         }
     }
 }
@@ -103,7 +102,7 @@ fun DrawDayrow() {
 }
 
 @Composable
-fun displayDaySchedule(exercise: List<Exercise>, day: String) {
+fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String) {
     //var day = LocalDate.now().dayOfWeek
     //var dayNuminMonth = LocalDate.now().dayOfMonth
     var month = LocalDate.now().monthValue 
@@ -126,8 +125,31 @@ fun displayDaySchedule(exercise: List<Exercise>, day: String) {
             )
             Spacer(modifier = Modifier.height(8.dp))
             exercise.forEach { exercise ->
-                    ExerciseRow(exercise)
+                    scheduleExerciseRow(exercise)
                 }
+        }
+    }
+}
+
+@Composable
+fun scheduleExerciseRow(exercise: Document<Map<String, Any>>) {
+    HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 8.dp))
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = exercise.data["exerciseName"] as String, color = Color.White)
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "${exercise.data["weight"] as Float} kg",
+                color = Color.Gray,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(end = 8.dp)
+            )
         }
     }
 }

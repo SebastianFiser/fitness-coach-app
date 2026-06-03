@@ -61,4 +61,12 @@ object Appwrite {
             else -> "Unknown error: $errorMsg"
         }
     }
+
+    suspend fun getCurrentUser(): User<Map<String, Any>>? {
+        return try {
+            account.get()
+        } catch (e: Throwable) {
+            null
+        }
+    }
 }

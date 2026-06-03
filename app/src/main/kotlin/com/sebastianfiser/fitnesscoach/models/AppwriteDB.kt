@@ -17,6 +17,7 @@ class AppwriteDB(private val client: Client) {
         private const val USER_SETTINGS_COL_ID = "user_settings"
         private const val WORKOUT_COL_ID = "workouts"
         private const val SETS_COL_ID = "sets"
+        private const val SCHEDULE_COL_ID = "schedule"
     }
 
     suspend fun saveWorkout(userId: String, date: String): Result<Document<Map<String, Any>>> {
@@ -84,6 +85,52 @@ class AppwriteDB(private val client: Client) {
                 )
             )
             response.documents
+        }
+    }
+
+    suspend fun saveScheduleItem(userId: String, day: String, exerciseName: String, sets: Int, reps: Int, weight: Float): Result<Document<Map<String, Any>>> {
+        return runCatching {
+            databases.createDocument(
+                databaseId = DB_ID,
+                collectionId = SCHEDULE_COL_ID,
+                documentId = ID.unique(),
+                data = mapOf(
+                    "userId" to userId,
+                    "day" to day,
+                    "exerciseName" to exerciseName,
+                    "sets" to sets,
+                    "reps" to reps,
+                    "weight" to weight
+                ),
+                permissions = listOf(
+                    Permission.read(Role.user(userId)),
+                    Permission.update(Role.user(userId)),
+                    Permission.delete(Role.user(userId))
+                )
+            )
+        }
+    }
+
+    suspend fun getSchedule(userId: String): Result<List<Document<Map<String, Any>>>> {
+        return runCatching {
+            val response = databases.listDocuments(
+                databaseId = DB_ID,
+                collectionId = SCHEDULE_COL_ID,
+                queries = listOf(
+                    Query.equal("userId", userId)
+                )
+            )
+            response.documents
+        }
+    }
+
+    suspend fun deleteScheduleItem(itemId: String, userId: String): Result<Unit> {
+        return runCatching {
+            databases.deleteDocument(
+                databaseId = DB_ID,
+                collectionId = SCHEDULE_COL_ID,
+                documentId = itemId
+            )
         }
     }
 }

@@ -21,7 +21,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.activity.compose.BackHandler
 
 @Composable
-fun RegisterScreen(navController: NavController) {
+fun RegisterScreen(navController: NavController, viewModel: AppViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
@@ -110,6 +110,8 @@ fun RegisterScreen(navController: NavController) {
                         try {
                             Appwrite.onRegister(email, password, name)
                             Appwrite.onLogin(email, password)
+                            val currentUser = Appwrite.getCurrentUser()
+                            viewModel.seedSchedule(currentUser?.id ?: return@launch)
                             navController.navigate(Screen.Overview.route)
                         } catch (e: Throwable) {
                             scope.launch {
