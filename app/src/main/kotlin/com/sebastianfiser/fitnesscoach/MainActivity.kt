@@ -47,7 +47,7 @@ import com.sebastianfiser.fitnesscoach.screens.StatsScreen
 import com.sebastianfiser.fitnesscoach.screens.LoginScreen
 import com.sebastianfiser.fitnesscoach.screens.RegisterScreen
 import com.sebastianfiser.fitnesscoach.screens.SetupScheduleScreen
-import com.sebastianfiser.fitnesscoach.screens.ExercisePickScreen
+import com.sebastianfiser.fitnesscoach.screens.workoutSelectScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -122,8 +122,8 @@ fun StartContent(viewModel: AppViewModel) {
                 composable(Screen.SetupSchedule.route) { SetupScheduleScreen(navController = navController, viewModel = viewModel) }
                 composable(Screen.ExercisePick.route) { 
                     workoutSelectScreen( 
-                        onExerciseSelected = { 
-                            viewModel.selectedExercise = it 
+                        onExerciseSelected = { exercise -> 
+                            viewModel.selectedExercise = exercise
                             navController.popBackStack() 
                         },
                         navController = navController
