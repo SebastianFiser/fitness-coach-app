@@ -113,7 +113,7 @@ fun RegisterScreen(navController: NavController, viewModel: AppViewModel) {
                             Appwrite.onLogin(email, password)
                             val currentUser = Appwrite.getCurrentUser()
                             viewModel.seedSchedule(currentUser?.id ?: return@launch)
-                            navController.navigate(Screen.Overview.route)
+                            navController.navigate(Screen.SetupSchedule.route)
                         } catch (e: Throwable) {
                             scope.launch {
                                 var errorMsg = Appwrite.ParseErrorMsg(e.message ?: "") 
