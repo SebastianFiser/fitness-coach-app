@@ -21,7 +21,8 @@ class AppViewModel : ViewModel() {
     var isDarkTheme by mutableStateOf<Boolean?>(false)
     val scheduleByDay: Map<String, List<Document<Map<String, Any>>>>
         get() = schedule.groupBy { it.data["day"] as String }
-
+    var selectedExercise by remember { mutableStateOf<Exercise?>(null) }
+    
     suspend fun loadWorkouts(userId: String) {
         repository.getWorkouts(userId)
             .onSuccess { workouts -> this.workouts = workouts}

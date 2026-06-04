@@ -6,9 +6,9 @@ import com.sebastianfiser.fitnesscoach.models.Day
 val weekData = listOf(
     Day("Monday", listOf(
         Exercise("Bench press",105.0f, 10, 4),
-        Exercise("Peck deck 20x3",50.0f, 3, 20),
-        Exercise("Dumbell flyes 10x4",35.0f, 4, 10),
-        Exercise("Cable cross 15x3",40.0f, 3, 15),
+        Exercise("Peck deck ",50.0f, 3, 20),
+        Exercise("Dumbell flyes ",35.0f, 4, 10),
+        Exercise("Cable cross ",40.0f, 3, 15),
     )),
     Day("Tuesday", listOf(
         Exercise("Squats",135.0f, 3, 20),
@@ -33,7 +33,7 @@ val weekData = listOf(
     Day("Saturday", listOf(
         Exercise("Tricep pushdown",50.0f, 4, 12),
         Exercise("Overhead tricep extension",40.0f, 3, 15),
-        Exercise("Dips 10x4", 0.0f, 4, 8)
+        Exercise("Dips", 0.0f, 4, 8)
     )),
     Day("Sunday", listOf(
         Exercise("Rest day", 0.0f, 0, 0)

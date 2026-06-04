@@ -106,6 +106,16 @@ fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String) 
     //var day = LocalDate.now().dayOfWeek
     //var dayNuminMonth = LocalDate.now().dayOfMonth
     var month = LocalDate.now().monthValue 
+    val dayLabels = mapOf(
+        "Mo" to "Monday",
+        "Tu" to "Tuesday",
+        "We" to "Wednesday",
+        "Th" to "Thursday",
+        "Fr" to "Friday",
+        "Sa" to "Saturday",
+        "Su" to "Sunday"
+    )
+    val dayName = dayLabels[day] ?: day
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -118,7 +128,7 @@ fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String) 
             horizontalAlignment = Alignment.Start
         ) {
             Text (
-                "$day",
+                "$dayName",
                 color = Color.White,
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
