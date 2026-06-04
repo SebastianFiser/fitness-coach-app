@@ -1,4 +1,4 @@
-package com.seabastianfiser.fitnesscoach.screens
+package com.sebastianfiser.fitnesscoach.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

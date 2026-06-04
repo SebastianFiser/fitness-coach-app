@@ -19,6 +19,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun workoutSelectScreen(onExerciseSelected: (String) -> Unit, navController: NavController) {
     var query by remember { mutableStateOf("") }
