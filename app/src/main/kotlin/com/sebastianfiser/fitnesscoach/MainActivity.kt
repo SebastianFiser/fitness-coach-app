@@ -120,7 +120,15 @@ fun StartContent(viewModel: AppViewModel) {
                 composable(Screen.Login.route) { LoginScreen(navController = navController, viewModel = viewModel) }
                 composable(Screen.Register.route) { RegisterScreen(navController = navController, viewModel = viewModel) }
                 composable(Screen.SetupSchedule.route) { SetupScheduleScreen(navController = navController, viewModel = viewModel) }
-                composable(Screen.ExercisePick.route) { workoutSelectScreen( onExerciseSelected = { viewModel.selectedExercise = it navController.popStackBack }, navController = navController) }
+                composable(Screen.ExercisePick.route) { 
+                    workoutSelectScreen( 
+                        onExerciseSelected = { 
+                            viewModel.selectedExercise = it 
+                            navController.popBackStack() 
+                        },
+                        navController = navController
+                    )
+                }
             }
         }
     }
