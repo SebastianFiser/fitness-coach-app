@@ -75,7 +75,9 @@ fun workoutSelectScreen(onExerciseSelected: (String) -> Unit, navController: Nav
                     filtedExercises.forEach { exercise ->
                         filterItem(exercise, onSelected = {
                             onExerciseSelected(exercise)
-                            navController.popBackStack()
+                            navController.navigate(Screen.SetupSchedule.route) {
+                                popUpTo(Screen.SetupSchedule.route) { inclusive = false }
+                            }
                         })
                     }
                 }
