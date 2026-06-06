@@ -34,13 +34,12 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 shape = RoundedCornerShape(8.dp),
                 border = BorderStroke(3.dp, Color.White),
                 colors = CardDefaults.cardColors(containerColor = Color(0xFFa84444)),
-                onClick = { navController.popBackStack() }
+                onClick = { /*Implement saving */ }
             ) {
                 Row(
                     modifier = Modifier
-                        .clickable{ /* Implement saving */ }
                         .padding(16.dp),
-                    horizontalArrangement = Arrangement.spaceBetween,
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text("Save Schedule", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
@@ -61,7 +60,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp),
                     border = BorderStroke(2.dp, Color.White),
-                    color = Color(0xFF333333),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF333333)),
                     onClick = { 
                         viewModel.selectedDay = day
                         navController.navigate(Screen.ExercisePick.route)

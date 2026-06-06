@@ -37,7 +37,7 @@ import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Settings
 
 import com.sebastianfiser.fitnesscoach.screens.MainWorkoutCard
-import com.sebastianfiser.fitnesscoach.screens.schduleScreen
+import com.sebastianfiser.fitnesscoach.screens.SetupSchedule
 import com.sebastianfiser.fitnesscoach.screens.LeaderboardScreen
 import com.sebastianfiser.fitnesscoach.screens.ProfileScreen
 import com.sebastianfiser.fitnesscoach.models.Exercise
