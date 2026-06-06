@@ -55,6 +55,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text("Save Schedule", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text("selectedDay: ${viewModel.selectedDay}", color = Color.White)
                     Icon(Icons.Default.Check, contentDescription = "Save", tint = Color.White)
                 }
             }
