@@ -90,6 +90,8 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     }
                     HorizontalDivider(color = Color.Gray, thickness = 0.5.dp)
                 }
+                Text("key: ${dayMap[day]}, data: ${viewModel.scheduleSetup[dayMap[day]]}", color = Color.White, modifier = Modifier.padding(16.dp))
+
                 val exercisesForDay = viewModel.scheduleSetup[dayMap[day]] ?: emptyList()
                 exercisesForDay.forEach { exercise ->
                     Text("- ${exercise.name}", fontSize = 16.sp, color = Color.LightGray, modifier = Modifier.padding(start = 32.dp, top = 4.dp))
@@ -98,9 +100,6 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
             }
             item {
                 Text("count: ${viewModel.scheduleSetup.size}", color = Color.White, modifier = Modifier.padding(16.dp))
-            }
-            item{
-                Text("key: ${dayMap[day]}, data: ${viewModel.scheduleSetup[dayMap[day]]}", color = Color.White, modifier = Modifier.padding(16.dp))
             }
         }
     }
