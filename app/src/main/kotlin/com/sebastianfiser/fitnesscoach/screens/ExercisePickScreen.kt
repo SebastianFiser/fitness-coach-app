@@ -113,6 +113,7 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                     val current = viewModel.scheduleSetup[key] ?: mutableListOf()
                     current.add(newExercise)
                     viewModel.scheduleSetup[key] = current.toMutableList()
+                    android.util.Log.d("DEBUG", "scheduleSetup: ${viewModel.scheduleSetup}")
                     navController.popBackStack()
                 }) {
                     Text("Add")
