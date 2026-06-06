@@ -15,6 +15,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import com.sebastianfiser.fitnesscoach.navigation.Screen
 
 @Composable
 fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
@@ -28,7 +33,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
                 border = BorderStroke(3.dp, Color.White),
-                color = Color(0xFFa84444),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFFa84444)),
                 onClick = { navController.popBackStack() }
             ) {
                 Row(
