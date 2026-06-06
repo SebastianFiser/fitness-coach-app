@@ -44,7 +44,7 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
     var clickedExercise by remember { mutableStateOf("") }
     Scaffold(
         topBar = {
-            StickyHeader(
+            stickyHeader(
                 OutlinedTextField(
                     value = query,
                     onValueChange = { query = it },
@@ -93,9 +93,9 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                     onValueChange = { sets = it },
                     placeholder = { Text("Enter number of sets") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        textColor = Color.White,
-                        placeholderColor = Color.LightGray,
+                    colors = outlinedTextFieldDefaults.colors(
+                        focusedtextColor = Color.White,
+                        unfocusedTextColor = Color.LightGray,
                         focusedBorderColor = Color.LightGray,
                         unfocusedBorderColor = Color.LightGray
                     )

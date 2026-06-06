@@ -40,7 +40,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
             ) {
                 Row(
                     modifier = Modifier
-                        .filMaxWidth()
+                        .fillMaxWidth()
                         .padding(16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
