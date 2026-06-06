@@ -119,16 +119,8 @@ fun StartContent(viewModel: AppViewModel) {
                 composable(Screen.Stats.route) { StatsScreen(viewModel = viewModel, navController = navController) }
                 composable(Screen.Login.route) { LoginScreen(navController = navController, viewModel = viewModel) }
                 composable(Screen.Register.route) { RegisterScreen(navController = navController, viewModel = viewModel) }
-                composable(Screen.SetupSchedule.route) { SetupScheduleScreen(navController = navController, viewModel = viewModel) }
-                composable(Screen.ExercisePick.route) { 
-                    workoutSelectScreen( 
-                        onExerciseSelected = { exercise -> 
-                            viewModel.selectedExercise = exercise
-                            navController.popBackStack() 
-                        },
-                        navController = navController
-                    )
-                }
+                composable(Screen.SetupSchedule.route) { SetupSchedule(navController = navController, viewModel = viewModel) }
+                composable(Screen.ExercisePick.route) { ExercisePickScreen(navController = navController, viewModel = viewModel) }
             }
         }
     }
