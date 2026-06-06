@@ -49,15 +49,18 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
     BackHandler(enabled = true) {
         navController.popBackStack()
     }
-    Scaffold(
-        topBar = {
+    Scaffold { paddingValues -> 
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
             stickyHeader(
                 OutlinedTextField(
                     value = query,
                     onValueChange = { query = it },
                     placeholder = { Text("Search exercises...") },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = outlinedTextFieldDefaults.colors(
+                    colors = OutlinedTextFieldDefaults.colors(
                         focusedTextColor = Color.White,
                         unfocusedTextColor = Color.LightGray,
                         focusedBorderColor = Color.LightGray,
@@ -65,12 +68,6 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                     )
                 )
             )
-        }
-    ) { paddingValues -> 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
         ) {
             items(filteredExercises) { exercise ->
                 Card(
@@ -100,7 +97,7 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                     onValueChange = { sets = it },
                     placeholder = { Text("Enter number of sets") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    colors = outlinedTextFieldDefaults.colors(
+                    colors = OutlinedTextFieldDefaults.colors(
                         focusedTextColor = Color.White,
                         unfocusedTextColor = Color.LightGray,
                         focusedBorderColor = Color.LightGray,
