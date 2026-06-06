@@ -54,7 +54,8 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
-            stickyHeader(
+        ) {
+            stickyHeader{
                 OutlinedTextField(
                     value = query,
                     onValueChange = { query = it },
@@ -67,8 +68,7 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                         unfocusedBorderColor = Color.LightGray
                     )
                 )
-            )
-        ) {
+            }
             items(filteredExercises) { exercise ->
                 Card(
                     modifier = Modifier
