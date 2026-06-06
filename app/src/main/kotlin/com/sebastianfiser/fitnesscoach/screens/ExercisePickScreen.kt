@@ -18,7 +18,11 @@ import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import com.sebastianfiser.fitnesscoach.models.Exercise
 import com.sebastianfiser.fitnesscoach.models.exerciseList
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.lazy.LazyColumn
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
     var query by remember { mutableStateOf("") }
@@ -42,6 +46,9 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
     var sets by remember { mutableStateOf("") }
     var showDialog by remember { mutableStateOf(false) }
     var clickedExercise by remember { mutableStateOf("") }
+    BackHandler(enabled = true) {
+        navController.popBackStack()
+    }
     Scaffold(
         topBar = {
             stickyHeader(
@@ -50,9 +57,9 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                     onValueChange = { query = it },
                     placeholder = { Text("Search exercises...") },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        textColor = Color.White,
-                        placeholderColor = Color.LightGray,
+                    colors = outlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.LightGray,
                         focusedBorderColor = Color.LightGray,
                         unfocusedBorderColor = Color.LightGray
                     )
@@ -94,7 +101,7 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                     placeholder = { Text("Enter number of sets") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     colors = outlinedTextFieldDefaults.colors(
-                        focusedtextColor = Color.White,
+                        focusedTextColor = Color.White,
                         unfocusedTextColor = Color.LightGray,
                         focusedBorderColor = Color.LightGray,
                         unfocusedBorderColor = Color.LightGray
