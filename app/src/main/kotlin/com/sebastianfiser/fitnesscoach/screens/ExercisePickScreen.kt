@@ -80,6 +80,7 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                     onClick = { 
                         showDialog = true 
                         clickedExercise = exercise
+                        androidn.util.Log.d("DEBUG", "Clicked: $exercise")
                         }
                 ) {
                     Text(exercise, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.padding(16.dp))
