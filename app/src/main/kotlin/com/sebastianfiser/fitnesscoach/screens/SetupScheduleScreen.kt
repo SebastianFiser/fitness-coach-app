@@ -100,7 +100,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 Text("count: ${viewModel.scheduleSetup.size}", color = Color.White, modifier = Modifier.padding(16.dp))
             }
             item{
-                Text("${viewModel.scheduleSetup}", color = Color.White, modifier = Modifier.padding(16.dp))
+                Text("key: ${dayMap[day]}, data: ${viewModel.scheduleSetup[dayMap[day]]}", color = Color.White, modifier = Modifier.padding(16.dp))
             }
         }
     }
