@@ -96,7 +96,9 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(horizontal = 16.dp))
                 }
             }
-
+            item {
+                Text("count: ${viewModel.scheduleSetup.size}", color = Color.White, modifier = Modifier.padding(16.dp))
+            }
         }
     }
 }
