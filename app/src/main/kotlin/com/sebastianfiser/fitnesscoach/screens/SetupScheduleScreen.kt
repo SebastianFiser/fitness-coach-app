@@ -25,7 +25,7 @@ import com.sebastianfiser.fitnesscoach.navigation.Screen
 fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
     val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
     BackHandler(enabled = true) {
-        
+
     }
     Scaffold (
         bottomBar = {
@@ -34,8 +34,8 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     .padding(16.dp)
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
-                border = BorderStroke(3.dp, Color.White),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFa84444)),
+                border = BorderStroke(1.dp, Color.White),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF333333)),
                 onClick = { /*Implement saving */ }
             ) {
                 Row(
@@ -61,7 +61,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                         .padding(8.dp)
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp),
-                    border = BorderStroke(2.dp, Color.White),
+                    border = BorderStroke(1.dp, Color.White),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF333333)),
                     onClick = { 
                         viewModel.selectedDay = day
@@ -77,9 +77,8 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                         Text(day, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
                         Icon(Icons.Default.Add, contentDescription = "Add exercise", tint = Color.White)
                     }
+                    HorizontalDivider(color = Color.Gray, thickness = 0.5.dp)
                 }
-                HorizontalDivider(color = Color.Gray, thickness = 0.5.dp)
-
             }
 
         }
