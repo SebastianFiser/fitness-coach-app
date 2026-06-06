@@ -33,7 +33,6 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
         "Sa" to "Saturday",
         "Su" to "Sunday"
     )
-    var ActualSchedule = viewModel.schdeuleStup
     BackHandler(enabled = true) {
 
     }
