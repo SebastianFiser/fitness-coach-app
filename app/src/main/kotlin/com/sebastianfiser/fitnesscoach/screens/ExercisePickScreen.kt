@@ -69,6 +69,9 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                     )
                 )
             }
+            item {
+                Text("selectedDay: ${viewModel.selectedDay}", color = Color.White, modifier = Modifier.padding(16.dp))
+            }
             items(filteredExercises) { exercise ->
                 Card(
                     modifier = Modifier
