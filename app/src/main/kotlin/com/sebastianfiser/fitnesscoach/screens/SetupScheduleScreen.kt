@@ -34,12 +34,13 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     .padding(16.dp)
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
-                border = BorderStroke(1.dp, Color.White),
+                border = BorderStroke(1.dp, Color.LightGray),
                 colors = CardDefaults.cardColors(containerColor = Color(0xFF333333)),
                 onClick = { /*Implement saving */ }
             ) {
                 Row(
                     modifier = Modifier
+                        .filMaxWidth()
                         .padding(16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
@@ -61,7 +62,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                         .padding(8.dp)
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp),
-                    border = BorderStroke(1.dp, Color.White),
+                    border = BorderStroke(1.dp, Color.LightGray),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF333333)),
                     onClick = { 
                         viewModel.selectedDay = day
@@ -70,6 +71,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 ) {
                     Row(
                         modifier = Modifier
+                            .fillMaxWidth()
                             .padding(16.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
