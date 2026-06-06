@@ -24,6 +24,16 @@ import com.sebastianfiser.fitnesscoach.navigation.Screen
 @Composable
 fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
     val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+    val dayMap = mapOf(
+        "Mo" to "Monday",
+        "Tu" to "Tuesday",
+        "We" to "Wednesday",
+        "Th" to "Thursday",
+        "Fr" to "Friday",
+        "Sa" to "Saturday",
+        "Su" to "Sunday"
+    )
+    var ActualSchedule = viewModel.schdeuleStup
     BackHandler(enabled = true) {
 
     }
@@ -80,6 +90,11 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                         Icon(Icons.Default.Add, contentDescription = "Add exercise", tint = Color.White)
                     }
                     HorizontalDivider(color = Color.Gray, thickness = 0.5.dp)
+                }
+                val exercisesForDay = viewModel.scheduleSetup[dayMap[day]] ?: emptyList()
+                exercisesForDay.forEach { exercise ->
+                    Text("- ${exercise.name}", fontSize = 16.sp, color = Color.LightGray, modifier = Modifier.padding(start = 32.dp, top = 4.dp))
+                    HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(horizontal = 16.dp))
                 }
             }
 
