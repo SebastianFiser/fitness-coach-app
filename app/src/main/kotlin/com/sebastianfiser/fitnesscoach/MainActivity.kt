@@ -38,6 +38,7 @@ import androidx.compose.material.icons.filled.Settings
 
 import com.sebastianfiser.fitnesscoach.screens.MainWorkoutCard
 import com.sebastianfiser.fitnesscoach.screens.SetupSchedule
+import com.sebastianfiser.fitnesscoach.screens.schduleScreen
 import com.sebastianfiser.fitnesscoach.screens.LeaderboardScreen
 import com.sebastianfiser.fitnesscoach.screens.ProfileScreen
 import com.sebastianfiser.fitnesscoach.models.Exercise
@@ -46,7 +47,6 @@ import com.sebastianfiser.fitnesscoach.screens.SettingsScreen
 import com.sebastianfiser.fitnesscoach.screens.StatsScreen
 import com.sebastianfiser.fitnesscoach.screens.LoginScreen
 import com.sebastianfiser.fitnesscoach.screens.RegisterScreen
-import com.sebastianfiser.fitnesscoach.screens.SetupScheduleScreen
 import com.sebastianfiser.fitnesscoach.screens.workoutSelectScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable

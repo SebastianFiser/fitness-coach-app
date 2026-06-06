@@ -24,7 +24,9 @@ import com.sebastianfiser.fitnesscoach.navigation.Screen
 @Composable
 fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
     val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
-    BackHandler(enabled = false)
+    BackHandler(enabled = true) {
+        
+    }
     Scaffold (
         bottomBar = {
             Card(
