@@ -87,44 +87,45 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                 }
             }
         }
-    }
-    if(showDialog) {
-        AlertDialog(
-            onDismissRequest = { showDialog = false },
-            title = { Text("How many sets?") },
-            text = {
-                OutlinedTextField(
-                    value = sets,
-                    onValueChange = { sets = it },
-                    placeholder = { Text("Enter number of sets") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.LightGray,
-                        focusedBorderColor = Color.LightGray,
-                        unfocusedBorderColor = Color.LightGray
+    
+        if(showDialog) {
+            AlertDialog(
+                onDismissRequest = { showDialog = false },
+                title = { Text("How many sets?") },
+                text = {
+                    OutlinedTextField(
+                        value = sets,
+                        onValueChange = { sets = it },
+                        placeholder = { Text("Enter number of sets") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedTextColor = Color.White,
+                            unfocusedTextColor = Color.LightGray,
+                            focusedBorderColor = Color.LightGray,
+                            unfocusedBorderColor = Color.LightGray
+                        )
                     )
-                )
-            },
-            confirmButton = {
-                Button(onClick = {
-                    showDialog = false
-                    val newExercise = Exercise(name = clickedExercise, sets = sets.toIntOrNull() ?: 0, reps = 10, weight = 0f)
-                    val key = dayMap[selectedExerciseDay] ?: "Mo"
-                    val current = viewModel.scheduleSetup[key] ?: mutableListOf()
-                    current.add(newExercise)
-                    viewModel.scheduleSetup[key] = current.toMutableList()
-                    android.util.Log.d("DEBUG", "scheduleSetup: ${viewModel.scheduleSetup}")
-                    navController.popBackStack()
-                }) {
-                    Text("Add")
+                },
+                confirmButton = {
+                    Button(onClick = {
+                        showDialog = false
+                        val newExercise = Exercise(name = clickedExercise, sets = sets.toIntOrNull() ?: 0, reps = 10, weight = 0f)
+                        val key = dayMap[selectedExerciseDay] ?: "Mo"
+                        val current = viewModel.scheduleSetup[key] ?: mutableListOf()
+                        current.add(newExercise)
+                        viewModel.scheduleSetup[key] = current.toMutableList()
+                        android.util.Log.d("DEBUG", "scheduleSetup: ${viewModel.scheduleSetup}")
+                        navController.popBackStack()
+                    }) {
+                        Text("Add")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = { showDialog = false }) {
+                        Text("Cancel")
+                    }
                 }
-            },
-            dismissButton = {
-                Button(onClick = { showDialog = false }) {
-                    Text("Cancel")
-                }
-            }
-        )
+            )
+        }
     }
 }
