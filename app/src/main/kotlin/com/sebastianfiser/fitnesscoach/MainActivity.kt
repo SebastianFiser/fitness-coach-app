@@ -47,7 +47,7 @@ import com.sebastianfiser.fitnesscoach.screens.SettingsScreen
 import com.sebastianfiser.fitnesscoach.screens.StatsScreen
 import com.sebastianfiser.fitnesscoach.screens.LoginScreen
 import com.sebastianfiser.fitnesscoach.screens.RegisterScreen
-import com.sebastianfiser.fitnesscoach.screens.workoutSelectScreen
+//import com.sebastianfiser.fitnesscoach.screens.workoutSelectScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -120,7 +120,7 @@ fun StartContent(viewModel: AppViewModel) {
                 composable(Screen.Login.route) { LoginScreen(navController = navController, viewModel = viewModel) }
                 composable(Screen.Register.route) { RegisterScreen(navController = navController, viewModel = viewModel) }
                 composable(Screen.SetupSchedule.route) { SetupSchedule(navController = navController, viewModel = viewModel) }
-                composable(Screen.ExercisePick.route) { ExercisePickScreen(navController = navController, viewModel = viewModel) }
+                //composable(Screen.ExercisePick.route) { ExercisePickScreen(navController = navController, viewModel = viewModel) }
             }
         }
     }

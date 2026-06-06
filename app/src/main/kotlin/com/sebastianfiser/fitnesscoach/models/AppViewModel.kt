@@ -2,6 +2,7 @@ package com.sebastianfiser.fitnesscoach.models
 
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import io.appwrite.models.Document
