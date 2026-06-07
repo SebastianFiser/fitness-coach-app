@@ -66,6 +66,9 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            item {
+                Text("debugKey: ${viewModel.debukgKey}", color = Color.White, modifier = Modifier.padding(16.dp))
+            }
             items(days) { day ->
                 Card(
                     modifier = Modifier
