@@ -21,11 +21,22 @@ import java.time.LocalDate
 import androidx.compose.ui.draw.alpha
 import androidx.compose.foundation.border
 import androidx.activity.compose.BackHandler
+import com.sebastianfiser.fitnesscoach.models.AppViewModel
 
 @Composable
-fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean) {
+fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewModel: AppViewModel) {
     var day = LocalDate.now().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }
     val Locale = java.util.Locale.getDefault()
+    val dayMap = mapOf(
+        "Monday" to "Mo",
+        "Tuesday" to "Tu",
+        "Wednesday" to "We",
+        "Thursday" to "Th",
+        "Friday" to "Fr",
+        "Saturday" to "Sa",
+        "Sunday" to "Su"
+    )
+    val currentDay = viewModel.schedule.value?.get(dayMap[day] ?: "")
     BackHandler(enabled = true) {
         //ignore the action
     }
@@ -134,8 +145,6 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean) {
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
-
-                val currentDay = weekData.find { it.day == day }
 
                 currentDay?.exercises?.forEach { exercise ->
                     ExerciseRow(exercise)

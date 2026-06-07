@@ -110,7 +110,7 @@ fun StartContent(viewModel: AppViewModel) {
                 navController = navController,
                 startDestination = if (loggedIn == true) Screen.Overview.route else Screen.Login.route,
             ) {
-                composable(Screen.Overview.route) { MainWorkoutCard(onStartWorkout = { navController.navigate(Screen.Workout.route) }, isWorkoutDone = isWorkoutDone) }
+                composable(Screen.Overview.route) { MainWorkoutCard(onStartWorkout = { navController.navigate(Screen.Workout.route) }, isWorkoutDone = isWorkoutDone, viewModel = viewModel ) }
                 composable(Screen.Workout.route) { WorkoutScreen(onFinish = { isWorkoutDone = true; navController.popBackStack() }, navController = navController, viewModel = viewModel) }
                 composable(Screen.Schedule.route) { schduleScreen( viewModel = viewModel ) }
                 composable(Screen.Leaderboard.route) { LeaderboardScreen() }
