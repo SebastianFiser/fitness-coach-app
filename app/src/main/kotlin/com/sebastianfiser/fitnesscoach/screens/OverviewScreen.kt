@@ -37,6 +37,7 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
         "Sunday" to "Su"
     )
     val currentDay = viewModel.schedule.value?.get(dayMap[day] ?: "")
+    val todaysExercises = currentDay?.exercises ?: emptyList()
     BackHandler(enabled = true) {
         //ignore the action
     }
@@ -146,7 +147,7 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                currentDay?.exercises?.forEach { exercise ->
+                todaysExercises.forEach { exercise ->
                     ExerciseRow(exercise)
                 }
             }
