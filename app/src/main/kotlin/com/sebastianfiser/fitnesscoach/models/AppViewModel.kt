@@ -24,7 +24,6 @@ class AppViewModel : ViewModel() {
         get() = schedule.groupBy { it.data["day"] as String }
     var selectedDay by mutableStateOf<String?>(null)
     var scheduleSetup = mutableStateMapOf<String, MutableList<Exercise>>()
-    var debugKey by mutableStateOf("")
 
     suspend fun loadWorkouts(userId: String) {
         repository.getWorkouts(userId)

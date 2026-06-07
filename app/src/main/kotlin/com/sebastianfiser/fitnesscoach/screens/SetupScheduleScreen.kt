@@ -55,7 +55,6 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text("Save Schedule", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                    Text("selectedDay: ${viewModel.selectedDay}", color = Color.White)
                     Icon(Icons.Default.Check, contentDescription = "Save", tint = Color.White)
                 }
             }
@@ -66,9 +65,6 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            item {
-                Text("debugKey: ${viewModel.debugKey}", color = Color.White, modifier = Modifier.padding(16.dp))
-            }
             items(days) { day ->
                 Card(
                     modifier = Modifier
@@ -94,16 +90,12 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     }
                     HorizontalDivider(color = Color.Gray, thickness = 0.5.dp)
                 }
-                Text("key: ${dayMap[day]}, data: ${viewModel.scheduleSetup[dayMap[day]]}", color = Color.White, modifier = Modifier.padding(16.dp))
 
                 val exercisesForDay = viewModel.scheduleSetup[dayMap[day]] ?: emptyList()
                 exercisesForDay.forEach { exercise ->
                     Text("- ${exercise.name}", fontSize = 16.sp, color = Color.LightGray, modifier = Modifier.padding(start = 32.dp, top = 4.dp))
                     HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(horizontal = 16.dp))
                 }
-            }
-            item {
-                Text("count: ${viewModel.scheduleSetup.size}", color = Color.White, modifier = Modifier.padding(16.dp))
             }
         }
     }

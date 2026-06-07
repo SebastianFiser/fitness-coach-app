@@ -50,7 +50,6 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
         navController.popBackStack()
     }
     Scaffold { paddingValues -> 
-        Text("selectedDay in picker: ${viewModel.selectedDay}", color = Color.White, modifier = Modifier.padding(16.dp))
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -69,9 +68,6 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                         unfocusedBorderColor = Color.LightGray
                     )
                 )
-            }
-            item {
-                Text("selectedDay: ${viewModel.selectedDay}", color = Color.White, modifier = Modifier.padding(16.dp))
             }
             items(filteredExercises) { exercise ->
                 Card(
@@ -115,7 +111,6 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                         showDialog = false
                         val newExercise = Exercise(name = clickedExercise, sets = sets.toIntOrNull() ?: 0, reps = 10, weight = 0f)
                         val key = dayMap[viewModel.selectedDay ?: ""] ?: "Mo"
-                        viewModel.debugKey = key
                         val current = viewModel.scheduleSetup[key] ?: mutableListOf()
                         current.add(newExercise)
                         viewModel.scheduleSetup[key] = current.toMutableList()
