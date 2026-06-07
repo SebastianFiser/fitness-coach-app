@@ -21,6 +21,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import com.sebastianfiser.fitnesscoach.navigation.Screen
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+import com.sebastianfiser.fitnesscoach.models.Appwrite
 
 @Composable
 fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
@@ -34,6 +37,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
         "Saturday" to "Sa",
         "Sunday" to "Su"
     )
+    val scope = rememberCoroutineScope()
     BackHandler(enabled = true) {
 
     }
@@ -46,7 +50,15 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 shape = RoundedCornerShape(8.dp),
                 border = BorderStroke(1.dp, Color.LightGray),
                 colors = CardDefaults.cardColors(containerColor = Color(0xFF333333)),
-                onClick = { /*Implement saving */ }
+                onClick = { 
+                    scope.launch {
+                        val currentUser = Appwrite.getCurrentUser()
+                        val userId = currentUser?.id ?: return@launch
+                        viewModel.saveSetupSchedule(userId)
+                        viewModel.loadSchedule(userId)
+                        navController.navigate(Screen.Overview.route)
+                    }
+                }
             ) {
                 Row(
                     modifier = Modifier
@@ -108,8 +120,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                                     val key = dayMap[day] ?: ""
                                     if(key.isEmpty()) return@clickable
                                     val current = viewModel.scheduleSetup[key] ?: return@clickable
-                                    current.remove(exercise)
-                                    viewModel.scheduleSetup[key] = current.toMutableList()
+                                    viewModel.scheduleSetup[key] = current.filter { it.name != exercise.name }.toMutableList()
                                 }
                             )
                         }

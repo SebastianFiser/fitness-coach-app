@@ -85,5 +85,20 @@ class AppViewModel : ViewModel() {
         }
     }
 
+    suspend fun saveSetupSchedule(userId: String) {
+        scheduleSetup.forEach { (day, exercises) ->
+            exercises.forEach { exercise ->
+                repository.saveScheduleItem(
+                    userId = userId,
+                    day = day,
+                    exerciseName = exercise.name,
+                    sets = exercise.sets,
+                    reps = exercise.reps,
+                    weight = exercise.weight
+                )
+            }
+        }
+    }
+
 
 }
