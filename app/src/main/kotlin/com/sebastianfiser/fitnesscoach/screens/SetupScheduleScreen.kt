@@ -105,7 +105,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                                 contentDescription = "Remove",
                                 tint = Color.LightGray,
                                 modifier = Modifier.clickable {
-                                    val key = dayMap[day] :? ""
+                                    val key = dayMap[day] ?: ""
                                     if(key.isEmpty()) return@clickable
                                     val current = viewModel.scheduleSetup[key] ?: return@clickable
                                     current.remove(exercise)
