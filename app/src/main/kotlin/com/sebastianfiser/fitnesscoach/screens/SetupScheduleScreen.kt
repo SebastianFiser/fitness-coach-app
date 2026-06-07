@@ -25,13 +25,13 @@ import com.sebastianfiser.fitnesscoach.navigation.Screen
 fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
     val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
     val dayMap = mapOf(
-        "Mo" to "Monday",
-        "Tu" to "Tuesday",
-        "We" to "Wednesday",
-        "Th" to "Thursday",
-        "Fr" to "Friday",
-        "Sa" to "Saturday",
-        "Su" to "Sunday"
+        "Monday" to "Mo",
+        "Tuesday" to "Tu",
+        "Wednesday" to "We",
+        "Thursday" to "Th",
+        "Friday" to "Fr",
+        "Saturday" to "Sa",
+        "Sunday" to "Su"
     )
     BackHandler(enabled = true) {
 
