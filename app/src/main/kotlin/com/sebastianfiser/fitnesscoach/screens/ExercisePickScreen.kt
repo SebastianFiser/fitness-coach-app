@@ -50,6 +50,7 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
         navController.popBackStack()
     }
     Scaffold { paddingValues -> 
+        Text("selectedDay in picker: ${viewModel.selectedDay}", color = Color.White, modifier = Modifier.padding(16.dp))
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -131,5 +132,4 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
             )
         }
     }
-    Text("selectedDay in picker: ${viewModel.selectedDay}", color = Color.White, modifier = Modifier.padding(16.dp))
 }
