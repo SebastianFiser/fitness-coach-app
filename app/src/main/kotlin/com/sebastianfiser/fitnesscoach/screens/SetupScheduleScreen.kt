@@ -73,13 +73,13 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     shape = RoundedCornerShape(8.dp),
                     border = BorderStroke(1.dp, Color.LightGray),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF333333)),
-                    onClick = { 
-                        viewModel.selectedDay = day
-                        navController.navigate(Screen.ExercisePick.route)
-                    }
                 ) {
                     Row(
                         modifier = Modifier
+                            .clickable { 
+                                viewModel.selectedDay = day
+                                navController.navigate(Screen.ExercisePick.route)
+                            }
                             .fillMaxWidth()
                             .padding(16.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -91,8 +91,27 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     HorizontalDivider(color = Color.Gray, thickness = 0.5.dp)
                     val exercisesForDay = viewModel.scheduleSetup[dayMap[day]] ?: emptyList()
                     exercisesForDay.forEach { exercise ->
-                        Text("- ${exercise.name}", fontSize = 16.sp, color = Color.LightGray, modifier = Modifier.padding(start = 32.dp, top = 4.dp))
-                        HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(horizontal = 16.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                         ) {
+                            Text("- ${exercise.name}", fontSize = 16.sp, color = Color.LightGray, modifier = Modifier.padding(start = 32.dp, top = 4.dp))
+                            Icon(
+                                Icons.Default.Delete,
+                                contentDescription = "Remove",
+                                tint = Color.LightGray,
+                                modifier = Modifier.clickable {
+                                    val key = dayMap[day] :? return@Clickable
+                                    val current = viewModel.scheduleSetup[key] ?: return@clickable
+                                    current.remove(exercise)
+                                    viewModel.scheduleSetup[key] = current.toMutableList()
+                                }
+                            )
+                        }
+                        HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(horizontal = 32.dp))
                     }                
                 }
             }
