@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import com.sebastianfiser.fitnesscoach.navigation.Screen
+import androidx.compose.material.icons.filled.Delete
 
 @Composable
 fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
@@ -104,7 +105,8 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                                 contentDescription = "Remove",
                                 tint = Color.LightGray,
                                 modifier = Modifier.clickable {
-                                    val key = dayMap[day] :? return@Clickable
+                                    val key = dayMap[day] :? ""
+                                    if(key.isEmpty()) return@clickable
                                     val current = viewModel.scheduleSetup[key] ?: return@clickable
                                     current.remove(exercise)
                                     viewModel.scheduleSetup[key] = current.toMutableList()
