@@ -114,7 +114,7 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                     Button(onClick = {
                         showDialog = false
                         val newExercise = Exercise(name = clickedExercise, sets = sets.toIntOrNull() ?: 0, reps = 10, weight = 0f)
-                        val key = dayMap[selectedExerciseDay] ?: "Mo"
+                        val key = dayMap[viewModel.selectedDay] ?: "Mo"
                         val current = viewModel.scheduleSetup[key] ?: mutableListOf()
                         current.add(newExercise)
                         viewModel.scheduleSetup[key] = current.toMutableList()
