@@ -67,7 +67,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 .padding(paddingValues)
         ) {
             item {
-                Text("debugKey: ${viewModel.debukgKey}", color = Color.White, modifier = Modifier.padding(16.dp))
+                Text("debugKey: ${viewModel.debugKey}", color = Color.White, modifier = Modifier.padding(16.dp))
             }
             items(days) { day ->
                 Card(
