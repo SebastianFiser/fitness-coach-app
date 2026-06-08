@@ -49,20 +49,21 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
             val userId = currentUser?.id ?: return@LaunchedEffect
             viewModel.loadSchedule(userId)
             viewModel.scheduleByDay.forEach { (day, docs) -> 
-            val exercises = docs.map { doc -> 
-                Exercise(
-                    name = doc.data["exerciseName"] as? String ?: "",
-                    sets = (doc.data["sets"] as? Long)?.toInt() ?: 0,
-                    reps = (doc.data["reps"] as? Long)?.toInt() ?: 0,
-                    weight = when (val w = doc.data["weight"]) {
-                        is Double -> w.toFloat()
-                        is Float -> w
-                        is Long -> w.toFloat()
-                        else -> 0f
-                    }
-                )}
+                val exercises = docs.map { doc -> 
+                    Exercise(
+                        name = doc.data["exerciseName"] as? String ?: "",
+                        sets = (doc.data["sets"] as? Long)?.toInt() ?: 0,
+                        reps = (doc.data["reps"] as? Long)?.toInt() ?: 0,
+                        weight = when (val w = doc.data["weight"]) {
+                            is Double -> w.toFloat()
+                            is Float -> w
+                            is Long -> w.toFloat()
+                            else -> 0f
+                        }
+                    )
+                }
+                viewModel.scheduleSetup[day] = exercises.toMutableList()
             }
-            viewModel.scheduleSetup[day] = exercises.toMutableList()
         }
     }
     Scaffold (

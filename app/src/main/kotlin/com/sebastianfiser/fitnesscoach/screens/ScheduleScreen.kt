@@ -19,6 +19,8 @@ import io.appwrite.models.Document
 import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import com.sebastianfiser.fitnesscoach.navigation.Screen
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
@@ -52,7 +54,7 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
                 }
 
                 TextButton(
-                    onClick { 
+                    onClick = { 
                         viewModel.isEditing = true
                         navController.navigate(Screen.SetupSchedule.route)
                     },
