@@ -101,7 +101,7 @@ class AppViewModel : ViewModel() {
         }
     }
     
-    suspend fun deleteAllSchedule(itemId: String, userId: String) {
+    suspend fun deleteAllSchedule(userId: String) {
         schedule.forEach { doc ->
             repository.deleteScheduleItem(doc.id, userId)
                 .onFailure { e -> Log.d("AppViewModel", "Failed to delete schedule item: ${e.message}") }
