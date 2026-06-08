@@ -24,6 +24,8 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
 import com.sebastianfiser.fitnesscoach.models.Appwrite
+import androidx.compose.runtime.LaunchedEffect
+import com.sebastianfiser.fitnesscoach.models.Exercise
 
 @Composable
 fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
@@ -41,6 +43,28 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
     BackHandler(enabled = true) {
 
     }
+    LaunchedEffect(viewModel.isEditing) {
+        if(viewModel.isEditing) {
+            val currentUser = Appwrite.getCurrentUser()
+            val userId = currentUser?.id ?: return@LaunchedEffect
+            viewModel.loadSchedule(userId)
+            viewModel.scheduleByDay.forEach { (day, docs) -> 
+            val exercises = docs.map { doc -> 
+                Exercise(
+                    name = doc.data["exerciseName"] as? String ?: "",
+                    sets = (doc.data["sets"] as? Long)?.toInt() ?: 0,
+                    reps = (doc.data["reps"] as? Long)?.toInt() ?: 0,
+                    weight = when (val w = doc.data["weight"]) {
+                        is Double -> w.toFloat()
+                        is Float -> w
+                        is Long -> w.toFloat()
+                        else -> 0f
+                    }
+                )
+            }
+            viewModel.scheduleSetup[day] = exercises.toMutableList()
+        }
+    }
     Scaffold (
         bottomBar = {
             Card(
@@ -54,9 +78,14 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     scope.launch {
                         val currentUser = Appwrite.getCurrentUser()
                         val userId = currentUser?.id ?: return@launch
+                        if (viewModel.isEditing) {
+                            viewModel.deleteAllSchedule(userId)
+                        }
                         viewModel.saveSetupSchedule(userId)
                         viewModel.loadSchedule(userId)
-                        navController.navigate(Screen.Overview.route)
+                        val destination = if (viewModel.isEditing) Screen.Overview.route else Screen.Schedule.route
+                        viewModel.isEditing = false
+                        navController.navigate(destination)
                     }
                 }
             ) {

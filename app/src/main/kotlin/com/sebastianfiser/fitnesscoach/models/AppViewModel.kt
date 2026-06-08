@@ -24,6 +24,7 @@ class AppViewModel : ViewModel() {
         get() = schedule.groupBy { it.data["day"] as String }
     var selectedDay by mutableStateOf<String?>(null)
     var scheduleSetup = mutableStateMapOf<String, MutableList<Exercise>>()
+    var isEditing by mutableStateOf(false)
 
     suspend fun loadWorkouts(userId: String) {
         repository.getWorkouts(userId)
@@ -99,6 +100,13 @@ class AppViewModel : ViewModel() {
             }
         }
     }
-
+    
+    suspend fun deleteAllSchedule(itemId: String, userId: String) {
+        schedule.forEach { doc ->
+            repository.deleteScheduleItem(doc.id, userId)
+                .onFailure { e -> Log.d("AppViewModel", "Failed to delete schedule item: ${e.message}") }
+        }
+        schedule.clear()
+    }
 
 }

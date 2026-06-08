@@ -16,11 +16,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.ExperimentalFoundationApi
 import io.appwrite.models.Document
+import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
+import com.sebastianfiser.fitnesscoach.navigation.Screen
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
-fun schduleScreen( viewModel: AppViewModel ) {
+fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -30,17 +32,37 @@ fun schduleScreen( viewModel: AppViewModel ) {
         contentPadding = PaddingValues(bottom = 90.dp),
     ) {
         item {
-            Box (
+            Row(
                 modifier = Modifier
-                .clip(RoundedCornerShape(16.dp))
-                .background(Color.DarkGray)
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.Center
             ) {
-                Text(
-                    "Your Schedule",
-                    color = Color.White,
-                    style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-                )
+                Box (
+                    modifier = Modifier
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color.DarkGray)
+                ) {
+                    Text(
+                        "Your Schedule",
+                        color = Color.White,
+                        style = MaterialTheme.typography.headlineMedium,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                    )
+                }
+
+                TextButton(
+                    onClick { 
+                        viewModel.isEditing = true
+                        navController.navigate(Screen.SetupSchedule.route)
+                    }
+                    colors = ButtonDefaults.textButtonColors(contentColor = Color.White),
+                    modifier = Modifier.padding(start = 16.dp)
+                ) {
+                    Icon(Icons.Default.Edit, contentDescription = "Edit Schedule", tint = Color.White)
+                    Text("Edit", color = Color.White)
+                }
+
             }
         }
         stickyHeader {
