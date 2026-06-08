@@ -55,7 +55,7 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
                     onClick { 
                         viewModel.isEditing = true
                         navController.navigate(Screen.SetupSchedule.route)
-                    }
+                    },
                     colors = ButtonDefaults.textButtonColors(contentColor = Color.White),
                     modifier = Modifier.padding(start = 16.dp)
                 ) {

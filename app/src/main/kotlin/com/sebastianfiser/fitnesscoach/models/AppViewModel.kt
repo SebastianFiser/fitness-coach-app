@@ -106,7 +106,7 @@ class AppViewModel : ViewModel() {
             repository.deleteScheduleItem(doc.id, userId)
                 .onFailure { e -> Log.d("AppViewModel", "Failed to delete schedule item: ${e.message}") }
         }
-        schedule.clear()
+        schedule = emptyList()
     }
 
 }

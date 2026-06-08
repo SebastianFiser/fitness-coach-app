@@ -60,7 +60,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                         is Long -> w.toFloat()
                         else -> 0f
                     }
-                )
+                )}
             }
             viewModel.scheduleSetup[day] = exercises.toMutableList()
         }
