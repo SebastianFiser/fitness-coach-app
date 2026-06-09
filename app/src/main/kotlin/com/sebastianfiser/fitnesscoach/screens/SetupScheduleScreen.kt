@@ -101,6 +101,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text("Save Schedule", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text("scheduleSetup count: ${viewModel.scheduleSetup.values.sumOf { it.size }}", color = Color.White)
                     Icon(Icons.Default.Check, contentDescription = "Save", tint = Color.White)
                 }
             }
