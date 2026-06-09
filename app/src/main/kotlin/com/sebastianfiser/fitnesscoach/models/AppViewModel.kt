@@ -25,6 +25,7 @@ class AppViewModel : ViewModel() {
     var selectedDay by mutableStateOf<String?>(null)
     var scheduleSetup = mutableStateMapOf<String, MutableList<Exercise>>()
     var isEditing by mutableStateOf(false)
+    var scheduleSetup by mutableStateOf(false)
 
     suspend fun loadWorkouts(userId: String) {
         repository.getWorkouts(userId)

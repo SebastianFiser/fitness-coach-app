@@ -44,7 +44,8 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
 
     }
     LaunchedEffect(Unit) {
-        if (viewModel.isEditing) {
+        if (viewModel.isEditing && !viewModel.scheduleSetupLoaded) {
+            viewModel.scheduleSetupLoaded = true
             val currentUser = Appwrite.getCurrentUser()
             val userId = currentUser?.id ?: return@LaunchedEffect
             viewModel.loadSchedule(userId)
@@ -65,7 +66,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 }
                 viewModel.scheduleSetup[day] = exercises.toMutableList()
             }
-        } else {
+        } else if (!viewModel.isEditing){
             viewModel.scheduleSetup.clear()
         }
     }
@@ -89,6 +90,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                         viewModel.loadSchedule(userId)
                         val destination = if (viewModel.isEditing) Screen.Schedule.route else Screen.Overview.route
                         viewModel.isEditing = false
+                        viewModel.scheduleSetupLoaded = false
                         navController.navigate(destination)
                     }
                 }
