@@ -48,7 +48,8 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
             val currentUser = Appwrite.getCurrentUser()
             val userId = currentUser?.id ?: return@LaunchedEffect
             viewModel.loadSchedule(userId)
-            viewModel.scheduleByDay.forEach { (day, docs) -> 
+            viewModel.schedulesetup.clear()
+            viewModel.schedule.groupBy { it.data["day"] as? String }.forEach { (day, docs) -> 
                 val exercises = docs.map { doc -> 
                     Exercise(
                         name = doc.data["exerciseName"] as? String ?: "",
@@ -84,7 +85,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                         }
                         viewModel.saveSetupSchedule(userId)
                         viewModel.loadSchedule(userId)
-                        val destination = if (viewModel.isEditing) Screen.Overview.route else Screen.Schedule.route
+                        val destination = if (viewModel.isEditing) Screen.Schedule.route else Screen.Overview.route
                         viewModel.isEditing = false
                         navController.navigate(destination)
                     }
