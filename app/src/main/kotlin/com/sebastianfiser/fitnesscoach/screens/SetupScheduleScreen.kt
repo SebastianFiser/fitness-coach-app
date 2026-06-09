@@ -49,7 +49,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
             val userId = currentUser?.id ?: return@LaunchedEffect
             viewModel.loadSchedule(userId)
             viewModel.schedulesetup.clear()
-            viewModel.schedule.groupBy { it.data["day"] as? String }.forEach { (day, docs) -> 
+            viewModel.schedule.groupBy { it.data["day"] as String }.forEach { (day, docs) -> 
                 val exercises = docs.map { doc -> 
                     Exercise(
                         name = doc.data["exerciseName"] as? String ?: "",
