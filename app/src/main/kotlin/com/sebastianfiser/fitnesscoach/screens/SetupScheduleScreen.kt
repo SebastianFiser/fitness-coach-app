@@ -43,12 +43,19 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
     BackHandler(enabled = true) {
 
     }
+    LaunchedEffect(Unit) {
+        if (!viewModel.isEditing) {
+            viewModel.scheduleSetup.clear()W
+        }
+    }
     LaunchedEffect(viewModel.isEditing) {
         if(viewModel.isEditing) {
             val currentUser = Appwrite.getCurrentUser()
             val userId = currentUser?.id ?: return@LaunchedEffect
             viewModel.loadSchedule(userId)
             viewModel.scheduleSetup.clear()
+            viewModel.schedule.clear()
+
             viewModel.schedule.groupBy { it.data["day"] as String }.forEach { (day, docs) -> 
                 val exercises = docs.map { doc -> 
                     Exercise(
