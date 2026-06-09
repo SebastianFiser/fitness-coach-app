@@ -66,7 +66,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 }
                 viewModel.scheduleSetup[day] = exercises.toMutableList()
             }
-        } else if (!viewModel.isEditing){
+        } else if (!viewModel.isEditing) {
             viewModel.scheduleSetup.clear()
         }
     }
