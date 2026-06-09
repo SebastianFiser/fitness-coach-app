@@ -45,7 +45,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
     }
     LaunchedEffect(Unit) {
         if (!viewModel.isEditing) {
-            viewModel.scheduleSetup.clear()W
+            viewModel.scheduleSetup.clear()
         }
     }
     LaunchedEffect(viewModel.isEditing) {
