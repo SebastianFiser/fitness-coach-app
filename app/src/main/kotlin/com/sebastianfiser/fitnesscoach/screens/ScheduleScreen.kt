@@ -25,6 +25,13 @@ import androidx.compose.material.icons.filled.Edit
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
 fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
+    val allDays = listOf("Mo", "Tu", "We", "Th", "Fr", "Sa", "Su")
+    val todayIndex = LocalDate.now().dayOfWeek.value - 1
+    val orderedDays = allDays.drop(todayIndex) + allDays.take(todayIndex)
+    val sortedEntries = viewModel.scheduleByDay.entries.toList().sortedBy { orderedDays.indexOf(it.key) }
+    BackHandler(enabled = true) {
+        //ignore the action
+    }
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -70,7 +77,7 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
         stickyHeader {
             DrawDayrow()
         }
-        items(viewModel.scheduleByDay.entries.toList()) { day ->
+        items(sortedEntries) { day ->
             displayDaySchedule(day.value, day.key)
         }
     }
