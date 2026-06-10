@@ -24,8 +24,9 @@ import androidx.compose.runtime.LaunchedEffect
 
 @Composable
 fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
-    val userId = Appwrite.account.get().id
     LaunchedEffect(Unit) {
+        val currentUser = Appwrite.getCurrentUser()
+        val userId = currentUser?.id ?: return@LaunchedEffect
         viewModel.prData = viewModel.getPRData(userId)
     }
     Column(
@@ -51,7 +52,7 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
         Text("Your Progress", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
         Spacer(modifier = Modifier.height(16.dp))
 
-        stats.forEach { stat ->
+        viewModel.prData.entries.forEach { (exerciseName, pr) ->
         Card(
             modifier = Modifier
                 .background(Color(0xFF1C1C1E))
@@ -70,7 +71,7 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
                 Text(stat.name, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("PR: ${stat.pr} ${viewModel.unit}", fontSize = 16.sp, color = Color.White)
-                Text("Weekly Gain: ${stat.weeklyGain} ${viewModel.unit}", fontSize = 16.sp, color = Color.White)
+                Text("Weekly Gain: 'Placeholder' ${viewModel.unit}", fontSize = 16.sp, color = Color.White)
             }
             Spacer(modifier = Modifier.height(12.dp))
             }

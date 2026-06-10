@@ -145,5 +145,5 @@ class AppwriteDB(private val client: Client) {
             )
             response.documents
         }
-
+    }
 }
