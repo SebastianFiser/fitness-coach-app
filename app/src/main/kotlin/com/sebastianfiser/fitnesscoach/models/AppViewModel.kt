@@ -22,6 +22,22 @@ class AppViewModel : ViewModel() {
     var isDarkTheme by mutableStateOf<Boolean?>(false)
     val scheduleByDay: Map<String, List<Document<Map<String, Any>>>>
         get() = schedule.groupBy { it.data["day"] as String }
+    val scheduleByDayExercises: Map<>String, List<Exercise>>
+        get() = schedule.groupBy { it.data["day"] as String }.mapValues { entry ->
+            entry.value.map { doc ->
+                Exercise(
+                    name = doc.data["exerciseName"] as String,
+                    sets = (doc.data["sets"] as Number).toInt(),
+                    reps = (doc.data["reps"] as Number).toInt(),
+                    weight = when (val w = doc.data["weight"]) {
+                        is Double -> w.toFloat()
+                        is Float -> w
+                        is Long -> w.toFloat()
+                        else -> 0f
+                    }
+                )
+            }
+        }
     var selectedDay by mutableStateOf<String?>(null)
     var scheduleSetup = mutableStateMapOf<String, MutableList<Exercise>>()
     var isEditing by mutableStateOf(false)

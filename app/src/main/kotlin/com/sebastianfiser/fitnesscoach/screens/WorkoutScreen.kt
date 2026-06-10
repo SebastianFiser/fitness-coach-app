@@ -59,7 +59,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
     )
     var day = LocalDate.now().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }
     val dayKey = dayMap[day] ?: "Mo"
-    val exercises = viewModel.scheduleByDay[dayKey] ?: emptyList()
+    val exercises = viewModel.scheduleByDayExercises[dayKey] ?: emptyList()
     var currentExerciseIndex by remember { mutableStateOf(0) }
     val currentExercise = exercises.getOrNull(currentExerciseIndex)
     val totalExercises = exercises.size
