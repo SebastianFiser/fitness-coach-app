@@ -22,7 +22,7 @@ class AppViewModel : ViewModel() {
     var isDarkTheme by mutableStateOf<Boolean?>(false)
     val scheduleByDay: Map<String, List<Document<Map<String, Any>>>>
         get() = schedule.groupBy { it.data["day"] as String }
-    val scheduleByDayExercises: Map<>String, List<Exercise>>
+    val scheduleByDayExercises: Map<String, List<Exercise>>
         get() = schedule.groupBy { it.data["day"] as String }.mapValues { entry ->
             entry.value.map { doc ->
                 Exercise(
