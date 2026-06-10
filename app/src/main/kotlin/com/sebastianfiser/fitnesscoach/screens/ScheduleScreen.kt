@@ -29,9 +29,6 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
     val todayIndex = LocalDate.now().dayOfWeek.value - 1
     val orderedDays = allDays.drop(todayIndex) + allDays.take(todayIndex)
     val sortedEntries = viewModel.scheduleByDay.entries.toList().sortedBy { orderedDays.indexOf(it.key) }
-    BackHandler(enabled = true) {
-        //ignore the action
-    }
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
