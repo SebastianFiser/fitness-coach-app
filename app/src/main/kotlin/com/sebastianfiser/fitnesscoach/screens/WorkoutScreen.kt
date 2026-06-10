@@ -1,6 +1,5 @@
 package com.sebastianfiser.fitnesscoach.screens
 
-import com.sebastianfiser.fitnesscoach.models.weekData
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -60,10 +59,10 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
     )
     var day = LocalDate.now().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }
     val dayKey = dayMap[day] ?: "Mo"
-    val currentDay = viewModel.scheduleByDay[dayKey] ?: emptyList()
+    val exercises = viewModel.scheduleByDay[dayKey] ?: emptyList()
     var currentExerciseIndex by remember { mutableStateOf(0) }
-    val currentExercise = currentDay?.exercises?.getOrNull(currentExerciseIndex)
-    val totalExercises = currentDay?.exercises?.size ?: 0
+    val currentExercise = exercises.getOrNull(currentExerciseIndex)
+    val totalExercises = exercises.size
     var timerRunningForSet by remember { mutableStateOf(-1) }
     var restTimeSeconds = viewModel.restTime //Seconds
     var showExitDialog by remember { mutableStateOf(false) }
