@@ -49,8 +49,18 @@ import com.sebastianfiser.fitnesscoach.models.Appwrite
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel: AppViewModel) {
+    val dayMap = mapOf(
+        "Monday" to "Mo",
+        "Tuesday" to "Tu",
+        "Wednesday" to "We",
+        "Thursday" to "Th",
+        "Friday" to "Fr",
+        "Saturday" to "Sa",
+        "Sunday" to "Su"
+    )
     var day = LocalDate.now().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }
-    val currentDay = weekData.find { it.day == day }
+    val dayKey = dayMap[day] ?: "Mo"
+    val currentDay = viewModel.scheduleByDay[dayKey] ?: emptyList()
     var currentExerciseIndex by remember { mutableStateOf(0) }
     val currentExercise = currentDay?.exercises?.getOrNull(currentExerciseIndex)
     val totalExercises = currentDay?.exercises?.size ?: 0
