@@ -27,7 +27,7 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
     LaunchedEffect(Unit) {
         val currentUser = Appwrite.getCurrentUser()
         val userId = currentUser?.id ?: return@LaunchedEffect
-        viewModel.prData = viewModel.loadPrData(userId)
+        viewModel.loadPrData(userId)
     }
     Column(
         modifier = Modifier
