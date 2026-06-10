@@ -67,7 +67,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
     var restTimeSeconds = viewModel.restTime //Seconds
     var showExitDialog by remember { mutableStateOf(false) }
     val setData = remember(currentExercise) {
-        mutableStateListOf(*Array(currentExercise?.sets ?:0) {SetEntry(weight = "", reps = "")})
+        mutableStateListOf(*Array(currentExercise?.sets ?:0) {SetEntry(entryWeight = "", entryReps = "")})
     }
     val focusManager = LocalFocusManager.current
     var scrollState = rememberScrollState()
