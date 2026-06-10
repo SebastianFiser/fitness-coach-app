@@ -134,4 +134,16 @@ class AppwriteDB(private val client: Client) {
         }
     }
 
+    suspend fun getSetByUser(userId: String): Result<List<Document<Map<String, Any>>>> {
+        return runCatching {
+            val response = databases.listDocuments(
+                databaseId = DB_ID,
+                collectionId = SETS_COL_ID,
+                queries = listOf(
+                    Query.equal("userId", userId)
+                )
+            )
+            response.documents
+        }
+
 }

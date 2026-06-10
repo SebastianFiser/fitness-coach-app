@@ -12,4 +12,5 @@ class WorkoutRepository(client: Client) {
     suspend fun saveScheduleItem(userId: String, day: String, exerciseName: String, sets: Int, reps: Int, weight: Float) = db.saveScheduleItem(userId, day, exerciseName, sets, reps, weight)
     suspend fun getSchedule(userId: String) = db.getSchedule(userId)
     suspend fun deleteScheduleItem(itemId: String, userId: String) = db.deleteScheduleItem(itemId, userId)
+    suspend fun getSetByUser(userId: String)
 }

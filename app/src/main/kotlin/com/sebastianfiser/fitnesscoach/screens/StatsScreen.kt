@@ -19,14 +19,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.Icons
 import androidx.navigation.NavController
+import com.sebastianfiser.fitnesscoach.models.Appwrite
+import androidx.compose.runtime.LaunchedEffect
 
 @Composable
 fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
-    val stats = listOf(
-        ExerciseStat("Bench Press", 100f, 5f),
-        ExerciseStat("Squat", 150f, 10f),
-        ExerciseStat("Deadlift", 180f, 15f)
-    )
+    val userId = Appwrite.account.get().id
+    LaunchedEffect(Unit) {
+        viewModel.prData = viewModel.getPRData(userId)
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()

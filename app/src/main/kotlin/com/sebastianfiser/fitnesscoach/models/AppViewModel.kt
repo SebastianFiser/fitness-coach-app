@@ -42,6 +42,7 @@ class AppViewModel : ViewModel() {
     var scheduleSetup = mutableStateMapOf<String, MutableList<Exercise>>()
     var isEditing by mutableStateOf(false)
     var scheduleSetupLoaded by mutableStateOf(false)
+    var prData by mutableStateOf<Map<String, Float>>(emptyMap())
 
     suspend fun loadWorkouts(userId: String) {
         repository.getWorkouts(userId)
@@ -126,4 +127,21 @@ class AppViewModel : ViewModel() {
         schedule = emptyList()
     }
 
+    suspend fun loadPrData(userId: String) {
+        val result = repository.getSetByUser(userId)
+        result.onSuccess { docs ->
+            prData = docs
+                .groupBy { it.data["exerciseName"] as String }
+                .mapValues { (_, sets) ->
+                    sets.maxOf { set ->
+                        when (val w = set.data["weight"]) {
+                            is Double -> w.toFloat()
+                            is Float -> w
+                            is Long -> w.toFloat()
+                            else -> 0f
+                        }
+                    }
+                }
+        }
+    }
 }
