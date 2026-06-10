@@ -12,8 +12,8 @@ data class Exercise(
 data class Day(val day: String, val exercises: List<Exercise>)
 
 data class SetEntry (
-    val weight: String,
-    val reps: String,
+    val entryWeight: String,
+    val entryReps: String,
     var isDone: Boolean = false
 )
 

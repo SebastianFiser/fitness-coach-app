@@ -185,7 +185,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                 }
             }
             repeat (currentExercise?.sets ?: 0) { setIndex ->
-                val (weight, reps, isDone) = setData[setIndex]
+                val (entryWeight, entryReps, isDone) = setData[setIndex]
                 val isSetActive = (setIndex == 0 || setData[setIndex - 1].isDone) && timerRunningForSet == -1
                 Card(
                     modifier = Modifier
@@ -209,9 +209,9 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                             style = MaterialTheme.typography.bodyMedium
                         )
                         OutlinedTextField(
-                            value = weight,
+                            value = entryWeight,
                             readOnly = !isSetActive,
-                            onValueChange = { setData[setIndex] = setData[setIndex].copy(weight = it) },
+                            onValueChange = { setData[setIndex] = setData[setIndex].copy(entryWeight = it) },
                             label = { Text("Weight (kg)", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -229,9 +229,9 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                                 .width(90.dp)
                         )
                         OutlinedTextField(
-                            value = reps,
+                            value = entryReps,
                             readOnly = !isSetActive,
-                            onValueChange = { setData[setIndex] = setData[setIndex].copy(reps = it) },
+                            onValueChange = { setData[setIndex] = setData[setIndex].copy(entryReps = it) },
                             label = { Text("Reps", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -249,15 +249,15 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                                 .width(90.dp)
                         )
                         TextButton(
-                            enabled = weight.isNotEmpty() && reps.isNotEmpty() && !isDone && (setIndex == 0 || setData[setIndex - 1].isDone ) && timerRunningForSet == -1,
+                            enabled = entryWeight.isNotEmpty() && entryReps.isNotEmpty() && !isDone && (setIndex == 0 || setData[setIndex - 1].isDone ) && timerRunningForSet == -1,
                             onClick = { restTimeSeconds = 90; timerRunningForSet = setIndex; setData[setIndex] = setData[setIndex].copy(isDone = true); focusManager.clearFocus(); scope.launch {
                                 val userId = Appwrite.account.get().id
                                 viewModel.saveSet(
                                     workoutId = workoutId,
                                     userId = userId,
                                     exerciseName = currentExercise?.name ?: "Unknown Exercise",
-                                    weight = weight.toFloatOrNull() ?: 0f,
-                                    reps = reps.toIntOrNull() ?: 0
+                                    weight = entryWeight.toFloatOrNull() ?: 0f,
+                                    reps = entryReps.toIntOrNull() ?: 0
                                 )
                             } },
                             colors = ButtonDefaults.buttonColors(
