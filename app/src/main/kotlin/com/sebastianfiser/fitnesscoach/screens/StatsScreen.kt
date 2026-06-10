@@ -27,7 +27,7 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
     LaunchedEffect(Unit) {
         val currentUser = Appwrite.getCurrentUser()
         val userId = currentUser?.id ?: return@LaunchedEffect
-        viewModel.prData = viewModel.getPRData(userId)
+        viewModel.prData = viewModel.getPrData(userId)
     }
     Column(
         modifier = Modifier
@@ -68,9 +68,9 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
                     .border(1.dp, Color.Gray, RoundedCornerShape(8.dp))
                     .padding(16.dp)
             ) {
-                Text(stat.name, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
+                Text(exerciseName, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("PR: ${stat.pr} ${viewModel.unit}", fontSize = 16.sp, color = Color.White)
+                Text("PR: ${pr} ${viewModel.unit}", fontSize = 16.sp, color = Color.White)
                 Text("Weekly Gain: 'Placeholder' ${viewModel.unit}", fontSize = 16.sp, color = Color.White)
             }
             Spacer(modifier = Modifier.height(12.dp))
