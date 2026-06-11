@@ -194,13 +194,17 @@ fun ProfileScreen(navController : NavController) {
                     ) {
                         Row (
                             modifier = Modifier
-                                .clickable { navController.navigate(Screen.Login.route) 
+                                .clickable {
                                     try {
                                         scope.launch {
                                             Appwrite.onLogout()
                                         }
                                     } catch (e: Throwable) {
                                         // Handle logout error if needed
+                                    }
+                                    viewModel.clearUserState
+                                    navController.navigate(Screen.Login.route) {
+                                        popUpTo(0) { inclusive = true }
                                     }
                                 }
                                 .fillMaxWidth(),

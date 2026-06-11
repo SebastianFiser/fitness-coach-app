@@ -144,4 +144,17 @@ class AppViewModel : ViewModel() {
                 }
         }
     }
+
+    fun cleaarUserState() {
+        workouts = mutableStateListOf()
+        schedule = mutableStateListOf()
+        restTime = 90
+        unit = "kg"
+        isDarkTheme = false
+        selectedDay = null
+        scheduleSetup = mutableStateMapOf()
+        isEditing = false
+        scheduleSetupLoaded = false
+        prData = emptyMap()
+    }
 }
