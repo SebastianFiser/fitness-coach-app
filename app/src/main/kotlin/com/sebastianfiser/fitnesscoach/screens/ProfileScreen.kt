@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
 
 @Composable
-fun ProfileScreen(navController : NavController) {
+fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
     var selectedTab by remember { mutableStateOf(0) }
     val scope = rememberCoroutineScope()
     var showAlert by remember { mutableStateOf(false) }
