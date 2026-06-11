@@ -202,7 +202,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                                     } catch (e: Throwable) {
                                         // Handle logout error if needed
                                     }
-                                    viewModel.clearUserState
+                                    viewModel.clearUserState()
                                     navController.navigate(Screen.Login.route) {
                                         popUpTo(0) { inclusive = true }
                                     }
