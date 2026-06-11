@@ -5,6 +5,7 @@ import io.appwrite.Client
 import io.appwrite.ID
 import io.appwrite.models.*
 import io.appwrite.services.*
+import com.sebastianfiser.fitnesscoach.BuildConfig
 
 object Appwrite {
     lateinit var client: Client
@@ -12,9 +13,8 @@ object Appwrite {
 
     fun init(context: Context) {
         client = Client(context)
-            .setEndpoint("https://fra.cloud.appwrite.io/v1")
-            .setProject("6a1b511e003e2af7aa7c")
-
+            .setEndpoint(BuildConfig.APPWRITE_ENDPOINT)
+            .setProject(BuildConfig.APPWRITE_PROJECT_ID)
         account = Account(client)
     }
 

@@ -107,22 +107,18 @@ fun RegisterScreen(navController: NavController, viewModel: AppViewModel) {
             val scope = rememberCoroutineScope()
             Button(
                 onClick = {
-                    if (name != "LetMeTrough") {
-                        scope.launch {
-                            try {
-                                Appwrite.onRegister(email, password, name)
-                                Appwrite.onLogin(email, password)
-                                val currentUser = Appwrite.getCurrentUser()
-                                navController.navigate(Screen.SetupSchedule.route)
-                            } catch (e: Throwable) {
-                                scope.launch {
-                                    var errorMsg = Appwrite.ParseErrorMsg(e.message ?: "") 
-                                    snackbarHostState.showSnackbar("Registration failed: ${errorMsg}")
-                                }
+                    scope.launch {
+                        try {
+                            Appwrite.onRegister(email, password, name)
+                            Appwrite.onLogin(email, password)
+                            val currentUser = Appwrite.getCurrentUser()
+                            navController.navigate(Screen.SetupSchedule.route)
+                        } catch (e: Throwable) {
+                            scope.launch {
+                                var errorMsg = Appwrite.ParseErrorMsg(e.message ?: "") 
+                                snackbarHostState.showSnackbar("Registration failed: ${errorMsg}")
                             }
                         }
-                    } else {
-                        navController.navigate(Screen.SetupSchedule.route)
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),

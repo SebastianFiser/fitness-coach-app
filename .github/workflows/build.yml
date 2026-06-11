@@ -27,6 +27,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Creating local.properities
+        run: |
+          echo "APPWRITE_ENDPOINT=${{ secrets.APPWRITE_ENDPOINT }}" >> local.properities
+          echo "APPWRITE_PROJECT_ID=${{ secrets.APPWRITE_PROJECT_ID }}" >> local.properities
+
       - name: Build s Gradle
         run: ./gradlew assembleDebug
 

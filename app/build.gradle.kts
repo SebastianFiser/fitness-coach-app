@@ -25,10 +25,16 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        val localProps = java.util.Properties()
+        localProps.load(file("../local.properities").inputStream())
+
+        buildConfigField("String", "APPWRITE_ENDPOINT", "\"${localProps["APPWRITE_ENDPOINT"]}\"")
+        buildConfigField("String", "APPWRITE_PROJECT_ID", "\"${localProps["APPWRITE_PROJECT_ID"]}\"")
     }
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
