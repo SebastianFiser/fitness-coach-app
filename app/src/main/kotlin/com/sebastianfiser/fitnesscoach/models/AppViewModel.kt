@@ -146,8 +146,8 @@ class AppViewModel : ViewModel() {
     }
 
     fun cleaarUserState() {
-        workouts = mutableStateListOf()
-        schedule = mutableStateListOf()
+        workouts = emptyList()
+        schedule = emptyList()
         restTime = 90
         unit = "kg"
         isDarkTheme = false
