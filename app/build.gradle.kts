@@ -1,3 +1,5 @@
+import java.util.Properities
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -25,7 +27,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-        val localProps = java.util.Properties()
+        val localProps = Properties()
         localProps.load(file("../local.properities").inputStream())
 
         buildConfigField("String", "APPWRITE_ENDPOINT", "\"${localProps["APPWRITE_ENDPOINT"]}\"")
