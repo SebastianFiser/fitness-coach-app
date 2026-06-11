@@ -145,7 +145,7 @@ class AppViewModel : ViewModel() {
         }
     }
 
-    fun cleaarUserState() {
+    fun clearUserState() {
         workouts = emptyList()
         schedule = emptyList()
         restTime = 90
