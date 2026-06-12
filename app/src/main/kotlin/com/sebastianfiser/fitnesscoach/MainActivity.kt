@@ -94,6 +94,7 @@ fun StartContent(viewModel: AppViewModel) {
     }
     
     Scaffold(
+        snackbarHost = { SnackbarHost(viewModel.snackbarHostState)},
         bottomBar = {
             val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
             if (currentRoute != Screen.Workout.route && currentRoute != Screen.Login.route && currentRoute != Screen.Register.route && currentRoute != null && currentRoute != Screen.SetupSchedule.route && currentRoute != Screen.ExercisePick.route) {

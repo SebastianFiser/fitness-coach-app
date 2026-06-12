@@ -8,6 +8,7 @@ import androidx.compose.runtime.setValue
 import io.appwrite.models.Document
 import android.util.Log
 import java.time.LocalDate
+import androidx.compose.material3.SnackbarHostState
 
 class AppViewModel : ViewModel() {
     private val repository = WorkoutRepository(Appwrite.client)
@@ -43,22 +44,32 @@ class AppViewModel : ViewModel() {
     var isEditing by mutableStateOf(false)
     var scheduleSetupLoaded by mutableStateOf(false)
     var prData by mutableStateOf<Map<String, Float>>(emptyMap())
+    val snackbarHostState = SnackbarHostState()
 
     suspend fun loadWorkouts(userId: String) {
         repository.getWorkouts(userId)
             .onSuccess { workouts -> this.workouts = workouts}
-            .onFailure { e -> Log.d("AppViewModel", "Failed to load workouts: ${e.message}") }
+            .onFailure { e -> 
+                Log.d("AppViewModel", "Failed to load workouts: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to load workouts, check your internet connection")
+            }
     }
 
     suspend fun saveWorkout(userId: String, date: String) {
         repository.saveWorkout(userId, date)
             .onSuccess { loadWorkouts(userId) }
-            .onFailure { e -> Log.d("AppViewModel", "Failed to save workout: ${e.message}") }
+            .onFailure { e -> 
+                Log.d("AppViewModel", "Failed to save workout: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to save workout, check your internet connection")
+            }
     }
 
     suspend fun saveSet(workoutId: String, userId: String, exerciseName: String, weight: Float, reps: Int) {
         repository.saveSet(workoutId, userId, exerciseName, weight, reps)
-            .onFailure { e -> Log.d("AppViewModel", "Failed to save set: ${e.message}") }
+            .onFailure { e -> 
+                Log.d("AppViewModel", "Failed to save set: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to save set, check your internet connection")
+            }
     }
 
     suspend fun createWorkout(): String? {
@@ -66,14 +77,20 @@ class AppViewModel : ViewModel() {
         val date = LocalDate.now().toString()
         return repository.saveWorkout(userId, date)
             .onSuccess { loadWorkouts(userId) }
-            .onFailure { e -> Log.d("AppViewModel", "Failed to create workout: ${e.message}") }
+            .onFailure { e -> 
+                Log.d("AppViewModel", "Failed to create workout: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to create workout, check your internet connection")
+            }
             .getOrNull()?.id
     }
 
     suspend fun loadSchedule(userId: String) {
         repository.getSchedule(userId)
             .onSuccess { schedule -> this.schedule = schedule }
-            .onFailure { e -> Log.d("AppViewModel", "Failed to load schedule: ${e.message}") }
+            .onFailure { e -> 
+                Log.d("AppViewModel", "Failed to load schedule: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to load schedule, check your internet connection")
+            }
     }
 
     suspend fun seedSchedule(userId: String) {
@@ -122,7 +139,10 @@ class AppViewModel : ViewModel() {
     suspend fun deleteAllSchedule(userId: String) {
         schedule.forEach { doc ->
             repository.deleteScheduleItem(doc.id, userId)
-                .onFailure { e -> Log.d("AppViewModel", "Failed to delete schedule item: ${e.message}") }
+                .onFailure { e -> 
+                    Log.d("AppViewModel", "Failed to delete schedule item: ${e.message}")
+                    snackbarHostState.showSnackbar("Failed to delete schedule item, check your internet connection")
+                }
         }
         schedule = emptyList()
     }

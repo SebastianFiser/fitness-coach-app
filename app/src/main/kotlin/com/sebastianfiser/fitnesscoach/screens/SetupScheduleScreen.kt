@@ -83,7 +83,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
                 border = BorderStroke(1.dp, Color.LightGray),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF333333)),
+                colors = CardDefaults.cardColors(if (isSaving) Color(0xFF1C1C1E) else Color(0xFF333333)),
                 enabled = if(isSaving) false else true,
                 onClick = { 
                     scope.launch {
@@ -115,7 +115,6 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text("Save Schedule", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                    Text("scheduleSetup count: ${viewModel.scheduleSetup.values.sumOf { it.size }}", color = Color.White)
                     if(isSaving) {
                         CircularProgressIndicator(modifier = Modifier.size(24.dp), color = Color.White, strokeWidth = 2.dp)
                     } else {
