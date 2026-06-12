@@ -29,6 +29,7 @@ import com.sebastianfiser.fitnesscoach.models.Exercise
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
 
 @Composable
 fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
