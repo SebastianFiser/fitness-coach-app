@@ -50,7 +50,7 @@ jobs:
           path: app/build/outputs/apk/debug/*.apk
 
       - name: Clean up debug builds
-        uses: dev-drprsad/delete-older-releases@v0.3.3
+        uses: dev-drprasad/delete-older-releases@v0.3.3
         with:
           keep_latest: 10
           delete_tags: true
