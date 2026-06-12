@@ -40,6 +40,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
         "Sunday" to "Su"
     )
     val scope = rememberCoroutineScope()
+    var isSaving by remember { mutableStateOf(false) }
     BackHandler(enabled = true) {
 
     }
@@ -79,19 +80,26 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 shape = RoundedCornerShape(8.dp),
                 border = BorderStroke(1.dp, Color.LightGray),
                 colors = CardDefaults.cardColors(containerColor = Color(0xFF333333)),
+                enabled = if(isSaving) false else true,
                 onClick = { 
                     scope.launch {
-                        val currentUser = Appwrite.getCurrentUser()
-                        val userId = currentUser?.id ?: return@launch
-                        if (viewModel.isEditing) {
-                            viewModel.deleteAllSchedule(userId)
+                        if (isSaving) return@launch
+                        isSaving = true
+                        try {
+                            val currentUser = Appwrite.getCurrentUser()
+                            val userId = currentUser?.id ?: return@launch
+                            if (viewModel.isEditing) {
+                                viewModel.deleteAllSchedule(userId)
+                            }
+                            viewModel.saveSetupSchedule(userId)
+                            viewModel.loadSchedule(userId)
+                            val destination = if (viewModel.isEditing) Screen.Schedule.route else Screen.Overview.route
+                            viewModel.isEditing = false
+                            viewModel.scheduleSetupLoaded = false
+                            navController.navigate(destination)
+                        } finally {
+                            isSaving = false
                         }
-                        viewModel.saveSetupSchedule(userId)
-                        viewModel.loadSchedule(userId)
-                        val destination = if (viewModel.isEditing) Screen.Schedule.route else Screen.Overview.route
-                        viewModel.isEditing = false
-                        viewModel.scheduleSetupLoaded = false
-                        navController.navigate(destination)
                     }
                 }
             ) {
@@ -104,7 +112,11 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 ) {
                     Text("Save Schedule", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
                     Text("scheduleSetup count: ${viewModel.scheduleSetup.values.sumOf { it.size }}", color = Color.White)
-                    Icon(Icons.Default.Check, contentDescription = "Save", tint = Color.White)
+                    if(!isSaving) {
+                        Icon(Icons.Default.Check, contentDescription = "Save", tint = Color.White)
+                    } else {
+                        CircularProgressIndicator(modifier = Modifier.size(24.dp), color = Color.White, strokeWidth = 2.dp)
+                    }
                 }
             }
         }
