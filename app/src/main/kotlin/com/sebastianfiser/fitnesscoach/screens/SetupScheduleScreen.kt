@@ -26,6 +26,9 @@ import kotlinx.coroutines.launch
 import com.sebastianfiser.fitnesscoach.models.Appwrite
 import androidx.compose.runtime.LaunchedEffect
 import com.sebastianfiser.fitnesscoach.models.Exercise
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Composable
 fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
@@ -112,10 +115,10 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 ) {
                     Text("Save Schedule", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
                     Text("scheduleSetup count: ${viewModel.scheduleSetup.values.sumOf { it.size }}", color = Color.White)
-                    if(!isSaving) {
-                        Icon(Icons.Default.Check, contentDescription = "Save", tint = Color.White)
-                    } else {
+                    if(isSaving) {
                         CircularProgressIndicator(modifier = Modifier.size(24.dp), color = Color.White, strokeWidth = 2.dp)
+                    } else {
+                        Icon(Icons.Default.Check, contentDescription = "Save", tint = Color.White)
                     }
                 }
             }
