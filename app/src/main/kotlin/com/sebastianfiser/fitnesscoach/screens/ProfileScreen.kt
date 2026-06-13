@@ -33,6 +33,8 @@ import com.sebastianfiser.fitnesscoach.navigation.Screen
 import com.sebastianfiser.fitnesscoach.models.Appwrite
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.LaunchedEffect
+
 
 @Composable
 fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
@@ -44,8 +46,10 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
     var showAlert by remember { mutableStateOf(false) }
     LunchedEffect(Unit) {
         val currentUser = Appwrite.getCurrentUser()
-        userName = currentUser?.name ?: "User"
-        userEmail = currentUser?.email ?: "user@email.com"
+        scope.launch {
+            userName = currentUser?.name ?: "User"
+            userEmail = currentUser?.email ?: "user@email.com"
+        }
     }
     Column (
         modifier = Modifier
