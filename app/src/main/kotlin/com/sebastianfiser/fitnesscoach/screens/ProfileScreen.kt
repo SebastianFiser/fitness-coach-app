@@ -44,9 +44,9 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
     var selectedTab by remember { mutableStateOf(0) }
     val scope = rememberCoroutineScope()
     var showAlert by remember { mutableStateOf(false) }
-    LunchedEffect(Unit) {
-        val currentUser = Appwrite.getCurrentUser()
+    LaunchedEffect(Unit) {
         scope.launch {
+            val currentUser = Appwrite.getCurrentUser()
             userName = currentUser?.name ?: "User"
             userEmail = currentUser?.email ?: "user@email.com"
         }
