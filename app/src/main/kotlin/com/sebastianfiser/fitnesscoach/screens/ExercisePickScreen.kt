@@ -69,6 +69,9 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                     )
                 )
             }
+            item {
+                Text("DEBUG: ${viewModel.scheduleSetup.entries.joinToString { "${it.key}: ${it.value.size}" }}", color = Color.White)
+            }
             items(filteredExercises) { exercise ->
                 Card(
                     modifier = Modifier
@@ -115,7 +118,7 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                         current.add(newExercise)
                         viewModel.scheduleSetup[key] = current.toMutableList()
                         android.util.Log.d("DEBUG", "scheduleSetup: ${viewModel.scheduleSetup}")
-                        navController.popBackStack()
+                        //navController.popBackStack()
                     }) {
                         Text("Add")
                     }
