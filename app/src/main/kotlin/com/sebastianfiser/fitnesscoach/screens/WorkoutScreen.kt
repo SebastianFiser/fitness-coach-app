@@ -64,7 +64,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
     val currentExercise = exercises.getOrNull(currentExerciseIndex)
     val totalExercises = exercises.size
     var timerRunningForSet by remember { mutableStateOf(-1) }
-    var restTimeSeconds = viewModel.restTime //Seconds
+    var restTimeSeconds by remember { mutableStateOf(viewModel.restTime) }
     var showExitDialog by remember { mutableStateOf(false) }
     val setData = remember(currentExercise) {
         mutableStateListOf(*Array(currentExercise?.sets ?:0) {SetEntry(entryWeight = "", entryReps = "")})
@@ -180,7 +180,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
             }
             repeat (currentExercise?.sets ?: 0) { setIndex ->
                 val (entryWeight, entryReps, isDone) = setData[setIndex]
-                val isSetActive = (setIndex == 0 || setData[setIndex - 1].isDone) && timerRunningForSet == -1
+                val isSetActive = (setIndex == 0 || setData[setIndex - 1].isDone) && timerRunningForSet == -1 && !isDone
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
