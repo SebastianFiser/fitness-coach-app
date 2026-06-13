@@ -71,8 +71,10 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 }
                 viewModel.scheduleSetup[day] = exercises.toMutableList()
             }
-        } else if (!viewModel.isEditing) {
+        } else if (!viewModel.isEditing && !viewModel.scheduleSetupLoaded) {
+            viewModel.scheduleSetupLoaded = true
             viewModel.scheduleSetup.clear()
+
         }
     }
     Scaffold (
@@ -129,9 +131,6 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            item {
-                Text("DEBUG: ${viewModel.scheduleSetup.entries.joinToString { "${it.key}: ${it.value.size}" }}", color = Color.White)
-            }
             items(days) { day ->
                 Card(
                     modifier = Modifier
