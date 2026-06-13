@@ -129,6 +129,9 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            item {
+                Text("DEBUG: ${viewModel.scheduleSetup.entries.joinToString { "${it.key}: ${it.value.size}" }}", color = Color.White)
+            }
             items(days) { day ->
                 Card(
                     modifier = Modifier
@@ -138,7 +141,6 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     border = BorderStroke(1.dp, Color.LightGray),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF333333)),
                 ) {
-                    Text("DEBUG: ${viewModel.scheduleSetup}", color = Color.White)
                     Row(
                         modifier = Modifier
                             .clickable { 
