@@ -36,9 +36,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 
 @Composable
 fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
+    var userName by remember { mutableStateOf("") }
+    var userEmail by remember { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
     var selectedTab by remember { mutableStateOf(0) }
     val scope = rememberCoroutineScope()
     var showAlert by remember { mutableStateOf(false) }
+    LunchedEffect(Unit) {
+        val currentUser = Appwrite.getCurrentUser()
+        userName = currentUser?.name ?: "User"
+        userEmail = currentUser?.email ?: "user@email.com"
+    }
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -73,8 +81,8 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                 Text("U", color = Color.White, style = MaterialTheme.typography.headlineLarge)
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Text("User", color = Color.White, style = MaterialTheme.typography.headlineSmall)
-            Text("user.email@email.com", color = Color.LightGray, style = MaterialTheme.typography.bodyMedium)
+            Text(userName, color = Color.White, style = MaterialTheme.typography.headlineSmall)
+            Text(userEmail, color = Color.LightGray, style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(16.dp))
             Column(
                 modifier = Modifier
