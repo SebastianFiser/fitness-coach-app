@@ -40,7 +40,6 @@ import androidx.compose.runtime.LaunchedEffect
 fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
     var userName by remember { mutableStateOf("") }
     var userEmail by remember { mutableStateOf("") }
-    val scope = rememberCoroutineScope()
     var selectedTab by remember { mutableStateOf(0) }
     val scope = rememberCoroutineScope()
     var showAlert by remember { mutableStateOf(false) }
