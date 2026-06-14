@@ -122,6 +122,7 @@ fun StartContent(viewModel: AppViewModel) {
                 composable(Screen.Register.route) { RegisterScreen(navController = navController, viewModel = viewModel) }
                 composable(Screen.SetupSchedule.route) { SetupSchedule(navController = navController, viewModel = viewModel) }
                 composable(Screen.ExercisePick.route) { ExercisePickScreen(navController = navController, viewModel = viewModel) }
+                composable(Screen.Submission.route) { SubmissionScreen(navController = navController, viewModel = viewModel) }
             }
         }
     }

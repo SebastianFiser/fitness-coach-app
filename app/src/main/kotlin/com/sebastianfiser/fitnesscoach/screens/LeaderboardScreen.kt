@@ -33,66 +33,87 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.text.font.FontWeight
 import com.sebastianfiser.fitnesscoach.models.FilterData
 import com.sebastianfiser.fitnesscoach.models.GenerateFewTimesLeaderBoardData
+import androidx.compose.material.icons.filled.Add
 
 
 @Composable
 fun LeaderboardScreen() {
     var selectedParameter by remember { mutableStateOf<String?>(null) }
     val data: List<LeaderBoardEntry> = remember {GenerateFewTimesLeaderBoardData()}
-    LazyColumn ( 
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black)
-            .padding(top = 48.dp, bottom = 80.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        item {
-            Box (
-                modifier = Modifier
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(Color.DarkGray)
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {/*Todo */},
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = Color.White
             ) {
-                Text(
-                    "Leaderboard",
-                    color = Color.White,
-                    style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-                )
+                Row(
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                    horizontalArrangement = Arrangement.spacedBetween
+                ) {
+                    Text("submit PR", color = Color.White)
+                    Icon(Icons.Default.Add, contentDescription = "Add PR", tint = Color.White)
+                }
             }
-        }
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-            Text("Top Users", color = Color.White, style = MaterialTheme.typography.headlineSmall)
-        }
-        item {
-            Card (
-                modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
-                shape = RoundedCornerShape(28.dp)
-            ) {
+        },
+        containerColor = Color.Black,
+    ) { innerPadding ->
+        LazyColumn ( 
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black)
+                .padding(top = 48.dp, bottom = 80.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            item {
                 Box (
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    contentAlignment = Alignment.Center
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color.DarkGray)
                 ) {
                     Text(
-                        "World Leaderboard",
+                        "Leaderboard",
                         color = Color.White,
-                        style = MaterialTheme.typography.headlineMedium
+                        style = MaterialTheme.typography.headlineMedium,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                     )
                 }
-                Box (
+            }
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text("Top Users", color = Color.White, style = MaterialTheme.typography.headlineSmall)
+            }
+            item {
+                Card (
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.Center
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    shape = RoundedCornerShape(28.dp)
                 ) {
-                    ShowFilterDropdown( onFilterSelected = { selectedParameter = it })
-                }
+                    Box (
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            "World Leaderboard",
+                            color = Color.White,
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                    }
+                    Box (
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        ShowFilterDropdown( onFilterSelected = { selectedParameter = it })
+                    }
 
-                ShowLeaderboard(selectedParameter = selectedParameter, data = data)
+                    ShowLeaderboard(selectedParameter = selectedParameter, data = data)
+                }
             }
         }
     }
