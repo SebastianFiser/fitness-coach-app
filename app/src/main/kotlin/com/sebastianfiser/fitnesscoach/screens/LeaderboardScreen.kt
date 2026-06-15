@@ -106,7 +106,10 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
                             Button (
                                 onClick = { navController.navigate(Screen.Submission.route) },
                                 colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black)
-                            )
+                            ) {
+                                Icon(Icons.Default.Add, contentDescription = "Add Submission", tint = Color.Black)
+                                Text("Submit PR")
+                            }
                         }
                     }
 
