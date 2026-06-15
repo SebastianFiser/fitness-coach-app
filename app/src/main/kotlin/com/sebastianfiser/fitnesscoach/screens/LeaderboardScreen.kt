@@ -59,7 +59,7 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.Black)
-                .padding(innerPadding)
+                .padding(top = innerPadding.calculateTopPadding())
                 .padding(top = 48.dp, bottom = 80.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
