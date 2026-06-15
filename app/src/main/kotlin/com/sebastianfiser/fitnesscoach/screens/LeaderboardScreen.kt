@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.sebastianfiser.fitnesscoach.models.FilterData
 import com.sebastianfiser.fitnesscoach.models.GenerateFewTimesLeaderBoardData
 import androidx.compose.material.icons.filled.Add
+import com.sebastianfiser.fitnesscoach.AppviewModel
 
 
 @Composable
@@ -49,8 +50,8 @@ fun LeaderboardScreen() {
             ) {
                 Row(
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                    horizontalArrangement = Arrangement.spacedBetween
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text("submit PR", color = Color.White)
                     Icon(Icons.Default.Add, contentDescription = "Add PR", tint = Color.White)

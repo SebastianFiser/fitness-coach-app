@@ -16,131 +16,131 @@ import com.sebastianfiser.fitnesscoach.AppViewModel
 
 @Composable
 fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
-Scaffold (
+    Scaffold (
 
-) { paddingValues ->
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(paddingValues)
-    ) {
-        item {
-            Text("Submission Screen", color = Color.White)
-        }
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            item {
+                Text("Submission Screen", color = Color.White)
+            }
 
-        item {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Row(
+            item {
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpacedBy(4.dp),
-                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Box(
+                    Row(
                         modifier = Modifier
-                            .height(48.dp)
-                            .weight(1f)
-                            .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                        contentAlignment = Alignment.Center
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Lift select placeholder")
+                        Box(
+                            modifier = Modifier
+                                .height(48.dp)
+                                .weight(1f)
+                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("Lift select placeholder")
+                        }
+                        Box(
+                            modifier = Modifier
+                                .height(48.dp)
+                                .weight(1f)
+                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("Weight input placeholder")
+                        }
                     }
-                    Box(
+                    Row(
                         modifier = Modifier
-                            .height(48.dp)
-                            .weight(1f)
-                            .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                        contentAlignment = Alignment.Center
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Weight input placeholder")
+                        Box(
+                            modifier = Modifier
+                                .height(48.dp)
+                                .weight(1f)
+                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("Video Selectoir button")
+                        }
                     }
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpacedBy(4.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
+                    Row(
                         modifier = Modifier
-                            .height(48.dp)
-                            .weight(1f)
-                            .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                        contentAlignment = Alignment.Center
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Video Selectoir button")
+                        Box(
+                            modifier = Modifier
+                                .height(48.dp)
+                                .weight(1f)
+                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("Country select placeholder")
+                        }
+                        Box(
+                            modifier = Modifier
+                                .height(48.dp)
+                                .weight(1f)
+                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("Gender select placeholder")
+                        }
                     }
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpacedBy(4.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
+                    Row(
                         modifier = Modifier
-                            .height(48.dp)
-                            .weight(1f)
-                            .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                        contentAlignment = Alignment.Center
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Country select placeholder")
+                        Box(
+                            modifier = Modifier
+                                .height(48.dp)
+                                .weight(1f)
+                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("Age select placeholder")
+                        }
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(48.dp)
+                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("Natural/Enhanced toggle placeholder")
+                        }
                     }
-                    Box(
+                    Row(
                         modifier = Modifier
-                            .height(48.dp)
-                            .weight(1f)
-                            .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                        contentAlignment = Alignment.Center
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Gender select placeholder")
-                    }
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpacedBy(4.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .height(48.dp)
-                            .weight(1f)
-                            .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("Age select placeholder")
-                    }
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(48.dp)
-                            .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("Natural/Enhanced toggle placeholder")
-                    }
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Button(onClick = { /* Handle submission */ }) {
-                        Text("Submit")
+                        Button(onClick = { /* Handle submission */ }) {
+                            Text("Submit")
+                        }
                     }
                 }
             }
         }
-
     }
 }
