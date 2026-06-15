@@ -44,7 +44,7 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
     var selectedParameter by remember { mutableStateOf<String?>(null) }
     val data: List<LeaderBoardEntry> = remember {GenerateFewTimesLeaderBoardData()}
     Scaffold(
-        FloatingActionButton = {
+        floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = { navController.navigate(Screen.Submission.route) },
                 containerColor = MaterialTheme.colorScheme.primary,
