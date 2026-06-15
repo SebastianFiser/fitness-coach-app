@@ -99,7 +99,7 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
                     ) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spaceBetween,
+                            horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             ShowFilterDropdown( onFilterSelected = { selectedParameter = it })
