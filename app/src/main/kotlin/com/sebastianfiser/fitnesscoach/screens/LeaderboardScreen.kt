@@ -34,7 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.sebastianfiser.fitnesscoach.models.FilterData
 import com.sebastianfiser.fitnesscoach.models.GenerateFewTimesLeaderBoardData
 import androidx.compose.material.icons.filled.Add
-import com.sebastianfiser.fitnesscoach.AppviewModel
+import com.sebastianfiser.fitnesscoach.models.AppViewModel
 
 
 @Composable

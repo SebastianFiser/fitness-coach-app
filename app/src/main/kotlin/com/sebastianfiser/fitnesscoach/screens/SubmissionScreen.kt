@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.sebastianfiser.fitnesscoach.AppViewModel
+import com.sebastianfiser.fitnesscoach.models.AppViewModel
 
 @Composable
 fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
