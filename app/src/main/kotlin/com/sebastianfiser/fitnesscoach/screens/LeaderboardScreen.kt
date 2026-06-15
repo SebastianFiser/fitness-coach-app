@@ -44,15 +44,6 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
     var selectedParameter by remember { mutableStateOf<String?>(null) }
     val data: List<LeaderBoardEntry> = remember {GenerateFewTimesLeaderBoardData()}
     Scaffold(
-        floatingActionButton = {
-            ExtendedFloatingActionButton(
-                onClick = { navController.navigate(Screen.Submission.route) },
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = Color.White,
-                icon = { Icon(Icons.Default.Add, contentDescription = "Add") },
-                text = { Text("Submit Lift") }
-            )
-        },
         containerColor = Color.Black,
     ) { innerPadding ->
         LazyColumn ( 
@@ -106,7 +97,17 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
                             .fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
-                        ShowFilterDropdown( onFilterSelected = { selectedParameter = it })
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            ShowFilterDropdown( onFilterSelected = { selectedParameter = it })
+                            Button (
+                                onClick = { navController.navigate(Screen.Submission.route) },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black)
+                            )
+                        }
                     }
 
                     ShowLeaderboard(selectedParameter = selectedParameter, data = data)
