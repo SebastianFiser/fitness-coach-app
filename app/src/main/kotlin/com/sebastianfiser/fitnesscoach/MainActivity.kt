@@ -115,7 +115,7 @@ fun StartContent(viewModel: AppViewModel) {
                 composable(Screen.Overview.route) { MainWorkoutCard(onStartWorkout = { navController.navigate(Screen.Workout.route) }, isWorkoutDone = isWorkoutDone, viewModel = viewModel ) }
                 composable(Screen.Workout.route) { WorkoutScreen(onFinish = { isWorkoutDone = true; navController.popBackStack() }, navController = navController, viewModel = viewModel) }
                 composable(Screen.Schedule.route) { schduleScreen( viewModel = viewModel, navController = navController) }
-                composable(Screen.Leaderboard.route) { LeaderboardScreen() }
+                composable(Screen.Leaderboard.route) { LeaderboardScreen(navController = navController, viewModel = viewModel) }
                 composable(Screen.Profile.route) { ProfileScreen(navController = navController, viewModel = viewModel) }
                 composable(Screen.Settings.route) { SettingsScreen(viewModel = viewModel, navController = navController) }
                 composable(Screen.Stats.route) { StatsScreen(viewModel = viewModel, navController = navController) }

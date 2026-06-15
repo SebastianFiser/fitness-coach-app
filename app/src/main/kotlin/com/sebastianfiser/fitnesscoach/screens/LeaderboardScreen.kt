@@ -35,16 +35,18 @@ import com.sebastianfiser.fitnesscoach.models.FilterData
 import com.sebastianfiser.fitnesscoach.models.GenerateFewTimesLeaderBoardData
 import androidx.compose.material.icons.filled.Add
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
+import androidx.navigation.NavController
+import com.sebastianfiser.fitnesscoach.navigation.Screen
 
 
 @Composable
-fun LeaderboardScreen() {
+fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
     var selectedParameter by remember { mutableStateOf<String?>(null) }
     val data: List<LeaderBoardEntry> = remember {GenerateFewTimesLeaderBoardData()}
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {/*Todo */},
+                onClick = { navController.navigate(Screen.Submission.route) },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = Color.White
             ) {
@@ -61,9 +63,10 @@ fun LeaderboardScreen() {
         containerColor = Color.Black,
     ) { innerPadding ->
         LazyColumn ( 
-            modifier = Modifier
+            modifier = Modfier
                 .fillMaxSize()
                 .background(Color.Black)
+                .padding(innerPadding)
                 .padding(top = 48.dp, bottom = 80.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
