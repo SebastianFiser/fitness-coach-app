@@ -63,7 +63,7 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
         containerColor = Color.Black,
     ) { innerPadding ->
         LazyColumn ( 
-            modifier = Modfier
+            modifier = Modifier
                 .fillMaxSize()
                 .background(Color.Black)
                 .padding(innerPadding)
