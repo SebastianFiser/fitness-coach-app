@@ -98,7 +98,9 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
                         contentAlignment = Alignment.Center
                     ) {
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
