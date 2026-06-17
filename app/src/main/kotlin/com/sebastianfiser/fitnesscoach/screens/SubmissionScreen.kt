@@ -348,7 +348,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                         .fillMaxSize()
                                         .padding(vertical = 8.dp)
                                         .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                                    horizontalAlignment = Alignment.Center
+                                    horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
                                     listOf("Natty", "Juiced").forEach { option ->
                                         Row(
