@@ -38,6 +38,8 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var bodyweight by remember { mutableStateOf("") }
     var selectedAgeGroup by remember { mutableStateOf<String?>(null) }
     var natty by remember { mutableStateOf<Boolean?>(null) }
+    var liftOpen by remember { mutableStateOf(false) }
+    var ageGroupOpen by remember { mutableStateOf(false) }
     Scaffold (
 
     ) { paddingValues ->
@@ -80,15 +82,41 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                     modifier = Modifier
                                         .wrapContentHeight()
                                         .fillMaxWidth()
+                                        .clickable { liftOpen = !liftOpen }
                                         .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    ShowFilterDropdownForLift(
-                                        selectedLift = selectedLift,
-                                        onLiftSelected = { lift ->
-                                            selectedLift = lift
+                                    Box{
+                                        DropdownMenu(
+                                            expanded = liftOpen,
+                                            onDismissRequest = { liftOpen = false },
+                                            modifier = Modifier
+                                                .background(Color(0xFF1C1C1E))
+                                                .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
+                                        ) { 
+                                            DropdownMenuItem(
+                                                text = { Text("Squat") },
+                                                onClick = { 
+                                                    liftOpen = false
+                                                    onLiftSelected("Squat") },
+                                                colors = MenuDefaults.itemColors(textColor = Color.White)
+                                            )
+                                            DropdownMenuItem(
+                                                text = { Text("Bench Press") },
+                                                onClick = { 
+                                                    liftOpen = false
+                                                    onLiftSelected("Bench Press") },
+                                                colors = MenuDefaults.itemColors(textColor = Color.White)
+                                            )
+                                            DropdownMenuItem(
+                                                text = { Text("Deadlift") },
+                                                onClick = { 
+                                                    liftOpen = false
+                                                    onLiftSelected("Deadlift") },
+                                                colors = MenuDefaults.itemColors(textColor = Color.White)
+                                            )
                                         }
-                                    )
+                                    }
                                     if(selectedLift == null) {
                                         Text("Select Lift")
                                     } else {
@@ -240,15 +268,55 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                     modifier = Modifier
                                         .wrapContentHeight()
                                         .fillMaxWidth()
+                                        .clickable { ageGroupOpen = !ageGroupOpen }
                                         .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    ShowFilterDropdownForAgeGroup(
-                                        selectedAgeGroup = selectedAgeGroup,
-                                        onAgeGroupSelected = { ageGroup ->
-                                            selectedAgeGroup = ageGroup
+                                    Box{
+                                        DropdownMenu(
+                                            expanded = ageGroupOpen,
+                                            onDismissRequest = { ageGroupOpen = false },
+                                            modifier = Modifier
+                                                .background(Color(0xFF1C1C1E))
+                                                .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
+                                        ) { 
+                                            DropdownMenuItem(
+                                                text = { Text("Under 18") },
+                                                onClick = { 
+                                                    ageGroupOpen = false
+                                                    onAgeGroupSelected("-18") },
+                                                colors = MenuDefaults.itemColors(textColor = Color.White)
+                                            )
+                                            DropdownMenuItem(
+                                                text = { Text("19-25") },
+                                                onClick = { 
+                                                    ageGroupOpen = false
+                                                    onAgeGroupSelected("19-25") },
+                                                colors = MenuDefaults.itemColors(textColor = Color.White)
+                                            )
+                                            DropdownMenuItem(
+                                                text = { Text("26-35") },
+                                                onClick = { 
+                                                    ageGroupOpen = false
+                                                    onAgeGroupSelected("26-35") },
+                                                colors = MenuDefaults.itemColors(textColor = Color.White)
+                                            )
+                                            DropdownMenuItem(
+                                                text = { Text("36-45") },
+                                                onClick = { 
+                                                    ageGroupOpen = false
+                                                    onAgeGroupSelected("36-45") },
+                                                colors = MenuDefaults.itemColors(textColor = Color.White)
+                                            )
+                                            DropdownMenuItem(
+                                                text = { Text("46+") },
+                                                onClick = { 
+                                                    ageGroupOpen = false
+                                                    onAgeGroupSelected("46+") },
+                                                colors = MenuDefaults.itemColors(textColor = Color.White)
+                                            )
                                         }
-                                    )
+                                    }
                                     if(selectedAgeGroup == null) {
                                         Text("Select age Group ")
                                     } else {
@@ -312,102 +380,4 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
             }
         }
     }
-}
-
-@Composable
-fun ShowFilterDropdownForLift(selectedLift: String?, onLiftSelected: (String) -> Unit) {
-    var liftOpen by remember { mutableStateOf(false) }
-    Box{
-        Button(
-            onClick = { liftOpen = !liftOpen },
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
-        ) {
-            Text("Lift")
-        }
-        DropdownMenu(
-            expanded = liftOpen,
-            onDismissRequest = { liftOpen = false },
-            modifier = Modifier
-                .background(Color(0xFF1C1C1E))
-                .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
-        ) { 
-            DropdownMenuItem(
-                text = { Text("Squat") },
-                onClick = { 
-                    liftOpen = false
-                    onLiftSelected("Squat") },
-                colors = MenuDefaults.itemColors(textColor = Color.White)
-            )
-            DropdownMenuItem(
-                text = { Text("Bench Press") },
-                onClick = { 
-                    liftOpen = false
-                    onLiftSelected("Bench Press") },
-                colors = MenuDefaults.itemColors(textColor = Color.White)
-            )
-            DropdownMenuItem(
-                text = { Text("Deadlift") },
-                onClick = { 
-                    liftOpen = false
-                    onLiftSelected("Deadlift") },
-                colors = MenuDefaults.itemColors(textColor = Color.White)
-            )
-        }
-    }
-}
-
-@Composable
-fun ShowFilterDropdownForAgeGroup(selectedAgeGroup: String?, onAgeGroupSelected: (String) -> Unit) {
-    var ageGroupOpen by remember { mutableStateOf(false) }
-    Box{
-        Button(
-            onClick = { ageGroupOpen = !ageGroupOpen },
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
-        ) {
-            Text("Age Group")
-        }
-        DropdownMenu(
-            expanded = ageGroupOpen,
-            onDismissRequest = { ageGroupOpen = false },
-            modifier = Modifier
-                .background(Color(0xFF1C1C1E))
-                .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
-        ) { 
-            DropdownMenuItem(
-                text = { Text("Under 18") },
-                onClick = { 
-                    ageGroupOpen = false
-                    onAgeGroupSelected("-18") },
-                colors = MenuDefaults.itemColors(textColor = Color.White)
-            )
-            DropdownMenuItem(
-                text = { Text("19-25") },
-                onClick = { 
-                    ageGroupOpen = false
-                    onAgeGroupSelected("19-25") },
-                colors = MenuDefaults.itemColors(textColor = Color.White)
-            )
-            DropdownMenuItem(
-                text = { Text("26-35") },
-                onClick = { 
-                    ageGroupOpen = false
-                    onAgeGroupSelected("26-35") },
-                colors = MenuDefaults.itemColors(textColor = Color.White)
-            )
-            DropdownMenuItem(
-                text = { Text("36-45") },
-                onClick = { 
-                    ageGroupOpen = false
-                    onAgeGroupSelected("36-45") },
-                colors = MenuDefaults.itemColors(textColor = Color.White)
-            )
-            DropdownMenuItem(
-                text = { Text("46+") },
-                onClick = { 
-                    ageGroupOpen = false
-                    onAgeGroupSelected("46+") },
-                colors = MenuDefaults.itemColors(textColor = Color.White)
-            )
-        }
-     }
 }
