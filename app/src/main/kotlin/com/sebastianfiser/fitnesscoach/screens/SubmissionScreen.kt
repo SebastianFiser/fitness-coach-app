@@ -338,7 +338,8 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                     .padding(8.dp),
                                 verticalArrangement = Arrangement.Center
                             ) {
-                                Box(
+                                Text("Are you natty or juiced?")
+                                Row(
                                     modifier = Modifier
                                         .fillMaxSize()
                                         .padding(vertical = 8.dp)
