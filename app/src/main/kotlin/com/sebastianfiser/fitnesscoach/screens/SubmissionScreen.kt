@@ -64,7 +64,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     ) {
                         Box(
                             modifier = Modifier
-                                .height(48.dp)
+                                .wrapContentHeight()
                                 .weight(1f)
                                 .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                             contentAlignment = Alignment.Center
@@ -78,7 +78,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                 Text("Select your lift")
                                 Box(
                                     modifier = Modifier
-                                        .height(32.dp)
+                                        .wrapContentHeight()
                                         .fillMaxWidth()
                                         .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
                                     contentAlignment = Alignment.Center
@@ -99,7 +99,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         }
                         Box(
                             modifier = Modifier
-                                .height(48.dp)
+                                .wrapContentHeight()
                                 .weight(1f)
                                 .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                             contentAlignment = Alignment.Center
@@ -142,7 +142,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     ) {
                         Box(
                             modifier = Modifier
-                                .height(48.dp)
+                                .wrapContentHeight()
                                 .weight(1f)
                                 .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                             contentAlignment = Alignment.Center
@@ -172,7 +172,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     ) {
                         Box(
                             modifier = Modifier
-                                .height(48.dp)
+                                .wrapContentHeight()
                                 .weight(1f)
                                 .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                             contentAlignment = Alignment.Center
@@ -181,7 +181,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         }
                         Box(
                             modifier = Modifier
-                                .height(48.dp)
+                                .wrapContentHeight()
                                 .weight(1f)
                                 .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                             contentAlignment = Alignment.Center
@@ -224,7 +224,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     ) {
                         Box(
                             modifier = Modifier
-                                .height(48.dp)
+                                .wrapContentHeight()
                                 .weight(1f)
                                 .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                             contentAlignment = Alignment.Center
@@ -238,7 +238,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                 Text("Select age group")
                                 Box(
                                     modifier = Modifier
-                                        .height(32.dp)
+                                        .wrapContentHeight()
                                         .fillMaxWidth()
                                         .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
                                     contentAlignment = Alignment.Center
@@ -260,7 +260,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         Box(
                             modifier = Modifier
                                 .weight(1f)
-                                .height(48.dp)
+                                .wrapContentHeight()
                                 .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                             contentAlignment = Alignment.Center
                         ) {
