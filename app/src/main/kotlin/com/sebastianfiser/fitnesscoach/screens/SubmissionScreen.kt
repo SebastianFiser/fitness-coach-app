@@ -60,14 +60,15 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .height(IntrinsicSize.Min)
                             .padding(16.dp),
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Box(
                             modifier = Modifier
-                                .wrapContentHeight()
                                 .weight(1f)
+                                .fillMaxHeight()
                                 .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                             contentAlignment = Alignment.Center
                         ) {
@@ -127,8 +128,8 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         }
                         Box(
                             modifier = Modifier
-                                .wrapContentHeight()
                                 .weight(1f)
+                                .fillMaxHeight()
                                 .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                             contentAlignment = Alignment.Center
                         ) {
@@ -164,14 +165,15 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .height(IntrinsicSize.Min)
                             .padding(16.dp),
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Box(
                             modifier = Modifier
-                                .wrapContentHeight()
                                 .weight(1f)
+                                .fillMaxHeight()
                                 .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                             contentAlignment = Alignment.Center
                         ) {
@@ -194,14 +196,15 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .height(IntrinsicSize.Min)
                             .padding(16.dp),
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Box(
                             modifier = Modifier
-                                .wrapContentHeight()
                                 .weight(1f)
+                                .fillMaxHeight()
                                 .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                             contentAlignment = Alignment.Center
                         ) {
@@ -209,8 +212,8 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         }
                         Box(
                             modifier = Modifier
-                                .wrapContentHeight()
                                 .weight(1f)
+                                .fillMaxHeight()
                                 .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                             contentAlignment = Alignment.Center
                         ) {
@@ -246,14 +249,15 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .height(IntrinsicSize.Min)
                             .padding(16.dp),
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Box(
                             modifier = Modifier
-                                .wrapContentHeight()
                                 .weight(1f)
+                                .fillMaxHeight()
                                 .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                             contentAlignment = Alignment.Center
                         ) {
@@ -328,7 +332,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         Box(
                             modifier = Modifier
                                 .weight(1f)
-                                .wrapContentHeight()
+                                .fillMaxHeight()
                                 .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
                             contentAlignment = Alignment.Center
                         ) {
@@ -339,12 +343,12 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 Text("Are you natty or juiced?")
-                                Row(
+                                Column(
                                     modifier = Modifier
                                         .fillMaxSize()
                                         .padding(vertical = 8.dp)
                                         .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                                    horizontalArrangement = Arrangement.Center
+                                    horizontalAlignment = Alignment.Center
                                 ) {
                                     listOf("Natty", "Juiced").forEach { option ->
                                         Row(
