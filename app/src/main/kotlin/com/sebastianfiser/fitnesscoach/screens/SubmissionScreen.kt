@@ -98,21 +98,21 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                                 text = { Text("Squat") },
                                                 onClick = { 
                                                     liftOpen = false
-                                                    onLiftSelected("Squat") },
+                                                    selectedLift = "Squat" },
                                                 colors = MenuDefaults.itemColors(textColor = Color.White)
                                             )
                                             DropdownMenuItem(
                                                 text = { Text("Bench Press") },
                                                 onClick = { 
                                                     liftOpen = false
-                                                    onLiftSelected("Bench Press") },
+                                                    selectedLift = "Bench Press" },
                                                 colors = MenuDefaults.itemColors(textColor = Color.White)
                                             )
                                             DropdownMenuItem(
                                                 text = { Text("Deadlift") },
                                                 onClick = { 
                                                     liftOpen = false
-                                                    onLiftSelected("Deadlift") },
+                                                    selectedLift = "Deadlift" },
                                                 colors = MenuDefaults.itemColors(textColor = Color.White)
                                             )
                                         }
@@ -284,35 +284,35 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                                 text = { Text("Under 18") },
                                                 onClick = { 
                                                     ageGroupOpen = false
-                                                    onAgeGroupSelected("-18") },
+                                                    selectedAgeGroup = "-18" },
                                                 colors = MenuDefaults.itemColors(textColor = Color.White)
                                             )
                                             DropdownMenuItem(
                                                 text = { Text("19-25") },
                                                 onClick = { 
                                                     ageGroupOpen = false
-                                                    onAgeGroupSelected("19-25") },
+                                                    selectedAgeGroup = "19-25" },
                                                 colors = MenuDefaults.itemColors(textColor = Color.White)
                                             )
                                             DropdownMenuItem(
                                                 text = { Text("26-35") },
                                                 onClick = { 
                                                     ageGroupOpen = false
-                                                    onAgeGroupSelected("26-35") },
+                                                    selectedAgeGroup = "26-35" },
                                                 colors = MenuDefaults.itemColors(textColor = Color.White)
                                             )
                                             DropdownMenuItem(
                                                 text = { Text("36-45") },
                                                 onClick = { 
                                                     ageGroupOpen = false
-                                                    onAgeGroupSelected("36-45") },
+                                                    selectedAgeGroup = "36-45" },
                                                 colors = MenuDefaults.itemColors(textColor = Color.White)
                                             )
                                             DropdownMenuItem(
                                                 text = { Text("46+") },
                                                 onClick = { 
                                                     ageGroupOpen = false
-                                                    onAgeGroupSelected("46+") },
+                                                    selectedAgeGroup = "46+" },
                                                 colors = MenuDefaults.itemColors(textColor = Color.White)
                                             )
                                         }
