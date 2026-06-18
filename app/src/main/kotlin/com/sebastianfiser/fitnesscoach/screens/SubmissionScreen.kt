@@ -276,7 +276,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         HorizontalDivider(color = Color.Gray, thickness = 1.dp)
                         OutlinedTextField(
                             value = bodyweight,
-                            shape = RoundedCornerShape(8.dp)
+                            shape = RoundedCornerShape(8.dp),
                             onValueChange = { bodyweight = it },
                             label = { Text("Bodyweight", color = Color.White) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
