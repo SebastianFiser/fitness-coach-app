@@ -60,8 +60,8 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(24.dp)
-                        .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp)),
+                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .padding(24.dp),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(28.dp)
                 ) {
@@ -119,8 +119,8 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 Card (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(24.dp)
-                        .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp)),
+                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .padding(24.dp),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(28.dp)
                 ) {
@@ -154,6 +154,208 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 }
             }
 
+            item {
+                Card (
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .padding(24.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    shape = RoundedCornerShape(28.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp)    
+                    ) {
+                        Text(
+                            "Upload Video",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = Color.White
+                        )
+                        HorizontalDivider(color = Color.Gray, thickness = 1.dp)
+                        Button(
+                            onClick = { videoPicker.launch("video/*") },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
+                        ) {
+                            Text("Select Video", color = Color.White)
+                        }
+                        selectedVideoUri?.let { uri ->
+                            Text("Selected Video: ${uri.lastPathSegment}", color = Color.White)
+                        }
+                    }
+                }
+            }
+            
+            item {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .padding(24.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    shape = RoundedCornerShape(28.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp)    
+                    ) {
+                        Text(
+                            "Select Age Group",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = Color.White
+                        )
+                        HorizontalDivider(color = Color.Gray, thickness = 1.dp)
+                        ExposedDropdownMenuBox(
+                            expanded = ageGroupOpen,
+                            onExpandedChange = { ageGroupOpen = it }
+                        ) {
+                            TextField(
+                                value = selectedAgeGroup ?: "",
+                                onValueChange = {},
+                                readOnly = true,
+                                label = { Text("Age Group", color = Color.White) },
+                                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = ageGroupOpen) },
+                                colors = TextFieldDefaults.textFieldColors(
+                                    focusedTextColor = Color.White,
+                                    unfocusedTextColor = Color.White,
+                                    disabledTextColor = Color.White,
+                                    focusedIndicatorColor = Color.Transparent,
+                                    unfocusedIndicatorColor = Color.Transparent,
+                                    disabledIndicatorColor = Color.Transparent
+        
+                                )
+                            )
+                        }
+                        ExposedDropdownMenu(
+                            expanded = ageGroupOpen,
+                            onDismissRequest = { ageGroupOpen = false }
+                        ) {
+                            listOf("Under 18", "18-25", "26-35", "36-45", "46+").forEach { group ->
+                                DropdownMenuItem(
+                                    text = { Text(group) },
+                                    onClick = {
+                                        selectedAgeGroup = group
+                                        ageGroupOpen = false
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            item {
+                Card (
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .padding(24.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    shape = RoundedCornerShape(28.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp)    
+                    ) {
+                        Text(
+                            "Enter Bodyweight",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = Color.White
+                        )
+                        HorizontalDivider(color = Color.Gray, thickness = 1.dp)
+                        TextField(
+                            value = bodyweight,
+                            onValueChange = { bodyweight = it },
+                            label = { Text("Bodyweight", color = Color.White) },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            colors = TextFieldDefaults.textFieldColors(
+                                focusedTextColor = Color.White,
+                                unfocusedTextColor = Color.White,
+                                disabledTextColor = Color.White,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent,
+                                disabledIndicatorColor = Color.Transparent
+                            )
+                        )
+                    }
+                }
+            }
+
+            item {
+                Card (
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .padding(24.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    shape = RoundedCornerShape(28.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp)    
+                    ) {
+                        Text(
+                            "Are you natural?",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = Color.White
+                        )
+                        HorizontalDivider(color = Color.Gray, thickness = 1.dp)
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            RadioButton(
+                                onClick = { natty = true },
+                                colors = ButtonDefaults.buttonColors(containerColor = if (natty == true) Color.Green else Color.Gray)
+                            ) {
+                                Text("Yes", color = Color.White)
+                            }
+                            RadioButton(
+                                onClick = { natty = false },
+                                colors = ButtonDefaults.buttonColors(containerColor = if (natty == false) Color.Red else Color.Gray)
+                            ) {
+                                Text("No", color = Color.White)
+                            }
+                        }
+                    }
+                }
+            }
+
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Button(
+                        onClick = {
+                            // Handle submission logic here
+                            if (selectedLift != null && prWeight.isNotEmpty() && selectedVideoUri != null && selectedAgeGroup != null && bodyweight.isNotEmpty() && natty != null) {
+                                viewModel.submitPR(
+                                    lift = selectedLift!!,
+                                    weight = prWeight.toFloat(),
+                                    videoUri = selectedVideoUri!!,
+                                    ageGroup = selectedAgeGroup!!,
+                                    bodyweight = bodyweight.toFloat(),
+                                    isNatty = natty!!
+                                )
+                                navController.popBackStack()
+                            } else {
+                                // Show error message or toast
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
+                    ) {
+                        Text("Submit", color = Color.White)
+                    }
+                }
+            }
         }  
     }
 }
