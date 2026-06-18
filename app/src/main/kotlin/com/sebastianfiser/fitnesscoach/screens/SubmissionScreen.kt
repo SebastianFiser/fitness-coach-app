@@ -60,7 +60,8 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(24.dp)
+                        .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp)),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(28.dp)
                 ) {
@@ -118,7 +119,8 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 Card (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(24.dp)
+                        .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp)),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(28.dp)
                 ) {
