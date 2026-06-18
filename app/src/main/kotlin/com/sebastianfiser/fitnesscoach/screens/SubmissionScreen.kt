@@ -57,314 +57,270 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
-                    Row(
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(IntrinsicSize.Min)
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Box(
+                        Column(
                             modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                            contentAlignment = Alignment.Center
+                                .fillMaxSize()
+                                .padding(8.dp),
+                            verticalArrangement = Arrangement.Center,
                         ) {
-                            Column(
+                            Text("Select your lift")
+                            Box(
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(8.dp),
-                                verticalArrangement = Arrangement.Center,
+                                    .wrapContentHeight()
+                                    .fillMaxWidth()
+                                    .clickable { liftOpen = !liftOpen }
+                                    .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
+                                contentAlignment = Alignment.Center
                             ) {
-                                Text("Select your lift")
-                                Box(
-                                    modifier = Modifier
-                                        .wrapContentHeight()
-                                        .fillMaxWidth()
-                                        .clickable { liftOpen = !liftOpen }
-                                        .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Box{
-                                        DropdownMenu(
-                                            expanded = liftOpen,
-                                            onDismissRequest = { liftOpen = false },
-                                            modifier = Modifier
-                                                .background(Color(0xFF1C1C1E))
-                                                .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
-                                        ) { 
-                                            DropdownMenuItem(
-                                                text = { Text("Squat") },
-                                                onClick = { 
-                                                    liftOpen = false
-                                                    selectedLift = "Squat" },
-                                                colors = MenuDefaults.itemColors(textColor = Color.White)
-                                            )
-                                            DropdownMenuItem(
-                                                text = { Text("Bench Press") },
-                                                onClick = { 
-                                                    liftOpen = false
-                                                    selectedLift = "Bench Press" },
-                                                colors = MenuDefaults.itemColors(textColor = Color.White)
-                                            )
-                                            DropdownMenuItem(
-                                                text = { Text("Deadlift") },
-                                                onClick = { 
-                                                    liftOpen = false
-                                                    selectedLift = "Deadlift" },
-                                                colors = MenuDefaults.itemColors(textColor = Color.White)
-                                            )
-                                        }
-                                    }
-                                    if(selectedLift == null) {
-                                        Text("Select Lift")
-                                    } else {
-                                        Text("${selectedLift}")
+                                Box{
+                                    DropdownMenu(
+                                        expanded = liftOpen,
+                                        onDismissRequest = { liftOpen = false },
+                                        modifier = Modifier
+                                            .background(Color(0xFF1C1C1E))
+                                            .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
+                                    ) { 
+                                        DropdownMenuItem(
+                                            text = { Text("Squat") },
+                                            onClick = { 
+                                                liftOpen = false
+                                                selectedLift = "Squat" },
+                                            colors = MenuDefaults.itemColors(textColor = Color.White)
+                                        )
+                                        DropdownMenuItem(
+                                            text = { Text("Bench Press") },
+                                            onClick = { 
+                                                liftOpen = false
+                                                selectedLift = "Bench Press" },
+                                            colors = MenuDefaults.itemColors(textColor = Color.White)
+                                        )
+                                        DropdownMenuItem(
+                                            text = { Text("Deadlift") },
+                                            onClick = { 
+                                                liftOpen = false
+                                                selectedLift = "Deadlift" },
+                                            colors = MenuDefaults.itemColors(textColor = Color.White)
+                                        )
                                     }
                                 }
-                            }
-                        }
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(8.dp),
-                                verticalArrangement = Arrangement.Center,
-                            ) {
-                                Text("Insert pr weight")
-                                OutlinedTextField(
-                                    value = prWeight,
-                                    onValueChange = { prWeight = it },
-                                    label = { Text("weight", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
-                                    singleLine = true,
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                    shape = RoundedCornerShape(14.dp),
-                                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                                        focusedTextColor = Color.White,
-                                        unfocusedTextColor = Color.White,
-                                        focusedBorderColor = Color.LightGray,
-                                        unfocusedBorderColor = Color.LightGray,
-                                        focusedLabelColor = Color.Gray,
-                                        unfocusedLabelColor = Color.DarkGray,
-                                        cursorColor = Color.White
-                                    ),
-                                    modifier = Modifier
-                                        .width(90.dp)
-                                )
-                            }
-                        }
-                    }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(IntrinsicSize.Min)
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .clickable{ videoPicker.launch("video/*") }
-                                    .padding(8.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                if(videoUploaded) {
-                                    Text("File: ${selectedVideoUri?.lastPathSegment ?: "unknown"}", color = Color.White)
+                                if(selectedLift == null) {
+                                    Text("Select Lift")
                                 } else {
-                                    Text("click to select file", color = Color.White)
+                                    Text("${selectedLift}")
                                 }
                             }
                         }
                     }
-                    Row(
+                    Column(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(IntrinsicSize.Min)
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                            .fillMaxSize()
+                            .padding(8.dp),
+                        verticalArrangement = Arrangement.Center,
                     ) {
-                        Box(
+                        Text("Insert pr weight")
+                        OutlinedTextField(
+                            value = prWeight,
+                            onValueChange = { prWeight = it },
+                            label = { Text("weight", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            shape = RoundedCornerShape(14.dp),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                focusedTextColor = Color.White,
+                                unfocusedTextColor = Color.White,
+                                focusedBorderColor = Color.LightGray,
+                                unfocusedBorderColor = Color.LightGray,
+                                focusedLabelColor = Color.Gray,
+                                unfocusedLabelColor = Color.DarkGray,
+                                cursorColor = Color.White
+                            ),
                             modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("Country select placeholder")
-                        }
-                        Box(
+                                .width(90.dp)
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Row(
                             modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                            contentAlignment = Alignment.Center
+                                .fillMaxSize()
+                                .clickable{ videoPicker.launch("video/*") }
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
                         ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(8.dp),
-                                verticalArrangement = Arrangement.Center,
-                            ) {
-                                Text("Input your bodyweight")
-                                OutlinedTextField(
-                                    value = bodyweight,
-                                    onValueChange = { bodyweight = it },
-                                    label = { Text("weight", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
-                                    singleLine = true,
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                    shape = RoundedCornerShape(14.dp),
-                                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                                        focusedTextColor = Color.White,
-                                        unfocusedTextColor = Color.White,
-                                        focusedBorderColor = Color.LightGray,
-                                        unfocusedBorderColor = Color.LightGray,
-                                        focusedLabelColor = Color.Gray,
-                                        unfocusedLabelColor = Color.DarkGray,
-                                        cursorColor = Color.White
-                                    ),
-                                    modifier = Modifier
-                                        .width(90.dp)
-                                )
+                            if(videoUploaded) {
+                                Text("File: ${selectedVideoUri?.lastPathSegment ?: "unknown"}", color = Color.White)
+                            } else {
+                                Text("click to select file", color = Color.White)
                             }
                         }
                     }
-                    Row(
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(IntrinsicSize.Min)
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Box(
+                        Text("Country select placeholder")
+                    }
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(
                             modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                            contentAlignment = Alignment.Center
+                                .fillMaxSize()
+                                .padding(8.dp),
+                            verticalArrangement = Arrangement.Center,
                         ) {
-                            Column(
+                            Text("Input your bodyweight")
+                            OutlinedTextField(
+                                value = bodyweight,
+                                onValueChange = { bodyweight = it },
+                                label = { Text("weight", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
+                                singleLine = true,
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                shape = RoundedCornerShape(14.dp),
+                                colors = TextFieldDefaults.outlinedTextFieldColors(
+                                    focusedTextColor = Color.White,
+                                    unfocusedTextColor = Color.White,
+                                    focusedBorderColor = Color.LightGray,
+                                    unfocusedBorderColor = Color.LightGray,
+                                    focusedLabelColor = Color.Gray,
+                                    unfocusedLabelColor = Color.DarkGray,
+                                    cursorColor = Color.White
+                                ),
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(8.dp),
-                                verticalArrangement = Arrangement.Center,
+                                    .width(90.dp)
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(8.dp),
+                            verticalArrangement = Arrangement.Center,
+                        ) {
+                            Text("Select age group")
+                            Box(
+                                modifier = Modifier
+                                    .wrapContentHeight()
+                                    .fillMaxWidth()
+                                    .clickable { ageGroupOpen = !ageGroupOpen }
+                                    .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
+                                contentAlignment = Alignment.Center
                             ) {
-                                Text("Select age group")
-                                Box(
-                                    modifier = Modifier
-                                        .wrapContentHeight()
-                                        .fillMaxWidth()
-                                        .clickable { ageGroupOpen = !ageGroupOpen }
-                                        .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Box{
-                                        DropdownMenu(
-                                            expanded = ageGroupOpen,
-                                            onDismissRequest = { ageGroupOpen = false },
-                                            modifier = Modifier
-                                                .background(Color(0xFF1C1C1E))
-                                                .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
-                                        ) { 
-                                            DropdownMenuItem(
-                                                text = { Text("Under 18") },
-                                                onClick = { 
-                                                    ageGroupOpen = false
-                                                    selectedAgeGroup = "-18" },
-                                                colors = MenuDefaults.itemColors(textColor = Color.White)
-                                            )
-                                            DropdownMenuItem(
-                                                text = { Text("19-25") },
-                                                onClick = { 
-                                                    ageGroupOpen = false
-                                                    selectedAgeGroup = "19-25" },
-                                                colors = MenuDefaults.itemColors(textColor = Color.White)
-                                            )
-                                            DropdownMenuItem(
-                                                text = { Text("26-35") },
-                                                onClick = { 
-                                                    ageGroupOpen = false
-                                                    selectedAgeGroup = "26-35" },
-                                                colors = MenuDefaults.itemColors(textColor = Color.White)
-                                            )
-                                            DropdownMenuItem(
-                                                text = { Text("36-45") },
-                                                onClick = { 
-                                                    ageGroupOpen = false
-                                                    selectedAgeGroup = "36-45" },
-                                                colors = MenuDefaults.itemColors(textColor = Color.White)
-                                            )
-                                            DropdownMenuItem(
-                                                text = { Text("46+") },
-                                                onClick = { 
-                                                    ageGroupOpen = false
-                                                    selectedAgeGroup = "46+" },
-                                                colors = MenuDefaults.itemColors(textColor = Color.White)
-                                            )
-                                        }
+                                Box{
+                                    DropdownMenu(
+                                        expanded = ageGroupOpen,
+                                        onDismissRequest = { ageGroupOpen = false },
+                                        modifier = Modifier
+                                            .background(Color(0xFF1C1C1E))
+                                            .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
+                                    ) { 
+                                        DropdownMenuItem(
+                                            text = { Text("Under 18") },
+                                            onClick = { 
+                                                ageGroupOpen = false
+                                                selectedAgeGroup = "-18" },
+                                            colors = MenuDefaults.itemColors(textColor = Color.White)
+                                        )
+                                        DropdownMenuItem(
+                                            text = { Text("19-25") },
+                                            onClick = { 
+                                                ageGroupOpen = false
+                                                selectedAgeGroup = "19-25" },
+                                            colors = MenuDefaults.itemColors(textColor = Color.White)
+                                        )
+                                        DropdownMenuItem(
+                                            text = { Text("26-35") },
+                                            onClick = { 
+                                                ageGroupOpen = false
+                                                selectedAgeGroup = "26-35" },
+                                            colors = MenuDefaults.itemColors(textColor = Color.White)
+                                        )
+                                        DropdownMenuItem(
+                                            text = { Text("36-45") },
+                                            onClick = { 
+                                                ageGroupOpen = false
+                                                selectedAgeGroup = "36-45" },
+                                            colors = MenuDefaults.itemColors(textColor = Color.White)
+                                        )
+                                        DropdownMenuItem(
+                                            text = { Text("46+") },
+                                            onClick = { 
+                                                ageGroupOpen = false
+                                                selectedAgeGroup = "46+" },
+                                            colors = MenuDefaults.itemColors(textColor = Color.White)
+                                        )
                                     }
-                                    if(selectedAgeGroup == null) {
-                                        Text("Select age Group ")
-                                    } else {
-                                        Text("${selectedAgeGroup}")
-                                    }
+                                }
+                                if(selectedAgeGroup == null) {
+                                    Text("Select age Group ")
+                                } else {
+                                    Text("${selectedAgeGroup}")
                                 }
                             }
                         }
-                        Box(
+                    }
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(
                             modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                            contentAlignment = Alignment.Center
+                                .fillMaxSize()
+                                .padding(8.dp),
+                            verticalArrangement = Arrangement.Center
                         ) {
+                            Text("Are you natty or juiced?")
                             Column(
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .padding(8.dp),
-                                verticalArrangement = Arrangement.Center
+                                    .padding(vertical = 8.dp)
+                                    .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                Text("Are you natty or juiced?")
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(vertical = 8.dp)
-                                        .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    listOf("Natty", "Juiced").forEach { option ->
-                                        Row(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .clickable { natty = option == "Natty" }
-                                                .padding(8.dp),
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            RadioButton(
-                                                selected = natty == (option == "Natty"),
-                                                onClick = { natty = option == "Natty" },
-                                                colors = RadioButtonDefaults.colors(selectedColor = Color.White, unselectedColor = Color.Gray)
-                                            )
-                                            Text(option, color = Color.White)
-                                        }
+                                listOf("Natty", "Juiced").forEach { option ->
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable { natty = option == "Natty" }
+                                            .padding(8.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        RadioButton(
+                                            selected = natty == (option == "Natty"),
+                                            onClick = { natty = option == "Natty" },
+                                            colors = RadioButtonDefaults.colors(selectedColor = Color.White, unselectedColor = Color.Gray)
+                                        )
+                                        Text(option, color = Color.White)
                                     }
                                 }
                             }
