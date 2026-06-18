@@ -336,19 +336,6 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     Button(
                         onClick = {
                             // Handle submission logic here
-                            if (selectedLift != null && prWeight.isNotEmpty() && selectedVideoUri != null && selectedAgeGroup != null && bodyweight.isNotEmpty() && natty != null) {
-                                viewModel.submitPR(
-                                    lift = selectedLift!!,
-                                    weight = prWeight.toFloat(),
-                                    videoUri = selectedVideoUri!!,
-                                    ageGroup = selectedAgeGroup!!,
-                                    bodyweight = bodyweight.toFloat(),
-                                    isNatty = natty!!
-                                )
-                                navController.popBackStack()
-                            } else {
-                                // Show error message or toast
-                            }
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
                     ) {
