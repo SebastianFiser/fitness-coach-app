@@ -229,19 +229,19 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
         
                                 )
                             )
-                        }
-                        ExposedDropdownMenu(
-                            expanded = ageGroupOpen,
-                            onDismissRequest = { ageGroupOpen = false }
-                        ) {
-                            listOf("Under 18", "18-25", "26-35", "36-45", "46+").forEach { group ->
-                                DropdownMenuItem(
-                                    text = { Text(group) },
-                                    onClick = {
-                                        selectedAgeGroup = group
-                                        ageGroupOpen = false
-                                    }
-                                )
+                            ExposedDropdownMenu(
+                                expanded = ageGroupOpen,
+                                onDismissRequest = { ageGroupOpen = false }
+                            ) {
+                                listOf("Under 18", "18-25", "26-35", "36-45", "46+").forEach { group ->
+                                    DropdownMenuItem(
+                                        text = { Text(group) },
+                                        onClick = {
+                                            selectedAgeGroup = group
+                                            ageGroupOpen = false
+                                        }
+                                    )
+                                }
                             }
                         }
                     }
