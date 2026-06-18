@@ -56,4 +56,6 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.5")
     implementation("io.appwrite:sdk-for-android:5.1.0")
+    implementation("org.kimplify:countries-core:0.1.1")
+    implementation("org.kimplify:countries-i18n:0.1.1")
 }

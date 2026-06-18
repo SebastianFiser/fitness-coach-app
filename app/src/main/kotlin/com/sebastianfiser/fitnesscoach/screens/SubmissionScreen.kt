@@ -40,6 +40,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var natty by remember { mutableStateOf<Boolean?>(null) }
     var liftOpen by remember { mutableStateOf(false) }
     var ageGroupOpen by remember { mutableStateOf(false) }
+    val countries = remember { Countries.repository.getAll() }
     Scaffold (
 
     ) { paddingValues ->
