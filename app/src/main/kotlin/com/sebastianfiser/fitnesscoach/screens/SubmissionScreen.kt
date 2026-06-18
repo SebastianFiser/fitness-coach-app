@@ -87,8 +87,8 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                 label = { Text("Lift", color = Color.White) },
                                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = liftOpen) },
                                 colors = TextFieldDefaults.textFieldColors(
-                                    focusedtextColor = Color.White,
-                                    unFocusedtextColor = Color.White,
+                                    focusedTextColor = Color.White,
+                                    unfocusedTextColor = Color.White,  
                                     disabledTextColor = Color.White,
                                     focusedIndicatorColor = Color.Transparent,
                                     unfocusedIndicatorColor = Color.Transparent,
@@ -140,8 +140,8 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             label = { Text("PR Weight", color = Color.White) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             colors = TextFieldDefaults.textFieldColors(
-                                focusedtextColor = Color.White,
-                                unFocusedtextColor = Color.White,
+                                focusedTextColor = Color.White,
+                                unfocusedTextColor = Color.White,
                                 disabledTextColor = Color.White,
                                 focusedIndicatorColor = Color.Transparent,
                                 unfocusedIndicatorColor = Color.Transparent,
