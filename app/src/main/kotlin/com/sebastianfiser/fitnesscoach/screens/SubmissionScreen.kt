@@ -311,13 +311,13 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
-                            RadioButton(
+                            Button(
                                 onClick = { natty = true },
                                 colors = ButtonDefaults.buttonColors(containerColor = if (natty == true) Color.Green else Color.Gray)
                             ) {
                                 Text("Yes", color = Color.White)
                             }
-                            RadioButton(
+                            Button(
                                 onClick = { natty = false },
                                 colors = ButtonDefaults.buttonColors(containerColor = if (natty == false) Color.Red else Color.Gray)
                             ) {
