@@ -56,6 +56,8 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Box(
                         modifier = Modifier
