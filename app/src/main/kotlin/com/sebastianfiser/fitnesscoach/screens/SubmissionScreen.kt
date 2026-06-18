@@ -81,7 +81,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             expanded = liftOpen,
                             onExpandedChange = { liftOpen = it }
                         ) {
-                            TextField(
+                            OutlinedTextField(
+                                modifier = Modifier.menuAnchor(),
+                                shape = RoundedCornerShape(8.dp),
                                 value = selectedLift ?: "",
                                 onValueChange = {},
                                 readOnly = true,
@@ -136,8 +138,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             color = Color.White
                         )
                         HorizontalDivider(color = Color.Gray, thickness = 1.dp)
-                        TextField(
+                        OutlinedTextField(
                             value = prWeight,
+                            shape = RoundedCornerShape(8.dp),
                             onValueChange = { prWeight = it },
                             label = { Text("PR Weight", color = Color.White) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -213,7 +216,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             expanded = ageGroupOpen,
                             onExpandedChange = { ageGroupOpen = it }
                         ) {
-                            TextField(
+                            OutlinedTextField(
+                                modifier = Modifier.menuAnchor(),
+                                shape = RoundedCornerShape(8.dp),
                                 value = selectedAgeGroup ?: "",
                                 onValueChange = {},
                                 readOnly = true,
@@ -269,8 +274,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             color = Color.White
                         )
                         HorizontalDivider(color = Color.Gray, thickness = 1.dp)
-                        TextField(
+                        OutlinedTextField(
                             value = bodyweight,
+                            shape = RoundedCornerShape(8.dp)
                             onValueChange = { bodyweight = it },
                             label = { Text("Bodyweight", color = Color.White) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
