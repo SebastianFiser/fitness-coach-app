@@ -41,7 +41,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var liftOpen by remember { mutableStateOf(false) }
     var ageGroupOpen by remember { mutableStateOf(false) }
     Scaffold (
-        containerColor = color.Black,
+
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
@@ -87,9 +87,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                 label = { Text("Lift", color = Color.White) },
                                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = liftOpen) },
                                 colors = TextFieldDefaults.textFieldColors(
-                                    textColor = Color.White,
+                                    focusedtextColor = Color.White,
+                                    unFocusedtextColor = Color.White,
                                     disabledTextColor = Color.White,
-                                    backgroundColor = Color.Transparent,
                                     focusedIndicatorColor = Color.Transparent,
                                     unfocusedIndicatorColor = Color.Transparent,
                                     disabledIndicatorColor = Color.Transparent
@@ -140,9 +140,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             label = { Text("PR Weight", color = Color.White) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             colors = TextFieldDefaults.textFieldColors(
-                                textColor = Color.White,
+                                focusedtextColor = Color.White,
+                                unFocusedtextColor = Color.White,
                                 disabledTextColor = Color.White,
-                                backgroundColor = Color.Transparent,
                                 focusedIndicatorColor = Color.Transparent,
                                 unfocusedIndicatorColor = Color.Transparent,
                                 disabledIndicatorColor = Color.Transparent
