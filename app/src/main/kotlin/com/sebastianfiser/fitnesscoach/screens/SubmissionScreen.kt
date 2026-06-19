@@ -175,6 +175,12 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
                     shape = RoundedCornerShape(28.dp)
                 ) {
+                    Text(
+                        "Select your country ",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.White
+                    )
+                    HorizontalDivider(color = Color.Gray, thickness = 1.dp)
                     //Country select- dropdown with search field.
                     ExposedDropdownMenuBox(
                         expanded = countryOpen,
