@@ -23,7 +23,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.material3.ExperimentalMaterial3Api
 import org.kimplify.countries.Countries
-import org.kimpify.countries.model.Country
+import org.kimplify.countries.model.Country
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
