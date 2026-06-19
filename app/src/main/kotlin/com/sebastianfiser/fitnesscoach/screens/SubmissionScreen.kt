@@ -42,6 +42,11 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var liftOpen by remember { mutableStateOf(false) }
     var ageGroupOpen by remember { mutableStateOf(false) }
     val countries = remember { Countries.repository.getAll() }
+    var countryQuery by remember { mutableStateOf("") }
+    var selectedCountry by remember { mutableStateOf<Country?>(null) }
+    var countryOpen by remember { mutableStateOf(false) }
+
+
     Scaffold (
 
     ) { paddingValues ->
@@ -155,6 +160,57 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                 disabledIndicatorColor = Color.Transparent
                             )
                         )
+                    }
+                }
+            }
+
+            item {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .padding(24.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    shape = RoundedCornerShape(28.dp)
+                ) {
+                    //Country select- dropdown with search field.
+                    ExposedDropdownMenuBox(
+                        expanded = countryOpen,
+                        onExpandedChange = { countryOpen = it }
+                    ) {
+                        OutlinedTextField(
+                            modifier = Modifier.menuAnchor(),
+                            shape = RoundedCornerShape(8.dp),
+                            value = countryQuery,
+                            onValueChange = { countryQuery = it; countryOpen = true },
+                            readOnly = false,
+                            label = { Text("Country", color = Color.White) },
+                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = countryOpen) },
+                            colors = TextFieldDefaults.textFieldColors(
+                                focusedTextColor = Color.White,
+                                unfocusedTextColor = Color.White,
+                                disabledTextColor = Color.White,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent,
+                                disabledIndicatorColor = Color.Transparent
+    
+                            )
+                        )
+                        ExposedDropdownMenu(
+                            expanded = countryOpen,
+                            onDismissRequest = { countryOpen = false }
+                        ) {
+                            countries.filter { it.getDisplayName().contains(countryQuery, ignoreCase = true) }.forEach { country ->
+                                DropdownMenuItem(
+                                    text = { Text(country.getDisplayName()) },
+                                    onClick = {
+                                        selectedCountry = country
+                                        countryQuery = country.getDisplayName()
+                                        countryOpen = false
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
             }
