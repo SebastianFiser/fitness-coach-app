@@ -22,9 +22,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.platform.LocalContext
 import org.kimplify.countries.Countries
 import org.kimplify.countries.model.Country
 import org.kimplify.countries.extensions.getDisplayName
+import com.sebastianfiser.fitnesscoach.models.Appwrite
+import androidx.compose.runtime.rememberCoroutineScope
+import android.content.Context
+import io.appwrite.ID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,6 +52,12 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var countryQuery by remember { mutableStateOf("") }
     var selectedCountry by remember { mutableStateOf<Country?>(null) }
     var countryOpen by remember { mutableStateOf(false) }
+    var gender by remember { mutableStateOf("") }
+    var genderOpen by remember { mutableStateOf(false) }
+    val user = Appwrite.getCurrentUser()
+    val userId = user?.id ?: return
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
 
     Scaffold (
@@ -162,6 +173,67 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                 disabledIndicatorColor = Color.Transparent
                             )
                         )
+                    }
+                }
+            }
+
+            item {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .padding(24.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    shape = RoundedCornerShape(28.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp)    
+                    ) {
+                        Text(
+                            "Your gender",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = Color.White
+                        )
+                        HorizontalDivider(color = Color.Gray, thickness = 1.dp)
+                        ExposedDropdownMenuBox(
+                            expanded = genderOpen,
+                            onExpandedChange = { genderOpen = it }
+                        ) {
+                            OutlinedTextField(
+                                modifier = Modifier.menuAnchor(),
+                                shape = RoundedCornerShape(8.dp),
+                                value = gender,
+                                onValueChange = {},
+                                readOnly = true,
+                                label = { Text("Gender", color = Color.White) },
+                                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = genderOpen) },
+                                colors = TextFieldDefaults.textFieldColors(
+                                    focusedTextColor = Color.White,
+                                    unfocusedTextColor = Color.White,  
+                                    disabledTextColor = Color.White,
+                                    focusedIndicatorColor = Color.Transparent,
+                                    unfocusedIndicatorColor = Color.Transparent,
+                                    disabledIndicatorColor = Color.Transparent
+                                )
+                            )
+                            ExposedDropdownMenu(
+                                expanded = genderOpen,
+                                onDismissRequest = { genderOpen = false }
+                            ) {
+                                listOf("Male", "Female", "Other").forEach { gender ->
+                                    DropdownMenuItem(
+                                        text = { Text(gender) },
+                                        onClick = {
+                                            selectedGender = gender
+                                            genderOpen = false
+                                        }
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -407,9 +479,33 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 ) {
                     Button(
                         onClick = {
-                            // Handle submission logic here
+                            if (selectedLift == null || prWeight.isBlank() || selectedCountry == null || natty == null || selectedAgeGroup == null || bodyweight.isBlank() || selectedVideoUri == null || gender.isBlank()) {
+                                // Show error message
+                                return@Button
+                            }
+                            val exerciseName = selectedLift ?: return@Button
+                            val weight = prWeight.toFloatOrNull() ?: return@Button
+                            val country = selectedCountry?.getDisplayName() ?: return@Button
+                            val isNatural = natty ?: return@Button
+                            val age = selectedAgeGroup
+                            val videoUri = selectedVideoUri ?: return@Button
+
+                            scope.launch {
+                                viewModel.submitEntry(
+                                    exerciseName = exerciseName,
+                                    weight = weight,
+                                    reps = 1,
+                                    country = country,
+                                    isNatural = isNatural,
+                                    age = age,
+                                    gender = gender,
+                                    context = context,
+                                    uri = videoUri,
+                                    userId = userId
+                                )
+                            }
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
                     ) {
                         Text("Submit", color = Color.White)
                     }

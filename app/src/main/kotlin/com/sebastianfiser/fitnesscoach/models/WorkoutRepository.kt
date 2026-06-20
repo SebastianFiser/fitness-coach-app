@@ -18,5 +18,5 @@ class WorkoutRepository(client: Client) {
     suspend fun deleteScheduleItem(itemId: String, userId: String) = db.deleteScheduleItem(itemId, userId)
     suspend fun getSetByUser(userId: String) = db.getSetByUser(userId)
     suspend fun uploadVideo(context: android.content.Context, uri: android.net.Uri, userId: String) = storage.uploadVideo(context, uri, userId)
-    suspend fun saveSubmission(userId: String, exerciseName: String, weight: Float, reps: Int, videoFileId: String, createdAt: String, country: String, isNatural: Boolean, age: Int, gender: String ) = db.saveSubmission(userId, exerciseName, weight, reps, videoFileId, createdAt, country, isNatural, age, gender)
+    suspend fun saveSubmission(userId: String, exerciseName: String, weight: Float, reps: Int, videoFileId: String, country: String, isNatural: Boolean, age: Int, gender: String ) = db.saveSubmission(userId, exerciseName, weight, reps, videoFileId, country, isNatural, age, gender)
 }

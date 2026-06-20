@@ -178,10 +178,10 @@ class AppViewModel : ViewModel() {
         prData = emptyMap()
     }
 
-    suspend fun submitEntry(exerciseName: String, weight: Float, reps: Int,createdAt: String, country: String, isNatural: Boolean, age: Int, gender: String, context: android.content.Context, uri: android.net.Uri, userId: String) {
+    suspend fun submitEntry(exerciseName: String, weight: Float, reps: Int, country: String, isNatural: Boolean, age: Int, gender: String, context: android.content.Context, uri: android.net.Uri, userId: String) {
         repository.uploadVideo(context, uri, userId)
             .onSuccess { fileId ->
-            repository.saveSubmission(userId, exerciseName, weight, reps, fileId, createdAt, country, isNatural, age, gender)
+            repository.saveSubmission(userId, exerciseName, weight, reps, fileId, country, isNatural, age, gender)
                 .onFailure { e ->
                     Log.d("AppViewModel", "Failed to save submission: ${e.message}")
                     snackbarHostState.showSnackbar("Failed to save submission, check your internet connection")
