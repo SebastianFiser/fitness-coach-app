@@ -18,9 +18,10 @@ class AppwriteStorage(private val client: Client) {
 
     suspend fun uploadVideo(context: Context, uri: Uri, userId: String): Result<String> {
         return runCatching {
+            val bytes = context.contentResolver.openInputStream(uri)?.readBytes() ?: throw Exception("Failed to read file")
             val response = storage.createFile(
                 bucketId = BUCKET_ID,
-                file = InputFile.fromUri(context, uri),
+                file = InputFile.fromBytes(bytes, "${ID.unique()}.mp4"),
                 fileId = ID.unique(),
                 permissions = listOf(
                     Permission.read(Role.user(userId))
