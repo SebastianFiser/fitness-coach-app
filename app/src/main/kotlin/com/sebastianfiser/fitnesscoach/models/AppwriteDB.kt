@@ -148,5 +148,5 @@ class AppwriteDB(private val client: Client) {
         }
     }
 
-    suspend fun saveSubmission(userId: String, exerciseName: String, weight: Float, reps: Int, )
+    //suspend fun saveSubmission(userId: String, exerciseName: String, weight: Float, reps: Int, )
 }
