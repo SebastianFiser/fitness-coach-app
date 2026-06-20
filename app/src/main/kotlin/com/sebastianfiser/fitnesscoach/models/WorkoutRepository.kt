@@ -1,9 +1,11 @@
 package com.sebastianfiser.fitnesscoach.models
 
 import io.appwrite.Client
+import 
 
 class WorkoutRepository(client: Client) {
     private val db = AppwriteDB(client)
+    private val storage = AppwriteStorage(client)
 
     suspend fun saveWorkout(userId: String, date: String) = db.saveWorkout(userId, date)
     suspend fun saveSet(workoutId: String, userId: String, exerciseName: String, weight: Float, reps: Int) = db.saveSet(workoutId, userId, exerciseName, weight, reps)
@@ -13,4 +15,6 @@ class WorkoutRepository(client: Client) {
     suspend fun getSchedule(userId: String) = db.getSchedule(userId)
     suspend fun deleteScheduleItem(itemId: String, userId: String) = db.deleteScheduleItem(itemId, userId)
     suspend fun getSetByUser(userId: String) = db.getSetByUser(userId)
+    suspend fun uploadVideo(context: android.content.Context, uri: android.net.Uri, userId: String) = storage.uploadVideo(context, uri, userId)
+    suspend fun saveSubmission(userId: String, exerciseName: String, weight: Float, reps: Int, videoFileId: String, createdAt: String, country: String, isNatural: Boolean, age: Int, gender: String ) = db.saveSubmission(userId, exerciseName, weight, reps, videoFileId, createdAt, country, isNatural, age, gender)
 }
