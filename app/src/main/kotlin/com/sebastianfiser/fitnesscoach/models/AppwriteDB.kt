@@ -163,7 +163,6 @@ class AppwriteDB(private val client: Client) {
                     "reps" to reps,
                     "videoFileId" to videoFileId,
                     "status" to status,
-                    "createdAt" to createdAt,
                     "country" to country,
                     "isNatural" to isNatural,
                     "age" to age,

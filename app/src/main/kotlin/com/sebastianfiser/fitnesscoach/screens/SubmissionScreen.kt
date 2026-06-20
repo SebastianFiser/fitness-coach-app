@@ -54,9 +54,11 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var countryOpen by remember { mutableStateOf(false) }
     var gender by remember { mutableStateOf("") }
     var genderOpen by remember { mutableStateOf(false) }
-    val user = Appwrite.getCurrentUser()
-    val userId = user?.id ?: return
     val scope = rememberCoroutineScope()
+    scope.launch {
+        val user = Appwrite.getCurrentUser()
+    }
+    val userId = user?.id ?: return
     val context = LocalContext.current
 
 
@@ -205,7 +207,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             OutlinedTextField(
                                 modifier = Modifier.menuAnchor(),
                                 shape = RoundedCornerShape(8.dp),
-                                value = gender,
+                                value = selectedGender,
                                 onValueChange = {},
                                 readOnly = true,
                                 label = { Text("Gender", color = Color.White) },
@@ -489,16 +491,17 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             val isNatural = natty ?: return@Button
                             val age = selectedAgeGroup
                             val videoUri = selectedVideoUri ?: return@Button
+                            val presGender = gender
 
                             scope.launch {
                                 viewModel.submitEntry(
                                     exerciseName = exerciseName,
                                     weight = weight,
-                                    reps = 1,
+                                    reps = "1",
                                     country = country,
                                     isNatural = isNatural,
                                     age = age,
-                                    gender = gender,
+                                    gender = presGender,
                                     context = context,
                                     uri = videoUri,
                                     userId = userId
