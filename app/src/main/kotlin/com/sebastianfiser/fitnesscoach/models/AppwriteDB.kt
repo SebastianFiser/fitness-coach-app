@@ -149,5 +149,32 @@ class AppwriteDB(private val client: Client) {
         }
     }
 
-    //suspend fun saveSubmission(userId: String, exerciseName: String, weight: Float, reps: Int, )
+    suspend fun saveSubmission(userId: String, exerciseName: String, weight: Float, reps: Int, videoFileId: String, createdAt: String, country: String, isNatural: Boolean, age: Int, gender: String ): Result<Document<Map<String, Any>>> {
+        val status = "pending" 
+        return runCatching {
+            databases.createDocument(
+                databaseId = DB_ID,
+                collectionId = SUBMISSION_COL_ID,
+                documentId = ID.unique(),
+                data = mapOf(
+                    "userId" to userId,
+                    "exerciseName" to exerciseName,
+                    "weight" to weight,
+                    "reps" to reps,
+                    "videoFileId" to videoFileId,
+                    "status" to status,
+                    "createdAt" to createdAt,
+                    "country" to country,
+                    "isNatural" to isNatural,
+                    "age" to age,
+                    "Gender" to gender
+                ),
+                permissions = listOf(
+                    Permission.read(Role.user(userId)),
+                    Permission.update(Role.user(userId)),
+                    Permission.delete(Role.user(userId))
+                )
+            )
+        }
+    }
 }
