@@ -18,6 +18,7 @@ class AppwriteDB(private val client: Client) {
         private const val WORKOUT_COL_ID = "workouts"
         private const val SETS_COL_ID = "sets"
         private const val SCHEDULE_COL_ID = "schedule"
+        private const val SUBMISSION_COL_ID = "submission"
     }
 
     suspend fun saveWorkout(userId: String, date: String): Result<Document<Map<String, Any>>> {
@@ -146,4 +147,6 @@ class AppwriteDB(private val client: Client) {
             response.documents
         }
     }
+
+    suspend fun saveSubmission(userId: String, exerciseName: String, weight: Float, reps: Int, )
 }
