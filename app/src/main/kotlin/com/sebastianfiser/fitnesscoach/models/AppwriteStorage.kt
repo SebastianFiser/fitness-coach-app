@@ -7,6 +7,7 @@ import android.net.Uri
 import io.appwrite.ID
 import io.appwrite.Permission
 import io.appwrite.Role
+import io.appwrite.models.InputFile
 
 class AppwriteStorage(private val client: Client) {
     private val storage = Storage(client)
