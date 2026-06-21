@@ -59,10 +59,6 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var selectedGender by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    scope.launch {
-        val user = Appwrite.getCurrentUser() ?: return@launch
-        val userId = user?.id ?: return@launch
-    }
 
     Scaffold (
 
@@ -494,6 +490,10 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             val age = selectedAgeGroup ?: return@Button
                             val videoUri = selectedVideoUri ?: return@Button
                             val presGender = gender
+                            scope.launch {
+                                val user = Appwrite.getCurrentUser() ?: return@launch
+                                val userId = user?.id ?: return@launch
+                            }
 
                             scope.launch {
                                 viewModel.submitEntry(
