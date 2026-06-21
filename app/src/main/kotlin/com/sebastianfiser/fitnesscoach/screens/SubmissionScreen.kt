@@ -59,15 +59,11 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var selectedGender by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    var userId by remember { mutableStateOf<String?>(null) }
-    var user by remember { mutableStateOf<io.appwrite.models.User?>(null) }
-
-    LaunchedEffect(Unit) {
-        scope.launch {
-            user = Appwrite.getCurrentUser()
-            userId = user?.id ?: return@launch
-        }
+    scope.launch {
+        val user = Appwrite.getCurrentUser() ?: return@launch
+        val userId = user?.id ?: return@launch
     }
+
     Scaffold (
 
     ) { paddingValues ->
@@ -493,9 +489,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             }
                             val exerciseName = selectedLift ?: return@Button
                             val weight = prWeight.toFloatOrNull() ?: return@Button
-                            val country = selectedCountry.getDisplayName() ?: return@Button
+                            val country = selectedCountry?.getDisplayName() ?: return@Button
                             val isNatural = natty ?: return@Button
-                            val age = selectedAgeGroup
+                            val age = selectedAgeGroup ?: return@Button
                             val videoUri = selectedVideoUri ?: return@Button
                             val presGender = gender
 
