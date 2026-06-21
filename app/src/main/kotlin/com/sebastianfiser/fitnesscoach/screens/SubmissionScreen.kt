@@ -45,7 +45,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
         selectedVideoUri = uri
     }
     var bodyweight by remember { mutableStateOf("") }
-    var selectedAgeGroup by remember { mutableStateOf<String?>(null) }
+    var selectedAgeGroup by remember { mutableStateOf<String>(null) }
     var natty by remember { mutableStateOf<Boolean?>(null) }
     var liftOpen by remember { mutableStateOf(false) }
     var ageGroupOpen by remember { mutableStateOf(false) }
@@ -59,7 +59,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     val scope = rememberCoroutineScope()
     scope.launch {
         val user = Appwrite.getCurrentUser()
-        val userId = user?.id ?: return
+        val userId = user?.id ?: return@launch
     }
     val context = LocalContext.current
 
