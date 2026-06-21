@@ -31,6 +31,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import android.content.Context
 import io.appwrite.ID
 import kotlinx.coroutines.launch
+import androidx.compose.runtime.LaunchedEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,13 +58,14 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var genderOpen by remember { mutableStateOf(false) }
     var selectedGender by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
-    scope.launch {
-        val user = Appwrite.getCurrentUser()
-        val userId = user?.id ?: return@launch
-    }
     val context = LocalContext.current
 
-
+    LaunchedEffect(Unit) {
+        scope.launch {
+            val user = Appwrite.getCurrentUser()
+            val userId = user?.id ?: return@launch
+        }
+    }
     Scaffold (
 
     ) { paddingValues ->
