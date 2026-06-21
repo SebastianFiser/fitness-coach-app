@@ -178,7 +178,7 @@ class AppViewModel : ViewModel() {
         prData = emptyMap()
     }
 
-    suspend fun submitEntry(exerciseName: String, weight: Float, reps: Int, country: String, isNatural: Boolean, age: String, gender: String, context: android.content.Context, uri: android.net.Uri, userId: String) {
+    suspend fun submitEntry(exerciseName: String, weight: Float, reps: Int, country: String?, isNatural: Boolean, age: String, gender: String, context: android.content.Context, uri: android.net.Uri, userId: String) {
         repository.uploadVideo(context, uri, userId)
             .onSuccess { fileId ->
             repository.saveSubmission(userId, exerciseName, weight, reps, fileId, country, isNatural, age, gender)
