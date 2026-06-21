@@ -492,7 +492,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             val presGender = gender
                             scope.launch {
                                 val user = Appwrite.getCurrentUser() ?: return@launch
-                                val userId = user?.id ?: return@launch
+                                val userId = user.id ?: return@launch
                             }
 
                             scope.launch {
