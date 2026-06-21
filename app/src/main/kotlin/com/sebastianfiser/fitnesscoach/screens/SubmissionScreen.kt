@@ -30,6 +30,7 @@ import com.sebastianfiser.fitnesscoach.models.Appwrite
 import androidx.compose.runtime.rememberCoroutineScope
 import android.content.Context
 import io.appwrite.ID
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,6 +55,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var countryOpen by remember { mutableStateOf(false) }
     var gender by remember { mutableStateOf("") }
     var genderOpen by remember { mutableStateOf(false) }
+    val selectedGender by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     scope.launch {
         val user = Appwrite.getCurrentUser()

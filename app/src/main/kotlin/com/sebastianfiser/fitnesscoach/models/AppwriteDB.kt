@@ -149,7 +149,7 @@ class AppwriteDB(private val client: Client) {
         }
     }
 
-    suspend fun saveSubmission(userId: String, exerciseName: String, weight: Float, reps: Int, videoFileId: String, country: String, isNatural: Boolean, age: Int, gender: String ): Result<Document<Map<String, Any>>> {
+    suspend fun saveSubmission(userId: String, exerciseName: String, weight: Float, reps: Int, videoFileId: String, country: String, isNatural: Boolean, age: String, gender: String ): Result<Document<Map<String, Any>>> {
         val status = "pending" 
         return runCatching {
             databases.createDocument(
