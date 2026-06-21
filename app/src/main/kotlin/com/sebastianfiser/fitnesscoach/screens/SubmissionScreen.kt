@@ -55,12 +55,12 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var countryOpen by remember { mutableStateOf(false) }
     var gender by remember { mutableStateOf("") }
     var genderOpen by remember { mutableStateOf(false) }
-    val selectedGender by remember { mutableStateOf("") }
+    var selectedGender by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     scope.launch {
         val user = Appwrite.getCurrentUser()
+        val userId = user?.id ?: return
     }
-    val userId = user?.id ?: return
     val context = LocalContext.current
 
 
@@ -489,7 +489,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             }
                             val exerciseName = selectedLift ?: return@Button
                             val weight = prWeight.toFloatOrNull() ?: return@Button
-                            val country = selectedCountry?.getDisplayName() ?: return@Button
+                            val country = selectedCountry.getDisplayName() ?: return@Button
                             val isNatural = natty ?: return@Button
                             val age = selectedAgeGroup
                             val videoUri = selectedVideoUri ?: return@Button
@@ -499,7 +499,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                 viewModel.submitEntry(
                                     exerciseName = exerciseName,
                                     weight = weight,
-                                    reps = "1",
+                                    reps = 1,
                                     country = country,
                                     isNatural = isNatural,
                                     age = age,
