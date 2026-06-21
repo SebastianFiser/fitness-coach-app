@@ -493,9 +493,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             scope.launch {
                                 val user = Appwrite.getCurrentUser() ?: return@launch
                                 val userId = user.id ?: return@launch
-                            }
 
-                            scope.launch {
                                 viewModel.submitEntry(
                                     exerciseName = exerciseName,
                                     weight = weight,
