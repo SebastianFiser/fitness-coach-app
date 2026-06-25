@@ -176,4 +176,18 @@ class AppwriteDB(private val client: Client) {
             )
         }
     }
+
+    suspend fun getPendingSubmissions(): Result<List<Document<Map<String, Any>>>> {
+        return runCatching {
+            val response = databases.listDocuments(
+                databaseId = DB_ID,
+                collectionId = SUBMISSION_COL_ID,
+                queries = listOf(
+                    Query.equal("status", "pending")
+                )
+            )
+            response.documents
+        }
+    }
+
 }

@@ -19,4 +19,5 @@ class WorkoutRepository(client: Client) {
     suspend fun getSetByUser(userId: String) = db.getSetByUser(userId)
     suspend fun uploadVideo(context: android.content.Context, uri: android.net.Uri, userId: String) = storage.uploadVideo(context, uri, userId)
     suspend fun saveSubmission(userId: String, exerciseName: String, weight: Float, reps: Int, videoFileId: String, country: String?, isNatural: Boolean, age: String, gender: String ) = db.saveSubmission(userId, exerciseName, weight, reps, videoFileId, country, isNatural, age, gender)
+    suspend fun getPendingSubmissions() = db.getPendingSubmissions()
 }

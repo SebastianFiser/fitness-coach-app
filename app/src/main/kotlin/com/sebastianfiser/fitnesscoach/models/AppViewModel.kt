@@ -46,6 +46,7 @@ class AppViewModel : ViewModel() {
     var prData by mutableStateOf<Map<String, Float>>(emptyMap())
     val snackbarHostState = SnackbarHostState()
     var isReviewer by mutableStateOf(false)
+    var pendingSubmissions by mutableStateOf<List<Document<Map<String, Any>>>>(emptyList())
     
     suspend fun checkReviewerStatus() {
         isReviewer = Appwrite.isReviewer()
@@ -195,6 +196,15 @@ class AppViewModel : ViewModel() {
             .onFailure { e ->
                 Log.d("AppViewModel", "Failed to upload video: ${e.message}")
                 snackbarHostState.showSnackbar("Failed to upload video, check your internet connection")
+            }
+    }
+
+    suspend fun loadPendingSubmissions() {
+        repository.getPendingSubmissions()
+            .onSuccess { submissions -> pendingSubmissions = submissions }
+            .onFailure { e ->
+                Log.d("AppViewModel", "Failed to load pending submissions: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to load pending submissions, check your internet connection")
             }
     }
 }
