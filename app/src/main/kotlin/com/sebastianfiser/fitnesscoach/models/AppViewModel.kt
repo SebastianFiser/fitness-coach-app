@@ -46,7 +46,7 @@ class AppViewModel : ViewModel() {
     var prData by mutableStateOf<Map<String, Float>>(emptyMap())
     val snackbarHostState = SnackbarHostState()
     var isReviewer by mutableStateOf(false)
-    ¨
+    
     suspend fun checkReviewerStatus() {
         isReviewer = Appwrite.isReviewer()
     }
