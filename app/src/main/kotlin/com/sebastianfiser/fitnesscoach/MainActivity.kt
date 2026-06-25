@@ -35,12 +35,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.CheckCircle
 
 import com.sebastianfiser.fitnesscoach.screens.MainWorkoutCard
 import com.sebastianfiser.fitnesscoach.screens.SetupSchedule
 import com.sebastianfiser.fitnesscoach.screens.schduleScreen
 import com.sebastianfiser.fitnesscoach.screens.LeaderboardScreen
 import com.sebastianfiser.fitnesscoach.screens.ProfileScreen
+import com.sebastianfiser.fitnesscoach.screens.ReviewerScreen
 import com.sebastianfiser.fitnesscoach.models.Exercise
 import com.sebastianfiser.fitnesscoach.screens.WorkoutScreen
 import com.sebastianfiser.fitnesscoach.screens.SettingsScreen
@@ -100,7 +102,7 @@ fun StartContent(viewModel: AppViewModel) {
         bottomBar = {
             val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
             if (currentRoute != Screen.Workout.route && currentRoute != Screen.Login.route && currentRoute != Screen.Register.route && currentRoute != null && currentRoute != Screen.SetupSchedule.route && currentRoute != Screen.ExercisePick.route) {
-                BottomNav(navController = navController)
+                BottomNav(navController = navController, viewModel = viewModel)
             }
         }
     ) { paddingValues ->
@@ -125,13 +127,14 @@ fun StartContent(viewModel: AppViewModel) {
                 composable(Screen.SetupSchedule.route) { SetupSchedule(navController = navController, viewModel = viewModel) }
                 composable(Screen.ExercisePick.route) { ExercisePickScreen(navController = navController, viewModel = viewModel) }
                 composable(Screen.Submission.route) { SubmissionScreen(navController = navController, viewModel = viewModel) }
+                composable(Screen.Reviewer.route) { ReviewerScreen(navController = navController, viewModel = viewModel) }
             }
         }
     }
 }
 
 @Composable
-fun BottomNav(modifier: Modifier = Modifier, navController: NavController) {
+fun BottomNav(modifier: Modifier = Modifier, navController: NavController, viewModel: AppViewModel) {
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     NavigationBar(
         modifier = modifier.drawBehind {
@@ -177,6 +180,17 @@ fun BottomNav(modifier: Modifier = Modifier, navController: NavController) {
             onClick = { navController.navigate(Screen.Leaderboard.route) },
             colors = colors
         )
+
+        if (viewModel.isReviewer) {
+            NavigationBarItem(
+                icon = { Icon(Icons.Default.CheckCircle, contentDescription = null) },
+                label = { Text("Submissions") },
+                selected = currentRoute == Screen.Reviewer.route,
+                onClick = { navController.navigate(Screen.Reviewer.route) },
+                colors = colors
+            )
+        }
+
         NavigationBarItem(
             icon = { Icon(Icons.Default.Person, contentDescription = null) },
             label = { Text("Profile") },
