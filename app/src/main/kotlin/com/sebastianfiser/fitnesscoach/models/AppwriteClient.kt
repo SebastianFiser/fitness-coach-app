@@ -6,6 +6,7 @@ import io.appwrite.ID
 import io.appwrite.models.*
 import io.appwrite.services.*
 import com.sebastianfiser.fitnesscoach.BuildConfig
+import io.appwrite.services.Teams
 
 object Appwrite {
     lateinit var client: Client
@@ -67,6 +68,16 @@ object Appwrite {
             account.get()
         } catch (e: Throwable) {
             null
+        }
+    }
+
+    suspend fun isReviewer(): Boolean {
+        val teams = Teams(client)
+        return try {
+            val response = teams.list()
+            response.teams.any { it.id == "reviewers" }
+        } catch (e: Throwable) {
+            false
         }
     }
 }
