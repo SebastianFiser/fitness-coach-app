@@ -175,7 +175,7 @@ fun BottomNav(modifier: Modifier = Modifier, navController: NavController, viewM
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Star, contentDescription = null) },
-            label = { Text("Leaderboard") },
+            label = { Text("Rankings") },
             selected = currentRoute == Screen.Leaderboard.route,
             onClick = { navController.navigate(Screen.Leaderboard.route) },
             colors = colors
@@ -184,7 +184,7 @@ fun BottomNav(modifier: Modifier = Modifier, navController: NavController, viewM
         if (viewModel.isReviewer) {
             NavigationBarItem(
                 icon = { Icon(Icons.Default.CheckCircle, contentDescription = null) },
-                label = { Text("Submissions") },
+                label = { Text("Review") },
                 selected = currentRoute == Screen.Reviewer.route,
                 onClick = { navController.navigate(Screen.Reviewer.route) },
                 colors = colors

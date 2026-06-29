@@ -57,7 +57,7 @@ fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
             items(viewModel.pendingSubmissions) { submission ->
                 val data = submission.data
                 val exerciseName = data["exerciseName"] as? String ?: "Unknown"
-                val weight = data["weight"] as? Float ?: 0f
+                val weight = (data["weight"] as? Number)?.toFloat() ?: 0f
                 val userId = data["userId"] as? String ?: "Unknown"
 
                 SubmissionCard(
