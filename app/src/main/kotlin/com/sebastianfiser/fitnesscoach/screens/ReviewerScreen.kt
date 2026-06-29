@@ -74,6 +74,7 @@ fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
 
 @Composable
 fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, userId: String, viewModel: AppViewModel) {
+    val scopeOne = rememberCoroutineScope()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -141,7 +142,7 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
-                    onClick = { scope.launch {
+                    onClick = { scopeOne.launch {
                         viewModel.updateSubmissionStatus(submissionId, "approved")
                     } },
                     modifier = Modifier
@@ -154,7 +155,7 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
                 }
 
                 OutlinedButton(
-                    onClick = { scope.launch {
+                    onClick = { scopeOne.launch {
                         viewModel.updateSubmissionStatus(submissionId, "rejected")
                     } },
                     modifier = Modifier
