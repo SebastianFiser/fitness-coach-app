@@ -64,7 +64,8 @@ fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
                     submissionId = submission.id,
                     exerciseName = exerciseName,
                     weight = weight,
-                    userId = userId
+                    userId = userId,
+                    viewModel = viewModel
                 )
             }
         }
@@ -72,7 +73,7 @@ fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
 }
 
 @Composable
-fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, userId: String) {
+fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, userId: String, viewModel: AppViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -140,7 +141,9 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
-                    onClick = {},
+                    onClick = { scope.launch {
+                        viewModel.updateSubmissionStatus(submissionId, "approved")
+                    } },
                     modifier = Modifier
                         .weight(1f)
                         .height(64.dp),
@@ -151,7 +154,9 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
                 }
 
                 OutlinedButton(
-                    onClick = {},
+                    onClick = { scope.launch {
+                        viewModel.updateSubmissionStatus(submissionId, "rejected")
+                    } },
                     modifier = Modifier
                         .weight(1f)
                         .height(64.dp),
