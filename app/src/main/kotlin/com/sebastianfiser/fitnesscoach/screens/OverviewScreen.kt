@@ -47,7 +47,6 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
             .padding(bottom = 80.dp)
     ) {
         Spacer(modifier = Modifier.height(30.dp))
-        Text("isReviewer: ${viewModel.isReviewer}", color = Color.White)
         Column(
             modifier = Modifier
                 .fillMaxWidth()

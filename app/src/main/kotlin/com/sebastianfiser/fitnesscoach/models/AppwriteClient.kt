@@ -72,13 +72,12 @@ object Appwrite {
     }
 
     suspend fun isReviewer(): Boolean {
-        return true
-    //    val teams = Teams(client)
-    //    return try {
-    //        val response = teams.list()
-    //        response.teams.any { it.id == "reviewers" }
-    //    } catch (e: Throwable) {
-    //        false
-    //    }
+        val teams = Teams(client)
+        return try {
+            val response = teams.list()
+            response.teams.any { it.id == "reviewers" }
+        } catch (e: Throwable) {
+            false
+        }
     }
 }
