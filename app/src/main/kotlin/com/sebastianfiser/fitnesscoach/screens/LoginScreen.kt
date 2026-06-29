@@ -98,6 +98,7 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
                         val userId = currentUser?.id ?: return@launch
                         viewModel.seedSchedule(userId)
                         viewModel.loadSchedule(userId)
+                        viewModel.checkReviewerStatus()
                         navController.navigate(Screen.Overview.route)
                     } catch (e: Throwable) {
                         scope.launch {
