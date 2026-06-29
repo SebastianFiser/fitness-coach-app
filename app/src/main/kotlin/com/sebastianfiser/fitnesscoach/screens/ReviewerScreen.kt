@@ -108,15 +108,15 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
 
             Card(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
                     .height(320.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1F))
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1F))
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color(0FF202127))
+                        .background(Color(0xFF202127))
                 ) {
                     // Placeholder for video content
                     Text(
