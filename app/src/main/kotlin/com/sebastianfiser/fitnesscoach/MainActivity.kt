@@ -90,10 +90,10 @@ fun StartContent(viewModel: AppViewModel) {
     LaunchedEffect(Unit) {
         loggedIn = Appwrite.onCheckSession()
         if (loggedIn == true) {
+            viewModel.checkReviewerStatus()
             val currentUser = Appwrite.getCurrentUser()
             val userId = currentUser?.id ?: return@LaunchedEffect
             viewModel.loadSchedule(userId)
-            viewModel.checkReviewerStatus()
         }
     }
     
