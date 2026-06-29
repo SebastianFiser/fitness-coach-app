@@ -190,4 +190,17 @@ class AppwriteDB(private val client: Client) {
         }
     }
 
+    suspend fun updateSubmissionStatus(submissionId: String, newStatus: String): Result<Document<Map<String, Any>>> {
+        return runCatching {
+            databases.updateDocument(
+                databaseId = DB_ID,
+                collectionId = SUBMISSION_COL_ID,
+                documentId = submissionId,
+                data = mapOf(
+                    "status" to newStatus
+                )
+            )
+        }
+    }
+
 }

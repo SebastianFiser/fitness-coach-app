@@ -207,4 +207,14 @@ class AppViewModel : ViewModel() {
                 snackbarHostState.showSnackbar("Failed to load pending submissions, check your internet connection")
             }
     }
+
+    suspend fun updateSubmissionStatus(submissionId: String, newStatus: String) {
+        repository.updateSubmissionStatus(submissionId, newStatus)
+            .onSuccess { loadPendingSubmissions() }
+            .onFailure { e ->
+                Log.d("AppViewModel", "Failed to update submission status: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to update submission status, check your internet connection")
+            }
+    }
+
 }
