@@ -42,7 +42,14 @@ import com.sebastianfiser.fitnesscoach.navigation.Screen
 @Composable
 fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
     var selectedParameter by remember { mutableStateOf<String?>(null) }
-    val data: List<LeaderBoardEntry> = remember {GenerateFewTimesLeaderBoardData()}
+    scope = rememberCoroutineScope()
+    var convertedLeaderBoardEntry by remember { mutableStateOf<LeaderBoardEntry> }
+    LaunchedEffect(Unit) {
+        scope.launch {
+            viewModel.getApprovedSubmissions()
+        }
+    }
+    
     Scaffold(
         containerColor = Color.Black,
     ) { innerPadding ->
@@ -115,7 +122,7 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
                         }
                     }
 
-                    ShowLeaderboard(selectedParameter = selectedParameter, data = data)
+                    ShowLeaderboard(selectedParameter = selectedParameter, data = viewModel.leaderboardEntries)
                 }
             }
         }

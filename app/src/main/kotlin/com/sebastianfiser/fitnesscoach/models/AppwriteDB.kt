@@ -151,6 +151,8 @@ class AppwriteDB(private val client: Client) {
 
     suspend fun saveSubmission(userId: String, exerciseName: String, weight: Float, reps: Int, videoFileId: String, country: String?, isNatural: Boolean, age: String, gender: String ): Result<Document<Map<String, Any>>> {
         val status = "pending" 
+        val user = getCurrentUser()
+        val userName = user?.name ?: "Unknown"
         return runCatching {
             databases.createDocument(
                 databaseId = DB_ID,
@@ -166,7 +168,8 @@ class AppwriteDB(private val client: Client) {
                     "country" to country,
                     "isNatural" to isNatural,
                     "age" to age,
-                    "Gender" to gender
+                    "Gender" to gender,
+                    "userName" to userName
                 ),
                 permissions = listOf(
                     Permission.read(Role.user(userId)),
@@ -200,6 +203,21 @@ class AppwriteDB(private val client: Client) {
                     "status" to newStatus
                 )
             )
+        }
+    }
+
+    suspend fun getApprovedSubmissions(): Result<List<Document<Map<String, Any>>>> {
+        return runCatching {
+            val response = databases.listDocuments(
+                databaseId = DB_ID,
+                collectionId = SUBMISSION_COL_ID,
+                queries = listOf(
+                    Query.equal("status", "approved"),
+                    Query.orderDesc("weight"),
+                    Query.limit(20)
+                )
+            )
+            response.documents
         }
     }
 

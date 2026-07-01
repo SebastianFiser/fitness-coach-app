@@ -21,4 +21,5 @@ class WorkoutRepository(client: Client) {
     suspend fun saveSubmission(userId: String, exerciseName: String, weight: Float, reps: Int, videoFileId: String, country: String?, isNatural: Boolean, age: String, gender: String ) = db.saveSubmission(userId, exerciseName, weight, reps, videoFileId, country, isNatural, age, gender)
     suspend fun getPendingSubmissions() = db.getPendingSubmissions()
     suspend fun updateSubmissionStatus(submissionId: String, status: String) = db.updateSubmissionStatus(submissionId, status)
+    suspend fun getApprovedSubmissions() = db.getApprovedSubmissions()
 }

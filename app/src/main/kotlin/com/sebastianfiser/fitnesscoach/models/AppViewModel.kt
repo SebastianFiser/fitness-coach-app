@@ -9,6 +9,7 @@ import io.appwrite.models.Document
 import android.util.Log
 import java.time.LocalDate
 import androidx.compose.material3.SnackbarHostState
+import com.sebastianfiser.fitnesscoach.models.LeaderBoardEntry
 
 class AppViewModel : ViewModel() {
     private val repository = WorkoutRepository(Appwrite.client)
@@ -47,6 +48,9 @@ class AppViewModel : ViewModel() {
     val snackbarHostState = SnackbarHostState()
     var isReviewer by mutableStateOf(false)
     var pendingSubmissions by mutableStateOf<List<Document<Map<String, Any>>>>(emptyList())
+    var approvedSubmissions by mutableStateOf<List<Document<Map<String, Any>>>>(emptyList())
+
+    var leaderboardList by mutableStateOf<List<LeaderBoardEntry>>(emptyList())
     
     suspend fun checkReviewerStatus() {
         isReviewer = Appwrite.isReviewer()
@@ -216,5 +220,55 @@ class AppViewModel : ViewModel() {
                 snackbarHostState.showSnackbar("Failed to update submission status, check your internet connection")
             }
     }
+
+    suspend fun getApprovedSubmissions() {
+        repository.getApprovedSubmissions()
+            .onSuccess { approvedSubmissions = it }
+            .onFailure { e ->
+                Log.d("AppViewModel", "Failed to load approved submissions: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to load leaderboard, check your internet connection")
+            }
+    }
+
+    val leaderboardEntries: List<LeaderBoardEntry>
+        get() = viewModel.approvedSubmissions.mapIndexed { index, document ->
+            val data = document.data
+
+            val rank = index + 1
+            val username = data["userName"] as? String ?: "Unknown"
+            val lift = data["exerciseName"] as? String ?: "Unknown"
+            val weight = (data["weight"] as? Number)?.toFloat() ?: 0f
+            val gender = when (data["Gender"] as? String) {
+                "Male" -> 1
+                "Female" -> 2
+                "Other" -> 3
+                else -> 3
+            }
+
+            val ageInt = when (val ageString = data["age"] as? String) {
+                "Under 18" -> 17
+                "18-25" -> 21
+                "26-35" -> 30
+                "36-45" -> 40
+                "46+" -> 50
+                else -> 0
+            }
+
+            val natural = data["isNatural"] as? Boolean ?: false
+
+            val nationality = data["country"] as? String ?: "Unknown"
+
+            LeaderBoardEntry(
+                rank = rank,
+                username = username,
+                lift = lift,
+                weight = weight,
+                gender = gender,
+                natural = natural,
+                age = ageInt,
+                nationality = nationality
+            )
+
+        }
 
 }
