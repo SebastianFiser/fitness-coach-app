@@ -45,11 +45,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
     var selectedParameter by remember { mutableStateOf<String?>(null) }
-    scope = rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
     LaunchedEffect(Unit) {
-        scope.launch {
-            viewModel.getApprovedSubmissions()
-        }
+        viewModel.getApprovedSubmissions()
     }
 
     
