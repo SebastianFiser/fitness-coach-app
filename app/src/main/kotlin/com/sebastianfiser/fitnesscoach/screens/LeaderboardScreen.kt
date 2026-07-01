@@ -37,18 +37,21 @@ import androidx.compose.material.icons.filled.Add
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.navigation.Screen
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
     var selectedParameter by remember { mutableStateOf<String?>(null) }
     scope = rememberCoroutineScope()
-    var convertedLeaderBoardEntry by remember { mutableStateOf<LeaderBoardEntry> }
     LaunchedEffect(Unit) {
         scope.launch {
             viewModel.getApprovedSubmissions()
         }
     }
+
     
     Scaffold(
         containerColor = Color.Black,

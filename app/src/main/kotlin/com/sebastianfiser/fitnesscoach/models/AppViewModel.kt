@@ -231,7 +231,7 @@ class AppViewModel : ViewModel() {
     }
 
     val leaderboardEntries: List<LeaderBoardEntry>
-        get() = viewModel.approvedSubmissions.mapIndexed { index, document ->
+        get() = approvedSubmissions.mapIndexed { index, document ->
             val data = document.data
 
             val rank = index + 1
