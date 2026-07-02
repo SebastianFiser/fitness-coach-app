@@ -39,7 +39,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.platform.LocalContext
 import androidx.media3.common.MediaItem
@@ -55,12 +54,6 @@ fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
             viewModel.loadPendingSubmissions()
         }
 
-    }
-
-    DisposableEffect(Unit) {
-        onDispose {
-            exoPlayer.release()
-        }
     }
 
     Scaffold(
@@ -96,12 +89,11 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
     val context = LocalContext.current
 
     scopeOne.launch {
-        viewModel.getVideoUrl(videoFileId)
+        val videoUrl = viewModel.getVideoUrl(videoFileId)
     }
 
     val exoPlayer = remember {
         ExoPlayer.Builder(context).build().apply {
-            val videoUrl = viewModel.videoUrl
             if (videoUrl != null) {
                 val mediaItem = MediaItem.fromUri(videoUrl)
                 setMediaItem(mediaItem)
@@ -208,6 +200,11 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
 
             }
 
+        }
+    }
+    DisposableEffect(Unit) {
+        onDispose {
+            exoPlayer.release()
         }
     }
 }
