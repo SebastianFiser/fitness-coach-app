@@ -58,4 +58,6 @@ dependencies {
     implementation("io.appwrite:sdk-for-android:5.1.0")
     implementation("org.kimplify:countries-core:0.1.1")
     implementation("org.kimplify:countries-i18n:0.1.1")
+    implementation("androidx.media3:media3-exoplayer:1.4.1")
+    implementation("androidx.media3:media3-ui:1.4.1")
 }
