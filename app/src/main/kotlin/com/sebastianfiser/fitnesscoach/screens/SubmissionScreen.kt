@@ -62,6 +62,8 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var gender by remember { mutableStateOf("") } 
     var genderOpen by remember { mutableStateOf(false) } 
     var selectedGender by remember { mutableStateOf("") } 
+    var isSubmitting by remember { mutableStateOf(false) }
+    var submitStatus by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
     val exoPlayer = remember(selectedVideoUri) { ExoPlayer.Builder(context).build().apply {
         setMediaItem(MediaItem.fromUri(selectedVideoUri ?: Uri.EMPTY))
@@ -506,9 +508,10 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Button(
+                        enabled = !isSubmitting,
                         onClick = {
                             if (selectedLift == null || prWeight.isBlank() || selectedCountry == null || natty == null || selectedAgeGroup == null || bodyweight.isBlank() || selectedVideoUri == null || gender.isBlank()) {
-                                // Show error message
+                                submitStatus = "Vyplň všechna pole před odesláním."
                                 return@Button
                             }
                             val exerciseName = selectedLift ?: return@Button
@@ -518,11 +521,19 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             val age = selectedAgeGroup ?: return@Button
                             val videoUri = selectedVideoUri ?: return@Button
                             val presGender = gender
+                            isSubmitting = true
+                            submitStatus = "Odesílám submission..."
                             scope.launch {
-                                val user = Appwrite.getCurrentUser() ?: return@launch
-                                val userId = user.id ?: return@launch
+                                val user = Appwrite.getCurrentUser()
+                                val userId = user?.id
 
-                                viewModel.submitEntry(
+                                if (userId == null) {
+                                    isSubmitting = false
+                                    submitStatus = "Nepodařilo se ověřit uživatele. Zkus to znovu."
+                                    return@launch
+                                }
+
+                                val success = viewModel.submitEntry(
                                     exerciseName = exerciseName,
                                     weight = weight,
                                     reps = 1,
@@ -534,12 +545,35 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                     uri = videoUri,
                                     userId = userId
                                 )
+
+                                isSubmitting = false
+                                submitStatus = if (success) {
+                                    "Submission odeslán a čeká na review."
+                                } else {
+                                    "Submission se nepodařilo odeslat."
+                                }
                             }
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
                     ) {
-                        Text("Submit", color = Color.White)
+                        if (isSubmitting) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(18.dp),
+                                color = Color.White,
+                                strokeWidth = 2.dp
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Odesílám...", color = Color.White)
+                        } else {
+                            Text("Submit", color = Color.White)
+                        }
                     }
+                }
+            }
+
+            item {
+                submitStatus?.let {
+                    Text(it, color = Color.White, style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }  

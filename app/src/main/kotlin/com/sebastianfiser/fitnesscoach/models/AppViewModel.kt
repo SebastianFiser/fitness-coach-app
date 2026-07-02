@@ -188,19 +188,27 @@ class AppViewModel : ViewModel() {
         prData = emptyMap()
     }
 
-    suspend fun submitEntry(exerciseName: String, weight: Float, reps: Int, country: String?, isNatural: Boolean, age: String, gender: String, context: android.content.Context, uri: android.net.Uri, userId: String) {
-        repository.uploadVideo(context, uri, userId)
-            .onSuccess { fileId ->
-            repository.saveSubmission(userId, exerciseName, weight, reps, fileId, country, isNatural, age, gender)
-                .onFailure { e ->
-                    Log.d("AppViewModel", "Failed to save submission: ${e.message}")
-                    snackbarHostState.showSnackbar("Failed to save submission, check your internet connection")
-                }
-            }
-            .onFailure { e ->
-                Log.d("AppViewModel", "Failed to upload video: ${e.message}")
-                snackbarHostState.showSnackbar("Failed to upload video, check your internet connection")
-            }
+    suspend fun submitEntry(exerciseName: String, weight: Float, reps: Int, country: String?, isNatural: Boolean, age: String, gender: String, context: android.content.Context, uri: android.net.Uri, userId: String): Boolean {
+        val uploadResult = repository.uploadVideo(context, uri, userId)
+        val fileId = uploadResult.getOrNull()
+
+        if (fileId == null) {
+            val errorMessage = uploadResult.exceptionOrNull()?.message ?: "Unknown upload error"
+            Log.d("AppViewModel", "Failed to upload video: $errorMessage")
+            snackbarHostState.showSnackbar("Upload failed: $errorMessage")
+            return false
+        }
+
+        val saveResult = repository.saveSubmission(userId, exerciseName, weight, reps, fileId, country, isNatural, age, gender)
+        if (saveResult.isFailure) {
+            val errorMessage = saveResult.exceptionOrNull()?.message ?: "Unknown save error"
+            Log.d("AppViewModel", "Failed to save submission: $errorMessage")
+            snackbarHostState.showSnackbar("Submission not saved: $errorMessage")
+            return false
+        }
+
+        snackbarHostState.showSnackbar("Submission sent and waiting for review")
+        return true
     }
 
     suspend fun loadPendingSubmissions() {
