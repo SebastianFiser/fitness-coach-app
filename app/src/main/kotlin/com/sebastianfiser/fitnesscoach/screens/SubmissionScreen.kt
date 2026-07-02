@@ -64,14 +64,18 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var isSubmitting by remember { mutableStateOf(false) }
     var submitStatus by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
-    val exoPlayer = remember(selectedVideoUri) { ExoPlayer.Builder(context).build().apply {
-        setMediaItem(MediaItem.fromUri(selectedVideoUri ?: Uri.EMPTY))
-        prepare()
-    } }
+    val exoPlayer = remember(selectedVideoUri) {
+        selectedVideoUri?.let { uri ->
+            ExoPlayer.Builder(context).build().apply {
+                setMediaItem(MediaItem.fromUri(uri))
+                prepare()
+            }
+        }
+    }
 
-    DisposableEffect(selectedVideoUri) {
+    DisposableEffect(exoPlayer) {
         onDispose {
-            exoPlayer.release()
+            exoPlayer?.release()
         }
     }
 
@@ -331,7 +335,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             color = Color.White
                         )
                         HorizontalDivider(color = Color.Gray, thickness = 1.dp)
-                        if (selectedVideoUri != null) {
+                        if (exoPlayer != null) {
                             AndroidView(
                                 factory = { ctx ->
                                     PlayerView(ctx).apply {
@@ -510,7 +514,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         enabled = !isSubmitting,
                         onClick = {
                             if (selectedLift == null || prWeight.isBlank() || selectedCountry == null || natty == null || selectedAgeGroup == null || bodyweight.isBlank() || selectedVideoUri == null || selectedGender.isBlank()) {
-                                submitStatus = "Vyplň všechna pole před odesláním."
+                                submitStatus = "Please fill all fields before submitting."
                                 return@Button
                             }
                             val exerciseName = selectedLift ?: return@Button
@@ -547,9 +551,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
 
                                 isSubmitting = false
                                 submitStatus = if (success) {
-                                    "Submission odeslán a čeká na review."
+                                    "Submission sent, and waiting for review"
                                 } else {
-                                    "Submission se nepodařilo odeslat."
+                                    "Submission failed to send."
                                 }
                             }
                         },
@@ -562,7 +566,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                 strokeWidth = 2.dp
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Odesílám...", color = Color.White)
+                            Text("Submitting...", color = Color.White)
                         } else {
                             Text("Submit", color = Color.White)
                         }
