@@ -32,6 +32,10 @@ import android.content.Context
 import io.appwrite.ID
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.LaunchedEffect
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.common.MediaItem
+import androidx.media3.ui.PlayerView
+import androidx.compose.ui.viewinterop.AndroidView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,25 +44,35 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var prWeight by remember { mutableStateOf("") }
     var selectedVideoUri by remember { mutableStateOf<Uri?>(null) }
     var videoUploaded by remember { mutableStateOf(false) }
+    val context = LocalContext.current
     var videoPicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
         selectedVideoUri = uri
     }
     var bodyweight by remember { mutableStateOf("") }
-    var selectedAgeGroup by remember { mutableStateOf<String?>(null) }
-    var natty by remember { mutableStateOf<Boolean?>(null) }
-    var liftOpen by remember { mutableStateOf(false) }
-    var ageGroupOpen by remember { mutableStateOf(false) }
-    val countries = remember { Countries.repository.getAll() }
-    var countryQuery by remember { mutableStateOf("") }
-    var selectedCountry by remember { mutableStateOf<Country?>(null) }
-    var countryOpen by remember { mutableStateOf(false) }
-    var gender by remember { mutableStateOf("") }
-    var genderOpen by remember { mutableStateOf(false) }
-    var selectedGender by remember { mutableStateOf("") }
+    var selectedAgeGroup by remember { mutableStateOf<String?>(null) } 
+    var natty by remember { mutableStateOf<Boolean?>(null) } 
+    var liftOpen by remember { mutableStateOf(false) } 
+    var ageGroupOpen by remember { mutableStateOf(false) } 
+    val countries = remember { Countries.repository.getAll() } 
+    var countryQuery by remember { mutableStateOf("") } 
+    var selectedCountry by remember { mutableStateOf<Country?>(null) } 
+    var countryOpen by remember { mutableStateOf(false) } 
+    var gender by remember { mutableStateOf("") } 
+    var genderOpen by remember { mutableStateOf(false) } 
+    var selectedGender by remember { mutableStateOf("") } 
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
+    val exoPlayer = remember(selectedVideoUri) { ExoPlayer.Builder(context).build().apply {
+        setMediaItem(MediaItem.fromUri(selectedVideoUri ?: Uri.EMPTY))
+        prepare()
+    } }
+
+    DisposableEffect(selectedVideoUri) {
+        onDispose {
+            exoPlayer.release()
+        }
+    }
 
     Scaffold (
 
@@ -319,8 +333,19 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         Button(
                             onClick = { videoPicker.launch("video/*") },
                             colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
-                        ) {
-                            Text("Select Video", color = Color.White)
+                        ) { 
+                            if (selectedVideoUri != null) {
+                                AndroidView(
+                                    factory = { ctx ->
+                                        PlayerView(ctx).apply {
+                                            player = exoPlayer
+                                        }
+                                    },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(400.dp)
+                                )
+                            }
                         }
                         selectedVideoUri?.let { uri ->
                             Text("Selected Video: ${uri.lastPathSegment}", color = Color.White)
