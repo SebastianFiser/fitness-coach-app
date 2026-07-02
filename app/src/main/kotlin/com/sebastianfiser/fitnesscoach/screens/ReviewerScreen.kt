@@ -91,6 +91,7 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
     val scopeOne = rememberCoroutineScope()
     val context = LocalContext.current
     var videoUrl by remember { mutableStateOf<String?>(null) }
+    val currentVideoUrl = videoUrl
 
     scopeOne.launch {
         videoUrl = viewModel.getVideoUrl(videoFileId)
@@ -98,8 +99,8 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
 
     val exoPlayer = remember {
         ExoPlayer.Builder(context).build().apply {
-            if (videoUrl != null) {
-                val mediaItem = MediaItem.fromUri(videoUrl)
+            if (currentVideoUrl != null) {
+                val mediaItem = MediaItem.fromUri(currentVideoUrl)
                 setMediaItem(mediaItem)
                 prepare()
                 playWhenReady = false
