@@ -59,7 +59,6 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var countryQuery by remember { mutableStateOf("") } 
     var selectedCountry by remember { mutableStateOf<Country?>(null) } 
     var countryOpen by remember { mutableStateOf(false) } 
-    var gender by remember { mutableStateOf("") } 
     var genderOpen by remember { mutableStateOf(false) } 
     var selectedGender by remember { mutableStateOf("") } 
     var isSubmitting by remember { mutableStateOf(false) }
@@ -510,7 +509,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     Button(
                         enabled = !isSubmitting,
                         onClick = {
-                            if (selectedLift == null || prWeight.isBlank() || selectedCountry == null || natty == null || selectedAgeGroup == null || bodyweight.isBlank() || selectedVideoUri == null || gender.isBlank()) {
+                            if (selectedLift == null || prWeight.isBlank() || selectedCountry == null || natty == null || selectedAgeGroup == null || bodyweight.isBlank() || selectedVideoUri == null || selectedGender.isBlank()) {
                                 submitStatus = "Vyplň všechna pole před odesláním."
                                 return@Button
                             }
@@ -520,7 +519,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             val isNatural = natty ?: return@Button
                             val age = selectedAgeGroup ?: return@Button
                             val videoUri = selectedVideoUri ?: return@Button
-                            val presGender = gender
+                            val presGender = selectedGender
                             isSubmitting = true
                             submitStatus = "Odesílám submission..."
                             scope.launch {
