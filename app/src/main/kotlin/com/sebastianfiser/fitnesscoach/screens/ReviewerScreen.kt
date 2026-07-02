@@ -90,7 +90,7 @@ fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
 fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, userId: String, videoFileId: String, viewModel: AppViewModel) {
     val scopeOne = rememberCoroutineScope()
     val context = LocalContext.current
-    val videoUrl by remember { mutableStateOf<String?>(null) }
+    var videoUrl by remember { mutableStateOf<String?>(null) }
 
     scopeOne.launch {
         videoUrl = viewModel.getVideoUrl(videoFileId)

@@ -36,8 +36,8 @@ class AppwriteStorage(private val client: Client) {
 
     suspend fun getVideoUrl(fileId: String): Result<String> {
         return runCatching {
-            val fileUrl: String = storage.getFileView(bucketId = BUCKET_ID, fileId = fileId)
-            fileUrl
+            val fileUrl: ByteArray = storage.getFileView(bucketId = BUCKET_ID, fileId = fileId)
+            fileUrl.toString(Charsets.UTF_8)
         }
     }
 
