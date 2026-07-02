@@ -47,6 +47,8 @@ import androidx.media3.ui.PlayerView
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
+import java.io.File
 
 @Composable
 fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
@@ -90,21 +92,27 @@ fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
 fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, userId: String, videoFileId: String, viewModel: AppViewModel) {
     val scopeOne = rememberCoroutineScope()
     val context = LocalContext.current
-    var videoUrl by remember { mutableStateOf<String?>(null) }
-    val currentVideoUrl = videoUrl
+    var videoUri by remember { mutableStateOf<android.net.Uri?>(null) }
 
-    scopeOne.launch {
-        videoUrl = viewModel.getVideoUrl(videoFileId)
+    LaunchedEffect(videoFileId) {
+        val videoBytes = viewModel.getVideoBytes(videoFileId)
+        videoUri = videoBytes?.let { bytes ->
+            val tempFile = File.createTempFile("submission_${videoFileId}_", ".mp4", context.cacheDir)
+            tempFile.writeBytes(bytes)
+            android.net.Uri.fromFile(tempFile)
+        }
     }
 
-    val exoPlayer = remember {
-        ExoPlayer.Builder(context).build().apply {
-            if (currentVideoUrl != null) {
-                val mediaItem = MediaItem.fromUri(currentVideoUrl)
-                setMediaItem(mediaItem)
-                prepare()
-                playWhenReady = false
-            }
+    val exoPlayer = remember(context) {
+        ExoPlayer.Builder(context).build()
+    }
+
+    LaunchedEffect(videoUri) {
+        exoPlayer.clearMediaItems()
+        videoUri?.let {
+            exoPlayer.setMediaItem(MediaItem.fromUri(it))
+            exoPlayer.prepare()
+            exoPlayer.playWhenReady = false
         }
     }
 
@@ -159,15 +167,17 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
                         .fillMaxSize()
                         .background(Color(0xFF202127))
                 ) {
-                    AndroidView(
-                        factory = { context ->
-                            PlayerView(context).apply {
-                                player = exoPlayer
-                                useController = true
-                            }
-                        },
-                        modifier = Modifier.fillMaxSize()
-                    )
+                        if (videoUri != null) {
+                            AndroidView(
+                                factory = { context ->
+                                    PlayerView(context).apply {
+                                        player = exoPlayer
+                                        useController = true
+                                    }
+                                },
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
                 }
             }
 
