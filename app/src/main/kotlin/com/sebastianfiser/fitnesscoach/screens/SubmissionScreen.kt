@@ -330,23 +330,26 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             color = Color.White
                         )
                         HorizontalDivider(color = Color.Gray, thickness = 1.dp)
+                        if (selectedVideoUri != null) {
+                            AndroidView(
+                                factory = { ctx ->
+                                    PlayerView(ctx).apply {
+                                        player = exoPlayer
+                                    }
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(400.dp)
+                            )
+                        }
+
                         Button(
                             onClick = { videoPicker.launch("video/*") },
                             colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
-                        ) { 
-                            if (selectedVideoUri != null) {
-                                AndroidView(
-                                    factory = { ctx ->
-                                        PlayerView(ctx).apply {
-                                            player = exoPlayer
-                                        }
-                                    },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(400.dp)
-                                )
-                            }
+                        ) {
+                            Text(if (selectedVideoUri == null) "Select Video" else "Change Video", color = Color.White)
                         }
+
                         selectedVideoUri?.let { uri ->
                             Text("Selected Video: ${uri.lastPathSegment}", color = Color.White)
                         }
