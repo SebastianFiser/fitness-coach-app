@@ -168,8 +168,8 @@ class AppwriteDB(private val client: Client) {
                     "status" to status,
                     "country" to country,
                     "isNatural" to isNatural,
-                    "age" to age,
-                    "Gender" to gender,
+                    "ageGroup" to age,
+                    "gender" to gender,
                     "userName" to userName
                 ),
                 permissions = listOf(
