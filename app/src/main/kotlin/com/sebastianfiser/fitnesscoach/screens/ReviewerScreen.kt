@@ -44,6 +44,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Composable
 fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
@@ -87,9 +90,10 @@ fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
 fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, userId: String, videoFileId: String, viewModel: AppViewModel) {
     val scopeOne = rememberCoroutineScope()
     val context = LocalContext.current
+    val videoUrl by remember { mutableStateOf<String?>(null) }
 
     scopeOne.launch {
-        val videoUrl = viewModel.getVideoUrl(videoFileId)
+        videoUrl = viewModel.getVideoUrl(videoFileId)
     }
 
     val exoPlayer = remember {
