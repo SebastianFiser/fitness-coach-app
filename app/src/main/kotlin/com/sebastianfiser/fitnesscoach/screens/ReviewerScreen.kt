@@ -37,15 +37,30 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.platform.LocalContext
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
 
 @Composable
 fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
     val scope = rememberCoroutineScope()
+
     LaunchedEffect(Unit) {
         scope.launch {
             viewModel.loadPendingSubmissions()
         }
 
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            exoPlayer.release()
+        }
     }
 
     Scaffold(
@@ -59,12 +74,15 @@ fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
                 val exerciseName = data["exerciseName"] as? String ?: "Unknown"
                 val weight = (data["weight"] as? Number)?.toFloat() ?: 0f
                 val userId = data["userId"] as? String ?: "Unknown"
+                val videoFileId = data["videoFileId"] as? String ?: ""
+
 
                 SubmissionCard(
                     submissionId = submission.id,
                     exerciseName = exerciseName,
                     weight = weight,
                     userId = userId,
+                    videoFileId = videoFileId,
                     viewModel = viewModel
                 )
             }
@@ -73,8 +91,26 @@ fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
 }
 
 @Composable
-fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, userId: String, viewModel: AppViewModel) {
+fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, userId: String, videoFileId: String, viewModel: AppViewModel) {
     val scopeOne = rememberCoroutineScope()
+    val context = LocalContext.current
+
+    scopeOne.launch {
+        viewModel.getVideoUrl(videoFileId)
+    }
+
+    val exoPlayer = remember {
+        ExoPlayer.Builder(context).build().apply {
+            val videoUrl = viewModel.videoUrl
+            if (videoUrl != null) {
+                val mediaItem = MediaItem.fromUri(videoUrl)
+                setMediaItem(mediaItem)
+                prepare()
+                playWhenReady = false
+            }
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -126,11 +162,14 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
                         .fillMaxSize()
                         .background(Color(0xFF202127))
                 ) {
-                    // Placeholder for video content
-                    Text(
-                        text = "Video Placeholder",
-                        color = Color.White,
-                        modifier = Modifier.align(Alignment.Center)
+                    AndroidView(
+                        factory = { context ->
+                            PlayerView(context).apply {
+                                player = exoPlayer
+                                useController = true
+                            }
+                        },
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
             }

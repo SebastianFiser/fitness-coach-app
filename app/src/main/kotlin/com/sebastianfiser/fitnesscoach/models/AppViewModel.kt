@@ -271,4 +271,12 @@ class AppViewModel : ViewModel() {
 
         }
 
+    suspend fun getVideoUrl(fileId: String): String? {
+        return repository.getVideoUrl(fileId)
+            .onFailure { e ->
+                Log.d("AppViewModel", "Failed to get video URL: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to get video URL, check your internet connection")
+            }
+            .getOrNull()
+    }
 }
