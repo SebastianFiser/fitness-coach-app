@@ -35,7 +35,7 @@ class AppwriteStorage(private val client: Client) {
     }
 
     fun getVideoUrl(fileId: String): String {
-        return Storage.getFileView(
+        return storage.getFileView(
             bucketId = BUCKET_ID,
             fileId = fileId
         ).toString()

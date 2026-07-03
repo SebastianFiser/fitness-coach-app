@@ -153,7 +153,7 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
                         .fillMaxSize()
                         .background(Color(0xFF202127))
                 ) {
-                        if (videoUri != null) {
+                        if (videoUrl != null) {
                             AndroidView(
                                 factory = { ctx ->
                                     PlayerView(ctx).apply {
