@@ -92,11 +92,23 @@ fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
 fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, userId: String, videoFileId: String, viewModel: AppViewModel) {
     val scopeOne = rememberCoroutineScope()
     val context = LocalContext.current
-    var videoUrl = remember(videoFileId) { viewModel.getVideoUrl(videoFileId) }
+    var videoBytes by remember { mutableStateOf<ByteArray?>(null)}
 
-    val exoPlayer = remember(videoUrl) {
+    LaunchedEffect(videoFileId) {
+        videoBytes = viewModel.getVideoBytes(videoFileId)
+    }
+
+    val videoUri = remember(videoBytes) {
+        videoBytes?.let { bytes ->
+            val tempFile = File.createTempFile("temp_video", ".mp4", context.cacheDir)
+            tempFile.writeBytes(bytes)
+            Uri.fromFile(tempFile)
+        }
+    }
+
+    val exoPlayer = remember(videoUri) {
         ExoPlayer.Builder(context).build().apply {
-            setMediaItem(MediaItem.fromUri(videoUrl))
+            setMediaItem(MediaItem.fromUri(videoUri ?: Uri.EMPTY))
             prepare()
             playWhenReady = false
         }
@@ -153,17 +165,19 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
                         .fillMaxSize()
                         .background(Color(0xFF202127))
                 ) {
-                        if (videoUrl != null) {
-                            AndroidView(
-                                factory = { ctx ->
-                                    PlayerView(ctx).apply {
-                                        player = exoPlayer
-                                        useController = true
-                                    }
-                                },
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
+                    if (videoUri != null) {
+                        AndroidView(
+                            factory = { ctx ->
+                                PlayerView(ctx).apply {
+                                    player = exoPlayer
+                                    useController = true
+                                }
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(400.dp)
+                        )
+                    }
                 }
             }
 
@@ -203,7 +217,7 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
 
         }
     }
-    DisposableEffect(Unit) {
+    DisposableEffect(videoUri) {
         onDispose {
             exoPlayer.release()
         }

@@ -279,8 +279,14 @@ class AppViewModel : ViewModel() {
 
         }
 
-    fun getVideoUrl(fileId: String): String {
-        return repository.getVideoUrl(fileId)
+    suspend fun getVideoBytes(fileId: String): ByteArray? {
+        return repository.getVideoBytes(fileId)
+            .onFailure {
+                snackbarHostState.showSnackbar("Failed to get video bytes, check your internet connection")
+            }
+            .getOrNull()
     }
+
+
 
 }
