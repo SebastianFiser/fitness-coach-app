@@ -49,6 +49,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.LaunchedEffect
 import java.io.File
+import android.net.Uri
 
 @Composable
 fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {

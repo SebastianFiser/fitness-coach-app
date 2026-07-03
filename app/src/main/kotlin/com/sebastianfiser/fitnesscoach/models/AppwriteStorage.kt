@@ -35,10 +35,12 @@ class AppwriteStorage(private val client: Client) {
     }
 
     suspend fun getVideoBytes(fileId: String): Result<ByteArray> {
-        return storage.getFileView(
-            bucketId = BUCKET_ID,
-            fileId = fileId
-        )
+        return runCaching {
+            storage.getFileView(
+                bucketId = BUCKET_ID,
+                fileId = fileId
+            )
+        }
     }
 
 }
