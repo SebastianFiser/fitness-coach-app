@@ -92,27 +92,13 @@ fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
 fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, userId: String, videoFileId: String, viewModel: AppViewModel) {
     val scopeOne = rememberCoroutineScope()
     val context = LocalContext.current
-    var videoUri by remember { mutableStateOf<android.net.Uri?>(null) }
+    var videoUrl = remember(videoFileId) { viewModel.getVideoUrl(videoFileId) }
 
-    LaunchedEffect(videoFileId) {
-        val videoBytes = viewModel.getVideoBytes(videoFileId)
-        videoUri = videoBytes?.let { bytes ->
-            val tempFile = File.createTempFile("submission_${videoFileId}_", ".mp4", context.cacheDir)
-            tempFile.writeBytes(bytes)
-            android.net.Uri.fromFile(tempFile)
-        }
-    }
-
-    val exoPlayer = remember(context) {
-        ExoPlayer.Builder(context).build()
-    }
-
-    LaunchedEffect(videoUri) {
-        exoPlayer.clearMediaItems()
-        videoUri?.let {
-            exoPlayer.setMediaItem(MediaItem.fromUri(it))
-            exoPlayer.prepare()
-            exoPlayer.playWhenReady = false
+    val exoPlayer = remember(videoUrl) {
+        ExoPlayer.Builder(context).build().apply {
+            setMediaItem(MediaItem.fromUri(videoUrl))
+            prepare()
+            playWhenReady = false
         }
     }
 
@@ -169,8 +155,8 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
                 ) {
                         if (videoUri != null) {
                             AndroidView(
-                                factory = { context ->
-                                    PlayerView(context).apply {
+                                factory = { ctx ->
+                                    PlayerView(ctx).apply {
                                         player = exoPlayer
                                         useController = true
                                     }

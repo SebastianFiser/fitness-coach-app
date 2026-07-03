@@ -22,5 +22,5 @@ class WorkoutRepository(client: Client) {
     suspend fun getPendingSubmissions() = db.getPendingSubmissions()
     suspend fun updateSubmissionStatus(submissionId: String, status: String) = db.updateSubmissionStatus(submissionId, status)
     suspend fun getApprovedSubmissions() = db.getApprovedSubmissions()
-    suspend fun getVideoUrl(fileId: String) = storage.getVideoUrl(fileId)
+    fun getVideoUrl(fileId: String) = storage.getVideoUrl(fileId)
 }

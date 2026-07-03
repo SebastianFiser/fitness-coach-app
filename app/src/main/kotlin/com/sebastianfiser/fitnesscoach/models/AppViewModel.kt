@@ -279,12 +279,8 @@ class AppViewModel : ViewModel() {
 
         }
 
-    suspend fun getVideoBytes(fileId: String): ByteArray? {
-        return repository.getVideoBytes(fileId)
-            .onFailure { e ->
-                Log.d("AppViewModel", "Failed to get video bytes: ${e.message}")
-                snackbarHostState.showSnackbar("Failed to load video, check your internet connection")
-            }
-            .getOrNull()
+    fun getVideoUrl(fileId: String): String {
+        return repository.getVideoUrl(fileId)
     }
+
 }

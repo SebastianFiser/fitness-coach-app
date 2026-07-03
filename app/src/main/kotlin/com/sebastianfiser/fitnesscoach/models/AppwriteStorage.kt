@@ -34,10 +34,11 @@ class AppwriteStorage(private val client: Client) {
         }
     }
 
-    suspend fun getVideoBytes(fileId: String): Result<ByteArray> {
-        return runCatching {
-            storage.getFileView(bucketId = BUCKET_ID, fileId = fileId)
-        }
+    fun getVideoUrl(fileId: String): String {
+        return Storage.getFileView(
+            bucketId = BUCKET_ID,
+            fileId = fileId
+        ).toString()
     }
 
 }
