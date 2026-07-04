@@ -73,8 +73,6 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
     val setData = remember(currentExercise) {
         mutableStateListOf(*Array(currentExercise?.sets ?:0) {SetEntry(entryWeight = "", entryReps = "")})
     }
-    val exerciseCompletionStatus = remember { mutableStateMapOf<Int, Boolean>()}
-    val skippedExercises = remember { mutableStateListOf<Int>() }
     val focusManager = LocalFocusManager.current
     var scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
