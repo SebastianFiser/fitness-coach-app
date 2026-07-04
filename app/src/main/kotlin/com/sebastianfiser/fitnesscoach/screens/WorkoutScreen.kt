@@ -44,6 +44,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
 import com.sebastianfiser.fitnesscoach.models.Appwrite
 
+data class exerciseProgress(
+    val isDone: Boolean = false,
+    val isSkipped: Boolean = false
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -69,10 +73,16 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
     val setData = remember(currentExercise) {
         mutableStateListOf(*Array(currentExercise?.sets ?:0) {SetEntry(entryWeight = "", entryReps = "")})
     }
+    val exerciseCompletionStatus = remember { mutableStateMapOf<Int, Boolean>()}
+    val skippedExercises = remember { mutableStateListOf<Int>() }
     val focusManager = LocalFocusManager.current
     var scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
     var workoutId by remember { mutableStateOf("") }
+    val exerciseProgress = remember {
+        mutableStateListOf(*Array(exercises.size) { ExerciseProgress() })
+    }
+
     BackHandler { showExitDialog = true }
     Column(
         modifier = Modifier
@@ -244,19 +254,30 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                         )
                         TextButton(
                             enabled = entryWeight.isNotEmpty() && entryReps.isNotEmpty() && !isDone && (setIndex == 0 || setData[setIndex - 1].isDone ) && timerRunningForSet == -1,
-                            onClick = { restTimeSeconds = 90; timerRunningForSet = setIndex; setData[setIndex] = setData[setIndex].copy(isDone = true); focusManager.clearFocus(); scope.launch {
-                                val userId = Appwrite.account.get().id
-                                if(workoutId.isEmpty()) {
-                                    workoutId = viewModel.createWorkout() ?: ""
+                            onClick = { 
+                                restTimeSeconds = 90
+                                timerRunningForSet = setIndex
+                                setData[setIndex] = setData[setIndex].copy(isDone = true)
+                                
+                                if (setData.all {it.isDone}) {
+                                    exerciseProgress[currentExerciseIndex] = exerciseProgress[currentExerciseIndex].copy(isDone = true)
                                 }
-                                viewModel.saveSet(
-                                    workoutId = workoutId,
-                                    userId = userId,
-                                    exerciseName = currentExercise?.name ?: "Unknown Exercise",
-                                    weight = entryWeight.toFloatOrNull() ?: 0f,
-                                    reps = entryReps.toIntOrNull() ?: 0
-                                )
-                            } },
+
+                                focusManager.clearFocus()
+                                scope.launch {
+                                    val userId = Appwrite.account.get().id
+                                    if(workoutId.isEmpty()) {
+                                        workoutId = viewModel.createWorkout() ?: ""
+                                    }
+                                    viewModel.saveSet(
+                                        workoutId = workoutId,
+                                        userId = userId,
+                                        exerciseName = currentExercise?.name ?: "Unknown Exercise",
+                                        weight = entryWeight.toFloatOrNull() ?: 0f,
+                                        reps = entryReps.toIntOrNull() ?: 0
+                                    )
+                                } 
+                            },
                             colors = ButtonDefaults.buttonColors(
                                 contentColor = Color.White,
                                 containerColor = Color.Transparent,
@@ -285,7 +306,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
             OutlinedButton(
                 onClick = { 
                     if(currentExerciseIndex < totalExercises - 1) {
-                        currentExercise?.isSkipped = true
+                        exerciseProgress[currentExerciseIndex] = exerciseProgress[currentExerciseIndex].copy(isSkipped = true)
                         currentExerciseIndex++
                         timerRunningForSet = -1
                         restTimeSeconds = viewModel.restTime
@@ -304,10 +325,10 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                         timerRunningForSet = -1
                         restTimeSeconds = viewModel.restTime
                     } else {
-                        if (exercises.all { it.isDone }) {
+                        if (exerciseProgress.all { it.isDone }) {
                             onFinish()
                         } else {
-                            val nextIndex = exercises.indexOfFirst { !it.isDone && it.isSkipped }
+                            val nextIndex = exerciseProgress.indexOfFirst { !it.isDone && it.isSkipped }
                             currentExerciseIndex = nextIndex
                         }
                     }
@@ -320,7 +341,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                     disabledContentColor = Color.Gray
                     )
             ) {
-                Text(if (currentExerciseIndex < totalExercises - 1 && exercises.all { it.isDone }) "Next Exercise" else "Finish Workout")
+                Text(if (currentExerciseIndex < totalExercises - 1 && exerciseProgress.all { it.isDone }) "Next Exercise" else "Finish Workout")
             }
         }
         LaunchedEffect(timerRunningForSet) {
