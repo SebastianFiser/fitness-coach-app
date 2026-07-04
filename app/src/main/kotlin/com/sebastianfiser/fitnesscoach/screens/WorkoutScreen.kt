@@ -318,18 +318,22 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
             }
             ElevatedButton(
                 onClick = {  
-                    if (currentExerciseIndex < totalExercises - 1) {
-                        currentExerciseIndex++
-                        timerRunningForSet = -1
-                        restTimeSeconds = viewModel.restTime
+                    val nextIncomplete = exerciseProgress
+                        .withIndex()
+                        .drop(currentExerciseIndex + 1)
+                        .firstOrNull { !it.value.isDone && !it.value.isSkipped }?.index
+                    if (nextIncomplete != null) {
+                        currentExerciseIndex = nextIncomplete
                     } else {
-                        if (exerciseProgress.all { it.isDone }) {
+                        val anyIncomplete = exerciseProgress.indexOfFirst { !it.isDone }
+                        if( anyIncomplete == -1 ) {
                             onFinish()
                         } else {
-                            val nextIndex = exerciseProgress.indexOfFirst { !it.isDone && it.isSkipped }
-                            currentExerciseIndex = nextIndex
+                            currentExerciseIndex = anyIncomplete
                         }
                     }
+                    timerRunningForSet = -1
+                    restTimeSeconds = viewModel.restTime
                 },
                 enabled = (setData.all { it.isDone } && timerRunningForSet == -1),
                 colors = ButtonDefaults.elevatedButtonColors(
