@@ -285,7 +285,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
             OutlinedButton(
                 onClick = { 
                     if(currentExerciseIndex < totalExercises - 1) {
-                        currentExercise.isSkipped = true
+                        currentExercise?.isSkipped = true
                         currentExerciseIndex++
                         timerRunningForSet = -1
                         restTimeSeconds = viewModel.restTime
@@ -309,7 +309,6 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                         } else {
                             val nextIndex = exercises.indexOfFirst { !it.isDone && it.isSkipped }
                             currentExerciseIndex = nextIndex
-                            currentExercise = exercises[nextIndex]
                         }
                     }
                 },
