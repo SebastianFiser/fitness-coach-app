@@ -139,14 +139,14 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                     ) {
                         Column {
                             LinearProgressIndicator(
-                                progress = { exercisesProgress.count { it.isDone }.toFloat() / totalExercises.toFloat() },
+                                progress = { exerciseProgress.count { it.isDone }.toFloat() / totalExercises.toFloat() },
                                 modifier = Modifier.fillMaxWidth(),
                                 color = Color.White,
                                 trackColor = Color.DarkGray
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
-                                "Exercise ${exercisesProgress.count { it.isDone } + 1} of $totalExercises",
+                                "Exercise ${exerciseProgress.count { it.isDone } + 1} of $totalExercises",
                                 color = Color.LightGray,
                                 style = MaterialTheme.typography.bodyMedium
                             )
