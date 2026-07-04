@@ -139,14 +139,14 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                     ) {
                         Column {
                             LinearProgressIndicator(
-                                progress = { currentExerciseIndex.toFloat() / totalExercises.toFloat() },
+                                progress = { exercisesProgress.count { it.isDone }.toFloat() / totalExercises.toFloat() },
                                 modifier = Modifier.fillMaxWidth(),
                                 color = Color.White,
                                 trackColor = Color.DarkGray
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
-                                "Excercise ${currentExerciseIndex + 1} of $totalExercises",
+                                "Exercise ${exercisesProgress.count { it.isDone } + 1} of $totalExercises",
                                 color = Color.LightGray,
                                 style = MaterialTheme.typography.bodyMedium
                             )
@@ -343,7 +343,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                     disabledContentColor = Color.Gray
                     )
             ) {
-                Text(if (currentExerciseIndex < totalExercises - 1 && exerciseProgress.all { it.isDone }) "Next Exercise" else "Finish Workout")
+                Text(if (exerciseProgress.all { it.isDone }) "Next Exercise" else "Finish Workout")
             }
         }
         LaunchedEffect(timerRunningForSet) {
