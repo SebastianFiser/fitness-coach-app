@@ -283,21 +283,34 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             OutlinedButton(
-                onClick = { /* TODO: implement selecting different exercise */ },
+                onClick = { 
+                    if(currentExerciseIndex < totalExercises - 1) {
+                        currentExercise.isSkipped = true
+                        currentExerciseIndex++
+                        timerRunningForSet = -1
+                        restTimeSeconds = viewModel.restTime
+                    }
+                 },
                 colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Black, contentColor = Color.LightGray),
             ) { 
-                Text("Different exerxise", style = MaterialTheme.typography.bodyMedium)
+                Text("Skip exercise", style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.width(4.dp))
                 Icon(Icons.Default.Book, contentDescription = null, tint = Color.LightGray)
             }
             ElevatedButton(
-                onClick = { 
+                onClick = {  
                     if (currentExerciseIndex < totalExercises - 1) {
                         currentExerciseIndex++
                         timerRunningForSet = -1
                         restTimeSeconds = viewModel.restTime
                     } else {
-                        onFinish()
+                        if (exercises.all { it.isDone }) {
+                            onFinish()
+                        } else {
+                            val nextIndex = exercises.indexOfFirst { !it.isDone && it.isSkipped }
+                            currentExerciseIndex = nextIndex
+                            currentExercise = exercises[nextIndex]
+                        }
                     }
                 },
                 enabled = (setData.all { it.isDone } && timerRunningForSet == -1),
@@ -308,7 +321,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                     disabledContentColor = Color.Gray
                     )
             ) {
-                Text(if (currentExerciseIndex < totalExercises - 1) "Next Exercise" else "Finish Workout")
+                Text(if (currentExerciseIndex < totalExercises - 1 && exercises.all { it.isDone }) "Next Exercise" else "Finish Workout")
             }
         }
         LaunchedEffect(timerRunningForSet) {
