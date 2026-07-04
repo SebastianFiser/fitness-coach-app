@@ -44,7 +44,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
 import com.sebastianfiser.fitnesscoach.models.Appwrite
 
-data class exerciseProgress(
+data class ExerciseProgress(
     val isDone: Boolean = false,
     val isSkipped: Boolean = false
 )
