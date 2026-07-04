@@ -26,8 +26,7 @@ class AppwriteStorage(private val client: Client) {
                 file = InputFile.fromBytes(bytes, "${ID.unique()}.mp4", "video/mp4"),
                 fileId = ID.unique(),
                 permissions = listOf(
-                    Permission.read(Role.user(userId)),
-                    Permission.read(Role.team("reviewers"))
+                    Permission.read(Role.user(userId))
                 )
             )
             response.id
