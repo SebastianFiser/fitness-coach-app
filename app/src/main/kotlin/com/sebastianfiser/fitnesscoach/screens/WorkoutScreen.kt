@@ -85,16 +85,16 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(MaterialTheme.colorScheme.background)
             .padding(bottom = 80.dp, top = 48.dp)
     ) {
         if (showExitDialog) {
             AlertDialog(
-                containerColor = Color(0xFF1A1A1A),
+                containerColor = MaterialTheme.colorScheme.surface,
                 shape = RoundedCornerShape(16.dp),
                 onDismissRequest = { showExitDialog = false },
-                title = { Text("Exit Workout", color = Color.White) },
-                text = { Text("Are you sure you want to exit the workout?", color = Color.LightGray) },
+                title = { Text("Exit Workout", color = MaterialTheme.colorScheme.onSurface) },
+                text = { Text("Are you sure you want to exit the workout?", color = MaterialTheme.colorScheme.onSurfaceVariant) },
                 confirmButton = {
                     TextButton(
                         onClick = {
@@ -123,8 +123,8 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
-                    .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp)),
-                colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
+                    .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp)),
+                colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
                 shape = RoundedCornerShape(16.dp)
             ) {
                 Column(
@@ -141,20 +141,20 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                             LinearProgressIndicator(
                                 progress = { exerciseProgress.count { it.isDone }.toFloat() / totalExercises.toFloat() },
                                 modifier = Modifier.fillMaxWidth(),
-                                color = Color.White,
-                                trackColor = Color.DarkGray
+                                color = MaterialTheme.colorScheme.onBackground,
+                                trackColor = MaterialTheme.colorScheme.surfaceVariant
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
                                 "Exercise ${exerciseProgress.count { it.isDone } + 1} of $totalExercises",
-                                color = Color.LightGray,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }
                     }
                     Text(
                         currentExercise?.name ?: "No exercise",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onSurface,
                         style = MaterialTheme.typography.headlineLarge,
                     )
                     Row(
@@ -166,12 +166,12 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                         Column {
                             Text(
                                 "Goal: ${currentExercise?.sets} Sets x ${currentExercise?.reps} Reps ",
-                                color = Color.LightGray,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 style = MaterialTheme.typography.bodyMedium
                             )
                             Text(
                                 "@ ${currentExercise?.weight} kg",
-                                color = Color.LightGray,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
@@ -186,8 +186,8 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                         .fillMaxWidth()
                         .padding(16.dp)
                         .alpha(if (isSetActive) 1f else 0.4f)
-                        .border(2.dp, if (isDone) Color.Green else Color.DarkGray, RoundedCornerShape(14.dp)),
-                    colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
+                        .border(2.dp, if (isDone) Color.Green else MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp)),
+                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(16.dp)
                 ) {
                     Row(
@@ -199,25 +199,25 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                     ) {
                         Text(
                             "Set ${setIndex + 1}",
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onSurface,
                             style = MaterialTheme.typography.bodyMedium
                         )
                         OutlinedTextField(
                             value = entryWeight,
                             readOnly = !isSetActive,
                             onValueChange = { setData[setIndex] = setData[setIndex].copy(entryWeight = it) },
-                            label = { Text("Weight (kg)", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
+                            label = { Text("Weight (kg)", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall) },
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             shape = RoundedCornerShape(14.dp),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Color.White,
-                                focusedBorderColor = Color.LightGray,
-                                unfocusedBorderColor = Color.LightGray,
-                                focusedLabelColor = Color.Gray,
-                                unfocusedLabelColor = Color.DarkGray,
-                                cursorColor = Color.White
+                                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                focusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                focusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
+                                unfocusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
+                                cursorColor = MaterialTheme.colorScheme.onSurface
                             ),
                             modifier = Modifier
                                 .width(90.dp)
@@ -226,18 +226,18 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                             value = entryReps,
                             readOnly = !isSetActive,
                             onValueChange = { setData[setIndex] = setData[setIndex].copy(entryReps = it) },
-                            label = { Text("Reps", color = Color.LightGray, style = MaterialTheme.typography.bodySmall) },
+                            label = { Text("Reps", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall) },
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             shape = RoundedCornerShape(14.dp),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Color.White,
-                                focusedBorderColor = Color.LightGray,
-                                unfocusedBorderColor = Color.LightGray,
-                                focusedLabelColor = Color.Gray,
-                                unfocusedLabelColor = Color.DarkGray,
-                                cursorColor = Color.White
+                                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                focusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                focusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
+                                unfocusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
+                                cursorColor = MaterialTheme.colorScheme.onSurface
                             ),
                             modifier = Modifier
                                 .width(90.dp)
@@ -269,9 +269,9 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                                 } 
                             },
                             colors = ButtonDefaults.buttonColors(
-                                contentColor = Color.White,
+                                contentColor = MaterialTheme.colorScheme.onSurface,
                                 containerColor = Color.Transparent,
-                                disabledContentColor = Color.Gray
+                                disabledContentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
                                 )
                         ) {
                             Icon(Icons.Default.Check, contentDescription = null)
@@ -302,11 +302,11 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                         restTimeSeconds = viewModel.restTime
                     }
                  },
-                colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Black, contentColor = Color.LightGray),
+                colors = ButtonDefaults.outlinedButtonColors(containerColor = MaterialTheme.colorScheme.background, contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
             ) { 
                 Text("Skip exercise", style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.width(4.dp))
-                Icon(Icons.Default.Book, contentDescription = null, tint = Color.LightGray)
+                Icon(Icons.Default.Book, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             ElevatedButton(
                 onClick = {  
@@ -329,10 +329,10 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                 },
                 enabled = (setData.all { it.isDone } && timerRunningForSet == -1),
                 colors = ButtonDefaults.elevatedButtonColors(
-                    containerColor = Color.White,
-                    contentColor = Color.Black,
-                    disabledContainerColor = Color.DarkGray,
-                    disabledContentColor = Color.Gray
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    disabledContainerColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    disabledContentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
                     )
             ) {
                 Text(if (exerciseProgress.all { it.isDone }) "Next Exercise" else "Finish Workout")
@@ -362,7 +362,7 @@ fun TimerCard(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFF1C1C1E), RoundedCornerShape(16.dp))
+                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(16.dp))
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -373,25 +373,25 @@ fun TimerCard(
             ) {
                 ElevatedButton(
                     onClick = onClose,
-                    colors =  ButtonDefaults.elevatedButtonColors(containerColor = Color.Transparent, contentColor = Color.White )
+                    colors =  ButtonDefaults.elevatedButtonColors(containerColor = Color.Transparent, contentColor = MaterialTheme.colorScheme.onSurface )
                 ) {
                     Icon(Icons.Default.Close, contentDescription = null)
                 }
                 Box(
                     modifier = Modifier
-                        .background(Color.White, RoundedCornerShape(180.dp))
+                        .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(180.dp))
                         .padding(horizontal = 24.dp, vertical = 12.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         String.format("%02d:%02d", minutes, seconds),
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.headlineMedium
                     )
                 }
                 ElevatedButton(
                     onClick = { onAdd30Seconds() }, 
-                    colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Transparent, contentColor = Color.White)
+                    colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Transparent, contentColor = MaterialTheme.colorScheme.onSurface )
                 ) {
                     Icon(Icons.Default.Add, contentDescription = null)
                 }

@@ -14,6 +14,8 @@ val DarkColors = darkColorScheme(
     onBackground = TextPrimaryDark,
     onSurface = TextPrimaryDark,
     onSurfaceVariant = TextSecondaryDark,
+    outline = OutlineDark,
+    surfaceVariant = SurfaceVariantDark,
     primary = CyanAccent,
     onPrimary = OnPrimary
 )
@@ -24,6 +26,8 @@ val LightColors = lightColorScheme(
     onBackground = TextPrimaryLight,
     onSurface = TextPrimaryLight,
     onSurfaceVariant = TextSecondaryLight,
+    outline = OutlineLight,
+    surfaceVariant = SurfaceVariantLight,
     primary = CyanAccent,
     onPrimary = OnPrimary
 )
