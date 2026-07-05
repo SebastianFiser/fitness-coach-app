@@ -62,7 +62,7 @@ import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import androidx.compose.foundation.isSystemInDarkTheme
 import com.sebastianfiser.fitnesscoach.models.Appwrite
 import androidx.compose.runtime.LaunchedEffect
-
+import com.sebastianfiser.fitnesscoach.ui.theme.FitCoachTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,10 +72,7 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             val viewModel: AppViewModel = viewModel()
-            val isDark = isSystemInDarkTheme()
-            MaterialTheme(
-                colorScheme = if (isDark == true) darkColorScheme() else lightColorScheme(),
-            ) {
+            FitCoachTheme(viewModel = viewModel) {
                 StartContent(viewModel = viewModel)
             }
         }
