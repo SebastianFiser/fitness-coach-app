@@ -86,7 +86,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(bottom = 80.dp, top = 48.dp)
+            .padding(bottom = 20.dp, top = 48.dp)
     ) {
         if (showExitDialog) {
             AlertDialog(
