@@ -352,7 +352,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             onClick = { videoPicker.launch("video/*") },
                             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant, contentColor = MaterialTheme.colorScheme.onPrimary)
                         ) {
-                            Text(if (selectedVideoUri == null) "Select Video" else "Change Video", color = Color.onSurfaceVariant)
+                            Text(if (selectedVideoUri == null) "Select Video" else "Change Video", color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
 
                         selectedVideoUri?.let { uri ->
