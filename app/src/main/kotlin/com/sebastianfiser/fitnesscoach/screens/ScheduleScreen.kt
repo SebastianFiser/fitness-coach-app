@@ -21,6 +21,7 @@ import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import com.sebastianfiser.fitnesscoach.navigation.Screen
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.foundation.border
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
