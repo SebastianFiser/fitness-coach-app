@@ -53,7 +53,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
     Column (
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(MaterialTheme.colorScheme.background)
             .padding(top = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -67,9 +67,9 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                 TextButton(
                     onClick = {}
                 ) {
-                    Icon(Icons.Default.Create , contentDescription = null, tint = Color.White)
+                    Icon(Icons.Default.Create , contentDescription = null, tint = MaterialTheme.colorScheme.onBackground)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Edit Profile", color = Color.White)
+                    Text("Edit Profile", color = MaterialTheme.colorScheme.onBackground)
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
@@ -84,22 +84,22 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                 Text("U", color = Color.White, style = MaterialTheme.typography.headlineLarge)
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Text(userName, color = Color.White, style = MaterialTheme.typography.headlineSmall)
-            Text(userEmail, color = Color.LightGray, style = MaterialTheme.typography.bodyMedium)
+            Text(userName, color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.headlineSmall)
+            Text(userEmail, color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(16.dp))
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
             ) {
-                Text("PERSONAL & APP ACTIVITY", color = Color.LightGray, style = MaterialTheme.typography.bodyMedium)
+                Text("PERSONAL & APP ACTIVITY", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(8.dp))
                 Card (
                     modifier = Modifier
                         .padding(vertical = 4.dp)
-                        .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp))
+                        .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                         .fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(14.dp)
                 ) {
                     Column(
@@ -113,24 +113,24 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(Icons.Default.BarChart, contentDescription = null, tint = Color.White)
+                            Icon(Icons.Default.BarChart, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("My Stats", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                            Text("My Stats", color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodyMedium)
                             Spacer(modifier = Modifier.weight(1f))
-                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = Color.LightGray)
+                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
-                        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outline)
                         Row (
                             modifier = Modifier
                                 .clickable { navController.navigate(Screen.Settings.route) }
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(Icons.Default.Settings, contentDescription = null, tint = Color.White)
+                            Icon(Icons.Default.Settings, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Settings", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                            Text("Settings", color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodyMedium)
                             Spacer(modifier = Modifier.weight(1f))
-                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = Color.LightGray)
+                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                 }
@@ -141,14 +141,14 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
             ) {
-                Text("ACCOUNT OPTIONS", color = Color.LightGray, style = MaterialTheme.typography.bodyMedium)
+                Text("ACCOUNT OPTIONS", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(8.dp))
                 Card (
                     modifier = Modifier
                         .padding(vertical = 4.dp)
-                        .border(2.dp, Color.DarkGray, RoundedCornerShape(14.dp))
+                        .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                         .fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(14.dp)
                 ) {
                     Column(
@@ -160,23 +160,23 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(Icons.Default.Sync, contentDescription = null, tint = Color.White)
+                            Icon(Icons.Default.Sync, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Switch Account", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                            Text("Switch Account", color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodyMedium)
                             Spacer(modifier = Modifier.weight(1f))
-                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = Color.LightGray)
+                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
-                        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outline)
                         Row (
                             modifier = Modifier
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(Icons.Default.Add, contentDescription = null, tint = Color.White)
+                            Icon(Icons.Default.Add, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Add Account", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                            Text("Add Account", color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodyMedium)
                             Spacer(modifier = Modifier.weight(1f))
-                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = Color.LightGray)
+                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                 }
@@ -187,7 +187,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
             ) {
-                Text("DANGER ZONE", color = Color.LightGray, style = MaterialTheme.typography.bodyMedium)
+                Text("DANGER ZONE", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(8.dp))
                 Card (
                     modifier = Modifier
@@ -195,7 +195,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                         .padding(bottom = 95.dp)
                         .border(2.dp, Color(0xFFFF6B6B), RoundedCornerShape(14.dp))
                         .fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(14.dp)
                 ) {
                     Column(
@@ -221,13 +221,13 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(Icons.Default.ExitToApp, contentDescription = null, tint = Color.White)
+                            Icon(Icons.Default.ExitToApp, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Logout", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                            Text("Logout", color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodyMedium)
                             Spacer(modifier = Modifier.weight(1f))
-                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = Color.LightGray)
+                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
-                        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outline)
                         Row (
                             modifier = Modifier
                                 .clickable { showAlert = true }
@@ -236,11 +236,11 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                         ) {
                             if(showAlert) {
                                  AlertDialog(
-                                    containerColor = Color(0xFF1A1A1A),
+                                    containerColor = MaterialTheme.colorScheme.surface,
                                     shape = RoundedCornerShape(16.dp),
                                     onDismissRequest = { showAlert = false },
                                     title = { Text("Delete Account", color = Color.Red) },
-                                    text = { Text("Are you sure you want to delete your account?", color = Color.LightGray) },
+                                    text = { Text("Are you sure you want to delete your account?", color = MaterialTheme.colorScheme.onSurface) },
                                     confirmButton = {
                                         TextButton(
                                             onClick = {
@@ -266,7 +266,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("Delete Account", color = Color(0xFFFF6B6B), style = MaterialTheme.typography.bodyMedium)
                             Spacer(modifier = Modifier.weight(1f))
-                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = Color.LightGray)
+                            Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                 }
