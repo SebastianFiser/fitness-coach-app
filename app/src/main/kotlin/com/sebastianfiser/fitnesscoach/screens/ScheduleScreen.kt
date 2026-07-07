@@ -146,11 +146,11 @@ fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String) 
     val dayName = dayLabels[day] ?: day
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .padding(8.dp)
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(8.dp),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        shape = RoundedCornerShape(28.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
