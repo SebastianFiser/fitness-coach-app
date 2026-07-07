@@ -32,7 +32,7 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(MaterialTheme.colorScheme.background)
             .padding(top = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         contentPadding = PaddingValues(bottom = 90.dp),
@@ -47,11 +47,11 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
                 Box (
                     modifier = Modifier
                     .clip(RoundedCornerShape(16.dp))
-                    .background(Color.DarkGray)
+                    .background(MaterialTheme.colorScheme.surface)
                 ) {
                     Text(
                         "Your Schedule",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onSurface,
                         style = MaterialTheme.typography.headlineMedium,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                     )
@@ -65,8 +65,8 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
                     colors = ButtonDefaults.textButtonColors(contentColor = Color.White),
                     modifier = Modifier.padding(start = 16.dp)
                 ) {
-                    Icon(Icons.Default.Edit, contentDescription = "Edit Schedule", tint = Color.White)
-                    Text("Edit", color = Color.White)
+                    Icon(Icons.Default.Edit, contentDescription = "Edit Schedule", tint = MaterialTheme.colorScheme.onBackground)
+                    Text("Edit", color = MaterialTheme.colorScheme.onBackground)
                 }
 
             }
@@ -87,7 +87,7 @@ fun DrawDayrow() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.Black)
+            .background(Color.Transparent)
             .padding(vertical = 8.dp)
     ) {
         Row(
@@ -108,7 +108,7 @@ fun DrawDayrow() {
 
                 days.forEach { (shortName, fullName) ->
                     val isToday = fullName.uppercase(Locale) == dayToday.name
-                    val color = if (isToday) Color.White else Color.DarkGray
+                    val color = if (isToday) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -148,7 +148,7 @@ fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String) 
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(28.dp)
     ) {
         Column(
@@ -157,7 +157,7 @@ fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String) 
         ) {
             Text (
                 "$dayName",
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
             )
@@ -177,7 +177,7 @@ fun scheduleExerciseRow(exercise: Document<Map<String, Any>>) {
         is Float -> w
         else -> 0f
     }
-    HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 8.dp))
+    HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 8.dp))
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -185,12 +185,12 @@ fun scheduleExerciseRow(exercise: Document<Map<String, Any>>) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = exercise.data["exerciseName"] as String, color = Color.White)
+        Text(text = exercise.data["exerciseName"] as String, color = MaterialTheme.colorScheme.onSurface)
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 "$weight kg",
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(end = 8.dp)
             )

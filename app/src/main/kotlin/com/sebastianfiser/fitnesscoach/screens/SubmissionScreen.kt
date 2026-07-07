@@ -263,6 +263,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         .fillMaxWidth()
                         .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                         .padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(28.dp)
                 ) {
