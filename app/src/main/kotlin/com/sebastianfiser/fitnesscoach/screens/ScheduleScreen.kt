@@ -87,7 +87,7 @@ fun DrawDayrow() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.Transparent)
+            .background(MaterialTheme.colorScheme.surface)
             .padding(vertical = 8.dp)
     ) {
         Row(
@@ -147,7 +147,12 @@ fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String) 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp)
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.outline,
+                shape = RoundedCornerShape(28.dp)
+            ),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(28.dp)
     ) {

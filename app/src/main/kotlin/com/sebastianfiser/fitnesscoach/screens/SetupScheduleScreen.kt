@@ -84,8 +84,8 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     .padding(16.dp)
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
-                border = BorderStroke(1.dp, Color.LightGray),
-                colors = CardDefaults.cardColors(if (isSaving) Color(0xFF1C1C1E) else Color(0xFF333333)),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+                colors = CardDefaults.cardColors(if (isSaving) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)),
                 enabled = if(isSaving) false else true,
                 onClick = { 
                     scope.launch {
@@ -116,11 +116,11 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Save Schedule", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text("Save Schedule", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                     if(isSaving) {
-                        CircularProgressIndicator(modifier = Modifier.size(24.dp), color = Color.White, strokeWidth = 2.dp)
+                        CircularProgressIndicator(modifier = Modifier.size(24.dp), color = MaterialTheme.colorScheme.onSurface, strokeWidth = 2.dp)
                     } else {
-                        Icon(Icons.Default.Check, contentDescription = "Save", tint = Color.White)
+                        Icon(Icons.Default.Check, contentDescription = "Save", tint = MaterialTheme.colorScheme.onSurface)
                     }
                 }
             }
@@ -137,8 +137,8 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                         .padding(8.dp)
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp),
-                    border = BorderStroke(1.dp, Color.LightGray),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF333333)),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                 ) {
                     Row(
                         modifier = Modifier
@@ -151,10 +151,10 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(day, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                        Icon(Icons.Default.Add, contentDescription = "Add exercise", tint = Color.White)
+                        Text(day, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                        Icon(Icons.Default.Add, contentDescription = "Add exercise", tint = MaterialTheme.colorScheme.onSurface)
                     }
-                    HorizontalDivider(color = Color.Gray, thickness = 0.5.dp)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp)
                     val exercisesForDay = viewModel.scheduleSetup[dayMap[day]] ?: emptyList()
                     exercisesForDay.forEach { exercise ->
                         Row(
@@ -164,11 +164,11 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
                          ) {
-                            Text("- ${exercise.name}", fontSize = 16.sp, color = Color.LightGray, modifier = Modifier.padding(start = 32.dp, top = 4.dp))
+                            Text("- ${exercise.name}", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(start = 32.dp, top = 4.dp))
                             Icon(
                                 Icons.Default.Delete,
                                 contentDescription = "Remove",
-                                tint = Color.LightGray,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.clickable {
                                     val key = dayMap[day] ?: ""
                                     if(key.isEmpty()) return@clickable
@@ -177,7 +177,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                                 }
                             )
                         }
-                        HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(horizontal = 32.dp))
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp, modifier = Modifier.padding(horizontal = 32.dp))
                     }                
                 }
             }
