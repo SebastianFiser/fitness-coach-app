@@ -148,7 +148,7 @@ fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String) 
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .border = (1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(28.dp)),
+            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(28.dp)),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(28.dp)
     ) {
