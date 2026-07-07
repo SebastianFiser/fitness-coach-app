@@ -150,7 +150,7 @@ fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String) 
             .padding(16.dp)
             .border(
                 width = 1.dp,
-                color = MaterialTheme.colorScheme.outline,
+                color = MaterialTheme.colorScheme.border,
                 shape = RoundedCornerShape(28.dp)
             ),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
