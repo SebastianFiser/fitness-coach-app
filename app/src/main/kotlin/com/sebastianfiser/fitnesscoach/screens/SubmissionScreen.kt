@@ -263,52 +263,57 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         .fillMaxWidth()
                         .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                         .padding(24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(28.dp)
                 ) {
-                    Text(
-                        "Select your country ",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                    HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
-                    //Country select- dropdown with search field.
-                    ExposedDropdownMenuBox(
-                        expanded = countryOpen,
-                        onExpandedChange = { countryOpen = it }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        OutlinedTextField(
-                            modifier = Modifier.menuAnchor(),
-                            shape = RoundedCornerShape(8.dp),
-                            value = countryQuery,
-                            onValueChange = { countryQuery = it; countryOpen = true },
-                            readOnly = false,
-                            label = { Text("Country", color = MaterialTheme.colorScheme.onSurface) },
-                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = countryOpen) },
-                            colors = TextFieldDefaults.textFieldColors(
-                                focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                                disabledTextColor = MaterialTheme.colorScheme.onSurface,
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent,
-                                disabledIndicatorColor = Color.Transparent
-    
-                            )
+                        Text(
+                            "Select your country ",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSurface
                         )
-                        ExposedDropdownMenu(
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
+                        //Country select- dropdown with search field.
+                        ExposedDropdownMenuBox(
                             expanded = countryOpen,
-                            onDismissRequest = { countryOpen = false }
+                            onExpandedChange = { countryOpen = it }
                         ) {
-                            countries.filter { it.getDisplayName().contains(countryQuery, ignoreCase = true) }.forEach { country ->
-                                DropdownMenuItem(
-                                    text = { Text(country.getDisplayName()) },
-                                    onClick = {
-                                        selectedCountry = country
-                                        countryQuery = country.getDisplayName()
-                                        countryOpen = false
-                                    }
+                            OutlinedTextField(
+                                modifier = Modifier.menuAnchor(),
+                                shape = RoundedCornerShape(8.dp),
+                                value = countryQuery,
+                                onValueChange = { countryQuery = it; countryOpen = true },
+                                readOnly = false,
+                                label = { Text("Country", color = MaterialTheme.colorScheme.onSurface) },
+                                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = countryOpen) },
+                                colors = TextFieldDefaults.textFieldColors(
+                                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                    disabledTextColor = MaterialTheme.colorScheme.onSurface,
+                                    focusedIndicatorColor = Color.Transparent,
+                                    unfocusedIndicatorColor = Color.Transparent,
+                                    disabledIndicatorColor = Color.Transparent
+        
                                 )
+                            )
+                            ExposedDropdownMenu(
+                                expanded = countryOpen,
+                                onDismissRequest = { countryOpen = false }
+                            ) {
+                                countries.filter { it.getDisplayName().contains(countryQuery, ignoreCase = true) }.forEach { country ->
+                                    DropdownMenuItem(
+                                        text = { Text(country.getDisplayName()) },
+                                        onClick = {
+                                            selectedCountry = country
+                                            countryQuery = country.getDisplayName()
+                                            countryOpen = false
+                                        }
+                                    )
+                                }
                             }
                         }
                     }
