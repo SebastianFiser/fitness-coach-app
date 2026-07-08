@@ -127,7 +127,7 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
                     Column {
                         Text(
                             "Workout Plan",
-                            color = MaterialTheme.colorSheme.onSurface,
+                            color = MaterialTheme.colorScheme.onSurface,
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
@@ -139,7 +139,7 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
                     ElevatedButton(
                         enabled = !isWorkoutDone,
                         onClick = { onStartWorkout() },
-                        colors = ButtonDefaults.elevatedButtonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MateriíalTheme.colorScheme.onPrimary, disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f), disabledContentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f)),
+                        colors = ButtonDefaults.elevatedButtonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary, disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f), disabledContentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f)),
                         ) {
                             Text("Start")
                         }
@@ -180,7 +180,7 @@ fun ExerciseRow(exercise: Exercise) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 "${exercise.weight} kg",
-                color = MatrialTheme.colorScheme.onSurfaceVariant,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(end = 8.dp)
             )

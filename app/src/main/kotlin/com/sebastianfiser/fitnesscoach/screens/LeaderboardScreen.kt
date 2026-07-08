@@ -137,7 +137,7 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
     Box{
         Button(
             onClick = { filterOpen = !filterOpen },
-            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.ColorScheme.background, contentColor = MaterialTheme.colorScheme.onBackground)
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.background, contentColor = MaterialTheme.colorScheme.onBackground)
         ) {
             Icon(
                 imageVector = Icons.Default.FilterList,
