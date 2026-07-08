@@ -72,20 +72,22 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
+            val outlineColor =  MaterialTheme.colorScheme.outline
+            val primaryColor = MaterialTheme.colorScheme.primary
             Canvas(
                 modifier = Modifier
                     .size(200.dp)
                     .padding(20.dp)
             ) {
                 drawArc(
-                    color = MaterialTheme.colorScheme.outline,
+                    color = outlineColor,
                     startAngle = 135f,
                     sweepAngle = 270f,
                     useCenter = false,
                     style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
                 )
                 drawArc(
-                    color = MaterialTheme.colorScheme.primary,
+                    color = primaryColor,
                     startAngle = 135f,
                     sweepAngle = 115f,
                     useCenter = false,
