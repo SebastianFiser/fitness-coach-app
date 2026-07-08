@@ -30,6 +30,7 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
     val todayIndex = LocalDate.now().dayOfWeek.value - 1
     val orderedDays = allDays.drop(todayIndex) + allDays.take(todayIndex)
     val sortedEntries = viewModel.scheduleByDay.entries.toList().sortedBy { orderedDays.indexOf(it.key) }
+    val unit = viewModel.unit
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -76,7 +77,7 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
             DrawDayrow()
         }
         items(sortedEntries) { day ->
-            displayDaySchedule(day.value, day.key)
+            displayDaySchedule(day.value, day.key, unit)
         }
     }
 }
@@ -131,7 +132,7 @@ fun DrawDayrow() {
 }
 
 @Composable
-fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String) {
+fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String, unit: String) {
     //var day = LocalDate.now().dayOfWeek
     //var dayNuminMonth = LocalDate.now().dayOfMonth
     var month = LocalDate.now().monthValue 
@@ -165,14 +166,14 @@ fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String) 
             )
             Spacer(modifier = Modifier.height(8.dp))
             exercise.forEach { exercise ->
-                    scheduleExerciseRow(exercise)
+                    scheduleExerciseRow(exercise, unit)
                 }
         }
     }
 }
 
 @Composable
-fun scheduleExerciseRow(exercise: Document<Map<String, Any>>) {
+fun scheduleExerciseRow(exercise: Document<Map<String, Any>>, unit: String) {
     val weight = when (val w = exercise.data["weight"]) {
         is Double -> w.toFloat()
         is Long -> w.toFloat()
@@ -191,11 +192,19 @@ fun scheduleExerciseRow(exercise: Document<Map<String, Any>>) {
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                "$weight kg",
+                "${convertUnit(weight, unit)} ${if (unit == "kg") "kg" else "lbs"}",
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(end = 8.dp)
             )
         }
+    }
+}
+
+fun convertUnit( weight: Float, unit: String): Float {
+    if (unit != "kg") {
+        return weight * 2.20462f
+    } else {
+        return weight
     }
 }

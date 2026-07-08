@@ -287,6 +287,12 @@ class AppViewModel : ViewModel() {
             .getOrNull()
     }
 
-
+    fun convertUnit( weight: Float, unit: String): Float {
+        return if (unit == "kg") {
+            (weight * 0.453592)
+        } else {
+            (weight * 2.20462)
+        }
+    } 
 
 }

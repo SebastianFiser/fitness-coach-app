@@ -160,7 +160,7 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
                             else -> 0f
                         }
                     )
-                    ExerciseRow(exercise)
+                    ExerciseRow(exercise, viewModel)
                 }
             }
         }
@@ -168,7 +168,10 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
 }
 
 @Composable
-fun ExerciseRow(exercise: Exercise) {
+fun ExerciseRow(exercise: Exercise, viewModel: AppViewModel) {
+    if (viewModel.unit != "kg") {
+        val weight = viewModel.convertUnit(exercise.weight)
+    }
     HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 8.dp))
     Row(
         modifier = Modifier
@@ -181,7 +184,7 @@ fun ExerciseRow(exercise: Exercise) {
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                "${exercise.weight} kg",
+                "${weight} ${viewModel.unit}",
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(end = 8.dp)

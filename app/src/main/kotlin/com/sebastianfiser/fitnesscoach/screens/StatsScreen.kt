@@ -62,6 +62,11 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
             shape = RoundedCornerShape(8.dp),
             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
         ) {
+            if (viewModel.unit != "kg") {
+                var convPr = viewModel.convertUnit(pr, viewModel.unit)
+            } else {
+                convPr = pr
+            }
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -71,7 +76,7 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
             ) {
                 Text(exerciseName, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurface)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("PR: ${pr} ${viewModel.unit}", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
+                Text("PR: ${convPr} ${viewModel.unit}", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
                 Text("Weekly Gain: 'Placeholder' ${viewModel.unit}", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
             }
             Spacer(modifier = Modifier.height(12.dp))

@@ -40,6 +40,7 @@ import com.sebastianfiser.fitnesscoach.navigation.Screen
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 
 @Composable
@@ -123,7 +124,7 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
                         }
                     }
 
-                    ShowLeaderboard(selectedParameter = selectedParameter, data = viewModel.leaderboardEntries)
+                    ShowLeaderboard(selectedParameter = selectedParameter, data = viewModel.leaderboardEntries, unit = viewModel.unit)
                 }
             }
         }
@@ -319,7 +320,7 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
 }
 
 @Composable
-fun ShowLeaderboard(selectedParameter: String?, data: List<LeaderBoardEntry>) {
+fun ShowLeaderboard(selectedParameter: String?, data: List<LeaderBoardEntry>, unit: String) {
     val dataFiltered = FilterData(selectedParameter, data)
     Column(
         modifier = Modifier
@@ -328,13 +329,13 @@ fun ShowLeaderboard(selectedParameter: String?, data: List<LeaderBoardEntry>) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         dataFiltered.forEach { entry ->
-            LeaderboardRow(entry)
+            LeaderboardRow(entry, unit)
         }
     }
 }
 
 @Composable
-fun LeaderboardRow(entry: LeaderBoardEntry) {
+fun LeaderboardRow(entry: LeaderBoardEntry, unit: String) {
     Column() {
         HorizontalDivider(
             color = MaterialTheme.colorScheme.outline,
@@ -383,7 +384,7 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
                     .padding(top = 8.dp, bottom = 2.dp)
                 )
                 Text(
-                    "${entry.weight} kg",
+                    formatLeaderboardWeight(entry.weight, unit),
                     color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
@@ -392,4 +393,14 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
             }
         }
     }
+}
+
+private fun formatLeaderboardWeight(weight: Float, unit: String): String {
+    val displayWeight = if (unit == "kg") {
+        weight
+    } else {
+        weight * 2.20462f
+    }
+
+    return String.format(Locale.US, "%.1f %s", displayWeight, unit)
 }
