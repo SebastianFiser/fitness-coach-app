@@ -169,9 +169,7 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
 
 @Composable
 fun ExerciseRow(exercise: Exercise, viewModel: AppViewModel) {
-    if (viewModel.unit != "kg") {
-        val weight = viewModel.convertUnit(exercise.weight)
-    }
+    val weight = viewModel.convertUnit(exercise.weight, viewModel.unit)
     HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 8.dp))
     Row(
         modifier = Modifier

@@ -62,11 +62,7 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
             shape = RoundedCornerShape(8.dp),
             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
         ) {
-            if (viewModel.unit != "kg") {
-                var convPr = viewModel.convertUnit(pr, viewModel.unit)
-            } else {
-                convPr = pr
-            }
+                val convPr = viewModel.convertUnit(pr, viewModel.unit)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

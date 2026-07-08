@@ -142,12 +142,10 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
                     )
                 }
 
-                if (viewModel.unit != "kg") {
                     val convWeight = viewModel.convertUnit(weight, viewModel.unit)
-                }
                 Column(horizontalAlignment = Alignment.End) {
                     Text(
-                        text = "${if (viewModel.unit == "kg") weight else convWeight} ${if (viewModel.unit == "kg") "kg" else "lbs"}",
+                            text = "$convWeight ${viewModel.unit}",
                         color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.SemiBold
