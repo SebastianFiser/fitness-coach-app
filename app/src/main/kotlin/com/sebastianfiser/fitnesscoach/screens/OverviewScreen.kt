@@ -45,6 +45,7 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
         modifier = Modifier
             .fillMaxSize()
             .padding(bottom = 80.dp)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Spacer(modifier = Modifier.height(30.dp))
         Column(
@@ -55,13 +56,13 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
         ) {
             Text(
                 "Good Morning, User!",
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
             Text(
                 "Here's your workout plan for today",
-                color = Color.LightGray,
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
@@ -71,20 +72,22 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
+            val outlineColor =  MaterialTheme.colorScheme.outline
+            val primaryColor = MaterialTheme.colorScheme.primary
             Canvas(
                 modifier = Modifier
                     .size(200.dp)
                     .padding(20.dp)
             ) {
                 drawArc(
-                    color = Color.DarkGray,
+                    color = outlineColor,
                     startAngle = 135f,
                     sweepAngle = 270f,
                     useCenter = false,
                     style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
                 )
                 drawArc(
-                    color = Color.White,
+                    color = primaryColor,
                     startAngle = 135f,
                     sweepAngle = 115f,
                     useCenter = false,
@@ -97,12 +100,12 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
                 ) {
                 Text(
                     "760",
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
                     "Day Score",
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     style = MaterialTheme.typography.labelMedium
                 )
             }
@@ -112,9 +115,9 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-                .border(2.dp, if (isWorkoutDone) Color.Green else Color.DarkGray, RoundedCornerShape(14.dp))
+                .border(2.dp, if (isWorkoutDone) Color.Green else MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                 .alpha(if (isWorkoutDone) 0.4f else 1f),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
             shape = RoundedCornerShape(14.dp)
         ) {
             Column(modifier = Modifier.padding(20.dp)) {
@@ -126,19 +129,19 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
                     Column {
                         Text(
                             "Workout Plan",
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onSurface,
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
                             "8:00 AM - 9:00 AM",
-                            color = Color.Gray,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
                     ElevatedButton(
                         enabled = !isWorkoutDone,
                         onClick = { onStartWorkout() },
-                        colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White, contentColor = Color.Black, disabledContainerColor = Color.Gray, disabledContentColor = Color.DarkGray),
+                        colors = ButtonDefaults.elevatedButtonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary, disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f), disabledContentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f)),
                         ) {
                             Text("Start")
                         }
@@ -157,7 +160,7 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
                             else -> 0f
                         }
                     )
-                    ExerciseRow(exercise)
+                    ExerciseRow(exercise, viewModel)
                 }
             }
         }
@@ -165,8 +168,9 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
 }
 
 @Composable
-fun ExerciseRow(exercise: Exercise) {
-    HorizontalDivider(color = Color.Gray, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 8.dp))
+fun ExerciseRow(exercise: Exercise, viewModel: AppViewModel) {
+    val weight = viewModel.convertUnit(exercise.weight, viewModel.unit)
+    HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 8.dp))
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -174,12 +178,12 @@ fun ExerciseRow(exercise: Exercise) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = exercise.name, color = Color.White)
+        Text(text = exercise.name, color = MaterialTheme.colorScheme.onSurface)
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                "${exercise.weight} kg",
-                color = Color.Gray,
+                "${weight} ${viewModel.unit}",
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(end = 8.dp)
             )

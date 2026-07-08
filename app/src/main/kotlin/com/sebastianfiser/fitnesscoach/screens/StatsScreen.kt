@@ -34,6 +34,7 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
+            .background(MaterialTheme.colorScheme.background)
             .padding(top = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -45,33 +46,34 @@ fun StatsScreen(viewModel: AppViewModel, navController: NavController) {
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowLeft,
                     contentDescription = "Back",
-                    tint = Color.White
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
         }
-        Text("Your Progress", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Text("Your Progress", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)
         Spacer(modifier = Modifier.height(16.dp))
 
         viewModel.prData.entries.forEach { (exerciseName, pr) ->
         Card(
             modifier = Modifier
-                .background(Color(0xFF1C1C1E))
+                .background(MaterialTheme.colorScheme.surface)
                 .fillMaxWidth()
                 .padding(top = 4.dp, bottom = 4.dp),
             shape = RoundedCornerShape(8.dp),
-            colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
+            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
         ) {
+                val convPr = viewModel.convertUnit(pr, viewModel.unit)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp)
-                    .border(1.dp, Color.Gray, RoundedCornerShape(8.dp))
+                    .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
                     .padding(16.dp)
             ) {
-                Text(exerciseName, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
+                Text(exerciseName, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurface)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("PR: ${pr} ${viewModel.unit}", fontSize = 16.sp, color = Color.White)
-                Text("Weekly Gain: 'Placeholder' ${viewModel.unit}", fontSize = 16.sp, color = Color.White)
+                Text("PR: ${convPr} ${viewModel.unit}", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
+                Text("Weekly Gain: 'Placeholder' ${viewModel.unit}", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
             }
             Spacer(modifier = Modifier.height(12.dp))
             }

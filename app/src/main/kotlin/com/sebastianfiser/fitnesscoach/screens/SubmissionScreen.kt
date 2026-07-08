@@ -92,16 +92,16 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                Text("Submit Your PR", style = MaterialTheme.typography.headlineMedium, color = Color.White)
+                Text("Submit Your PR", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onBackground)
             }
             
             item {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                         .padding(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(28.dp)
                 ) {
                     Column(
@@ -113,9 +113,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         Text(
                             "Select Lift",
                             style = MaterialTheme.typography.titleMedium,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onSurface
                         )
-                        HorizontalDivider(color = Color.Gray, thickness = 1.dp)
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
                         ExposedDropdownMenuBox(
                             expanded = liftOpen,
                             onExpandedChange = { liftOpen = it }
@@ -126,12 +126,12 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                 value = selectedLift ?: "",
                                 onValueChange = {},
                                 readOnly = true,
-                                label = { Text("Lift", color = Color.White) },
+                                label = { Text("Lift", color = MaterialTheme.colorScheme.onSurface) },
                                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = liftOpen) },
                                 colors = TextFieldDefaults.textFieldColors(
-                                    focusedTextColor = Color.White,
-                                    unfocusedTextColor = Color.White,  
-                                    disabledTextColor = Color.White,
+                                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                    disabledTextColor = MaterialTheme.colorScheme.onSurface,
                                     focusedIndicatorColor = Color.Transparent,
                                     unfocusedIndicatorColor = Color.Transparent,
                                     disabledIndicatorColor = Color.Transparent
@@ -160,9 +160,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 Card (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                         .padding(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(28.dp)
                 ) {
                     Column(
@@ -174,19 +174,19 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         Text(
                             "Enter PR Weight",
                             style = MaterialTheme.typography.titleMedium,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onSurface
                         )
-                        HorizontalDivider(color = Color.Gray, thickness = 1.dp)
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
                         OutlinedTextField(
                             value = prWeight,
                             shape = RoundedCornerShape(8.dp),
                             onValueChange = { prWeight = it },
-                            label = { Text("PR Weight", color = Color.White) },
+                            label = { Text("PR Weight", color = MaterialTheme.colorScheme.onSurface) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             colors = TextFieldDefaults.textFieldColors(
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Color.White,
-                                disabledTextColor = Color.White,
+                                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                disabledTextColor = MaterialTheme.colorScheme.onSurface,
                                 focusedIndicatorColor = Color.Transparent,
                                 unfocusedIndicatorColor = Color.Transparent,
                                 disabledIndicatorColor = Color.Transparent
@@ -200,9 +200,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                         .padding(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(28.dp)
                 ) {
                     Column(
@@ -214,9 +214,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         Text(
                             "Your gender",
                             style = MaterialTheme.typography.titleMedium,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onSurface
                         )
-                        HorizontalDivider(color = Color.Gray, thickness = 1.dp)
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
                         ExposedDropdownMenuBox(
                             expanded = genderOpen,
                             onExpandedChange = { genderOpen = it }
@@ -227,12 +227,12 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                 value = selectedGender,
                                 onValueChange = {},
                                 readOnly = true,
-                                label = { Text("Gender", color = Color.White) },
+                                label = { Text("Gender", color = MaterialTheme.colorScheme.onSurface) },
                                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = genderOpen) },
                                 colors = TextFieldDefaults.textFieldColors(
-                                    focusedTextColor = Color.White,
-                                    unfocusedTextColor = Color.White,  
-                                    disabledTextColor = Color.White,
+                                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                    disabledTextColor = MaterialTheme.colorScheme.onSurface,
                                     focusedIndicatorColor = Color.Transparent,
                                     unfocusedIndicatorColor = Color.Transparent,
                                     disabledIndicatorColor = Color.Transparent
@@ -261,53 +261,59 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                         .padding(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(28.dp)
                 ) {
-                    Text(
-                        "Select your country ",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = Color.White
-                    )
-                    HorizontalDivider(color = Color.Gray, thickness = 1.dp)
-                    //Country select- dropdown with search field.
-                    ExposedDropdownMenuBox(
-                        expanded = countryOpen,
-                        onExpandedChange = { countryOpen = it }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        OutlinedTextField(
-                            modifier = Modifier.menuAnchor(),
-                            shape = RoundedCornerShape(8.dp),
-                            value = countryQuery,
-                            onValueChange = { countryQuery = it; countryOpen = true },
-                            readOnly = false,
-                            label = { Text("Country", color = Color.White) },
-                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = countryOpen) },
-                            colors = TextFieldDefaults.textFieldColors(
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Color.White,
-                                disabledTextColor = Color.White,
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent,
-                                disabledIndicatorColor = Color.Transparent
-    
-                            )
+                        Text(
+                            "Select your country ",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSurface
                         )
-                        ExposedDropdownMenu(
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
+                        //Country select- dropdown with search field.
+                        ExposedDropdownMenuBox(
                             expanded = countryOpen,
-                            onDismissRequest = { countryOpen = false }
+                            onExpandedChange = { countryOpen = it }
                         ) {
-                            countries.filter { it.getDisplayName().contains(countryQuery, ignoreCase = true) }.forEach { country ->
-                                DropdownMenuItem(
-                                    text = { Text(country.getDisplayName()) },
-                                    onClick = {
-                                        selectedCountry = country
-                                        countryQuery = country.getDisplayName()
-                                        countryOpen = false
-                                    }
+                            OutlinedTextField(
+                                modifier = Modifier.menuAnchor(),
+                                shape = RoundedCornerShape(8.dp),
+                                value = countryQuery,
+                                onValueChange = { countryQuery = it; countryOpen = true },
+                                readOnly = false,
+                                label = { Text("Country", color = MaterialTheme.colorScheme.onSurface) },
+                                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = countryOpen) },
+                                colors = TextFieldDefaults.textFieldColors(
+                                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                    disabledTextColor = MaterialTheme.colorScheme.onSurface,
+                                    focusedIndicatorColor = Color.Transparent,
+                                    unfocusedIndicatorColor = Color.Transparent,
+                                    disabledIndicatorColor = Color.Transparent
+        
                                 )
+                            )
+                            ExposedDropdownMenu(
+                                expanded = countryOpen,
+                                onDismissRequest = { countryOpen = false }
+                            ) {
+                                countries.filter { it.getDisplayName().contains(countryQuery, ignoreCase = true) }.forEach { country ->
+                                    DropdownMenuItem(
+                                        text = { Text(country.getDisplayName()) },
+                                        onClick = {
+                                            selectedCountry = country
+                                            countryQuery = country.getDisplayName()
+                                            countryOpen = false
+                                        }
+                                    )
+                                }
                             }
                         }
                     }
@@ -318,9 +324,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 Card (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                         .padding(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(28.dp)
                 ) {
                     Column(
@@ -332,9 +338,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         Text(
                             "Upload Video",
                             style = MaterialTheme.typography.titleMedium,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onSurface
                         )
-                        HorizontalDivider(color = Color.Gray, thickness = 1.dp)
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
                         if (exoPlayer != null) {
                             AndroidView(
                                 factory = { ctx ->
@@ -350,13 +356,13 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
 
                         Button(
                             onClick = { videoPicker.launch("video/*") },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
+                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant, contentColor = MaterialTheme.colorScheme.onPrimary)
                         ) {
-                            Text(if (selectedVideoUri == null) "Select Video" else "Change Video", color = Color.White)
+                            Text(if (selectedVideoUri == null) "Select Video" else "Change Video", color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
 
                         selectedVideoUri?.let { uri ->
-                            Text("Selected Video: ${uri.lastPathSegment}", color = Color.White)
+                            Text("Selected Video: ${uri.lastPathSegment}", color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodyMedium)
                         }
                     }
                 }
@@ -366,9 +372,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                         .padding(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(28.dp)
                 ) {
                     Column(
@@ -380,9 +386,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         Text(
                             "Select Age Group",
                             style = MaterialTheme.typography.titleMedium,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onSurface
                         )
-                        HorizontalDivider(color = Color.Gray, thickness = 1.dp)
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
                         ExposedDropdownMenuBox(
                             expanded = ageGroupOpen,
                             onExpandedChange = { ageGroupOpen = it }
@@ -393,12 +399,12 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                 value = selectedAgeGroup ?: "",
                                 onValueChange = {},
                                 readOnly = true,
-                                label = { Text("Age Group", color = Color.White) },
+                                label = { Text("Age Group", color = MaterialTheme.colorScheme.onSurface) },
                                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = ageGroupOpen) },
                                 colors = TextFieldDefaults.textFieldColors(
-                                    focusedTextColor = Color.White,
-                                    unfocusedTextColor = Color.White,
-                                    disabledTextColor = Color.White,
+                                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                    disabledTextColor = MaterialTheme.colorScheme.onSurface,
                                     focusedIndicatorColor = Color.Transparent,
                                     unfocusedIndicatorColor = Color.Transparent,
                                     disabledIndicatorColor = Color.Transparent
@@ -428,9 +434,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 Card (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                         .padding(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(28.dp)
                 ) {
                     Column(
@@ -442,19 +448,19 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         Text(
                             "Enter Bodyweight",
                             style = MaterialTheme.typography.titleMedium,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onSurface
                         )
-                        HorizontalDivider(color = Color.Gray, thickness = 1.dp)
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
                         OutlinedTextField(
                             value = bodyweight,
                             shape = RoundedCornerShape(8.dp),
                             onValueChange = { bodyweight = it },
-                            label = { Text("Bodyweight", color = Color.White) },
+                            label = { Text("Bodyweight", color = MaterialTheme.colorScheme.onSurface) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             colors = TextFieldDefaults.textFieldColors(
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Color.White,
-                                disabledTextColor = Color.White,
+                                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                disabledTextColor = MaterialTheme.colorScheme.onSurface,
                                 focusedIndicatorColor = Color.Transparent,
                                 unfocusedIndicatorColor = Color.Transparent,
                                 disabledIndicatorColor = Color.Transparent
@@ -468,9 +474,9 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 Card (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .border(2.dp, Color.White, RoundedCornerShape(14.dp))
+                        .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                         .padding(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(28.dp)
                 ) {
                     Column(
@@ -482,23 +488,23 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         Text(
                             "Are you natural?",
                             style = MaterialTheme.typography.titleMedium,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onSurface
                         )
-                        HorizontalDivider(color = Color.Gray, thickness = 1.dp)
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             Button(
                                 onClick = { natty = true },
-                                colors = ButtonDefaults.buttonColors(containerColor = if (natty == true) Color.Green else Color.Gray)
+                                colors = ButtonDefaults.buttonColors(containerColor = if (natty == true) Color.Green else MaterialTheme.colorScheme.primary)
                             ) {
-                                Text("Yes", color = Color.White)
+                                Text("Yes", color = MaterialTheme.colorScheme.onSurface)
                             }
                             Button(
                                 onClick = { natty = false },
-                                colors = ButtonDefaults.buttonColors(containerColor = if (natty == false) Color.Red else Color.Gray)
+                                colors = ButtonDefaults.buttonColors(containerColor = if (natty == false) Color.Red else MaterialTheme.colorScheme.primary)
                             ) {
-                                Text("No", color = Color.White)
+                                Text("No", color = MaterialTheme.colorScheme.onSurface)
                             }
                         }
                     }
@@ -525,14 +531,14 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                             val videoUri = selectedVideoUri ?: return@Button
                             val presGender = selectedGender
                             isSubmitting = true
-                            submitStatus = "Odesílám submission..."
+                            submitStatus = "Submitting submission..."
                             scope.launch {
                                 val user = Appwrite.getCurrentUser()
                                 val userId = user?.id
 
                                 if (userId == null) {
                                     isSubmitting = false
-                                    submitStatus = "Nepodařilo se ověřit uživatele. Zkus to znovu."
+                                    submitStatus = "Failed to verify user. Please try again."
                                     return@launch
                                 }
 
@@ -557,26 +563,20 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                 }
                             }
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary)
                     ) {
                         if (isSubmitting) {
                             CircularProgressIndicator(
                                 modifier = Modifier.size(18.dp),
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 strokeWidth = 2.dp
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Submitting...", color = Color.White)
+                            Text("Submitting...", color = MaterialTheme.colorScheme.onPrimary)
                         } else {
-                            Text("Submit", color = Color.White)
+                            Text("Submit", color = MaterialTheme.colorScheme.onPrimary)
                         }
                     }
-                }
-            }
-
-            item {
-                submitStatus?.let {
-                    Text(it, color = Color.White, style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }  

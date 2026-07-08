@@ -40,6 +40,7 @@ import com.sebastianfiser.fitnesscoach.navigation.Screen
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 
 @Composable
@@ -52,12 +53,12 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
 
     
     Scaffold(
-        containerColor = Color.Black,
+        containerColor = MaterialTheme.colorScheme.background,
     ) { innerPadding ->
         LazyColumn ( 
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Black)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(top = innerPadding.calculateTopPadding())
                 .padding(top = 48.dp, bottom = 80.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -66,11 +67,11 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
                 Box (
                     modifier = Modifier
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Color.DarkGray)
+                        .background(MaterialTheme.colorScheme.surface)
                 ) {
                     Text(
                         "Leaderboard",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onSurface,
                         style = MaterialTheme.typography.headlineMedium,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                     )
@@ -78,14 +79,14 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
             }
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                Text("Top Users", color = Color.White, style = MaterialTheme.typography.headlineSmall)
+                Text("Top Users", color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.headlineSmall)
             }
             item {
                 Card (
                     modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(28.dp)
                 ) {
                     Box (
@@ -96,7 +97,7 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
                     ) {
                         Text(
                             "World Leaderboard",
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onSurface,
                             style = MaterialTheme.typography.headlineMedium
                         )
                     }
@@ -115,15 +116,15 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
                             ShowFilterDropdown( onFilterSelected = { selectedParameter = it })
                             Button (
                                 onClick = { navController.navigate(Screen.Submission.route) },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black)
+                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary)
                             ) {
-                                Icon(Icons.Default.Add, contentDescription = "Add Submission", tint = Color.Black)
+                                Icon(Icons.Default.Add, contentDescription = "Add Submission", tint = MaterialTheme.colorScheme.onPrimary)
                                 Text("Submit PR")
                             }
                         }
                     }
 
-                    ShowLeaderboard(selectedParameter = selectedParameter, data = viewModel.leaderboardEntries)
+                    ShowLeaderboard(selectedParameter = selectedParameter, data = viewModel.leaderboardEntries, unit = viewModel.unit)
                 }
             }
         }
@@ -137,12 +138,12 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
     Box{
         Button(
             onClick = { filterOpen = !filterOpen },
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.background, contentColor = MaterialTheme.colorScheme.onBackground)
         ) {
             Icon(
                 imageVector = Icons.Default.FilterList,
                 contentDescription = null,
-                tint = Color.White
+                tint = MaterialTheme.colorScheme.onBackground
             )
             Text("Filter")
         }
@@ -150,13 +151,13 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
             expanded = filterOpen,
             onDismissRequest = { filterOpen = false },
             modifier = Modifier
-                .background(Color(0xFF1C1C1E))
-                .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
+                .background(MaterialTheme.colorScheme.surface)
+                .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
         ) { 
             DropdownMenuItem(
                 text = { Text("Gender") },
                 onClick = { submenuOpen = "Gender" },
-                colors = MenuDefaults.itemColors(textColor = Color.White)
+                colors = MenuDefaults.itemColors(MaterialTheme.colorScheme.onSurface)
             )
             if (submenuOpen == "Gender"){
                 DropdownMenuItem(
@@ -164,27 +165,27 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("Male") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Female") },
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("Female") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Other") },
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("OtherGen") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
             }
             DropdownMenuItem(
                 text = { Text("Age Group") },
                 onClick = { submenuOpen = "Age" },
-                colors = MenuDefaults.itemColors(textColor = Color.White)
+                colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
             )
             if (submenuOpen == "Age") {
                 DropdownMenuItem(
@@ -192,41 +193,41 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("Under 18") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
                 DropdownMenuItem(
                     text = { Text(" • 18-25") },
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("18-25") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
                 DropdownMenuItem(
                     text = { Text(" • 26-35") },
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("26-35") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
                 DropdownMenuItem(
                     text = { Text(" • 36-45") },
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("36-45")},
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
                 DropdownMenuItem(
                     text = { Text(" • 46+") },
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("46+") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
             }
             DropdownMenuItem(
                 text = { Text("Natural/Enhanced") },
                 onClick = { submenuOpen = "Natty" },
-                colors = MenuDefaults.itemColors(textColor = Color.White)
+                colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
             )
             if (submenuOpen == "Natty"){
                 DropdownMenuItem(
@@ -234,20 +235,20 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("Natural") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Enhanced") },
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("Enhanced") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
             }
             DropdownMenuItem(
                 text = { Text("Nationality") },
                 onClick = { submenuOpen = "Nationality" },
-                colors = MenuDefaults.itemColors(textColor = Color.White)
+                colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
             )
             if (submenuOpen == "Nationality") {
                 DropdownMenuItem(
@@ -255,41 +256,41 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("CZ") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
                 DropdownMenuItem(
                     text = { Text(" • United States") },
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("USA") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Germany") },
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("GE") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
                 DropdownMenuItem(
                     text = { Text(" • United Kingdom") },
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("UK") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Other") },
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("Other") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
             }
             DropdownMenuItem(
                 text = { Text("Lift") },
                 onClick = { submenuOpen = "Lift" },
-                colors = MenuDefaults.itemColors(textColor = Color.White)
+                colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
             )
             if (submenuOpen == "Lift") {
                 DropdownMenuItem(
@@ -297,21 +298,21 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("Squat") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Bench Press") },
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("Bench Press") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
                 DropdownMenuItem(
                     text = { Text(" • Deadlift") },
                     onClick = { 
                         filterOpen = false
                         onFilterSelected("Deadlift") },
-                    colors = MenuDefaults.itemColors(textColor = Color.White)
+                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
                 )
             }
         }
@@ -319,7 +320,7 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
 }
 
 @Composable
-fun ShowLeaderboard(selectedParameter: String?, data: List<LeaderBoardEntry>) {
+fun ShowLeaderboard(selectedParameter: String?, data: List<LeaderBoardEntry>, unit: String) {
     val dataFiltered = FilterData(selectedParameter, data)
     Column(
         modifier = Modifier
@@ -328,16 +329,16 @@ fun ShowLeaderboard(selectedParameter: String?, data: List<LeaderBoardEntry>) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         dataFiltered.forEach { entry ->
-            LeaderboardRow(entry)
+            LeaderboardRow(entry, unit)
         }
     }
 }
 
 @Composable
-fun LeaderboardRow(entry: LeaderBoardEntry) {
+fun LeaderboardRow(entry: LeaderBoardEntry, unit: String) {
     Column() {
         HorizontalDivider(
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.outline,
             thickness = 0.5.dp,
             modifier = Modifier.padding(vertical = 8.dp)
         )
@@ -353,12 +354,12 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
                 modifier = Modifier
                     .size(30.dp)
                     .clip(CircleShape)
-                    .background(Color.White),
+                    .background(MaterialTheme.colorScheme.onBackground),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     "${entry.rank}",
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.background,
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
@@ -368,7 +369,7 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
 
             Text(
                 "${entry.username}",
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
                     .padding(2.dp)
@@ -377,14 +378,14 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
             Column(horizontalAlignment = Alignment.End) {
                 Text(
                     "${entry.lift}",
-                    color = Color.LightGray,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier
                     .padding(top = 8.dp, bottom = 2.dp)
                 )
                 Text(
-                    "${entry.weight} kg",
-                    color = Color.White,
+                    formatLeaderboardWeight(entry.weight, unit),
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
                     .padding(top = 2.dp, bottom = 8.dp)
@@ -392,4 +393,14 @@ fun LeaderboardRow(entry: LeaderBoardEntry) {
             }
         }
     }
+}
+
+private fun formatLeaderboardWeight(weight: Float, unit: String): String {
+    val displayWeight = if (unit == "kg") {
+        weight
+    } else {
+        weight * 2.20462f
+    }
+
+    return String.format(Locale.US, "%.1f %s", displayWeight, unit)
 }

@@ -63,7 +63,7 @@ fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
     }
 
     Scaffold(
-        containerColor = Color(0xFF0B0B0D)
+
     ) { paddingValues ->
         LazyColumn(
             contentPadding = paddingValues
@@ -131,21 +131,22 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
                 Column {
                     Text(
                         text = userId,
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.SemiBold
                     )
                     Text(
                         text = exerciseName,
-                        color = Color(0xFFB9B9BE),
+                        color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
 
+                    val convWeight = viewModel.convertUnit(weight, viewModel.unit)
                 Column(horizontalAlignment = Alignment.End) {
                     Text(
-                        text = "$weight kg",
-                        color = Color.White,
+                            text = "$convWeight ${viewModel.unit}",
+                        color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.SemiBold
                     )
@@ -159,12 +160,12 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
                     .fillMaxWidth()
                     .height(320.dp),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1F))
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color(0xFF202127))
+                        .background(MaterialTheme.colorScheme.onSurface)
                 ) {
                     if (videoUri != null) {
                         AndroidView(
@@ -196,9 +197,9 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
                         .weight(1f)
                         .height(64.dp),
                     shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A1A1F))
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                 ) {
-                    Text(text = "Approve", color = Color.White)
+                    Text(text = "Approve", color = MaterialTheme.colorScheme.onPrimary)
                 }
 
                 OutlinedButton(
@@ -209,9 +210,9 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
                         .weight(1f)
                         .height(64.dp),
                     shape = CircleShape,
-                    colors = ButtonDefaults.outlinedButtonColors(containerColor = Color(0xFF1A1A1F))
+                    colors = ButtonDefaults.outlinedButtonColors(containerColor = MaterialTheme.colorScheme.surface)
                 ) {
-                    Text(text = "Reject", color = Color.White)
+                    Text(text = "Reject", color = MaterialTheme.colorScheme.onSurface)
                 }
 
             }

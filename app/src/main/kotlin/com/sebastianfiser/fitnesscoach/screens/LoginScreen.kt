@@ -40,12 +40,12 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
                     .padding(16.dp),
                 shape = RoundedCornerShape(8.dp),
                 border = BorderStroke(1.dp, Color.White),
-                color = Color(0xFFa84444),
+                color = MaterialTheme.colorScheme.surface,
             ) {
                 Snackbar(
                     snackbarData = data,
                     containerColor = Color.Transparent,
-                    contentColor = Color.White,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }}
@@ -57,7 +57,7 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Welcome", fontSize = 42.sp, fontWeight = FontWeight.Bold, color = Color.White)
+            Text("Welcome", fontSize = 42.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)
             Spacer(modifier = Modifier.height(32.dp))
             OutlinedTextField(
                 value = email,
@@ -65,12 +65,12 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
                 label = { Text("Email") },
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color.White,
-                    unfocusedBorderColor = Color.Gray,
-                    focusedLabelColor = Color.White,
-                    unfocusedLabelColor = Color.Gray
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    focusedLabelColor = MaterialTheme.colorScheme.primary,
+                    unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -80,12 +80,12 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
                 label = { Text("Password") },
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color.White,
-                    unfocusedBorderColor = Color.Gray,
-                    focusedLabelColor = Color.White,
-                    unfocusedLabelColor = Color.Gray
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    focusedLabelColor = MaterialTheme.colorScheme.primary,
+                    unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
                 ),
                 visualTransformation = PasswordVisualTransformation()
             )
@@ -108,15 +108,15 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
                     }
                 } },
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(Color.White)
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
             ) {
-                Text("Login", color = Color.Black)
+                Text("Login", color = MaterialTheme.colorScheme.onPrimary)
             }
             TextButton(
                 onClick = { navController.navigate(Screen.Register.route) },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Don't have an account? Register", color = Color.White)
+                Text("Don't have an account? Register", color = MaterialTheme.colorScheme.onBackground)
             }
         }
     }

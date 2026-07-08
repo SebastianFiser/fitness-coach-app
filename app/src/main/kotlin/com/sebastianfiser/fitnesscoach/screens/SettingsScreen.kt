@@ -35,7 +35,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 12.dp)
             .padding(top = 24.dp, bottom = 114.dp),
     ) {
@@ -46,13 +46,13 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
             horizontalArrangement = Arrangement.Start
         ) {
             IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.Default.KeyboardArrowLeft, contentDescription = "Back", tint = Color.White)
+                Icon(Icons.Default.KeyboardArrowLeft, contentDescription = "Back", tint = MaterialTheme.colorScheme.onBackground)
             }
         }
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text("Settings", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White)
+            Text("Settings", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)
 
             Row(
                 modifier = Modifier
@@ -68,7 +68,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                         .fillMaxSize()
                         .padding(end = 2.dp)
                         .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
-                    colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
+                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(14.dp)
                 ) {
                     Column(
@@ -77,7 +77,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                             .padding(horizontal = 28.dp, vertical = 40.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Text("Rest Time", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        Text("Rest Time", color = MaterialTheme.colorScheme.onSurface, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                         Spacer(modifier = Modifier.height(8.dp))
                         Card(
                             modifier = Modifier
@@ -92,35 +92,35 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .clickable {viewModel.restTime += 5}
-                                        .background(Color.DarkGray)
+                                        .background(MaterialTheme.colorScheme.onSurfaceVariant)
                                         .weight(1f),
                                     horizontalArrangement = Arrangement.Center,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Increase time", tint = Color.White)
+                                    Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Increase time", tint = MaterialTheme.colorScheme.onSurface)
                                 }
-                                Divider(color = Color.Gray, thickness = 1.dp)
+                                Divider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .background(Color.Black)
+                                        .background(MaterialTheme.colorScheme.background)
                                         .weight(3f),
                                     horizontalArrangement = Arrangement.Center,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Text(String.format("%02d:%02d", minutes, seconds), color = Color.White, fontSize = 32.sp)
+                                    Text(String.format("%02d:%02d", minutes, seconds), color = MaterialTheme.colorScheme.onBackground, fontSize = 32.sp)
                                 }
-                                Divider(color = Color.Gray, thickness = 1.dp)
+                                Divider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
                                 Row(
                                     modifier = Modifier                                        
                                         .fillMaxWidth()
                                         .clickable {viewModel.restTime -= 5}
-                                        .background(Color.DarkGray)
+                                        .background(MaterialTheme.colorScheme.onSurfaceVariant)
                                         .weight(1f),
                                     horizontalArrangement = Arrangement.Center,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Decrease Rest Time", tint = Color.White)
+                                    Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Decrease Rest Time", tint = MaterialTheme.colorScheme.onSurface)
                                 }
                             }
                         }
@@ -131,8 +131,8 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                         .weight(1f)
                         .fillMaxSize()
                         .padding(start = 2.dp)
-                        .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
-                    colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
+                        .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp)),
+                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(14.dp)
                 ) {
                     Column(
@@ -140,7 +140,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                             .padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Text("Unit System", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        Text("Unit System", color = MaterialTheme.colorScheme.onSurface, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                         Spacer(modifier = Modifier.height(8.dp))
                         
                     //Unit sider
@@ -148,22 +148,22 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                             modifier = Modifier
                                 .padding(horizontal = 12.dp, vertical = 24.dp)
                                 .fillMaxSize()
-                                .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
+                                .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp)),
                             shape = RoundedCornerShape(8.dp),
-                            colors = CardDefaults.cardColors(Color.DarkGray)
+                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.onSurfaceVariant)
                         ) {
                             listOf("kg", "lbs").forEach { unit ->
                                 val selected = viewModel.unit == unit
                                 TextButton(
                                     onClick = { viewModel.unit = unit },
                                     colors = ButtonDefaults.textButtonColors(
-                                        contentColor = if (selected) Color.Black else Color.White,
-                                        containerColor = if (selected) Color.White else Color.DarkGray
+                                        contentColor = if (selected) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onSurface,
+                                        containerColor = if (selected) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.onSurfaceVariant
                                     ),
                                     modifier = Modifier.fillMaxSize().weight(1f),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
-                                    Text(unit, fontSize = 18.sp, color = if (selected) Color.Black else Color.White)
+                                    Text(unit, fontSize = 18.sp, color = if (selected) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onSurface)
                                 }
                             }
                         }
@@ -181,15 +181,15 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxSize()
-                        .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp)),
-                    colors = CardDefaults.cardColors(Color(0xFF1C1C1E)),
+                        .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp)),
+                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
                     shape = RoundedCornerShape(14.dp)
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(16.dp)
-                            .background(Color(0xFF1C1C1E)),
+                            .background(MaterialTheme.colorScheme.surface),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Row(
@@ -197,7 +197,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                 .fillMaxWidth(),
                             horizontalArrangement = Arrangement.Center,
                         ) {
-                            Text("Color Themes", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                            Text("Color Themes", color = MaterialTheme.colorScheme.onSurface, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                         }
                         Row(
                             modifier = Modifier
@@ -212,10 +212,10 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                         .weight(1f)
                                         .fillMaxHeight()
                                         .clickable { viewModel.isDarkTheme = isDark }
-                                        .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
+                                        .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp)),
                                     colors = CardDefaults.cardColors(
-                                        containerColor = if (selected) Color.White else Color.DarkGray,
-                                        contentColor = if (selected) Color.Black else Color.White
+                                        containerColor = if (selected) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.onSurfaceVariant,
+                                        contentColor = if (selected) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onSurface
                                     ),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
@@ -224,9 +224,9 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                         horizontalAlignment = Alignment.CenterHorizontally,
                                         verticalArrangement = Arrangement.Center
                                     ) {
-                                        Icon(icon, contentDescription = name, tint = if (selected) Color.Black else Color.White)
+                                        Icon(icon, contentDescription = name, tint = if (selected) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onSurface)
                                         Spacer(modifier = Modifier.height(4.dp))
-                                        Text(name, fontSize = 14.sp, color = if (selected) Color.Black else Color.White)
+                                        Text(name, fontSize = 14.sp, color = if (selected) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onSurface)
                                     }
                                 }
                             }
