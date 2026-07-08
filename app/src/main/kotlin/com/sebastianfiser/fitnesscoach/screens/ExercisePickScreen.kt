@@ -62,10 +62,10 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                     placeholder = { Text("Search exercises...") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.LightGray,
-                        focusedBorderColor = Color.LightGray,
-                        unfocusedBorderColor = Color.LightGray
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        focusedBorderColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 )
             }
@@ -75,15 +75,15 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                         .padding(8.dp)
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp),
-                    border = BorderStroke(1.dp, Color.LightGray),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF333333)),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurfaceVariant),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onBackground),
                     onClick = { 
                         showDialog = true 
                         clickedExercise = exercise
                         android.util.Log.d("DEBUG", "Clicked: $exercise")
                         }
                 ) {
-                    Text(exercise, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.padding(16.dp))
+                    Text(exercise, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.padding(16.dp))
                 }
             }
         }
@@ -99,10 +99,10 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                         placeholder = { Text("Enter number of sets") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.LightGray,
-                            focusedBorderColor = Color.LightGray,
-                            unfocusedBorderColor = Color.LightGray
+                            focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                            unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            focusedBorderColor = MaterialTheme.colorScheme.onSurface,
+                            unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant   
                         )
                     )
                 },
