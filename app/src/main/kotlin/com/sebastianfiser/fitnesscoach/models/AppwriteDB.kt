@@ -222,4 +222,30 @@ class AppwriteDB(private val client: Client) {
         }
     }
 
+    suspend fun updateUserSettings(userId: String, restTime: Int, unit: String, isDarkTheme: Boolean, profileIconId: String): Result<Document<Map<String, Any>>> {
+        return runCatching {
+            databases.updateDocument(
+                databaseId = DB_ID,
+                collectionId = USER_SETTINGS_COL_ID,
+                documentId = userId,
+                data = mapOf(
+                    "restTime" to restTime,
+                    "Unit" to unit,
+                    "isDarkTheme" to isDarkTheme,
+                    "profileIconId" to profileIconId
+                )
+            )
+        }
+    }
+
+    suspend fun getUserSettings(userId: String): Result<Document<Map<String, Any>>> {
+        return runCatching {
+            databases.getDocument(
+                databaseId = DB_ID,
+                collectionId = USER_SETTINGS_COL_ID,
+                documentId = userId
+            )
+        }
+    }
+
 }

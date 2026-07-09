@@ -49,6 +49,9 @@ class AppViewModel : ViewModel() {
     var isReviewer by mutableStateOf(false)
     var pendingSubmissions by mutableStateOf<List<Document<Map<String, Any>>>>(emptyList())
     var approvedSubmissions by mutableStateOf<List<Document<Map<String, Any>>>>(emptyList())
+    var userIconId by mutableStateOf<String?>(null)
+    var userIconUri by mutableStateOf<android.net.Uri?>(null)
+    var userIcon by mutableStateOf<ByteArray?>(null)
 
     var leaderboardList by mutableStateOf<List<LeaderBoardEntry>>(emptyList())
     
@@ -294,5 +297,56 @@ class AppViewModel : ViewModel() {
             weight * 2.20462f
         }
     } 
+
+    suspend fun updateUserSettings() {
+        return repository.updateUserSettings(
+            userId = val userId = Appwrite.account.get().id,
+            restTime = restTime,
+            unit = unit,
+            isDarkTheme = isDarkTheme,
+            profileIconId = userIconId ?: ""
+        )
+        .onFailure { e ->
+            Log.d("AppViewModel", "Failed to update user settings: ${e.message}")
+            snackbarHostState.showSnackbar("Failed to update user settings, check your internet connection")
+        }
+    }
+
+    suspend fun uploadImage(context: Context, uri: Uri, userId: String) {
+        repository.uploadImage(context, uri, userId)
+            .onSuccess { fileId ->
+                userIconId = fileId
+                updateUserSettings()
+            }
+            .onFailure { e ->
+                Log.d("AppViewModel", "Failed to upload image: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to upload image, check your internet connection")
+            }
+    }
+
+    suspend fun getUserSettings(userId: String) {
+        repository.getUserSettings(userId)
+            .onSuccess { document ->
+                restTime = (document.data["restTime"] as? Number)?.toInt() ?: 90
+                unit = document.data["unit"] as? String ?: "kg"
+                isDarkTheme = document.data["isDarkTheme"] as? Boolean ?: false
+                userIconId = document.data["profileIconId"] as? String
+            }
+            .onFailure { e ->
+                Log.d("AppViewModel", "Failed to get user settings: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to get user settings, check your internet connection")
+            }
+    }
+
+    suspend fun getImage(fileId: String) {
+        repository.getImage(fileId)
+            .onSuccess { bytes ->
+                userIcon = bytes
+            }
+            .onFailure { e ->
+                Log.d("AppViewModel", "Failed to get image: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to get image, check your internet connection")
+            }
+    }
 
 }

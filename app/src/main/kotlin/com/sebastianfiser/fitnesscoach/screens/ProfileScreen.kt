@@ -43,11 +43,41 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
     var selectedTab by remember { mutableStateOf(0) }
     val scope = rememberCoroutineScope()
     var showAlert by remember { mutableStateOf(false) }
+    var userIcUri by remember {mutableStateOf(Uri.EMPTY)}
+    val pickMedia = rememberLauncherForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        userIcUri = uri
+    }
+    val bitmap = remember(viewModel.userIcon ) {
+        userIcon?.let {
+            BitmaúFactory.decodeByteArray(it, 0, it.size).asImageBitmap()
+        }
+    }
+
     LaunchedEffect(Unit) {
         scope.launch {
             val currentUser = Appwrite.getCurrentUser()
             userName = currentUser?.name ?: "User"
             userEmail = currentUser?.email ?: "user@email.com"
+
+            if (viweModel.userIcon == null) {
+                viewModel.getImage(viewModel.userIconId!!)
+            }
+        }
+    }
+    LaunchedEffect(userIcUri) {
+        if (userIcUri != Uri.EMPTY) {
+            val currentUser = Appwrite.getCurrentUser()
+            val userId = currentUser?.id ?: return@LaunchedEffect
+            scope.launch {
+                val result = viewModel.uploadImage(context = LocalContext.current, uri = userIcUri, userId = userId)
+                result.onSuccess { fileId ->
+                    viewModel.userIconId = fileId
+                }.onFailure { error ->
+                    // Handle the error, e.g., show a message to the user
+                }
+            }
         }
     }
     Column (
@@ -75,14 +105,35 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
             Spacer(modifier = Modifier.height(8.dp))
             Box(
                 modifier = Modifier
-                    .size(80.dp)
+                    .size(85.dp)
                     .clip(CircleShape)
-                    .border(3.dp, Color(0xFFD4B896), CircleShape)
-                    .background(Color.Gray),
+                    .background(Color.Transparent)
+                    .clickable { 
+                        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                    },
                 contentAlignment = Alignment.Center
-            ) {
-                Text("U", color = Color.White, style = MaterialTheme.typography.headlineLarge)
-            }
+            )
+                if (bitmap == null) {
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp)
+                            .clip(CircleShape)
+                            .border(3.dp, Color(0xFFD4B896), CircleShape)
+                            .background(Color.Gray),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("U", color = Color.White, style = MaterialTheme.typography.headlineLarge)
+                    }
+                } else {
+                    Image(
+                        bitmap = bitmap,
+                        contentDescription = "User Icon",
+                        modifier = Modifier
+                            .size(80.dp)
+                            .clip(CircleShape)
+                            .border(3.dp, Color(0xFFD4B896), CircleShape)
+                    )
+                }
             Spacer(modifier = Modifier.height(16.dp))
             Text(userName, color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.headlineSmall)
             Text(userEmail, color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.bodyMedium)
