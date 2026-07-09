@@ -59,7 +59,6 @@ class AppViewModel : ViewModel() {
 
     var leaderboardList by mutableStateOf<List<LeaderBoardEntry>>(emptyList())
 
-    val viewModelScope = rememberCoroutineScope()
     
     suspend fun checkReviewerStatus() {
         isReviewer = Appwrite.isReviewer()
