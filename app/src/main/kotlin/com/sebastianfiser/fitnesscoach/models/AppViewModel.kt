@@ -306,7 +306,7 @@ class AppViewModel : ViewModel() {
             userId = userId,
             restTime = restTime,
             unit = unit,
-            isDarkTheme = isDarkTheme,
+            isDarkTheme = isDarkTheme ?: false,
             profileIconId = userIconId ?: ""
         )
         .onFailure { e ->
@@ -317,14 +317,18 @@ class AppViewModel : ViewModel() {
 
     suspend fun uploadImage(context: Context, uri: Uri, userId: String): Result<String> {
         val result = repository.uploadImage(context, uri, userId)
-        result.onSuccess { fileId ->
-            userIconId = fileId
-            updateUserSettings()
-        }
-        .onFailure { e ->
-            Log.d("AppViewModel", "Failed to upload image: ${e.message}")
+        if (result.isSuccess) {
+            val fileId = result.getOrNull()
+            if (fileId != null) {
+                userIconId = fileId
+                updateUserSettings()
+            }
+        } else {
+            val e = result.exceptionOrNull()
+            Log.d("AppViewModel", "Failed to upload image: ${e?.message}")
             snackbarHostState.showSnackbar("Failed to upload image, check your internet connection")
         }
+
         return result
     }
 

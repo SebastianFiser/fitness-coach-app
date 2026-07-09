@@ -1,6 +1,9 @@
 package com.sebastianfiser.fitnesscoach.screens
 
 import androidx.compose.foundation.background
+package com.sebastianfiser.fitnesscoach.screens
+
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -37,6 +40,7 @@ import androidx.compose.runtime.LaunchedEffect
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.Image
 import androidx.compose.ui.graphics.asImageBitmap
@@ -44,19 +48,22 @@ import android.graphics.BitmapFactory
 
 
 @Composable
-fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
+fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
     var userName by remember { mutableStateOf("") }
     var userEmail by remember { mutableStateOf("") }
     var selectedTab by remember { mutableStateOf(0) }
     val scope = rememberCoroutineScope()
     var showAlert by remember { mutableStateOf(false) }
-    var userIcUri by remember {mutableStateOf(Uri.EMPTY)}
+    var userIcUri by remember { mutableStateOf(Uri.EMPTY) }
+    val context = LocalContext.current
+
     val pickMedia = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         userIcUri = uri ?: Uri.EMPTY
     }
-    val bitmap = remember(viewModel.userIcon ) {
+
+    val bitmap = remember(viewModel.userIcon) {
         viewModel.userIcon?.let {
             BitmapFactory.decodeByteArray(it, 0, it.size).asImageBitmap()
         }
@@ -73,12 +80,13 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
             }
         }
     }
+
     LaunchedEffect(userIcUri) {
         if (userIcUri != Uri.EMPTY) {
             val currentUser = Appwrite.getCurrentUser()
             val userId = currentUser?.id ?: return@LaunchedEffect
             scope.launch {
-                val result = viewModel.uploadImage(LocalContext.current, userIcUri, userId)
+                val result = viewModel.uploadImage(context, userIcUri, userId)
                 result.onSuccess { fileId ->
                     viewModel.userIconId = fileId
                 }.onFailure { error ->
@@ -87,7 +95,8 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
             }
         }
     }
-    Column (
+
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
@@ -101,10 +110,8 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                TextButton(
-                    onClick = {}
-                ) {
-                    Icon(Icons.Default.Create , contentDescription = null, tint = MaterialTheme.colorScheme.onBackground)
+                TextButton(onClick = {}) {
+                    Icon(Icons.Default.Create, contentDescription = null, tint = MaterialTheme.colorScheme.onBackground)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("Edit Profile", color = MaterialTheme.colorScheme.onBackground)
                 }
@@ -116,7 +123,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                     .clip(CircleShape)
                     .background(Color.Transparent)
                     .clickable {
-                        pickMedia.launch(ActivityResultContracts.PickVisualMedia.PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                     },
                 contentAlignment = Alignment.Center
             ) {
@@ -153,7 +160,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
             ) {
                 Text("PERSONAL & APP ACTIVITY", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(8.dp))
-                Card (
+                Card(
                     modifier = Modifier
                         .padding(vertical = 4.dp)
                         .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
@@ -166,7 +173,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                             .fillMaxWidth()
                             .padding(16.dp)
                     ) {
-                        Row (
+                        Row(
                             modifier = Modifier
                                 .clickable { navController.navigate(Screen.Stats.route) }
                                 .fillMaxWidth(),
@@ -179,7 +186,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                             Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outline)
-                        Row (
+                        Row(
                             modifier = Modifier
                                 .clickable { navController.navigate(Screen.Settings.route) }
                                 .fillMaxWidth(),
@@ -202,7 +209,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
             ) {
                 Text("DANGER ZONE", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(8.dp))
-                Card (
+                Card(
                     modifier = Modifier
                         .padding(vertical = 4.dp)
                         .padding(bottom = 95.dp)
@@ -216,7 +223,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                             .fillMaxWidth()
                             .padding(16.dp)
                     ) {
-                        Row (
+                        Row(
                             modifier = Modifier
                                 .clickable {
                                     try {
@@ -241,14 +248,14 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                             Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outline)
-                        Row (
+                        Row(
                             modifier = Modifier
                                 .clickable { showAlert = true }
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            if(showAlert) {
-                                 AlertDialog(
+                            if (showAlert) {
+                                AlertDialog(
                                     containerColor = MaterialTheme.colorScheme.surface,
                                     shape = RoundedCornerShape(16.dp),
                                     onDismissRequest = { showAlert = false },
@@ -258,9 +265,9 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                                         TextButton(
                                             onClick = {
                                                 showAlert = false
-                                                scope.launch{
+                                                scope.launch {
                                                     /*Todo */
-                                                } 
+                                                }
                                             }
                                         ) {
                                             Text("Yes", color = Color.Red)
