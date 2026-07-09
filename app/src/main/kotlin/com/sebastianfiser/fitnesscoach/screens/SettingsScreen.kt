@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.filled.NightlightRound
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.runtime.rememberCoroutineScope
 
 
 
@@ -34,9 +35,12 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
         Triple("Dark", Icons.Default.NightlightRound, true),
         Triple("System", Icons.Default.Settings, null)
     )
+    val scope = rememberCoroutineScope()
 
     DisposableEffect(Unit) {
-        viewModel.updateUserSettings()
+        onDispose {
+            viewModel.updateUserSettingsAsync()
+        }
     }
 
     Column(

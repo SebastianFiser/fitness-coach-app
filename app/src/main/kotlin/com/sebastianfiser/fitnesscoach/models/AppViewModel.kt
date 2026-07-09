@@ -12,6 +12,8 @@ import android.net.Uri
 import java.time.LocalDate
 import androidx.compose.material3.SnackbarHostState
 import com.sebastianfiser.fitnesscoach.models.LeaderBoardEntry
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 
 class AppViewModel : ViewModel() {
     private val repository = WorkoutRepository(Appwrite.client)
@@ -56,6 +58,8 @@ class AppViewModel : ViewModel() {
     var userIcon by mutableStateOf<ByteArray?>(null)
 
     var leaderboardList by mutableStateOf<List<LeaderBoardEntry>>(emptyList())
+
+    val viewModelScope = rememberCoroutineScope()
     
     suspend fun checkReviewerStatus() {
         isReviewer = Appwrite.isReviewer()
@@ -299,6 +303,12 @@ class AppViewModel : ViewModel() {
             weight * 2.20462f
         }
     } 
+
+    fun updateUserSettingsAsync() {
+        viewModelScope.launch {
+            updateUserSettings()
+        }
+    }
 
     suspend fun updateUserSettings() {
         val userId = Appwrite.account.get().id
