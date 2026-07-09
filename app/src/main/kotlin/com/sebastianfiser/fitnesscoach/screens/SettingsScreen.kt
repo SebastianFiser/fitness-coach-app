@@ -23,6 +23,8 @@ import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.filled.NightlightRound
 import androidx.compose.material.icons.filled.Settings
 
+
+
 @Composable
 fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
     val minutes = viewModel.restTime / 60
@@ -32,6 +34,11 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
         Triple("Dark", Icons.Default.NightlightRound, true),
         Triple("System", Icons.Default.Settings, null)
     )
+
+    DisposableEffect(Unit) {
+        viewModel.updateUserSettings()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
