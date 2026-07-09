@@ -134,11 +134,12 @@ fun StartContent(viewModel: AppViewModel) {
 @Composable
 fun BottomNav(modifier: Modifier = Modifier, navController: NavController, viewModel: AppViewModel) {
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+    val outline = MaterialTheme.colorScheme.outline 
     NavigationBar(
         modifier = modifier.drawBehind {
             val strokeWidth = 0.5.dp.toPx()
             drawLine(
-                color = MaterialTheme.colorScheme.outline,
+                color = outline,
                 start = Offset(0f, 0f),
                 end = Offset(size.width, 0f),
                 strokeWidth = strokeWidth
