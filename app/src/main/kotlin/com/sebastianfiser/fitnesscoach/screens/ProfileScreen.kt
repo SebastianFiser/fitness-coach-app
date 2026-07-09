@@ -34,6 +34,13 @@ import com.sebastianfiser.fitnesscoach.models.Appwrite
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.LaunchedEffect
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.foundation.Image
+import androidx.compose.ui.graphics.asImageBitmap
+import android.graphics.BitmapFactory
 
 
 @Composable
@@ -46,12 +53,12 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
     var userIcUri by remember {mutableStateOf(Uri.EMPTY)}
     val pickMedia = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
-    ) { uri ->
-        userIcUri = uri
+    ) { uri: Uri? ->
+        userIcUri = uri ?: Uri.EMPTY
     }
     val bitmap = remember(viewModel.userIcon ) {
-        userIcon?.let {
-            BitmaúFactory.decodeByteArray(it, 0, it.size).asImageBitmap()
+        viewModel.userIcon?.let {
+            BitmapFactory.decodeByteArray(it, 0, it.size).asImageBitmap()
         }
     }
 
@@ -61,7 +68,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
             userName = currentUser?.name ?: "User"
             userEmail = currentUser?.email ?: "user@email.com"
 
-            if (viweModel.userIcon == null) {
+            if (viewModel.userIcon == null && viewModel.userIconId != null) {
                 viewModel.getImage(viewModel.userIconId!!)
             }
         }
@@ -71,7 +78,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
             val currentUser = Appwrite.getCurrentUser()
             val userId = currentUser?.id ?: return@LaunchedEffect
             scope.launch {
-                val result = viewModel.uploadImage(context = LocalContext.current, uri = userIcUri, userId = userId)
+                val result = viewModel.uploadImage(LocalContext.current, userIcUri, userId)
                 result.onSuccess { fileId ->
                     viewModel.userIconId = fileId
                 }.onFailure { error ->
@@ -108,11 +115,11 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                     .size(85.dp)
                     .clip(CircleShape)
                     .background(Color.Transparent)
-                    .clickable { 
-                        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                    .clickable {
+                        pickMedia.launch(ActivityResultContracts.PickVisualMedia.PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                     },
                 contentAlignment = Alignment.Center
-            )
+            ) {
                 if (bitmap == null) {
                     Box(
                         modifier = Modifier
@@ -134,6 +141,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                             .border(3.dp, Color(0xFFD4B896), CircleShape)
                     )
                 }
+            }
             Spacer(modifier = Modifier.height(16.dp))
             Text(userName, color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.headlineSmall)
             Text(userEmail, color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.bodyMedium)

@@ -7,6 +7,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import io.appwrite.models.Document
 import android.util.Log
+import android.content.Context
+import android.net.Uri
 import java.time.LocalDate
 import androidx.compose.material3.SnackbarHostState
 import com.sebastianfiser.fitnesscoach.models.LeaderBoardEntry
@@ -299,8 +301,9 @@ class AppViewModel : ViewModel() {
     } 
 
     suspend fun updateUserSettings() {
-        return repository.updateUserSettings(
-            userId = val userId = Appwrite.account.get().id,
+        val userId = Appwrite.account.get().id
+        repository.updateUserSettings(
+            userId = userId,
             restTime = restTime,
             unit = unit,
             isDarkTheme = isDarkTheme,
@@ -312,16 +315,17 @@ class AppViewModel : ViewModel() {
         }
     }
 
-    suspend fun uploadImage(context: Context, uri: Uri, userId: String) {
-        repository.uploadImage(context, uri, userId)
-            .onSuccess { fileId ->
-                userIconId = fileId
-                updateUserSettings()
-            }
-            .onFailure { e ->
-                Log.d("AppViewModel", "Failed to upload image: ${e.message}")
-                snackbarHostState.showSnackbar("Failed to upload image, check your internet connection")
-            }
+    suspend fun uploadImage(context: Context, uri: Uri, userId: String): Result<String> {
+        val result = repository.uploadImage(context, uri, userId)
+        result.onSuccess { fileId ->
+            userIconId = fileId
+            updateUserSettings()
+        }
+        .onFailure { e ->
+            Log.d("AppViewModel", "Failed to upload image: ${e.message}")
+            snackbarHostState.showSnackbar("Failed to upload image, check your internet connection")
+        }
+        return result
     }
 
     suspend fun getUserSettings(userId: String) {
