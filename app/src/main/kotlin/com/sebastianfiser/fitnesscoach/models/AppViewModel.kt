@@ -12,8 +12,8 @@ import android.net.Uri
 import java.time.LocalDate
 import androidx.compose.material3.SnackbarHostState
 import com.sebastianfiser.fitnesscoach.models.LeaderBoardEntry
-import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
+import androidx.lifecycle.viewModelScope
 
 class AppViewModel : ViewModel() {
     private val repository = WorkoutRepository(Appwrite.client)
