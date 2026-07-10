@@ -320,7 +320,7 @@ class AppViewModel : ViewModel() {
         )
         .onFailure { e ->
             Log.d("AppViewModel", "Failed to update user settings: ${e.message}")
-            snackbarHostState.showSnackbar("Failed to update user settings, check your internet connection")
+            snackbarHostState.showSnackbar("Failed to update user settings, check your internet connection DEBUG: ${e.message}")
         }
     }
 
@@ -335,7 +335,7 @@ class AppViewModel : ViewModel() {
         } else {
             val e = result.exceptionOrNull()
             Log.d("AppViewModel", "Failed to upload image: ${e?.message}")
-            snackbarHostState.showSnackbar("Failed to upload image, check your internet connection")
+            snackbarHostState.showSnackbar("Failed to upload image, check your internet connection DEBUG: ${e?.message}")
         }
 
         return result
@@ -351,7 +351,7 @@ class AppViewModel : ViewModel() {
             }
             .onFailure { e ->
                 Log.d("AppViewModel", "Failed to get user settings: ${e.message}")
-                snackbarHostState.showSnackbar("Failed to get user settings, check your internet connection")
+                snackbarHostState.showSnackbar("Failed to get user settings, check your internet connection DEBUG: ${e.message}")
             }
     }
 
@@ -362,7 +362,7 @@ class AppViewModel : ViewModel() {
             }
             .onFailure { e ->
                 Log.d("AppViewModel", "Failed to get image: ${e.message}")
-                snackbarHostState.showSnackbar("Failed to get image, check your internet connection")
+                snackbarHostState.showSnackbar("Failed to get image, check your internet connection: DEBUG: ${e.message}")
             }
     }
 
