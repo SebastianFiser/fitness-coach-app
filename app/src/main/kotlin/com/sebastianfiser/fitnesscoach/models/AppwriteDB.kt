@@ -223,13 +223,12 @@ class AppwriteDB(private val client: Client) {
     }
 
     suspend fun updateUserSettings(userId: String, restTime: Int, unit: String, isDarkTheme: Boolean, profileIconId: String): Result<Document<Map<String, Any>>> {
-        if (profileIconId == "") {
-            var idToSend = null
-        } else {
-            var idToSend = profileIconId
-        }
-        
         return runCatching {
+            if (profileIconId == "") {
+                var idToSend = null
+            } else {
+                idToSend = profileIconId
+            }
             databases.updateDocument(
                 databaseId = DB_ID,
                 collectionId = USER_SETTINGS_COL_ID,
