@@ -27,4 +27,5 @@ class WorkoutRepository(client: Client) {
     suspend fun updateUserSettings(userId: String, restTime: Int, unit: String, isDarkTheme: Boolean, profileIconId: String) = db.updateUserSettings(userId, restTime, unit, isDarkTheme, profileIconId)
     suspend fun getUserSettings(userId: String) = db.getUserSettings(userId)
     suspend fun getImage(fileId: String) = storage.getImage(fileId)
+    suspend fun createUserSettings(userId: String) = db.createUserSettings(userId)
 }

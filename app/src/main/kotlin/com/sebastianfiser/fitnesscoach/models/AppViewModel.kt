@@ -366,4 +366,12 @@ class AppViewModel : ViewModel() {
             }
     }
 
+    suspend fun createUserSettings(userId: String) {
+        repository.createUserSettings(userId)
+            .onFailure { e ->
+                Log.d("AppViewModel", "Failed to create user settings: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to create user settings, check your internet connection DEBUG: ${e.message}")
+            }
+    }
+
 }

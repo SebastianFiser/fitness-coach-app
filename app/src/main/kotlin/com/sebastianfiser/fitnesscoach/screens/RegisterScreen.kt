@@ -112,6 +112,7 @@ fun RegisterScreen(navController: NavController, viewModel: AppViewModel) {
                             Appwrite.onRegister(email, password, name)
                             Appwrite.onLogin(email, password)
                             val currentUser = Appwrite.getCurrentUser()
+                            appviewModel.createUserSettings(currentUser?.id ?: "")
                             navController.navigate(Screen.SetupSchedule.route)
                         } catch (e: Throwable) {
                             scope.launch {
