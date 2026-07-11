@@ -58,7 +58,7 @@ class AppViewModel : ViewModel() {
     var userIcon by mutableStateOf<ByteArray?>(null)
 
     var leaderboardList by mutableStateOf<List<LeaderBoardEntry>>(emptyList())
-    var testResult by mutableStžateOf<String?>(null)
+    var testResult by mutableStateOf<String?>(null)
 
     
     suspend fun checkReviewerStatus() {
