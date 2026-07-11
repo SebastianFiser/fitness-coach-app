@@ -59,6 +59,7 @@ class AppViewModel : ViewModel() {
 
     var leaderboardList by mutableStateOf<List<LeaderBoardEntry>>(emptyList())
     var testResult by mutableStateOf<String?>(null)
+    var accountDeleted by mutableStateOf(false)
 
     
     suspend fun checkReviewerStatus() {
@@ -195,6 +196,11 @@ class AppViewModel : ViewModel() {
         isEditing = false
         scheduleSetupLoaded = false
         prData = emptyMap()
+        isReviewer = false
+        userIcon = null
+        isProfileIconLoaded = false
+        userIconId = null
+        userIconUri = null
     }
 
     suspend fun submitEntry(exerciseName: String, weight: Float, reps: Int, country: String?, isNatural: Boolean, age: String, gender: String, context: android.content.Context, uri: android.net.Uri, userId: String): Boolean {
@@ -378,16 +384,21 @@ class AppViewModel : ViewModel() {
             }
     }
 
-    fun testDeleteAccount() {
+    fun deleteAccount() {
         viewModelScope.launch {
             try {
                 val execution = Appwrite.deleteAccount()
-                Log.d("AppViewModel", "Delete account function executed: ${execution.status}")
-                testResult = execution.responseBody
-
+                if(execution.responseStatusCode == 200) {
+                    clearUserState()
+                    snackbarHostState.showSnackbar("Account deleted successfully")
+                    accountDeleted = true 
+                } else {
+                    Log.d("AppViewModel", "Failed to delete account, status code: ${execution.responseStatusCode}")
+                    snackbarHostState.showSnackbar("Failed to delete account, error code ${execution.responseStatusCode}")
+                }
             } catch (e: Exception) {
                 Log.d("AppViewModel", "Failed to execute delete account function: ${e.message}")
-                snackbarHostState.showSnackbar("Failed to delete account, check your internet connection DEBUG: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to delete account error code ${e.message}")
             }
         }
     }

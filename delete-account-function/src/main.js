@@ -1,3 +1,4 @@
+//v3
 import { Client, Databases, Storage, Users, Query } from 'node-appwrite';
 export default async ({ req, res, log, error}) => {
     const userId = req.headers['x-appwrite-user-id'];
@@ -21,9 +22,39 @@ export default async ({ req, res, log, error}) => {
             [Query.equal('userId', userId)]
         );
 
+        const workoutsResult = await databases.listDocuments(
+            'fitness-coach-db',
+            'workouts',
+            [Query.equal('userId', userId)]
+        );
+
+        const setsResult = await databases.listDocuments(
+            'fitness-coach-db',
+            'sets',
+            [Query.equal('userId', userId)]
+        );
+
+        const scheduleResult = await databases.listDocuments(
+            'fitness-coach-db',
+            'schedule',
+            [Query.equal('userId', userId)]
+        );
+
         const userSettings = await databases.getDocument('fitness-coach-db', 'user_settings', userId);
 
         const pendingSubmissions = submissionResult.documents.filter(doc => doc.status === 'pending');
+
+        for (const schedule of scheduleResult.documents) {
+            await databases.deleteDocument('fitness-coach-db', 'schedule', schedule.$id);
+        }
+
+        for (const set of setsResult.documents) {
+            await databases.deleteDocument('fitness-coach-db', 'sets', set.$id);
+        }
+
+        for (const workout of workoutsResult.documents) {
+            await databases.deleteDocument('fitness-coach-db', 'workouts', workout.$id);
+        }
 
         for (const submission of pendingSubmissions) {
             await databases.deleteDocument('fitness-coach-db', 'submission', submission.$id);

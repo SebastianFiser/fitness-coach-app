@@ -94,6 +94,15 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
         }
     }
 
+    LaunchedEffect(viewModel.accountDeleted) {
+        if (viewModel.accountDeleted) {
+            navController.navigate(Screen.Login.route) {
+                popUpTo(0) { inclusive = true }
+            }
+            viewModel.accountDeleted = false
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -265,9 +274,7 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
                                         TextButton(
                                             onClick = {
                                                 showAlert = false
-                                                scope.launch {
-                                                    /*Todo */
-                                                }
+                                                viewModel.deleteAccount()
                                             }
                                         ) {
                                             Text("Yes", color = Color.Red)
@@ -291,20 +298,6 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
                     }
                 }
             }
-        }
-        Button(
-            onClick = {
-                try {
-                    viewModel.testDeleteAccount()
-                } catch (e: Throwable) {
-                    // Handle logout error if needed
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        ) {
-            Text("Delete account test: ${viewModel.testResult ?: "No result"}")
         }
     }
 }
