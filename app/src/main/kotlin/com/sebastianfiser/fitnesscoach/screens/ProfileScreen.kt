@@ -125,6 +125,7 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
                     },
                 contentAlignment = Alignment.Center
             ) {
+                val capedFirLetUname = userName.firstOrNull()?.uppercase() ?: "U"
                 if (bitmap == null) {
                     Box(
                         modifier = Modifier
@@ -134,12 +135,13 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
                             .background(Color.Gray),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("U", color = Color.White, style = MaterialTheme.typography.headlineLarge)
+                        Text("${capedFirLetUname}", color = Color.White, style = MaterialTheme.typography.headlineLarge)
                     }
                 } else {
                     Image(
                         bitmap = bitmap,
                         contentDescription = "User Icon",
+                        contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .size(80.dp)
                             .clip(CircleShape)
