@@ -292,5 +292,19 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
                 }
             }
         }
+        Button(
+            onClick = {
+                try {
+                    viewModel.testDeleteAccount()
+                } catch (e: Throwable) {
+                    // Handle logout error if needed
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        ) {
+            Text("Delete account test: ${viewModel.testResult ?: "No result"}")
+        }
     }
 }

@@ -58,6 +58,7 @@ class AppViewModel : ViewModel() {
     var userIcon by mutableStateOf<ByteArray?>(null)
 
     var leaderboardList by mutableStateOf<List<LeaderBoardEntry>>(emptyList())
+    var testResult by mutableStžateOf<String?>(null)
 
     
     suspend fun checkReviewerStatus() {
@@ -375,6 +376,20 @@ class AppViewModel : ViewModel() {
                 Log.d("AppViewModel", "Failed to create user settings: ${e.message}")
                 snackbarHostState.showSnackbar("Failed to create user settings, check your internet connection DEBUG: ${e.message}")
             }
+    }
+
+    fun testDeleteAccount() {
+        viewModelScope.launch {
+            try {
+                val execution = Appwrite.deleteAccount()
+                Log.d("AppViewModel", "Delete account function executed: ${execution.status}")
+                testResult = execution.responseBody
+
+            } catch (e: Exception) {
+                Log.d("AppViewModel", "Failed to execute delete account function: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to delete account, check your internet connection DEBUG: ${e.message}")
+            }
+        }
     }
 
 }
