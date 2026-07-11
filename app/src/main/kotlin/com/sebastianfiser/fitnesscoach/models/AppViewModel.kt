@@ -198,7 +198,6 @@ class AppViewModel : ViewModel() {
         prData = emptyMap()
         isReviewer = false
         userIcon = null
-        isProfileIconLoaded = false
         userIconId = null
         userIconUri = null
     }
