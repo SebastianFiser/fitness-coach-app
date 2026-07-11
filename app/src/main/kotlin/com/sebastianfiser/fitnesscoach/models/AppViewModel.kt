@@ -387,7 +387,7 @@ class AppViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val execution = Appwrite.deleteAccount()
-                if(execution.responseStatusCode == 200) {
+                if(execution.responseStatusCode == 200L) {
                     clearUserState()
                     snackbarHostState.showSnackbar("Account deleted successfully")
                     accountDeleted = true 
