@@ -348,6 +348,9 @@ class AppViewModel : ViewModel() {
                 unit = document.data["unit"] as? String ?: "kg"
                 isDarkTheme = document.data["isDarkTheme"] as? Boolean ?: false
                 userIconId = document.data["profileIconId"] as? String
+                if (!userIconId.isNullOrEmpty()) {
+                    getImage(userIconId!!)
+                }
             }
             .onFailure { e ->
                 Log.d("AppViewModel", "Failed to get user settings: ${e.message}")
