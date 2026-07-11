@@ -91,6 +91,7 @@ fun StartContent(viewModel: AppViewModel) {
             val currentUser = Appwrite.getCurrentUser()
             val userId = currentUser?.id ?: return@LaunchedEffect
             viewModel.loadSchedule(userId)
+            viewModel.getUserSettings(userId)
         }
     }
     
@@ -133,35 +134,31 @@ fun StartContent(viewModel: AppViewModel) {
 @Composable
 fun BottomNav(modifier: Modifier = Modifier, navController: NavController, viewModel: AppViewModel) {
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+    val outline = MaterialTheme.colorScheme.outline 
     NavigationBar(
         modifier = modifier.drawBehind {
             val strokeWidth = 0.5.dp.toPx()
             drawLine(
-                color = Color.Gray,
+                color = outline,
                 start = Offset(0f, 0f),
                 end = Offset(size.width, 0f),
                 strokeWidth = strokeWidth
             )
         },
-        containerColor = Color.Black,
+        containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 0.dp,
         windowInsets = NavigationBarDefaults.windowInsets 
     ) {
+
+        val colors = navItemColors()
+        
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = null) },
             label = { Text("Overview") },
             selected = currentRoute == Screen.Overview.route,
             onClick = { navController.navigate(Screen.Overview.route) },
-            colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = Color.White,
-                unselectedIconColor = Color.Gray,
-                selectedTextColor = Color.White,
-                unselectedTextColor = Color.Gray,
-                indicatorColor = Color.DarkGray
-            )
+            colors = colors
         )
-        // Pomocná funkce pro barvy položek (vytvořená dole)
-        val colors = navItemColors()
         
         NavigationBarItem(
             icon = { Icon(Icons.Default.DateRange, contentDescription = null) },
@@ -207,9 +204,9 @@ data class LeaderBoardEntry(
 
 @Composable
 fun navItemColors() = NavigationBarItemDefaults.colors(
-    selectedIconColor = Color.White,
-    unselectedIconColor = Color.Gray,
-    selectedTextColor = Color.White,
-    unselectedTextColor = Color.Gray,
-    indicatorColor = Color.DarkGray
+    selectedIconColor = MaterialTheme.colorScheme.primary,
+    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    selectedTextColor = MaterialTheme.colorScheme.onPrimary,
+    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    indicatorColor = MaterialTheme.colorScheme.primary
 )

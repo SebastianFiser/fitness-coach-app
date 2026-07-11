@@ -23,4 +23,9 @@ class WorkoutRepository(client: Client) {
     suspend fun updateSubmissionStatus(submissionId: String, status: String) = db.updateSubmissionStatus(submissionId, status)
     suspend fun getApprovedSubmissions() = db.getApprovedSubmissions()
     suspend fun getVideoBytes(fileId: String) = storage.getVideoBytes(fileId)
+    suspend fun uploadImage(context: Context, uri: Uri, userId: String) = storage.uploadImage(context, uri, userId)
+    suspend fun updateUserSettings(userId: String, restTime: Int, unit: String, isDarkTheme: Boolean, profileIconId: String) = db.updateUserSettings(userId, restTime, unit, isDarkTheme, profileIconId)
+    suspend fun getUserSettings(userId: String) = db.getUserSettings(userId)
+    suspend fun getImage(fileId: String) = storage.getImage(fileId)
+    suspend fun createUserSettings(userId: String) = db.createUserSettings(userId)
 }

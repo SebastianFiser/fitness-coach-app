@@ -80,4 +80,11 @@ object Appwrite {
             false
         }
     }
+
+    suspend fun deleteAccount(): Execution {
+        val functionId = "6a52700b002e0a6b077c"
+        val functions = Functions(client)
+        return functions.createExecution(functionId)
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.sebastianfiser.fitnesscoach.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -34,23 +35,75 @@ import com.sebastianfiser.fitnesscoach.models.Appwrite
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.LaunchedEffect
-
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.foundation.Image
+import androidx.compose.ui.graphics.asImageBitmap
+import android.graphics.BitmapFactory
+import androidx.compose.ui.layout.ContentScale
 
 @Composable
-fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
+fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
     var userName by remember { mutableStateOf("") }
     var userEmail by remember { mutableStateOf("") }
     var selectedTab by remember { mutableStateOf(0) }
     val scope = rememberCoroutineScope()
     var showAlert by remember { mutableStateOf(false) }
+    var userIcUri by remember { mutableStateOf(Uri.EMPTY) }
+    val context = LocalContext.current
+
+    val pickMedia = rememberLauncherForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri: Uri? ->
+        userIcUri = uri ?: Uri.EMPTY
+    }
+
+    val bitmap = remember(viewModel.userIcon) {
+        viewModel.userIcon?.let {
+            BitmapFactory.decodeByteArray(it, 0, it.size).asImageBitmap()
+        }
+    }
+
     LaunchedEffect(Unit) {
         scope.launch {
             val currentUser = Appwrite.getCurrentUser()
             userName = currentUser?.name ?: "User"
             userEmail = currentUser?.email ?: "user@email.com"
+
+            if (viewModel.userIcon == null && viewModel.userIconId != null) {
+                viewModel.getImage(viewModel.userIconId!!)
+            }
         }
     }
-    Column (
+
+    LaunchedEffect(userIcUri) {
+        if (userIcUri != Uri.EMPTY) {
+            val currentUser = Appwrite.getCurrentUser()
+            val userId = currentUser?.id ?: return@LaunchedEffect
+            scope.launch {
+                val result = viewModel.uploadImage(context, userIcUri, userId)
+                result.onSuccess { fileId ->
+                    viewModel.userIconId = fileId
+                }.onFailure { error ->
+                    // Handle the error, e.g., show a message to the user
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(viewModel.accountDeleted) {
+        if (viewModel.accountDeleted) {
+            navController.navigate(Screen.Login.route) {
+                popUpTo(0) { inclusive = true }
+            }
+            viewModel.accountDeleted = false
+        }
+    }
+
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
@@ -64,10 +117,8 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                TextButton(
-                    onClick = {}
-                ) {
-                    Icon(Icons.Default.Create , contentDescription = null, tint = MaterialTheme.colorScheme.onBackground)
+                TextButton(onClick = {}) {
+                    Icon(Icons.Default.Create, contentDescription = null, tint = MaterialTheme.colorScheme.onBackground)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("Edit Profile", color = MaterialTheme.colorScheme.onBackground)
                 }
@@ -75,13 +126,37 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
             Spacer(modifier = Modifier.height(8.dp))
             Box(
                 modifier = Modifier
-                    .size(80.dp)
+                    .size(85.dp)
                     .clip(CircleShape)
-                    .border(3.dp, Color(0xFFD4B896), CircleShape)
-                    .background(Color.Gray),
+                    .background(Color.Transparent)
+                    .clickable {
+                        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                    },
                 contentAlignment = Alignment.Center
             ) {
-                Text("U", color = Color.White, style = MaterialTheme.typography.headlineLarge)
+                val capedFirLetUname = userName.firstOrNull()?.uppercase() ?: "U"
+                if (bitmap == null) {
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp)
+                            .clip(CircleShape)
+                            .border(3.dp, Color(0xFFD4B896), CircleShape)
+                            .background(Color.Gray),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("${capedFirLetUname}", color = Color.White, style = MaterialTheme.typography.headlineLarge)
+                    }
+                } else {
+                    Image(
+                        bitmap = bitmap,
+                        contentDescription = "User Icon",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(80.dp)
+                            .clip(CircleShape)
+                            .border(3.dp, Color(0xFFD4B896), CircleShape)
+                    )
+                }
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text(userName, color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.headlineSmall)
@@ -94,7 +169,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
             ) {
                 Text("PERSONAL & APP ACTIVITY", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(8.dp))
-                Card (
+                Card(
                     modifier = Modifier
                         .padding(vertical = 4.dp)
                         .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
@@ -107,7 +182,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                             .fillMaxWidth()
                             .padding(16.dp)
                     ) {
-                        Row (
+                        Row(
                             modifier = Modifier
                                 .clickable { navController.navigate(Screen.Stats.route) }
                                 .fillMaxWidth(),
@@ -120,7 +195,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                             Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outline)
-                        Row (
+                        Row(
                             modifier = Modifier
                                 .clickable { navController.navigate(Screen.Settings.route) }
                                 .fillMaxWidth(),
@@ -143,7 +218,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
             ) {
                 Text("DANGER ZONE", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(8.dp))
-                Card (
+                Card(
                     modifier = Modifier
                         .padding(vertical = 4.dp)
                         .padding(bottom = 95.dp)
@@ -157,7 +232,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                             .fillMaxWidth()
                             .padding(16.dp)
                     ) {
-                        Row (
+                        Row(
                             modifier = Modifier
                                 .clickable {
                                     try {
@@ -182,14 +257,14 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                             Icon(Icons.Default.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outline)
-                        Row (
+                        Row(
                             modifier = Modifier
                                 .clickable { showAlert = true }
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            if(showAlert) {
-                                 AlertDialog(
+                            if (showAlert) {
+                                AlertDialog(
                                     containerColor = MaterialTheme.colorScheme.surface,
                                     shape = RoundedCornerShape(16.dp),
                                     onDismissRequest = { showAlert = false },
@@ -199,9 +274,7 @@ fun ProfileScreen(navController : NavController, viewModel: AppViewModel) {
                                         TextButton(
                                             onClick = {
                                                 showAlert = false
-                                                scope.launch{
-                                                    /*Todo */
-                                                } 
+                                                viewModel.deleteAccount()
                                             }
                                         ) {
                                             Text("Yes", color = Color.Red)

@@ -7,9 +7,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import io.appwrite.models.Document
 import android.util.Log
+import android.content.Context
+import android.net.Uri
 import java.time.LocalDate
 import androidx.compose.material3.SnackbarHostState
 import com.sebastianfiser.fitnesscoach.models.LeaderBoardEntry
+import kotlinx.coroutines.launch
+import androidx.lifecycle.viewModelScope
 
 class AppViewModel : ViewModel() {
     private val repository = WorkoutRepository(Appwrite.client)
@@ -49,8 +53,14 @@ class AppViewModel : ViewModel() {
     var isReviewer by mutableStateOf(false)
     var pendingSubmissions by mutableStateOf<List<Document<Map<String, Any>>>>(emptyList())
     var approvedSubmissions by mutableStateOf<List<Document<Map<String, Any>>>>(emptyList())
+    var userIconId by mutableStateOf<String?>(null)
+    var userIconUri by mutableStateOf<android.net.Uri?>(null)
+    var userIcon by mutableStateOf<ByteArray?>(null)
 
     var leaderboardList by mutableStateOf<List<LeaderBoardEntry>>(emptyList())
+    var testResult by mutableStateOf<String?>(null)
+    var accountDeleted by mutableStateOf(false)
+
     
     suspend fun checkReviewerStatus() {
         isReviewer = Appwrite.isReviewer()
@@ -186,6 +196,10 @@ class AppViewModel : ViewModel() {
         isEditing = false
         scheduleSetupLoaded = false
         prData = emptyMap()
+        isReviewer = false
+        userIcon = null
+        userIconId = null
+        userIconUri = null
     }
 
     suspend fun submitEntry(exerciseName: String, weight: Float, reps: Int, country: String?, isNatural: Boolean, age: String, gender: String, context: android.content.Context, uri: android.net.Uri, userId: String): Boolean {
@@ -294,5 +308,98 @@ class AppViewModel : ViewModel() {
             weight * 2.20462f
         }
     } 
+
+    fun updateUserSettingsAsync() {
+        viewModelScope.launch {
+            updateUserSettings()
+        }
+    }
+
+    suspend fun updateUserSettings() {
+        val userId = Appwrite.account.get().id
+        repository.updateUserSettings(
+            userId = userId,
+            restTime = restTime,
+            unit = unit,
+            isDarkTheme = isDarkTheme ?: false,
+            profileIconId = userIconId ?: ""
+        )
+        .onFailure { e ->
+            Log.d("AppViewModel", "Failed to update user settings: ${e.message}")
+            snackbarHostState.showSnackbar("Failed to update user settings, check your internet connection DEBUG: ${e.message}")
+        }
+    }
+
+    suspend fun uploadImage(context: Context, uri: Uri, userId: String): Result<String> {
+        val result = repository.uploadImage(context, uri, userId)
+        if (result.isSuccess) {
+            val fileId = result.getOrNull()
+            if (fileId != null) {
+                userIconId = fileId
+                updateUserSettings()
+            }
+        } else {
+            val e = result.exceptionOrNull()
+            Log.d("AppViewModel", "Failed to upload image: ${e?.message}")
+            snackbarHostState.showSnackbar("Failed to upload image, check your internet connection DEBUG: ${e?.message}")
+        }
+
+        return result
+    }
+
+    suspend fun getUserSettings(userId: String) {
+        repository.getUserSettings(userId)
+            .onSuccess { document ->
+                restTime = (document.data["restTime"] as? Number)?.toInt() ?: 90
+                unit = document.data["unit"] as? String ?: "kg"
+                isDarkTheme = document.data["isDarkTheme"] as? Boolean ?: false
+                userIconId = document.data["profileIconId"] as? String
+                if (!userIconId.isNullOrEmpty()) {
+                    getImage(userIconId!!)
+                }
+            }
+            .onFailure { e ->
+                Log.d("AppViewModel", "Failed to get user settings: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to get user settings, check your internet connection DEBUG: ${e.message}")
+            }
+    }
+
+    suspend fun getImage(fileId: String) {
+        repository.getImage(fileId)
+            .onSuccess { bytes ->
+                userIcon = bytes
+            }
+            .onFailure { e ->
+                Log.d("AppViewModel", "Failed to get image: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to get image, check your internet connection: DEBUG: ${e.message}")
+            }
+    }
+
+    suspend fun createUserSettings(userId: String) {
+        repository.createUserSettings(userId)
+            .onFailure { e ->
+                Log.d("AppViewModel", "Failed to create user settings: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to create user settings, check your internet connection DEBUG: ${e.message}")
+            }
+    }
+
+    fun deleteAccount() {
+        viewModelScope.launch {
+            try {
+                val execution = Appwrite.deleteAccount()
+                if(execution.responseStatusCode == 200L) {
+                    clearUserState()
+                    snackbarHostState.showSnackbar("Account deleted successfully")
+                    accountDeleted = true 
+                } else {
+                    Log.d("AppViewModel", "Failed to delete account, status code: ${execution.responseStatusCode}")
+                    snackbarHostState.showSnackbar("Failed to delete account, error code ${execution.responseStatusCode}")
+                }
+            } catch (e: Exception) {
+                Log.d("AppViewModel", "Failed to execute delete account function: ${e.message}")
+                snackbarHostState.showSnackbar("Failed to delete account error code ${e.message}")
+            }
+        }
+    }
 
 }
