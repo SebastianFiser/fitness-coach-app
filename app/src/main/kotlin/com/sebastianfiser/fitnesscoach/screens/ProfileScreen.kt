@@ -43,7 +43,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.Image
 import androidx.compose.ui.graphics.asImageBitmap
 import android.graphics.BitmapFactory
-
+import androidx.compose.ui.layout.ContentScale
 
 @Composable
 fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
