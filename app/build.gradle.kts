@@ -34,10 +34,33 @@ android {
         buildConfigField("String", "APPWRITE_PROJECT_ID", "\"${localProps["APPWRITE_PROJECT_ID"]}\"")
     }
 
+    signingConfigs {
+        create("release") {
+            val localProps = Properties()
+            localProps.load(file("../local.properities").inputStream())
+            storeFile = file((localProps["KEYSTORE_PATH"] as? String) ?: "dummy.keystore")
+            storePassword = ((localProps["KEYSTORE_PASSWORD"] as? String) ?: "")
+            keyAlias = ((localProps["KEY_ALIAS"] as? String) ?: "")
+            keyPassword = ((localProps["KEY_PASSWORD"] as? String) ?: "")
+        }
+    }
+
     buildFeatures {
         compose = true
         buildConfig = true
     }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
+
 }
 
 repositories {

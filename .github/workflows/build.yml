@@ -42,7 +42,7 @@ jobs:
           files: app/build/outputs/apk/debug/*.apk
           prerelease: true
 
-      - name: Upload APK jako artefakt
+      - name: Upload APK as an artefakt
         uses: actions/upload-artifact@v4
         with:
           name: app-release
@@ -56,3 +56,50 @@ jobs:
           delete_tag_pattern: 'debug-'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  buildSignedRelease:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '__release__')
+    steps: 
+      - name: Checkout projektu
+        uses: actions/checkout@v4
+
+      - name: Nastavení Java JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17' # Většina moderních Android projektů vyžaduje 17+
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Creating local.properities
+        run: |
+          echo "APPWRITE_ENDPOINT=${{ secrets.APPWRITE_ENDPOINT }}" >> local.properities
+          echo "APPWRITE_PROJECT_ID=${{ secrets.APPWRITE_PROJECT_ID }}" >> local.properities
+          echo "KEYSTORE_PATH=fitcoach-release.keystore" >> local.properities
+          echo "KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> local.properities
+          echo "KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> local.properities
+          echo "KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> local.properities
+
+      - name: Decode Keystore file
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > "app/fitcoach-release.keystore"
+
+      - name: Build s Gradle
+        run: ./gradlew assembleRelease
+
+      - name: Build release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: release-${{ github.run_number }}-${{ github.sha }}
+          name: Release Build
+          files: app/build/outputs/apk/release/*.apk
+          prerelease: false
+
+      - name: Upload APK as an artefakt
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: app/build/outputs/apk/release/*.apk
