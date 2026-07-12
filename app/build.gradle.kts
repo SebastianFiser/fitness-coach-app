@@ -38,10 +38,10 @@ android {
         create("release") {
             val localProps = Properties()
             localProps.load(file("../local.properities").inputStream())
-            storeFile = file(localProps["KEYSTORE_PATH"] as? String) ?: "dummy.keystore"
-            storePassword = (localProps["KEYSTORE_PASSWORD"] as? String) ?: ""
-            keyAlias = (localProps["KEY_ALIAS"] as? String) ?: ""
-            keyPassword = (localProps["KEY_PASSWORD"] as? String) ?: ""
+            storeFile = file((localProps["KEYSTORE_PATH"] as? String) ?: "dummy.keystore")
+            storePassword = ((localProps["KEYSTORE_PASSWORD"] as? String) ?: "")
+            keyAlias = ((localProps["KEY_ALIAS"] as? String) ?: "")
+            keyPassword = ((localProps["KEY_PASSWORD"] as? String) ?: "")
         }
     }
 
