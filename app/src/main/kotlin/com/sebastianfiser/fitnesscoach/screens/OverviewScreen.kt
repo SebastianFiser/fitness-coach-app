@@ -69,7 +69,9 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
             )
         }
 
-        ComingSoonOverlay {
+        ComingSoonOverlay (
+            modifier = Modifier.padding(horizontal = 30.dp)
+        ){
             Box(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
