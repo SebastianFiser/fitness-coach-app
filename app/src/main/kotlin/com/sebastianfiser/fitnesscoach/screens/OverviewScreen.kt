@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.foundation.border
 import androidx.activity.compose.BackHandler
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
+import com.sebastianfiser.fitnesscoach.ui.components.ComingSoonOverlay
 
 @Composable
 fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewModel: AppViewModel) {
@@ -68,46 +69,48 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
             )
         }
 
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            val outlineColor =  MaterialTheme.colorScheme.outline
-            val primaryColor = MaterialTheme.colorScheme.primary
-            Canvas(
-                modifier = Modifier
-                    .size(200.dp)
-                    .padding(20.dp)
+        ComingSoonOverlay {
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
             ) {
-                drawArc(
-                    color = outlineColor,
-                    startAngle = 135f,
-                    sweepAngle = 270f,
-                    useCenter = false,
-                    style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
-                )
-                drawArc(
-                    color = primaryColor,
-                    startAngle = 135f,
-                    sweepAngle = 115f,
-                    useCenter = false,
-                    style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
-                )
-            }
-            Column(horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .offset(y = (-7).dp)
+                val outlineColor =  MaterialTheme.colorScheme.outline
+                val primaryColor = MaterialTheme.colorScheme.primary
+                Canvas(
+                    modifier = Modifier
+                        .size(200.dp)
+                        .padding(20.dp)
                 ) {
-                Text(
-                    "760",
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-                    style = MaterialTheme.typography.headlineLarge
-                )
-                Text(
-                    "Day Score",
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.labelMedium
-                )
+                    drawArc(
+                        color = outlineColor,
+                        startAngle = 135f,
+                        sweepAngle = 270f,
+                        useCenter = false,
+                        style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
+                    )
+                    drawArc(
+                        color = primaryColor,
+                        startAngle = 135f,
+                        sweepAngle = 115f,
+                        useCenter = false,
+                        style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
+                    )
+                }
+                Column(horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .offset(y = (-7).dp)
+                    ) {
+                    Text(
+                        "760",
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+                        style = MaterialTheme.typography.headlineLarge
+                    )
+                    Text(
+                        "Day Score",
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                }
             }
         }
 
