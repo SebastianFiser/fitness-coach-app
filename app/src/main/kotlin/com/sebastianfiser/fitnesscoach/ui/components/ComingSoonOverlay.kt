@@ -22,10 +22,12 @@ fun ComingSoonOverlay(
             val lineCount = (size.width / spacing).toInt() + 1
             for (i in 0..lineCount) {
                 val offset: Float = spacing * i
+                val minWidth = size.width * -1
+                val minHeight = size.height * -1
                 drawLine(
                     color = Color.Red.copy(alpha = 0.5f),
                     strokeWidth = 5f,
-                    start = Offset(0f + offset, 0f ),
+                    start = Offset( minWidth + offset, minHeight ),
                     end = Offset( size.width + offset , size.height ),
                 )
             }
