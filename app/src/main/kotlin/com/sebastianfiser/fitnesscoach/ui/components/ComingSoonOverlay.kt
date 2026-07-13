@@ -18,8 +18,9 @@ fun ComingSoonOverlay(
     Box(modifier = modifier
         .drawWithContent {
             drawContent()
-            val spacing = size.width / 10
-            for (i in 0..5) {
+            val spacing = 40f
+            val lineCount = (size.width / spacing).toInt() + 1
+            for (i in 0..lineCount) {
                 val offset: Float = spacing * i
                 drawLine(
                     color = Color.Red.copy(alpha = 0.5f),
@@ -30,7 +31,7 @@ fun ComingSoonOverlay(
             }
         }
         .border(
-            width = 2.dp,
+            width = 5.dp,
             color = Color.Red,
             shape = RoundedCornerShape(8.dp)
         )
