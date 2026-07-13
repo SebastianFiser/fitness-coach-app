@@ -76,7 +76,7 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp),
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurfaceVariant),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onBackground),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     onClick = { 
                         showDialog = true 
                         clickedExercise = exercise
