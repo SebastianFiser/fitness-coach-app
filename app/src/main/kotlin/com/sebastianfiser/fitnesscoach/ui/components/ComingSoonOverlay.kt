@@ -19,15 +19,19 @@ fun ComingSoonOverlay(
         .drawWithContent {
             drawContent()
             val spacing = 40f
-            val lineCount = (size.width / spacing).toInt() + 1
+            val lineCount = ((size.width / spacing).toInt() + 1) * 2
             for (i in 0..lineCount) {
-                val offset: Float = spacing * i
-                val minWidth = size.width * -1
-                val minHeight = size.height * -1
+                val middle = lineCount / 2
+                val offset: Float 
+                if (i < middle) {
+                    offset = -spacing * (middle - i)
+                } else {
+                    offset = spacing * (i - middle)
+                }
                 drawLine(
                     color = Color.Red.copy(alpha = 0.5f),
                     strokeWidth = 5f,
-                    start = Offset( minWidth + offset, minHeight ),
+                    start = Offset( 0f + offset, 0f ),
                     end = Offset( size.width + offset , size.height ),
                 )
             }
