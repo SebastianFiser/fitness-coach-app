@@ -16,6 +16,7 @@ fun ComingSoonOverlay(
     content: @Composable () -> Unit
 ) {
     Box(modifier = modifier
+        .clip(RoundedCornerShape(8.dp))
         .drawWithContent {
             drawContent()
             val spacing = 40f
