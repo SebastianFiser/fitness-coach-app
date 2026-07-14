@@ -231,7 +231,7 @@ class AppwriteDB(private val client: Client) {
                 documentId = userId,
                 data = mapOf(
                     "restTime" to restTime,
-                    "Unit" to unit,
+                    "unit" to unit,
                     "isDarkTheme" to isDarkTheme,
                     "profileIconId" to idToSend
                 )
@@ -257,7 +257,7 @@ class AppwriteDB(private val client: Client) {
                 documentId = userId,
                 data = mapOf(
                     "restTime" to 60,
-                    "Unit" to "kg",
+                    "unit" to "kg",
                     "isDarkTheme" to false,
                     "profileIconId" to ""
                 ),

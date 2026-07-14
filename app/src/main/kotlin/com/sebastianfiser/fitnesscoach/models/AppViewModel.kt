@@ -125,6 +125,7 @@ class AppViewModel : ViewModel() {
         )
         loadSchedule(userId)
         if (schedule.isEmpty()) {
+            var failCount = 0
             weekData.forEach { day ->
                 day.exercises.forEach { exercise ->
                     repository.saveScheduleItem(
@@ -134,14 +135,21 @@ class AppViewModel : ViewModel() {
                         sets = exercise.sets,
                         reps = exercise.reps,
                         weight = exercise.weight
-                    )
+                    ).onFailure { e -> 
+                        Log.d("AppViewModel", "Failed to seed schedule item: ${e.message}")
+                        failCount++
+                    }
                 }
+            }
+            if (failCount > 0) {
+                snackbarHostState.showSnackbar("Failed to seed $failCount schedule items, check your internet connection")
             }
             loadSchedule(userId)
         }
     }
 
     suspend fun saveSetupSchedule(userId: String) {
+        var failSetupCount = 0
         scheduleSetup.forEach { (day, exercises) ->
             exercises.forEach { exercise ->
                 repository.saveScheduleItem(
@@ -151,8 +159,14 @@ class AppViewModel : ViewModel() {
                     sets = exercise.sets,
                     reps = exercise.reps,
                     weight = exercise.weight
-                )
+                ).onFailure { e ->
+                    failSetupCount++
+                    Log.d("AppViewModel", "Failed to save setup schedule item: ${e.message}")
+                }
             }
+        }
+        if (failSetupCount > 0) {
+            snackbarHostState.showSnackbar("Failed to save $failSetupCount schedule items, check your internet connection")
         }
     }
     
@@ -182,6 +196,9 @@ class AppViewModel : ViewModel() {
                         }
                     }
                 }
+        }.onFailure { e ->
+            Log.d("AppViewModel", "Failed to load PR data: ${e.message}")
+            snackbarHostState.showSnackbar("Failed to load PR data, check your internet connection")
         }
     }
 
@@ -260,14 +277,14 @@ class AppViewModel : ViewModel() {
             val username = data["userName"] as? String ?: "Unknown"
             val lift = data["exerciseName"] as? String ?: "Unknown"
             val weight = (data["weight"] as? Number)?.toFloat() ?: 0f
-            val gender = when (data["Gender"] as? String) {
+            val gender = when (data["gender"] as? String) {
                 "Male" -> 1
                 "Female" -> 2
                 "Other" -> 3
                 else -> 3
             }
 
-            val ageInt = when (val ageString = data["age"] as? String) {
+            val ageInt = when (val ageString = data["ageGroup"] as? String) {
                 "Under 18" -> 17
                 "18-25" -> 21
                 "26-35" -> 30

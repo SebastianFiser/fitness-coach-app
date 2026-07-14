@@ -41,12 +41,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
 import java.util.Locale
+import org.kimplify.countries.Countries
+import org.kimplify.countries.model.Country
+import org.kimplify.countries.extensions.getDisplayName
 
 
 @Composable
 fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
     var selectedParameter by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
+    val countries = remember { Countries.repository.getAll() }
     LaunchedEffect(Unit) {
         viewModel.getApprovedSubmissions()
     }
@@ -135,6 +139,7 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
 fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
     var filterOpen by remember { mutableStateOf(false) }
     var submenuOpen by remember { mutableStateOf<String?>(null)}
+    val countries = remember { Countries.repository.getAll() }
     Box{
         Button(
             onClick = { filterOpen = !filterOpen },
@@ -251,41 +256,16 @@ fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
                 colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
             )
             if (submenuOpen == "Nationality") {
-                DropdownMenuItem(
-                    text = { Text(" • Czech Republic") },
-                    onClick = { 
-                        filterOpen = false
-                        onFilterSelected("CZ") },
-                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
-                )
-                DropdownMenuItem(
-                    text = { Text(" • United States") },
-                    onClick = { 
-                        filterOpen = false
-                        onFilterSelected("USA") },
-                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
-                )
-                DropdownMenuItem(
-                    text = { Text(" • Germany") },
-                    onClick = { 
-                        filterOpen = false
-                        onFilterSelected("GE") },
-                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
-                )
-                DropdownMenuItem(
-                    text = { Text(" • United Kingdom") },
-                    onClick = { 
-                        filterOpen = false
-                        onFilterSelected("UK") },
-                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
-                )
-                DropdownMenuItem(
-                    text = { Text(" • Other") },
-                    onClick = { 
-                        filterOpen = false
-                        onFilterSelected("Other") },
-                    colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
-                )
+                countries.forEach { country ->
+                    var countryName = country.getDisplayName()
+                    DropdownMenuItem(
+                        text = { Text(" • ${countryName}") },
+                        onClick = { 
+                            filterOpen = false
+                            onFilterSelected(countryName) },
+                        colors = MenuDefaults.itemColors(textColor = MaterialTheme.colorScheme.onSurface)
+                    )
+                }
             }
             DropdownMenuItem(
                 text = { Text("Lift") },

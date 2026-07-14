@@ -96,7 +96,7 @@ jobs:
           tag_name: release-${{ github.run_number }}-${{ github.sha }}
           name: Release Build
           files: app/build/outputs/apk/release/*.apk
-          prerelease: false
+          prerelease: true
 
       - name: Upload APK as an artefakt
         uses: actions/upload-artifact@v4

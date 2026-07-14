@@ -44,6 +44,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.ui.graphics.asImageBitmap
 import android.graphics.BitmapFactory
 import androidx.compose.ui.layout.ContentScale
+import com.sebastianfiser.fitnesscoach.ui.components.ComingSoonOverlay
 
 @Composable
 fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
@@ -117,10 +118,12 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                TextButton(onClick = {}) {
-                    Icon(Icons.Default.Create, contentDescription = null, tint = MaterialTheme.colorScheme.onBackground)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("Edit Profile", color = MaterialTheme.colorScheme.onBackground)
+                ComingSoonOverlay {
+                    TextButton(onClick = {}) {
+                        Icon(Icons.Default.Create, contentDescription = null, tint = MaterialTheme.colorScheme.onBackground)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Edit Profile", color = MaterialTheme.colorScheme.onBackground)
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
