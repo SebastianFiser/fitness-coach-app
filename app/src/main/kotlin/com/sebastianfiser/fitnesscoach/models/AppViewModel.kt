@@ -260,14 +260,14 @@ class AppViewModel : ViewModel() {
             val username = data["userName"] as? String ?: "Unknown"
             val lift = data["exerciseName"] as? String ?: "Unknown"
             val weight = (data["weight"] as? Number)?.toFloat() ?: 0f
-            val gender = when (data["Gender"] as? String) {
+            val gender = when (data["gender"] as? String) {
                 "Male" -> 1
                 "Female" -> 2
                 "Other" -> 3
                 else -> 3
             }
 
-            val ageInt = when (val ageString = data["age"] as? String) {
+            val ageInt = when (val ageString = data["ageGroup"] as? String) {
                 "Under 18" -> 17
                 "18-25" -> 21
                 "26-35" -> 30
