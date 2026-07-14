@@ -70,3 +70,7 @@ Supports easy, out-of-the-box running
 ## License
 
 [custom](https://github.com/SebastianFiser/fitness-coach-app/blob/main/LICENSE)
+
+## Releases
+
+First official signed release v1.0.0 beta is out!! go and check it in releases
