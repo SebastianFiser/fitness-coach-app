@@ -20,7 +20,7 @@ fun ComingSoonOverlay(
         .clip(RoundedCornerShape(8.dp))
         .drawWithContent {
             drawContent()
-            val spacing = 40f
+            val spacing = 80f
             val lineCount = ((size.width / spacing).toInt() + 1) * 2
             for (i in 0..lineCount) {
                 val middle = lineCount / 2
@@ -40,7 +40,7 @@ fun ComingSoonOverlay(
         }
         .border(
             width = 5.dp,
-            color = Color.Red,
+            color = Color.Red.copy(alpha = 0.7f),
             shape = RoundedCornerShape(8.dp)
         )
     ) {

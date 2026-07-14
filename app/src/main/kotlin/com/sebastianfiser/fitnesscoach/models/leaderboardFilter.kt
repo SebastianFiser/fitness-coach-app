@@ -1,6 +1,9 @@
 package com.sebastianfiser.fitnesscoach.models
 
 import com.sebastianfiser.fitnesscoach.models.GenerateFewTimesLeaderBoardData
+import org.kimplify.countries.Countries
+import org.kimplify.countries.model.Country
+import org.kimplify.countries.extensions.getDisplayName
 
 fun FilterData(parameter: String?, data: List<LeaderBoardEntry>): List<LeaderBoardEntry> {
     if (parameter == null) {
@@ -51,11 +54,6 @@ fun matchesFilter(entry: LeaderBoardEntry, parameter: String): Boolean {
         parameter =="OtherGen" -> entry.gender == 3
         parameter =="Natural" -> entry.natural
         parameter =="Enhanced" -> !entry.natural
-        parameter =="USA" -> entry.nationality == "USA"
-        parameter =="UK" -> entry.nationality == "UK"
-        parameter =="GE" -> entry.nationality == "GE"
-        parameter =="CZ" -> entry.nationality == "CZ"
-        parameter =="Other" -> entry.nationality == "Other"
-        else -> false
+        else -> entry.nationality == parameter
     }
 }

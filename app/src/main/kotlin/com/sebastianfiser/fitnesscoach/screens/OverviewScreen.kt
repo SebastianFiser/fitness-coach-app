@@ -116,6 +116,13 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
             }
         }
 
+        Text(
+            "Feature coming soon!",
+            color = MaterialTheme.colorScheme.onBackground,
+            style = MaterialTheme.typography.titleSmall,
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
+        )
+
         Card(
             modifier = Modifier
                 .fillMaxWidth()
