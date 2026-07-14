@@ -139,6 +139,7 @@ fun LeaderboardScreen(navController: NavController, viewModel: AppViewModel) {
 fun ShowFilterDropdown(onFilterSelected: (String?) -> Unit) {
     var filterOpen by remember { mutableStateOf(false) }
     var submenuOpen by remember { mutableStateOf<String?>(null)}
+    val countries = remember { Countries.repository.getAll() }
     Box{
         Button(
             onClick = { filterOpen = !filterOpen },
