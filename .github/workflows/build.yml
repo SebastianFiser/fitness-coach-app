@@ -85,7 +85,7 @@ jobs:
 
       - name: Decode Keystore file
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > "app/fitcoach-release.keystore"
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > "fitcoach-release.keystore"
 
       - name: Build s Gradle
         run: ./gradlew assembleRelease
