@@ -339,9 +339,9 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     suspend fun updateUserSettings() {
 
         var presistentDataToSave = PresistentData
-        PresistentDataToSave.isDarkTheme = isDarkTheme
-        PresistentDataToSave.unit = unit
-        PresistentDataToSave.restTimeSeconds = restTime
+        presistentDataToSave.isDarkTheme = isDarkTheme
+        presistentDataToSave.unit = unit
+        presistentDataToSave.restTimeSeconds = restTime
 
         val json = Json.encodeToString(presistentDataToSave)
 
