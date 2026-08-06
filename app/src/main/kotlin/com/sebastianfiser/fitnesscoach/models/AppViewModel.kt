@@ -336,6 +336,11 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    private fun isSystemInDarkTheme(): Boolean {
+        val context = getApplication<Application>()
+        return context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+    }
+
     suspend fun updateUserSettings() {
 
         val persistentData = PersistentData(
@@ -351,7 +356,11 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         val prefs = getApplication<Application>().getSharedPreferences("settings_prefs", Context.MODE_PRIVATE)
-        prefs.edit().putBoolean("is_dark_theme", isDarkTheme).apply()
+        if isDarkTheme == null {
+            realTheme = isSystemInDarkTheme()
+            prefs.edit().putBoolean("is_dark_theme", realTheme).apply()
+            isDarkTheme = realTheme
+        }
 
         val userId = Appwrite.account.get().id
         repository.updateUserSettings(
