@@ -14,8 +14,12 @@ import androidx.compose.material3.SnackbarHostState
 import com.sebastianfiser.fitnesscoach.models.LeaderBoardEntry
 import kotlinx.coroutines.launch
 import androidx.lifecycle.viewModelScope
+import com.sebastianfiser.fitnesscoach.models.PersistentData
+import kotlinx.serialization.json.Json
+import androidx.lifecycle.AndroidViewModel
+import android.app.Application
 
-class AppViewModel : ViewModel() {
+class AppViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = WorkoutRepository(Appwrite.client)
     var workouts by mutableStateOf<List<Document<Map<String, Any>>>>(
         emptyList()
@@ -61,7 +65,7 @@ class AppViewModel : ViewModel() {
     var testResult by mutableStateOf<String?>(null)
     var accountDeleted by mutableStateOf(false)
 
-    
+
     suspend fun checkReviewerStatus() {
         isReviewer = Appwrite.isReviewer()
     }
@@ -69,7 +73,7 @@ class AppViewModel : ViewModel() {
     suspend fun loadWorkouts(userId: String) {
         repository.getWorkouts(userId)
             .onSuccess { workouts -> this.workouts = workouts}
-            .onFailure { e -> 
+            .onFailure { e ->
                 Log.d("AppViewModel", "Failed to load workouts: ${e.message}")
                 snackbarHostState.showSnackbar("Failed to load workouts, check your internet connection")
             }
@@ -78,7 +82,7 @@ class AppViewModel : ViewModel() {
     suspend fun saveWorkout(userId: String, date: String) {
         repository.saveWorkout(userId, date)
             .onSuccess { loadWorkouts(userId) }
-            .onFailure { e -> 
+            .onFailure { e ->
                 Log.d("AppViewModel", "Failed to save workout: ${e.message}")
                 snackbarHostState.showSnackbar("Failed to save workout, check your internet connection")
             }
@@ -86,7 +90,7 @@ class AppViewModel : ViewModel() {
 
     suspend fun saveSet(workoutId: String, userId: String, exerciseName: String, weight: Float, reps: Int) {
         repository.saveSet(workoutId, userId, exerciseName, weight, reps)
-            .onFailure { e -> 
+            .onFailure { e ->
                 Log.d("AppViewModel", "Failed to save set: ${e.message}")
                 snackbarHostState.showSnackbar("Failed to save set, check your internet connection")
             }
@@ -97,7 +101,7 @@ class AppViewModel : ViewModel() {
         val date = LocalDate.now().toString()
         return repository.saveWorkout(userId, date)
             .onSuccess { loadWorkouts(userId) }
-            .onFailure { e -> 
+            .onFailure { e ->
                 Log.d("AppViewModel", "Failed to create workout: ${e.message}")
                 snackbarHostState.showSnackbar("Failed to create workout, check your internet connection")
             }
@@ -107,7 +111,7 @@ class AppViewModel : ViewModel() {
     suspend fun loadSchedule(userId: String) {
         repository.getSchedule(userId)
             .onSuccess { schedule -> this.schedule = schedule }
-            .onFailure { e -> 
+            .onFailure { e ->
                 Log.d("AppViewModel", "Failed to load schedule: ${e.message}")
                 snackbarHostState.showSnackbar("Failed to load schedule, check your internet connection")
             }
@@ -135,7 +139,7 @@ class AppViewModel : ViewModel() {
                         sets = exercise.sets,
                         reps = exercise.reps,
                         weight = exercise.weight
-                    ).onFailure { e -> 
+                    ).onFailure { e ->
                         Log.d("AppViewModel", "Failed to seed schedule item: ${e.message}")
                         failCount++
                     }
@@ -169,11 +173,11 @@ class AppViewModel : ViewModel() {
             snackbarHostState.showSnackbar("Failed to save $failSetupCount schedule items, check your internet connection")
         }
     }
-    
+
     suspend fun deleteAllSchedule(userId: String) {
         schedule.forEach { doc ->
             repository.deleteScheduleItem(doc.id, userId)
-                .onFailure { e -> 
+                .onFailure { e ->
                     Log.d("AppViewModel", "Failed to delete schedule item: ${e.message}")
                     snackbarHostState.showSnackbar("Failed to delete schedule item, check your internet connection")
                 }
@@ -324,7 +328,7 @@ class AppViewModel : ViewModel() {
         } else {
             weight * 2.20462f
         }
-    } 
+    }
 
     fun updateUserSettingsAsync() {
         viewModelScope.launch {
@@ -333,6 +337,20 @@ class AppViewModel : ViewModel() {
     }
 
     suspend fun updateUserSettings() {
+
+        var presistentDataToSave = presistentData
+        presistentDataToSave.isDarkTheme = isDarkTheme
+        presistentDataToSave.unit = unit
+        presistentDataToSave.restTimeSeconds = restTimeSeconds
+
+        val json = Json.encodeToString(presistentDataToSave)
+
+        conte
+        
+        Context.openFileOutput("settings.json", Context.MODE_PRIVATE).use {
+            it.write(json.toByteArray())
+        }
+        
         val userId = Appwrite.account.get().id
         repository.updateUserSettings(
             userId = userId,
@@ -345,6 +363,9 @@ class AppViewModel : ViewModel() {
             Log.d("AppViewModel", "Failed to update user settings: ${e.message}")
             snackbarHostState.showSnackbar("Failed to update user settings, check your internet connection DEBUG: ${e.message}")
         }
+
+
+
     }
 
     suspend fun uploadImage(context: Context, uri: Uri, userId: String): Result<String> {
@@ -407,7 +428,7 @@ class AppViewModel : ViewModel() {
                 if(execution.responseStatusCode == 200L) {
                     clearUserState()
                     snackbarHostState.showSnackbar("Account deleted successfully")
-                    accountDeleted = true 
+                    accountDeleted = true
                 } else {
                     Log.d("AppViewModel", "Failed to delete account, status code: ${execution.responseStatusCode}")
                     snackbarHostState.showSnackbar("Failed to delete account, error code ${execution.responseStatusCode}")
