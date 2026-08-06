@@ -409,7 +409,11 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
                 persistentSettings = Json.decodeFromString(PersistentData.serializer(), json)
             }
         } else {
-            persistentSettings = PersistentData()
+            persistentSettings = PersistentData(
+                isDarkTheme = false,
+                unit = "kg",
+                restTimeSeconds = 90
+            )
         }
 
         isDarkTheme = persistentSettings.isDarkTheme
