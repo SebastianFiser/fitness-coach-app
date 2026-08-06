@@ -18,6 +18,7 @@ import com.sebastianfiser.fitnesscoach.models.PersistentData
 import kotlinx.serialization.json.Json
 import androidx.lifecycle.AndroidViewModel
 import android.app.Application
+import java.io.File
 
 class AppViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = WorkoutRepository(Appwrite.client)
@@ -401,13 +402,13 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             restTimeSeconds = 90
         )
 
-        val file = File(context.filesDir, "settings.json")
+        val contexter = getApplication<Application>()
+        val file = File(contexter.filesDir, "settings.json")
 
         if (file.exists()) {
-            file.inputStream().use { inputStream ->
-                val json = inputStream.reader().use { it.readText() }
-                persistentSettings = Json.decodeFromString(PersistentData.serializer(), json)
-            }
+            val json = file.readText()
+            persistentSettings = Json.decodeFromString(PersistentData.serializer(), json)
+
         } else {
             persistentSettings = PersistentData(
                 isDarkTheme = false,
