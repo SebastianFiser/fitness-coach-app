@@ -34,9 +34,11 @@ val LightColors = lightColorScheme(
 
 @Composable
 fun FitCoachTheme(viewModel: AppViewModel, darkTheme: Boolean, content: @Composable () -> Unit) {
-    val colors = when (darkTheme) {
+    viewModel.isDarkTheme = darkTheme
+    val colors = when (viewModel.isDarkTheme) {
         true -> DarkColors
         false -> LightColors
+        else -> LightColors
     }
 
     MaterialTheme(
