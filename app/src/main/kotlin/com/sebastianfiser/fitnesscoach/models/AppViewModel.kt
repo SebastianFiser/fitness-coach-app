@@ -393,6 +393,8 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     suspend fun getUserSettings(userId: String) {
 
+        var persistentSettings = PersistentSettings()
+
         getApplication<Application>().openFileInput("settings.json").use { inputStream ->
             val json = inputStream.reader().use { it.readText() }
             persistentSettings = Json.decodeFromString(PersistentData.serializer(), json)
