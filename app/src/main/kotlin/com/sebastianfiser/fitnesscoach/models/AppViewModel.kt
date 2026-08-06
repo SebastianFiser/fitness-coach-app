@@ -400,16 +400,14 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     suspend fun getUserSettings(userId: String) {
 
-        var persistentSettings: PersistentData? = null
-
         getApplication<Application>().openFileInput("settings.json").use { inputStream ->
             val json = inputStream.reader().use { it.readText() }
             persistentSettings = Json.decodeFromString(PersistentData.serializer(), json)
         }
 
-        isDarkTheme = persistentSettings?.isDarkTheme ?: false
-        unit = persistentSettings?.unit ?: "kg"
-        restTime = persistentSettings?.restTimeSeconds ?: 90
+        isDarkTheme = persistentSettings.isDarkTheme
+        unit = persistentSettings.unit
+        restTime = persistentSettings.restTimeSeconds
 
         repository.getUserSettings(userId)
             .onSuccess { document ->
