@@ -336,11 +336,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun isSystemInDarkTheme(): Boolean {
-        val context = getApplication<Application>()
-        return context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-    }
-
     suspend fun updateUserSettings() {
 
         var realTheme: Bool
@@ -358,10 +353,8 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         val prefs = getApplication<Application>().getSharedPreferences("settings_prefs", Context.MODE_PRIVATE)
-        if isDarkTheme == null {
-            realTheme = isSystemInDarkTheme()
-            prefs.edit().putBoolean("is_dark_theme", realTheme).apply()
-            isDarkTheme = realTheme
+        if isDarkTheme != null {
+            prefs.edit().putBoolean("is_dark_theme", isDarkTheme).apply()
         }
 
         val userId = Appwrite.account.get().id
