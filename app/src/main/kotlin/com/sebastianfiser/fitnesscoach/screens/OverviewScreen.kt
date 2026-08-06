@@ -23,6 +23,9 @@ import androidx.compose.foundation.border
 import androidx.activity.compose.BackHandler
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import com.sebastianfiser.fitnesscoach.ui.components.ComingSoonOverlay
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
+
 
 @Composable
 fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewModel: AppViewModel) {
