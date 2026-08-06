@@ -345,8 +345,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
         val json = Json.encodeToString(presistentDataToSave)
 
-        app = getApplication<Application>()
-        app.openFileOutput("settings.json", Context.MODE_PRIVATE).use {
+        getApplication<Application>().openFileOutput("settings.json", Context.MODE_PRIVATE).use {
             it.write(json.toByteArray())
         }
 
