@@ -3,7 +3,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PersistentData(
-    var isDarkTheme: Boolean? = null,
-    var unit: String = "kg",
-    var restTimeSeconds: Int = 90
+    var isDarkTheme: Boolean,
+    var unit: String,
+    var restTimeSeconds: Int
 )
