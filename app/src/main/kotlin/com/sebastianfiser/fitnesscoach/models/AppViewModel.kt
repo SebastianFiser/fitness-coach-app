@@ -338,8 +338,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     suspend fun updateUserSettings() {
 
-        var realTheme: Bool
-
         val persistentData = PersistentData(
             isDarkTheme = isDarkTheme,
             unit = unit,
@@ -353,8 +351,12 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         val prefs = getApplication<Application>().getSharedPreferences("settings_prefs", Context.MODE_PRIVATE)
-        if isDarkTheme != null {
-            prefs.edit().putBoolean("is_dark_theme", isDarkTheme).apply()
+        if (isDarkTheme != null) {
+            if (isDarkTheme) {
+                prefs.edit().putBoolean("is_dark_theme", true).apply()
+            } else {
+                prefs.edit().putBoolean("is_dark_theme", false).apply()
+            }
         }
 
         val userId = Appwrite.account.get().id
