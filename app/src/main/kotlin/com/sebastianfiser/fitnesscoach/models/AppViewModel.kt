@@ -344,7 +344,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             restTimeSeconds = restTime
         )
 
-        val json = Json.encodeToString(persistentData)
+        val json = Json.encodeToString(PersistentData.serializer(), persistentData)
 
         getApplication<Application>().openFileOutput("settings.json", Context.MODE_PRIVATE).use { outputStream ->
             outputStream.write(json.toByteArray())
@@ -385,6 +385,9 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     suspend fun getUserSettings(userId: String) {
+
+
+
         repository.getUserSettings(userId)
             .onSuccess { document ->
                 restTime = (document.data["restTime"] as? Number)?.toInt() ?: 90
