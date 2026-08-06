@@ -350,6 +350,9 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             outputStream.write(json.toByteArray())
         }
 
+        val prefs = context.getSharedPreferences("settings_prefs", Context.MODE_PRIVATE)
+        prefs.edit().putBoolean("is_dark_theme", isDarkTheme).apply()
+
         val userId = Appwrite.account.get().id
         repository.updateUserSettings(
             userId = userId,
