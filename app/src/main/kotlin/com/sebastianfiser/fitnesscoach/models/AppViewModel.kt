@@ -338,19 +338,18 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     suspend fun updateUserSettings() {
 
-        var presistentDataToSave = presistentData
+        var presistentDataToSave = PresistentData
         presistentDataToSave.isDarkTheme = isDarkTheme
         presistentDataToSave.unit = unit
         presistentDataToSave.restTimeSeconds = restTimeSeconds
 
-        val json = Json.encodeToString(presistentDataToSave)
+        val json = Json.encodeToString(PresistentData.serializer(), presistentDataToSave)
 
-        conte
-        
-        Context.openFileOutput("settings.json", Context.MODE_PRIVATE).use {
+        context = getApplication<Application>()
+        context.openFileOutput("settings.json", Context.MODE_PRIVATE).use {
             it.write(json.toByteArray())
         }
-        
+
         val userId = Appwrite.account.get().id
         repository.updateUserSettings(
             userId = userId,
