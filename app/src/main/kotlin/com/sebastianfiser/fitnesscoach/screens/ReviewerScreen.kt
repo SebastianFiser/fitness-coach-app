@@ -275,7 +275,7 @@ fun showReturnMessage(navController: NavController) {
                     onClick = { navController.popBackStack() },
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.Primary, contentColor = MaterialTheme.colorScheme.onPrimary)
                 ) {
-                    Text(text = "Back")
+                    Text(text = "Go Back")
                 }
             }
         }
