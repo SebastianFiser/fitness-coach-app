@@ -401,9 +401,15 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             restTimeSeconds = 90
         )
 
-        getApplication<Application>().openFileInput("settings.json").use { inputStream ->
-            val json = inputStream.reader().use { it.readText() }
-            persistentSettings = Json.decodeFromString(PersistentData.serializer(), json)
+        val file = File(context.filesDir, "settings.json")
+
+        if (file.exists()) {
+            file.inputStream().use { inputStream ->
+                val json = inputStream.reader().use { it.readText() }
+                persistentSettings = Json.decodeFromString(PersistentData.serializer(), json)
+            }
+        } else {
+            persistentSettings = PersistentData()
         }
 
         isDarkTheme = persistentSettings.isDarkTheme
