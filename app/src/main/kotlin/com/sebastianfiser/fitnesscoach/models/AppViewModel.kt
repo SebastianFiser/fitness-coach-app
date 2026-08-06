@@ -352,7 +352,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
         val prefs = getApplication<Application>().getSharedPreferences("settings_prefs", Context.MODE_PRIVATE)
         if (isDarkTheme != null) {
-            if (isDarkTheme) {
+            if (isDarkTheme == true) {
                 prefs.edit().putBoolean("is_dark_theme", true).apply()
             } else {
                 prefs.edit().putBoolean("is_dark_theme", false).apply()
@@ -395,7 +395,11 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     suspend fun getUserSettings(userId: String) {
 
-        var persistentSettings = PersistentSettings()
+        var persistentSettings = PersistentData(
+            isDarkTheme = false,
+            unit = "kg",
+            restTimeSeconds = 90
+        )
 
         getApplication<Application>().openFileInput("settings.json").use { inputStream ->
             val json = inputStream.reader().use { it.readText() }
