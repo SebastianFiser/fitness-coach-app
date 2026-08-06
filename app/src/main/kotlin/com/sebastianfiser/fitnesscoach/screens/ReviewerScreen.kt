@@ -50,6 +50,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.LaunchedEffect
 import java.io.File
 import android.net.Uri
+import androidx.compose.material3.Icon
+import androidx.compose.material3.icons.Icons
+import androidx.compose.material3.icons.filled.Cancel
+import androidx.compose.material3.HorizontalDivider
 
 @Composable
 fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
@@ -68,6 +72,13 @@ fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
         LazyColumn(
             contentPadding = paddingValues
         ) {
+
+            if (viewModel.pendingSubmissions.isEmpty()) {
+                item {
+                    showReturnMessage(navController = navController)
+                }
+            }
+
             items(viewModel.pendingSubmissions) { submission ->
                 val data = submission.data
                 val exerciseName = data["exerciseName"] as? String ?: "Unknown"
@@ -222,6 +233,51 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
     DisposableEffect(videoUri) {
         onDispose {
             exoPlayer.release()
+        }
+    }
+}
+
+fun showReturnMessage(navController: NavController) {
+    Box (
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Card (
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 32.dp)
+                .background(MaterialTheme.colorScheme.surface),
+            shape = RoundedCornerShape(16.dp),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 8.dp
+            )
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                Text(text = "Wait", color = MaterialTheme.colorScheme.onSurface, fontSize = 24.sp)
+                Spacer(modifier = Modifier.height(16.dp))
+                Icon(
+                        imageVector = Icons.Filled.Cancel,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.size(48.dp)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "Theres no submissions to review", color = MaterialTheme.colorScheme.onSurface, fontSize = 16.sp)
+                HorizontalDivider(color = MaterialTheme.colorScheme.onSurface, thickness = 0.5.dp, modifier = Modifier.padding(horizontal = 16.dp))
+                Button(
+                    onClick = { navController.popBackStack() },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.Primary, contentColor = MaterialTheme.colorScheme.onPrimary)
+                ) {
+                    Text(text = "Back")
+                }
+            }
         }
     }
 }

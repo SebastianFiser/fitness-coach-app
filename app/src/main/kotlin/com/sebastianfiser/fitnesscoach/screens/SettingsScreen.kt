@@ -123,7 +123,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                                 }
                                 Divider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
                                 Row(
-                                    modifier = Modifier                                        
+                                    modifier = Modifier
                                         .fillMaxWidth()
                                         .clickable {viewModel.restTime -= 5}
                                         .background(MaterialTheme.colorScheme.onSurfaceVariant)
@@ -153,7 +153,7 @@ fun SettingsScreen(viewModel: AppViewModel, navController: NavController) {
                     ) {
                         Text("Unit System", color = MaterialTheme.colorScheme.onSurface, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                         Spacer(modifier = Modifier.height(8.dp))
-                        
+
                     //Unit sider
                         Card(
                             modifier = Modifier
