@@ -207,9 +207,9 @@ data class LeaderBoardEntry(
 
 @Composable
 fun navItemColors() = NavigationBarItemDefaults.colors(
-    selectedIconColor = MaterialTheme.colorScheme.primary,
+    selectedIconColor = MaterialTheme.colorScheme.onPrimary,
     unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-    selectedTextColor = MaterialTheme.colorScheme.onPrimary,
+    selectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
     unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
     indicatorColor = MaterialTheme.colorScheme.primary
 )
