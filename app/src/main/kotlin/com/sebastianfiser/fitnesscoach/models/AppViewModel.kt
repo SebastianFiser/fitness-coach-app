@@ -343,6 +343,8 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     suspend fun updateUserSettings() {
 
+        var realTheme: Bool
+
         val persistentData = PersistentData(
             isDarkTheme = isDarkTheme,
             unit = unit,
