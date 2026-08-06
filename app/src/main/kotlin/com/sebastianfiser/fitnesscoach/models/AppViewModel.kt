@@ -14,7 +14,7 @@ import androidx.compose.material3.SnackbarHostState
 import com.sebastianfiser.fitnesscoach.models.LeaderBoardEntry
 import kotlinx.coroutines.launch
 import androidx.lifecycle.viewModelScope
-import com.sebastianfiser.fitnesscoach.models.PersistentData
+import com.sebastianfiser.fitnesscoach.models.PresistentData
 import kotlinx.serialization.json.Json
 import androidx.lifecycle.AndroidViewModel
 import android.app.Application
@@ -339,11 +339,11 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     suspend fun updateUserSettings() {
 
         var presistentDataToSave = PresistentData
-        presistentDataToSave.isDarkTheme = isDarkTheme
-        presistentDataToSave.unit = unit
-        presistentDataToSave.restTimeSeconds = restTimeSeconds
+        PresistentDataToSave.isDarkTheme = isDarkTheme
+        PresistentDataToSave.unit = unit
+        PresistentDataToSave.restTimeSeconds = restTime
 
-        val json = Json.encodeToString(PresistentData.serializer(), presistentDataToSave)
+        val json = Json.encodeToString(presistentDataToSave)
 
         app = getApplication<Application>()
         app.openFileOutput("settings.json", Context.MODE_PRIVATE).use {
