@@ -354,7 +354,7 @@ fun CountryCard(selectedCountry: Country?, countryOpen: Boolean, onSelectedCount
                 onExpandedChange = { onOpenChange(it) }
             ) {
                 OutlinedTextField(
-                    modifer = Modifier.menuAnchor(),
+                    modifier = Modifier.menuAnchor(),
                     shape = RoundedCornerShape(14.dp),
                     value = countryQuery,
                     onValueChange = { countryQuery = it; onOpenChange(true) },
@@ -378,7 +378,7 @@ fun CountryCard(selectedCountry: Country?, countryOpen: Boolean, onSelectedCount
                         DropdownMenuItem(
                             text = { Text(country.getDisplayName()) },
                             onClick = {
-                                selectedCountry = onCountrySelected(country)
+                                selectedCountry = onSelectedCountryChange(country)
                                 countryQuery = country.getDisplayName()
                                 countryOpen = onOpenChange(false)
                             }
