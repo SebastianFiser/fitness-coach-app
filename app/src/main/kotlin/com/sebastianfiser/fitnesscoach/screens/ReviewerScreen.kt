@@ -51,8 +51,8 @@ import androidx.compose.runtime.LaunchedEffect
 import java.io.File
 import android.net.Uri
 import androidx.compose.material3.Icon
-import androidx.compose.material3.icons.Icons
-import androidx.compose.material3.icons.filled.Cancel
+import androidx.compose.material3.Icons.Icons
+import androidx.compose.material3.Icons.filled.Cancel
 import androidx.compose.material3.HorizontalDivider
 
 @Composable
@@ -237,6 +237,7 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
     }
 }
 
+@Composable
 fun showReturnMessage(navController: NavController) {
     Box (
         modifier = Modifier.fillMaxSize(),

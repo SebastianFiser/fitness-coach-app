@@ -85,7 +85,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
 
     ) { paddingValues ->
         Column(
-            modifer = Modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp),
@@ -107,7 +107,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
             AnimatedContent(
                 targetState = currentStep,
                 label = "StepAnimation",
-                modifier = Modifier.weightt(1f)
+                modifier = Modifier.weight(1f)
             ) { step ->
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -135,7 +135,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         Text("Back")
                     }
                 } else {
-                    spacer(modifier = Modifier.width(1.dp))
+                    Spacer(modifier = Modifier.width(1.dp))
                 }
 
                 Button(
@@ -155,13 +155,14 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     }
 }
 
+@Composable
 fun CardLift(liftOpen: Boolean, selectedLift: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
             .padding(24.dp),
-        colors = CardDefaults.cardColors(containerSColor = MaterialTheme.colorScheme.surface),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(28.dp)
     ) {
         Column(
@@ -170,9 +171,9 @@ fun CardLift(liftOpen: Boolean, selectedLift: String) {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                    "Select Lift",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface
+                text = "Select Lift",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
             )
             HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
             ExposedDropdownMenuBox(
