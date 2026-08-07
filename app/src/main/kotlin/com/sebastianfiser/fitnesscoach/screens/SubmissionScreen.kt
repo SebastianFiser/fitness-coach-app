@@ -116,7 +116,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         0 -> CardLift(liftOpen = liftOpen, selectedLift = selectedLift, onOpenChange = { liftOpen = it }, onLiftSelect = { selectedLift = it }) //cards
                         1 -> CardWeight(prWeight = prWeight, onWeightChange = { prWeight = it })
                         2 -> GenderCard(selectedGender = selectedGender, genderOpen = genderOpen, onGenderChange = { selectedGender = it }, onOpenChange = { genderOpen = it })
-                        3 -> CountryCard()
+                        3 -> CountryCard(selectedCountry = selectedCountry, countryOpen = countryOpen, onSelectedCountryChange = { selectedCountry = it }, onOpenChange = { countryOpen = it } )
                         //4 -> videoCard()
                         //5 -> ageCard()
                         //6 -> bodyCard()
