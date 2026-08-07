@@ -325,8 +325,9 @@ fun GenderCard(selectedGender: String, genderOpen: Boolean, onGenderChange: (Str
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CountryCard(selectedCountry: String, countryOpen: Boolean, onSelectedCountryChange: (String) -> Unit, onOpenChange: (Boolean) -> Unit) {
+fun CountryCard(selectedCountry: Country?, countryOpen: Boolean, onSelectedCountryChange: (Country?) -> Unit, onOpenChange: (Boolean) -> Unit) {
     val countries = remember { Countries.repository.getAll() }
     var countryQuery by remember { mutableStateOf("") }
     Card (
