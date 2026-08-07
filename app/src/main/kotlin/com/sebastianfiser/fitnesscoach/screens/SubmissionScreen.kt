@@ -219,6 +219,7 @@ fun CardLift(liftOpen: Boolean, selectedLift: String?, onOpenChange: (Boolean) -
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardWeight(prWeight: String, onWeightChange: (String) -> Unit) {
     Card(
@@ -227,7 +228,7 @@ fun CardWeight(prWeight: String, onWeightChange: (String) -> Unit) {
             .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
             .padding(24.dp),
         colors = CardDefault.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        shape = RoundedCornerShape
+        shape = RoundedCornerShape(14.dp)
     ) {
         Column (
             modifier = Modifier
