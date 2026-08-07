@@ -116,7 +116,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 ) {
                     when (step) {
                         0 -> CardLift(liftOpen = liftOpen, selectedLift = selectedLift, onOpenChange = { liftOpen = it }, onLiftSelect = { selectedLift = it }) //cards
-                        //1 -> CardWeight()
+                        1 -> CardWeight(prWeight = prWeight, onWeightChange = { prWeight = it })
                         //2 -> GenderCard()
                         //3 -> CountryCard()
                         //4 -> videoCard()
@@ -215,6 +215,47 @@ fun CardLift(liftOpen: Boolean, selectedLift: String?, onOpenChange: (Boolean) -
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun CardWeight(prWeight: String, onWeightChange: (String) -> Unit) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
+            .padding(24.dp),
+        colors = CardDefault.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        shape = RoundedCornerShape
+    ) {
+        Column (
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                "Enter PR Weight",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
+            OutlinedTextField(
+                value = prWeight,
+                shape = RoundedCornerShape(8.dp),
+                onValueChange = { onWeightChange(it) },
+                label = { Text("PR Weight", color = MaterialTheme.colorScheme.onSurface) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                colors = TextFieldDefaults.textFieldColors(
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    disabledTextColor = MaterialTheme.colorScheme.onSurface,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent
+                )
+            )
         }
     }
 }
