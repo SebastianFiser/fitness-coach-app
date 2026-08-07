@@ -115,7 +115,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     contentAlignment = Alignment.Center
                 ) {
                     when (step) {
-                        0 -> CardLift(liftOpen, selectedLift) //cards
+                        0 -> CardLift(liftOpen = liftOpen, selectedLift = selectedLift, onOpenChange = { liftOpen = it }, onLiftSelect = { selectedLift = it }) //cards
                         //1 -> CardWeight()
                         //2 -> GenderCard()
                         //3 -> CountryCard()
@@ -159,7 +159,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardLift(liftOpen: Boolean, selectedLift: String) {
+fun CardLift(liftOpen: Boolean, selectedLift: String?, onOpenChange: (Boolean) -> Unit, onLiftSelect: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
