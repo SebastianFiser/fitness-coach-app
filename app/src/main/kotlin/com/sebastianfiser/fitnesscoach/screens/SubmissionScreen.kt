@@ -378,9 +378,9 @@ fun CountryCard(selectedCountry: Country?, countryOpen: Boolean, onSelectedCount
                         DropdownMenuItem(
                             text = { Text(country.getDisplayName()) },
                             onClick = {
-                                selectedCountry = onSelectedCountryChange(country)
+                                onSelectedCountryChange(country)
                                 countryQuery = country.getDisplayName()
-                                countryOpen = onOpenChange(false)
+                                onOpenChange(false)
                             }
                         )
                     }
