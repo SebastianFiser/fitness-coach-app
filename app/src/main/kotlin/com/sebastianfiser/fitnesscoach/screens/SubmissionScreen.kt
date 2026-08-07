@@ -117,7 +117,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     when (step) {
                         0 -> CardLift(liftOpen = liftOpen, selectedLift = selectedLift, onOpenChange = { liftOpen = it }, onLiftSelect = { selectedLift = it }) //cards
                         1 -> CardWeight(prWeight = prWeight, onWeightChange = { prWeight = it })
-                        //2 -> GenderCard()
+                        2 -> GenderCard(selectedGender = selectedGender, genderOpen = genderOpen, onGenderChange = { selectedGender = it }, onOpenChange = { genderOpen = it })
                         //3 -> CountryCard()
                         //4 -> videoCard()
                         //5 -> ageCard()
@@ -257,6 +257,72 @@ fun CardWeight(prWeight: String, onWeightChange: (String) -> Unit) {
                     disabledIndicatorColor = Color.Transparent
                 )
             )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun genderCard(selectedGender: String, genderOpen: Boolean, onGenderChange: (String) -> Unit, onOpenChange: (Boolean) -> Unit) {
+    Card (
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
+            .padding(24.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface,
+        ),
+        shape = RoundedCornerShape(14.dp)
+    ) {
+        Column (
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                "Your gender",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
+            ExposedDropdownMenuBox(
+                expanded = genderOpen,
+                onExpandedChange = { onOpenChange(it) }
+            ) {
+                OutlinedTextField(
+                    modifier = Modifier.menuAnchor(),
+                    shape = RoundedCornerShape(8.dp),
+                    value = selectedGender,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text("Gender", color = MaterialTheme.colorScheme.onSurface) },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = genderOpen) },
+                    colors = TextFieldDefaults.colors(
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocuseTextColor = MaterialTheme.colorScheme.onSurface,
+                        disabledTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    )
+                )
+                ExposedDropdownMenu(
+                    expanded = genderOpen,
+                    onDismissRequest = { onOpenChange(false) }
+                ) {
+                    listOf("Male", "Female", "Other").forEach { gender ->
+                        ExposedDropdownMenuDefaults.Item(
+                            text = gender,
+                            onClick = {
+                                onOpenChange(false)
+                                onGenderChange(gender)
+                            }
+                        )
+                    }
+                }
+            }
         }
     }
 }
