@@ -263,7 +263,7 @@ fun CardWeight(prWeight: String, onWeightChange: (String) -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun genderCard(selectedGender: String, genderOpen: Boolean, onGenderChange: (String) -> Unit, onOpenChange: (Boolean) -> Unit) {
+fun GenderCard(selectedGender: String, genderOpen: Boolean, onGenderChange: (String) -> Unit, onOpenChange: (Boolean) -> Unit) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -301,7 +301,7 @@ fun genderCard(selectedGender: String, genderOpen: Boolean, onGenderChange: (Str
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = genderOpen) },
                     colors = TextFieldDefaults.colors(
                         focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                        unfocuseTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                         disabledTextColor = MaterialTheme.colorScheme.onSurface,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
