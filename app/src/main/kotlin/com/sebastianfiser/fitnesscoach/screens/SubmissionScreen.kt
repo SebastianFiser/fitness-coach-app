@@ -123,6 +123,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         //5 -> ageCard()
                         //6 -> bodyCard()
                         //7 -> nattyCard()
+                        else -> Text("Unknown step: $step")
                     }
                 }
             }
@@ -188,7 +189,7 @@ fun CardLift(liftOpen: Boolean, selectedLift: String) {
                     value = selectedLift ?: "",
                     onValueChange = {},
                     readOnly = true,
-                    label = { Text("Lift, color = MaterialTheme.colorScheme.onSurface) },
+                    label = { Text("Lift, color = MaterialTheme.colorScheme.onSurface") },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = liftOpen) },
                     colors = TextFieldDefaults.textFieldColors(
                         focusedTextColor = MaterialTheme.colorScheme.onSurface,

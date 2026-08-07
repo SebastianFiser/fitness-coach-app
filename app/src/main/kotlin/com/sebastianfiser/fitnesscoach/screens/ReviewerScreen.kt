@@ -51,7 +51,7 @@ import androidx.compose.runtime.LaunchedEffect
 import java.io.File
 import android.net.Uri
 import androidx.compose.material.icons.Icons
-import androidx.compose.material3.icons.filled.Cancel
+import androidx.compose.material3.icons.filled.Close
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.foundation.BorderStroke
 
@@ -263,10 +263,10 @@ fun showReturnMessage(navController: NavController) {
                 Text(text = "Wait", color = MaterialTheme.colorScheme.onSurface, fontSize = 24.dp)
                 Spacer(modifier = Modifier.height(16.dp))
                 Icon(
-                        imageVector = Icons.Filled.Cancel,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.size(48.dp)
+                    imageVector = Icons.Default.Close,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.size(48.dp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(text = "Theres no submissions to review", color = MaterialTheme.colorScheme.onSurface, fontSize = 16.dp)
