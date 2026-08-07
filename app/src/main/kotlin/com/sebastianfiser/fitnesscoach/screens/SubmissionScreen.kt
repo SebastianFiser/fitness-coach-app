@@ -38,11 +38,11 @@ import androidx.media3.ui.PlayerView
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.animation.AnimatedContent
 
-var selectedLift by remember { mutableStateOf<String?>(null) }
-var liftOpen by remember { mutableStateOf(false) }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
+    var selectedLift by remember { mutableStateOf<String?>(null) }
+    var liftOpen by remember { mutableStateOf(false) }
     var prWeight by remember { mutableStateOf("") }
     var selectedVideoUri by remember { mutableStateOf<Uri?>(null) }
     var videoUploaded by remember { mutableStateOf(false) }
