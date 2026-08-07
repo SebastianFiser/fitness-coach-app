@@ -114,7 +114,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     contentAlignment = Alignment.Center
                 ) {
                     when (step) {
-                        0 -> CardLift(liftOpen, selectedLift)
+                        0 -> CardLift(liftOpen, selectedLift) //cards
                         //1 -> CardWeight()
                         //2 -> GenderCard()
                         //3 -> CountryCard()
