@@ -36,6 +36,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.common.MediaItem
 import androidx.media3.ui.PlayerView
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.animation.AnimatedContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -155,6 +156,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardLift(liftOpen: Boolean, selectedLift: String) {
     Card(

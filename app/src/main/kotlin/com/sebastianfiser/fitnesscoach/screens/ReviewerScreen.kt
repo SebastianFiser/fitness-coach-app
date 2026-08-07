@@ -50,10 +50,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.LaunchedEffect
 import java.io.File
 import android.net.Uri
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Icons.Icons
-import androidx.compose.material3.Icons.filled.Cancel
+import androidx.compose.material.icons.Icons
+import androidx.compose.material3.icons.filled.Cancel
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.BorderStroke
 
 @Composable
 fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
@@ -241,8 +241,7 @@ fun SubmissionCard(submissionId: String, exerciseName: String, weight: Float, us
 fun showReturnMessage(navController: NavController) {
     Box (
         modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalAlignment = Alignment.CenterVertically,
+        contentAlignment = Alignment.Center
     ) {
         Card (
             modifier = Modifier
@@ -261,7 +260,7 @@ fun showReturnMessage(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
-                Text(text = "Wait", color = MaterialTheme.colorScheme.onSurface, fontSize = 24.sp)
+                Text(text = "Wait", color = MaterialTheme.colorScheme.onSurface, fontSize = 24.dp)
                 Spacer(modifier = Modifier.height(16.dp))
                 Icon(
                         imageVector = Icons.Filled.Cancel,
@@ -270,11 +269,11 @@ fun showReturnMessage(navController: NavController) {
                         modifier = Modifier.size(48.dp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Text(text = "Theres no submissions to review", color = MaterialTheme.colorScheme.onSurface, fontSize = 16.sp)
+                Text(text = "Theres no submissions to review", color = MaterialTheme.colorScheme.onSurface, fontSize = 16.dp)
                 HorizontalDivider(color = MaterialTheme.colorScheme.onSurface, thickness = 0.5.dp, modifier = Modifier.padding(horizontal = 16.dp))
                 Button(
                     onClick = { navController.popBackStack() },
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.Primary, contentColor = MaterialTheme.colorScheme.onPrimary)
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary)
                 ) {
                     Text(text = "Go Back")
                 }
