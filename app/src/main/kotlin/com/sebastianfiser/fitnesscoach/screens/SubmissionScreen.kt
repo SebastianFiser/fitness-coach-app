@@ -181,7 +181,7 @@ fun CardLift(liftOpen: Boolean, selectedLift: String?, onOpenChange: (Boolean) -
             HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
             ExposedDropdownMenuBox(
                 expanded = liftOpen,
-                onExpandedChange = { liftOpen = it }
+                onExpandedChange = { onOpenChange(it) }
             ) {
                 OutlinedTextField(
                     modifier = Modifier.menuAnchor(),
@@ -189,7 +189,7 @@ fun CardLift(liftOpen: Boolean, selectedLift: String?, onOpenChange: (Boolean) -
                     value = selectedLift ?: "",
                     onValueChange = {},
                     readOnly = true,
-                    label = { Text("Lift, color = MaterialTheme.colorScheme.onSurface") },
+                    label = { Text("Lift", color = MaterialTheme.colorScheme.onSurface) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = liftOpen) },
                     colors = TextFieldDefaults.textFieldColors(
                         focusedTextColor = MaterialTheme.colorScheme.onSurface,
@@ -202,14 +202,14 @@ fun CardLift(liftOpen: Boolean, selectedLift: String?, onOpenChange: (Boolean) -
                 )
                 ExposedDropdownMenu(
                     expanded = liftOpen,
-                    onDismissRequest = { liftOpen = false }
+                    onDismissRequest = { onOpenChange(false) }
                 ) {
                     listOf("Squat", "Bench press", "Deadlift").forEach { lift ->
                         DropdownMenuItem(
                             text = { Text(lift) },
                             onClick = {
-                                selectedLift = lift
-                                liftOpen = false
+                                onLiftSelect(lift)
+                                onOpenChange(false)
                             }
                         )
                     }
