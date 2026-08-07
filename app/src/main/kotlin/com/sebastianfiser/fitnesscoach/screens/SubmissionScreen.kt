@@ -56,8 +56,6 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
     var selectedAgeGroup by remember { mutableStateOf<String?>(null) }
     var natty by remember { mutableStateOf<Boolean?>(null) }
     var ageGroupOpen by remember { mutableStateOf(false) }
-    val countries = remember { Countries.repository.getAll() }
-    var countryQuery by remember { mutableStateOf("") }
     var selectedCountry by remember { mutableStateOf<Country?>(null) }
     var countryOpen by remember { mutableStateOf(false) }
     var genderOpen by remember { mutableStateOf(false) }
@@ -118,7 +116,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         0 -> CardLift(liftOpen = liftOpen, selectedLift = selectedLift, onOpenChange = { liftOpen = it }, onLiftSelect = { selectedLift = it }) //cards
                         1 -> CardWeight(prWeight = prWeight, onWeightChange = { prWeight = it })
                         2 -> GenderCard(selectedGender = selectedGender, genderOpen = genderOpen, onGenderChange = { selectedGender = it }, onOpenChange = { genderOpen = it })
-                        //3 -> CountryCard()
+                        3 -> CountryCard()
                         //4 -> videoCard()
                         //5 -> ageCard()
                         //6 -> bodyCard()
@@ -318,6 +316,70 @@ fun GenderCard(selectedGender: String, genderOpen: Boolean, onGenderChange: (Str
                             onClick = {
                                 onOpenChange(false)
                                 onGenderChange(gender)
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CountryCard(selectedCountry: String, countryOpen: Boolean, onSelectedCountryChange: (String) -> Unit, onOpenChange: (Boolean) -> Unit) {
+    val countries = remember { Countries.repository.getAll() }
+    var countryQuery by remember { mutableStateOf("") }
+    Card (
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
+            .padding(24.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        shape = RoundedCornerShape(14.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                "Select your country",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
+            ExposedDropdownMenuBox(
+                expanded = countryOpen,
+                onExpandedChange = { onOpenChange(it) }
+            ) {
+                OutlinedTextField(
+                    modifer = Modifier.menuAnchor(),
+                    shape = RoundedCornerShape(14.dp),
+                    value = countryQuery,
+                    onValueChange = { countryQuery = it; onOpenChange(true) },
+                    readOnly = false,
+                    label = { Text("Country", color = MaterialTheme.colorScheme.onSurface)},
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = countryOpen) },
+                    colors = TextFieldDefaults.textFieldColors(
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        disabledTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    )
+                )
+                ExposedDropdownMenu(
+                    expanded = countryOpen,
+                    onDismissRequest = { onOpenChange(false) }
+                ) {
+                    countries.filter { it.getDisplayName().contains(countryQuery, ignoreCase = true) }.forEach { country ->
+                        DropdownMenuItem(
+                            text = { Text(country.getDisplayName()) },
+                            onClick = {
+                                selectedCountry = onCountrySelected(country)
+                                countryQuery = country.getDisplayName()
+                                countryOpen = onOpenChange(false)
                             }
                         )
                     }
