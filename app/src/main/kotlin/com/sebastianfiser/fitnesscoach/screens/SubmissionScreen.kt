@@ -227,7 +227,7 @@ fun CardWeight(prWeight: String, onWeightChange: (String) -> Unit) {
             .fillMaxWidth()
             .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
             .padding(24.dp),
-        colors = CardDefault.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(14.dp)
     ) {
         Column (
