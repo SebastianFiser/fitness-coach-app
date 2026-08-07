@@ -313,8 +313,8 @@ fun GenderCard(selectedGender: String, genderOpen: Boolean, onGenderChange: (Str
                     onDismissRequest = { onOpenChange(false) }
                 ) {
                     listOf("Male", "Female", "Other").forEach { gender ->
-                        ExposedDropdownMenuDefaults.Item(
-                            text = gender,
+                        DropdownMenuItem(
+                            text = { Text(gender)},
                             onClick = {
                                 onOpenChange(false)
                                 onGenderChange(gender)
