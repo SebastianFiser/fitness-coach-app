@@ -51,9 +51,10 @@ import androidx.compose.runtime.LaunchedEffect
 import java.io.File
 import android.net.Uri
 import androidx.compose.material.icons.Icons
-import androidx.compose.material3.icons.filled.Close
+import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun ReviewerScreen(navController: NavController, viewModel: AppViewModel) {
@@ -260,16 +261,16 @@ fun showReturnMessage(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
-                Text(text = "Wait", color = MaterialTheme.colorScheme.onSurface, fontSize = 24.dp)
+                Text("Wait", color = MaterialTheme.colorScheme.onSurface, fontSize = 24.sp)
                 Spacer(modifier = Modifier.height(16.dp))
                 Icon(
-                    imageVector = Icons.Default.Close,
+                    imageVector = Icons.Default.Cancel,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.size(48.dp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Text(text = "Theres no submissions to review", color = MaterialTheme.colorScheme.onSurface, fontSize = 16.dp)
+                Text("Theres no submissions to review", color = MaterialTheme.colorScheme.onSurface, fontSize = 16.sp)
                 HorizontalDivider(color = MaterialTheme.colorScheme.onSurface, thickness = 0.5.dp, modifier = Modifier.padding(horizontal = 16.dp))
                 Button(
                     onClick = { navController.popBackStack() },
