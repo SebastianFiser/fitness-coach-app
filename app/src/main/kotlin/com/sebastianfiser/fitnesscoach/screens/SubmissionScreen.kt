@@ -122,7 +122,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         //5 -> ageCard()
                         //6 -> bodyCard()
                         //7 -> nattyCard()
-                        else -> Text("Unknown step: $step")
+                        else -> Text("Unknown step: $step try realoding this page")
                     }
                 }
             }
