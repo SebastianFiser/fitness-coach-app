@@ -84,7 +84,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
 
     ) { paddingValues ->
         Column(
-            modifier = Modifie
+            modifier = Modifier
                 .padding(paddingValues)
                 .padding(16.dp)
                 .padding(bottom = 80.dp)
