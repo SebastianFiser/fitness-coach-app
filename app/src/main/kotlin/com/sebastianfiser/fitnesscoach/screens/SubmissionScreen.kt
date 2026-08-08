@@ -188,7 +188,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                             )
 
                                             isSubmitting = false
-                                            submitStatus = if (sucess) {
+                                            submitStatus = if (success) {
                                                 "Submission sent, and waiting for review"
                                             } else {
                                                 "Submission failed to send."
@@ -196,7 +196,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
 
                                         }
                                     },
-                                    colors = ButtonDefauts.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary)
+                                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary)
                                 ) {
                                     if (isSubmitting) {
                                         CircularProgressIndicator(
