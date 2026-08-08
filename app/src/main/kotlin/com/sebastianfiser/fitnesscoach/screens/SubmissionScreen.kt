@@ -138,7 +138,6 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 } else {
                     Spacer(modifier = Modifier.width(1.dp))
                 }
-
                 Button(
                     onClick = {
                         if (currentStep < totalSteps - 1) {
@@ -146,7 +145,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         } else {
                             Row (
                                 modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
+                                horizontalArrangement = Arrangement.SpaceEvenly
                             ) {
                                 Button (
                                     enabled = !isSubmitting,
@@ -158,7 +157,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                                         val exerciseName = selectedLift ?: return@Button
                                         val weight = prWeight.toFloatOrNull() ?: return@Button
                                         val country = selectedCountry?.getDisplayName() ?: return@Button
-                                        val isNatural = natty ?: return@ButtonDefaults
+                                        val isNatural = natty ?: return@Button
                                         val age = selectedAgeGroup ?: return@Button
                                         val videoUri = selectedVideoUri ?: return@Button
                                         val presGender = selectedGender ?: return@Button
