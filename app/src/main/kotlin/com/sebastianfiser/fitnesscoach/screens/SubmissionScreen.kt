@@ -110,7 +110,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 modifier = Modifier.weight(1f)
             ) { step ->
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.wrapContentSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     when (step) {
