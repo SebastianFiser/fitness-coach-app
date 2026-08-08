@@ -121,7 +121,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         4 -> VideoCard(selectedVideoUri = selectedVideoUri, exoPlayer = exoPlayer, onSelectVideoClick = { videoPicker.launch("video/*") })
                         5 -> AgeCard(ageGroupOpen = ageGroupOpen, onAgeGroupOpen = { ageGroupOpen = it }, selectedAgeGroup = selectedAgeGroup, onSelectedAgeGroup = { selectedAgeGroup = it })
                         6 -> BodywCard(bodyweight = bodyweight, onBodyweight = { bodyweight = it })
-                        7 -> nattyCard()
+                        7 -> NattyCard(onNatty = { natty = it })
                         else -> Text("Unknown step: $step try realoding this page")
                     }
                 }
@@ -548,7 +548,7 @@ fun BodywCard(bodyweight: String, onBodyweight: (String) -> Unit) {
 }
 
 @Composable
-fun NattyCard() {
+fun NattyCard(onNatty: (Boolean) -> Unit) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
