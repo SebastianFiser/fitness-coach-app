@@ -121,7 +121,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         4 -> VideoCard(selectedVideoUri = selectedVideoUri, exoPlayer = exoPlayer, onSelectVideoClick = { videoPicker.launch("video/*") })
                         5 -> AgeCard(ageGroupOpen = ageGroupOpen, onAgeGroupOpen = { ageGroupOpen = it }, selectedAgeGroup = selectedAgeGroup, onSelectedAgeGroup = { selectedAgeGroup = it })
                         6 -> BodywCard(bodyweight = bodyweight, onBodyweight = { bodyweight = it })
-                        //7 -> nattyCard()
+                        7 -> nattyCard()
                         else -> Text("Unknown step: $step try realoding this page")
                     }
                 }
@@ -543,6 +543,49 @@ fun BodywCard(bodyweight: String, onBodyweight: (String) -> Unit) {
                     disabledIndicatorColor = Color.Transparent
                 )
             )
+        }
+    }
+}
+
+@Composable
+fun NattyCard() {
+    Card (
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
+            .padding(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        shape = RoundedCornerShape(28.dp),
+    ) {
+        Column (
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text (
+                "Are you natural?",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                Button (
+                    onClick = { onNatty(true) },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                ) {
+                    Text("Yes", color = MaterialTheme.colorScheme.onPrimary)
+                }
+                Button (
+                    onClick = { onNatty(false) },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                ) {
+                    Text("No", color = MaterialTheme.colorScheme.onPrimary)
+                }
+            }
+
         }
     }
 }
