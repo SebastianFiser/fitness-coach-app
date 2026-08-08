@@ -144,7 +144,73 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         if (currentStep < totalSteps - 1) {
                             currentStep++
                         } else {
-                            //APPWRITE SENDING
+                            Row (
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Button (
+                                    enabled = !isSubmitting,
+                                    onClick = {
+                                        if ( selectedLift == null || prWeight.isBlank() || selectedCountry == null || natty == null || selectedAgeGroup == null || bodyweight.isBlank() || selectedVideoUri == null || selectedGender.isBlank()) {
+                                            submitStatus = "Please fill in all of the fields before submitting."
+                                            return@Button
+                                        }
+                                        val exerciseName = selectedLift ?: return@Button
+                                        val weight = prWeight.toFloatOrNull() ?: return@Button
+                                        val country = selectedCountry?.getDisplayName() ?: return@Button
+                                        val isNatural = natty ?: return@ButtonDefaults
+                                        val age = selectedAgeGroup ?: return@Button
+                                        val videoUri = selectedVideoUri ?: return@Button
+                                        val presGender = selectedGender ?: return@Button
+                                        isSubmitting = true
+                                        submitStatus = "Submitting submission"
+                                        scope.launch {
+                                            val user = Appwrite.getCurrentUser()
+                                            val userId = user?.id
+
+                                            if (userId == null) {
+                                                isSubmitting = false
+                                                submitStatus = "Failed to verify user. Please try again"
+                                                return@launch
+                                            }
+
+                                            val success = viewModel.submitEntry (
+                                                exerciseName = exerciseName,
+                                                weight = weight,
+                                                reps = 1,
+                                                country = country,
+                                                isNatural = isNatural,
+                                                age = age,
+                                                gender = presGender,
+                                                context = context,
+                                                uri = videoUri,
+                                                userId = userId
+                                            )
+
+                                            isSubmitting = false
+                                            submitStatus = if (sucess) {
+                                                "Submission sent, and waiting for review"
+                                            } else {
+                                                "Submission failed to send."
+                                            }
+
+                                        }
+                                    },
+                                    colors = ButtonDefauts.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary)
+                                ) {
+                                    if (isSubmitting) {
+                                        CircularProgressIndicator(
+                                            modifier = Modifier.size(18.dp),
+                                            color = MaterialTheme.colorScheme.onPrimary,
+                                            strokeWidth = 2.dp
+                                        )
+                                        Spacer(modifier = Modifier.width(18.dp))
+                                        Text("Submitting...", color = MaterialTheme.colorScheme.onPrimary)
+                                    } else {
+                                        Text("Submit", color = MaterialTheme.colorScheme.onPrimary)
+                                    }
+                                }
+                            }
                         }
                     }
                 ) {
