@@ -147,7 +147,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     }
                 } else {
                     Button(
-                        onClick {
+                        onClick = {
                             Row (
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceEvenly
