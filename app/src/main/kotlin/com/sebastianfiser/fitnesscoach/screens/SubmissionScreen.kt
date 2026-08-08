@@ -88,7 +88,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp)
-                .padding(horizontal = 160.dp)
+                .padding(horizontal = 160.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -118,7 +118,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         1 -> CardWeight(prWeight = prWeight, onWeightChange = { prWeight = it })
                         2 -> GenderCard(selectedGender = selectedGender, genderOpen = genderOpen, onGenderChange = { selectedGender = it }, onOpenChange = { genderOpen = it })
                         3 -> CountryCard(selectedCountry = selectedCountry, countryOpen = countryOpen, onSelectedCountryChange = { selectedCountry = it }, onOpenChange = { countryOpen = it } )
-                        4 -> videoCard(selectedVideoUri = selectedVideoUri, exoPlayer = exoPlayer, onSelectVideoClick = { videoPicker.launch("video/*") })
+                        4 -> VideoCard(selectedVideoUri = selectedVideoUri, exoPlayer = exoPlayer, onSelectVideoClick = { videoPicker.launch("video/*") })
                         //5 -> ageCard()
                         //6 -> bodyCard()
                         //7 -> nattyCard()
@@ -422,7 +422,7 @@ fun VideoCard(selectedVideoUri: Uri?, exoPlayer: ExoPlayer?, onSelectVideoClick:
                         }
                     },
                     modifier = Modifier
-                        .filMaxWidth()
+                        .fillMaxWidth()
                         .height(400.dp)
                 )
             }
@@ -432,7 +432,7 @@ fun VideoCard(selectedVideoUri: Uri?, exoPlayer: ExoPlayer?, onSelectVideoClick:
             onClick = { onSelectVideoClick() },
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary)
         ) {
-            Text(if (selectedVideoUri == null) "select Video" else "Choose Video" color = MaterialTheme.colorScheme .onSurfaceVariant)
+            Text(if (selectedVideoUri == null) "select Video" else "Choose Video", color = MaterialTheme.colorScheme .onSurfaceVariant)
         }
 
         selectedVideoUri?.let { uri->
