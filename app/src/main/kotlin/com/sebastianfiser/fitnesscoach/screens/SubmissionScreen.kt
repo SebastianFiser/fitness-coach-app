@@ -444,7 +444,7 @@ fun VideoCard(selectedVideoUri: Uri?, exoPlayer: ExoPlayer?, onSelectVideoClick:
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AgeCard(ageGroupOpen: Boolean, onAgeGroupOpen: (Boolean) -> Unit, selectedAgeGroup: String, onSelectedAgeGroup: (String) -> Unit) {
+fun AgeCard(ageGroupOpen: Boolean, onAgeGroupOpen: (Boolean) -> Unit, selectedAgeGroup: String?, onSelectedAgeGroup: (String) -> Unit) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -466,12 +466,12 @@ fun AgeCard(ageGroupOpen: Boolean, onAgeGroupOpen: (Boolean) -> Unit, selectedAg
             HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
             ExposedDropdownMenuBox (
                 expanded = ageGroupOpen,
-                onExpandedChange = { onAgeGrouOpen(it) }
+                onExpandedChange = { onAgeGroupOpen(it) }
             ) {
                 OutlinedTextField (
                     modifier = Modifier.menuAnchor(),
                     shape = RoundedCornerShape(14.dp),
-                    value = SelectedAgeGroup ?: "",
+                    value = selectedAgeGroup ?: "",
                     onValueChange = {},
                     readOnly = true,
                     label = { Text("Age Group", color = MaterialTheme.colorScheme.onSurface) },
@@ -493,7 +493,7 @@ fun AgeCard(ageGroupOpen: Boolean, onAgeGroupOpen: (Boolean) -> Unit, selectedAg
                         DropdownMenuItem(
                             text = { Text(group) },
                             onClick = {
-                                onSelectedAgeGoup(group)
+                                onSelectedAgeGroup(group)
                                 onAgeGroupOpen(false)
                             }
                         )
