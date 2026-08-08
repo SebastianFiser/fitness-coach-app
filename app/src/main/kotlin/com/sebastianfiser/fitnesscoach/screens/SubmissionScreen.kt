@@ -87,7 +87,8 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp),
+                .padding(16.dp)
+                .padding(horizontal = 160.dp)
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -117,7 +118,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         1 -> CardWeight(prWeight = prWeight, onWeightChange = { prWeight = it })
                         2 -> GenderCard(selectedGender = selectedGender, genderOpen = genderOpen, onGenderChange = { selectedGender = it }, onOpenChange = { genderOpen = it })
                         3 -> CountryCard(selectedCountry = selectedCountry, countryOpen = countryOpen, onSelectedCountryChange = { selectedCountry = it }, onOpenChange = { countryOpen = it } )
-                        //4 -> videoCard()
+                        4 -> videoCard(selectedVideoUri = selectedVideoUri, exoPlayer = exoPlayer, onSelectVideoClick = { videoPicker.launch("video/*") })
                         //5 -> ageCard()
                         //6 -> bodyCard()
                         //7 -> nattyCard()
@@ -387,5 +388,56 @@ fun CountryCard(selectedCountry: Country?, countryOpen: Boolean, onSelectedCount
                 }
             }
         }
+    }
+}
+
+
+@Composable
+fun VideoCard(selectedVideoUri: Uri?, exoPlayer: ExoPlayer?, onSelectVideoClick: () -> Unit) {
+    Card (
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
+            .padding(24.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            shape = RoundedCornerShape(28.dp)
+    ) {
+        Column (
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text (
+                "Upload Video",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
+            if (exoPlayer != null) {
+                AndroidView(
+                    factory = { ctx ->
+                        PlayerView(ctx).apply {
+                            player = exoPlayer
+                        }
+                    },
+                    modifier = Modifier
+                        .filMaxWidth()
+                        .height(400.dp)
+                )
+            }
+        }
+
+        Button (
+            onClick = { onSelectVideoClick() },
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary)
+        ) {
+            Text(if (selectedVideoUri == null) "select Video" else "Choose Video" color = MaterialTheme.colorScheme .onSurfaceVariant)
+        }
+
+        selectedVideoUri?.let { uri->
+            Text("Selected Video: ${uri.lastPathSegment}", color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodyMedium)
+        }
+
     }
 }
