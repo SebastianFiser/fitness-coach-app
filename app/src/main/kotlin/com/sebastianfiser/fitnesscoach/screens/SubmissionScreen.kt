@@ -84,10 +84,10 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
 
     ) { paddingValues ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifie
                 .padding(paddingValues)
                 .padding(16.dp)
+                .padding(bottom = 80.dp)
                 .widthIn(max = 480.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
