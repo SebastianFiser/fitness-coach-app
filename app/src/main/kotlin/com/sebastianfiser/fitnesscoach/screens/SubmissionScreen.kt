@@ -119,7 +119,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         2 -> GenderCard(selectedGender = selectedGender, genderOpen = genderOpen, onGenderChange = { selectedGender = it }, onOpenChange = { genderOpen = it })
                         3 -> CountryCard(selectedCountry = selectedCountry, countryOpen = countryOpen, onSelectedCountryChange = { selectedCountry = it }, onOpenChange = { countryOpen = it } )
                         4 -> VideoCard(selectedVideoUri = selectedVideoUri, exoPlayer = exoPlayer, onSelectVideoClick = { videoPicker.launch("video/*") })
-                        //5 -> ageCard()
+                        5 -> AgeCard(ageGroupOpen = ageGroupOpen, onAgeGroupOpen = { ageGroupOpen = it }, selectedAgeGroup = selectedAgeGroup, onSelectedAgeGroup = { selectedAgeGroup = it })
                         //6 -> bodyCard()
                         //7 -> nattyCard()
                         else -> Text("Unknown step: $step try realoding this page")
@@ -439,5 +439,68 @@ fun VideoCard(selectedVideoUri: Uri?, exoPlayer: ExoPlayer?, onSelectVideoClick:
             Text("Selected Video: ${uri.lastPathSegment}", color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodyMedium)
         }
 
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AgeCard(ageGroupOpen: Boolean, onAgeGroupOpen: (Boolean) -> Unit, selectedAgeGroup: String, onSelectedAgeGroup: (String) -> Unit) {
+    Card (
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
+            .padding(24.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        shape = RoundedCornerShape(28.dp)
+    ) {
+        Column (
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text (
+                "SelectAgeGroup",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
+            ExposedDropdownMenuBox (
+                expanded = ageGroupOpen,
+                onExpandedChange = { onAgeGrouOpen(it) }
+            ) {
+                OutlinedTextField (
+                    modifier = Modifier.menuAnchor(),
+                    shape = RoundedCornerShape(14.dp),
+                    value = SelectedAgeGroup ?: "",
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text("Age Group", color = MaterialTheme.colorScheme.onSurface) },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = ageGroupOpen) },
+                    colors = TextFieldDefaults.textFieldColors(
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        disabledTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    )
+                )
+                ExposedDropdownMenu (
+                    expanded = ageGroupOpen,
+                    onDismissRequest = { onAgeGroupOpen(false) }
+                ) {
+                    listOf("Under 18", "18-25", "26-35", "36-45", "46+").forEach { group ->
+                        DropdownMenuItem(
+                            text = { Text(group) },
+                            onClick = {
+                                onSelectedAgeGoup(group)
+                                onAgeGroupOpen(false)
+                            }
+                        )
+                    }
+                }
+            }
+
+        }
     }
 }
