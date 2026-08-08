@@ -87,7 +87,8 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp),
+                .padding(16.dp)
+                .widthIn(max = 480.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -102,29 +103,33 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
                 )
             }
-
-            AnimatedContent(
-                targetState = currentStep,
-                label = "StepAnimation",
-                modifier = Modifier.weight(1f)
-            ) { step ->
-                Box(
-                    modifier = Modifier.wrapContentSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    when (step) {
-                        0 -> CardLift(liftOpen = liftOpen, selectedLift = selectedLift, onOpenChange = { liftOpen = it }, onLiftSelect = { selectedLift = it }) //cards
-                        1 -> CardWeight(prWeight = prWeight, onWeightChange = { prWeight = it })
-                        2 -> GenderCard(selectedGender = selectedGender, genderOpen = genderOpen, onGenderChange = { selectedGender = it }, onOpenChange = { genderOpen = it })
-                        3 -> CountryCard(selectedCountry = selectedCountry, countryOpen = countryOpen, onSelectedCountryChange = { selectedCountry = it }, onOpenChange = { countryOpen = it } )
-                        4 -> VideoCard(selectedVideoUri = selectedVideoUri, exoPlayer = exoPlayer, onSelectVideoClick = { videoPicker.launch("video/*") })
-                        5 -> AgeCard(ageGroupOpen = ageGroupOpen, onAgeGroupOpen = { ageGroupOpen = it }, selectedAgeGroup = selectedAgeGroup, onSelectedAgeGroup = { selectedAgeGroup = it })
-                        6 -> BodywCard(bodyweight = bodyweight, onBodyweight = { bodyweight = it })
-                        7 -> NattyCard(onNatty = { natty = it })
-                        else -> Text("Unknown step: $step try realoding this page")
+            Box (
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            )
+                AnimatedContent(
+                    targetState = currentStep,
+                    label = "StepAnimation",
+                ) { step ->
+                    Box(
+                        modifier = Modifier.wrapContentSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        when (step) {
+                            0 -> CardLift(liftOpen = liftOpen, selectedLift = selectedLift, onOpenChange = { liftOpen = it }, onLiftSelect = { selectedLift = it }) //cards
+                            1 -> CardWeight(prWeight = prWeight, onWeightChange = { prWeight = it })
+                            2 -> GenderCard(selectedGender = selectedGender, genderOpen = genderOpen, onGenderChange = { selectedGender = it }, onOpenChange = { genderOpen = it })
+                            3 -> CountryCard(selectedCountry = selectedCountry, countryOpen = countryOpen, onSelectedCountryChange = { selectedCountry = it }, onOpenChange = { countryOpen = it } )
+                            4 -> VideoCard(selectedVideoUri = selectedVideoUri, exoPlayer = exoPlayer, onSelectVideoClick = { videoPicker.launch("video/*") })
+                            5 -> AgeCard(ageGroupOpen = ageGroupOpen, onAgeGroupOpen = { ageGroupOpen = it }, selectedAgeGroup = selectedAgeGroup, onSelectedAgeGroup = { selectedAgeGroup = it })
+                            6 -> BodywCard(bodyweight = bodyweight, onBodyweight = { bodyweight = it })
+                            7 -> NattyCard(onNatty = { natty = it })
+                            else -> Text("Unknown step: $step try realoding this page")
+                        }
                     }
                 }
-            }
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -227,6 +232,7 @@ fun CardLift(liftOpen: Boolean, selectedLift: String?, onOpenChange: (Boolean) -
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .wrapContentSize()
             .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
             .padding(24.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
@@ -289,6 +295,7 @@ fun CardWeight(prWeight: String, onWeightChange: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .wrapContentSize()
             .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
             .padding(24.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
@@ -331,6 +338,7 @@ fun GenderCard(selectedGender: String, genderOpen: Boolean, onGenderChange: (Str
     Card (
         modifier = Modifier
             .fillMaxWidth()
+            .wrapContentSize()
             .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
             .padding(24.dp),
         colors = CardDefaults.cardColors(
@@ -399,6 +407,7 @@ fun CountryCard(selectedCountry: Country?, countryOpen: Boolean, onSelectedCount
     Card (
         modifier = Modifier
             .fillMaxWidth()
+            .wrapContentSize()
             .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
             .padding(24.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
@@ -462,6 +471,7 @@ fun VideoCard(selectedVideoUri: Uri?, exoPlayer: ExoPlayer?, onSelectVideoClick:
     Card (
         modifier = Modifier
             .fillMaxWidth()
+            .wrapContentSize()
             .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
             .padding(24.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
@@ -513,6 +523,7 @@ fun AgeCard(ageGroupOpen: Boolean, onAgeGroupOpen: (Boolean) -> Unit, selectedAg
     Card (
         modifier = Modifier
             .fillMaxWidth()
+            .wrapContentSize()
             .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
             .padding(24.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
@@ -576,6 +587,7 @@ fun BodywCard(bodyweight: String, onBodyweight: (String) -> Unit) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
+            .wrapContentSize()
             .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
             .padding(24.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
@@ -617,6 +629,7 @@ fun NattyCard(onNatty: (Boolean) -> Unit) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
+            .wrapContentSize()
             .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
             .padding(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
