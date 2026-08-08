@@ -108,7 +108,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     .weight(1f)
                     .fillMaxWidth(),
                 contentAlignment = Alignment.Center
-            )
+            ) {
                 AnimatedContent(
                     targetState = currentStep,
                     label = "StepAnimation",
@@ -130,6 +130,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                         }
                     }
                 }
+            }
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
