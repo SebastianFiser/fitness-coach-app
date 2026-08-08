@@ -505,6 +505,7 @@ fun AgeCard(ageGroupOpen: Boolean, onAgeGroupOpen: (Boolean) -> Unit, selectedAg
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BodywCard(bodyweight: String, onBodyweight: (String) -> Unit) {
     Card (
