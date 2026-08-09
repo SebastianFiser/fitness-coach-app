@@ -254,7 +254,7 @@ fun CardLift(liftOpen: Boolean, selectedLift: String?, onOpenChange: (Boolean) -
             ) {
                 OutlinedTextField(
                     modifier = Modifier
-                        .fillMaxWidth
+                        .fillMaxWidth()
                         .menuAnchor(),
                     shape = RoundedCornerShape(8.dp),
                     value = selectedLift ?: "",
@@ -304,7 +304,7 @@ fun CardWeight(prWeight: String, onWeightChange: (String) -> Unit) {
         Column (
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24.dp)),
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
