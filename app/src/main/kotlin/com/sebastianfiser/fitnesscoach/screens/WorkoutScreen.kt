@@ -321,7 +321,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                     if (allExercisesDone) {
                         onFinish()
                     } else {
-                        val nextUnfinished = unfinishedIndices.firstOrNull { it > currentExerciseIndex } ?: unfinishedIndices
+                        val nextUnfinished: Int?  = unfinishedIndices.firstOrNull { it > currentExerciseIndex } ?: unfinishedIndices.firstOrNull()
                         if (nextUnfinished != null) {
                             currentExerciseIndex = nextUnfinished
                         }
