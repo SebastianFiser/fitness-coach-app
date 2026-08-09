@@ -112,6 +112,7 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                 AnimatedContent(
                     targetState = currentStep,
                     label = "StepAnimation",
+                    modifier = Modifier.wrapContentSize()
                 ) { step ->
                     when (step) {
                         0 -> CardLift(liftOpen = liftOpen, selectedLift = selectedLift, onOpenChange = { liftOpen = it }, onLiftSelect = { selectedLift = it }) //cards
@@ -236,7 +237,9 @@ fun CardLift(liftOpen: Boolean, selectedLift: String?, onOpenChange: (Boolean) -
         shape = RoundedCornerShape(28.dp)
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -300,7 +303,8 @@ fun CardWeight(prWeight: String, onWeightChange: (String) -> Unit) {
     ) {
         Column (
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxWidth()
+                .wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -346,7 +350,8 @@ fun GenderCard(selectedGender: String, genderOpen: Boolean, onGenderChange: (Str
     ) {
         Column (
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxWidth()
+                .wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -412,7 +417,8 @@ fun CountryCard(selectedCountry: Country?, countryOpen: Boolean, onSelectedCount
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxWidth()
+                .wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -476,7 +482,8 @@ fun VideoCard(selectedVideoUri: Uri?, exoPlayer: ExoPlayer?, onSelectVideoClick:
     ) {
         Column (
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxWidth()
+                .wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -527,7 +534,9 @@ fun AgeCard(ageGroupOpen: Boolean, onAgeGroupOpen: (Boolean) -> Unit, selectedAg
         shape = RoundedCornerShape(28.dp)
     ) {
         Column (
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -592,7 +601,8 @@ fun BodywCard(bodyweight: String, onBodyweight: (String) -> Unit) {
     ) {
         Column (
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxWidth()
+                .wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -634,7 +644,8 @@ fun NattyCard(onNatty: (Boolean) -> Unit) {
     ) {
         Column (
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxWidth()
+                .wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
