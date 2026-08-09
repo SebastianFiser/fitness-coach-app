@@ -230,16 +230,15 @@ fun CardLift(liftOpen: Boolean, selectedLift: String?, onOpenChange: (Boolean) -
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentSize()
-            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
-            .padding(24.dp),
+            .wrapContentHeight()
+            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp)),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        shape = RoundedCornerShape(28.dp)
+        shape = RoundedCornerShape(14.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentSize(),
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -254,7 +253,9 @@ fun CardLift(liftOpen: Boolean, selectedLift: String?, onOpenChange: (Boolean) -
                 onExpandedChange = { onOpenChange(it) }
             ) {
                 OutlinedTextField(
-                    modifier = Modifier.menuAnchor(),
+                    modifier = Modifier
+                        .fillMaxWidth
+                        .menuAnchor(),
                     shape = RoundedCornerShape(8.dp),
                     value = selectedLift ?: "",
                     onValueChange = {},
@@ -295,16 +296,15 @@ fun CardWeight(prWeight: String, onWeightChange: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentSize()
-            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
-            .padding(24.dp),
+            .wrapContentHeight()
+            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp)),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(14.dp)
     ) {
         Column (
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentSize(),
+                .padding(24.dp)),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -315,6 +315,7 @@ fun CardWeight(prWeight: String, onWeightChange: (String) -> Unit) {
             )
             HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
             OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = prWeight,
                 shape = RoundedCornerShape(8.dp),
                 onValueChange = { onWeightChange(it) },
@@ -339,9 +340,8 @@ fun GenderCard(selectedGender: String, genderOpen: Boolean, onGenderChange: (Str
     Card (
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentSize()
-            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
-            .padding(24.dp),
+            .wrapContentHeight()
+            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp)),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.onSurface,
@@ -351,7 +351,7 @@ fun GenderCard(selectedGender: String, genderOpen: Boolean, onGenderChange: (Str
         Column (
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentSize(),
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -366,7 +366,9 @@ fun GenderCard(selectedGender: String, genderOpen: Boolean, onGenderChange: (Str
                 onExpandedChange = { onOpenChange(it) }
             ) {
                 OutlinedTextField(
-                    modifier = Modifier.menuAnchor(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor(),
                     shape = RoundedCornerShape(8.dp),
                     value = selectedGender,
                     onValueChange = {},
@@ -409,16 +411,15 @@ fun CountryCard(selectedCountry: Country?, countryOpen: Boolean, onSelectedCount
     Card (
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentSize()
-            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
-            .padding(24.dp),
+            .wrapContentHeight()
+            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(14.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentSize(),
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -432,7 +433,9 @@ fun CountryCard(selectedCountry: Country?, countryOpen: Boolean, onSelectedCount
                 onExpandedChange = { onOpenChange(it) }
             ) {
                 OutlinedTextField(
-                    modifier = Modifier.menuAnchor(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor(),
                     shape = RoundedCornerShape(14.dp),
                     value = countryQuery,
                     onValueChange = { countryQuery = it; onOpenChange(true) },
@@ -474,16 +477,15 @@ fun VideoCard(selectedVideoUri: Uri?, exoPlayer: ExoPlayer?, onSelectVideoClick:
     Card (
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentSize()
-            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
-            .padding(24.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-            shape = RoundedCornerShape(28.dp)
+            .wrapContentHeight()
+            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        shape = RoundedCornerShape(28.dp)
     ) {
         Column (
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentSize(),
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -527,21 +529,20 @@ fun AgeCard(ageGroupOpen: Boolean, onAgeGroupOpen: (Boolean) -> Unit, selectedAg
     Card (
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentSize()
-            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
-            .padding(24.dp),
+            .wrapContentHeight()
+            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp)),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(28.dp)
     ) {
         Column (
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentSize(),
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text (
-                "SelectAgeGroup",
+                "Select Age Group",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )
@@ -551,7 +552,9 @@ fun AgeCard(ageGroupOpen: Boolean, onAgeGroupOpen: (Boolean) -> Unit, selectedAg
                 onExpandedChange = { onAgeGroupOpen(it) }
             ) {
                 OutlinedTextField (
-                    modifier = Modifier.menuAnchor(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor(),
                     shape = RoundedCornerShape(14.dp),
                     value = selectedAgeGroup ?: "",
                     onValueChange = {},
@@ -593,16 +596,15 @@ fun BodywCard(bodyweight: String, onBodyweight: (String) -> Unit) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentSize()
-            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
-            .padding(24.dp),
+            .wrapContentHeight()
+            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp)),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(28.dp),
     ) {
         Column (
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentSize(),
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -636,16 +638,15 @@ fun NattyCard(onNatty: (Boolean) -> Unit) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentSize()
-            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
-            .padding(16.dp),
+            .wrapContentHeight()
+            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp)),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(28.dp),
     ) {
         Column (
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentSize(),
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {

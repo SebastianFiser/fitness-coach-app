@@ -130,7 +130,7 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-                .height(500.dp)
+                .wrapContentSize()
                 .border(2.dp, if (isWorkoutDone) Color.Green else MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                 .alpha(if (isWorkoutDone) 0.4f else 1f),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
