@@ -113,21 +113,17 @@ fun SubmissionScreen(navController: NavController, viewModel: AppViewModel) {
                     targetState = currentStep,
                     label = "StepAnimation",
                 ) { step ->
-                    Box(
-                        modifier = Modifier.wrapContentSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        when (step) {
-                            0 -> CardLift(liftOpen = liftOpen, selectedLift = selectedLift, onOpenChange = { liftOpen = it }, onLiftSelect = { selectedLift = it }) //cards
-                            1 -> CardWeight(prWeight = prWeight, onWeightChange = { prWeight = it })
-                            2 -> GenderCard(selectedGender = selectedGender, genderOpen = genderOpen, onGenderChange = { selectedGender = it }, onOpenChange = { genderOpen = it })
-                            3 -> CountryCard(selectedCountry = selectedCountry, countryOpen = countryOpen, onSelectedCountryChange = { selectedCountry = it }, onOpenChange = { countryOpen = it } )
-                            4 -> VideoCard(selectedVideoUri = selectedVideoUri, exoPlayer = exoPlayer, onSelectVideoClick = { videoPicker.launch("video/*") })
-                            5 -> AgeCard(ageGroupOpen = ageGroupOpen, onAgeGroupOpen = { ageGroupOpen = it }, selectedAgeGroup = selectedAgeGroup, onSelectedAgeGroup = { selectedAgeGroup = it })
-                            6 -> BodywCard(bodyweight = bodyweight, onBodyweight = { bodyweight = it })
-                            7 -> NattyCard(onNatty = { natty = it })
-                            else -> Text("Unknown step: $step try realoding this page")
-                        }
+                    when (step) {
+                        0 -> CardLift(liftOpen = liftOpen, selectedLift = selectedLift, onOpenChange = { liftOpen = it }, onLiftSelect = { selectedLift = it }) //cards
+                        1 -> CardWeight(prWeight = prWeight, onWeightChange = { prWeight = it })
+                        2 -> GenderCard(selectedGender = selectedGender, genderOpen = genderOpen, onGenderChange = { selectedGender = it }, onOpenChange = { genderOpen = it })
+                        3 -> CountryCard(selectedCountry = selectedCountry, countryOpen = countryOpen, onSelectedCountryChange = { selectedCountry = it }, onOpenChange = { countryOpen = it } )
+                        4 -> VideoCard(selectedVideoUri = selectedVideoUri, exoPlayer = exoPlayer, onSelectVideoClick = { videoPicker.launch("video/*") })
+                        5 -> AgeCard(ageGroupOpen = ageGroupOpen, onAgeGroupOpen = { ageGroupOpen = it }, selectedAgeGroup = selectedAgeGroup, onSelectedAgeGroup = { selectedAgeGroup = it })
+                        6 -> BodywCard(bodyweight = bodyweight, onBodyweight = { bodyweight = it })
+                        7 -> NattyCard(onNatty = { natty = it })
+                        else -> Text("Unknown step: $step try realoding this page")
+
                     }
                 }
             }
