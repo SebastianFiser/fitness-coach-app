@@ -80,6 +80,8 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
     val exerciseProgress = remember {
         mutableStateListOf(*Array(exercises.size) { ExerciseProgress() })
     }
+    val unfinishedIndices: List<Int> = exerciseProgress.indices.filter { !exerciseProgress[it].isDone }
+    val allExercisesDone = exerciseProgress.isNotEmpty() && exerciseProgress.all { it.isDone }
 
     BackHandler { showExitDialog = true }
     Column(
@@ -294,8 +296,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            val unfinishedIndices = exerciseProgress.indices.filter { !exerciseProgress[it].isDone }
-            val unfinishedCount = unfinishedIndecies.size
+            val unfinishedCount = unfinishedIndices.size
             OutlinedButton(
                 onClick = {
                     if(unfinishedCount > 1) {

@@ -405,29 +405,44 @@ fun GenderCard(selectedGender: String, genderOpen: Boolean, onGenderChange: (Str
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CountryCard(selectedCountry: Country?, countryOpen: Boolean, onSelectedCountryChange: (Country?) -> Unit, onOpenChange: (Boolean) -> Unit) {
+fun CountryCard(
+    selectedCountry: Country?,
+    countryOpen: Boolean,
+    onSelectedCountryChange: (Country?) -> Unit,
+    onOpenChange: (Boolean) -> Unit
+) {
     val countries = remember { Countries.repository.getAll() }
-    var countryQuery by remember { mutableStateOf("") }
-    Card (
+    // Výchozí text nastaven podle již vybrané země
+    var countryQuery by remember(selectedCountry) {
+        mutableStateOf(selectedCountry?.getDisplayName() ?: "")
+    }
+
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
-            .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp),
+            .wrapContentHeight(),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = BorderStroke(2.dp, MaterialTheme.colorScheme.outline),
         shape = RoundedCornerShape(14.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp) // Přidá mezery mezi prvky
         ) {
             Text(
-                "Select your country",
+                text = "Select your country",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
+
+            HorizontalDivider(
+                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
+                thickness = 1.dp
+            )
+
             ExposedDropdownMenuBox(
                 expanded = countryOpen,
                 onExpandedChange = { onOpenChange(it) }
@@ -438,24 +453,31 @@ fun CountryCard(selectedCountry: Country?, countryOpen: Boolean, onSelectedCount
                         .menuAnchor(),
                     shape = RoundedCornerShape(14.dp),
                     value = countryQuery,
-                    onValueChange = { countryQuery = it; onOpenChange(true) },
+                    onValueChange = {
+                        countryQuery = it
+                        onOpenChange(true)
+                    },
                     readOnly = false,
-                    label = { Text("Country", color = MaterialTheme.colorScheme.onSurface)},
+                    label = { Text("Country", color = MaterialTheme.colorScheme.onSurface) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = countryOpen) },
-                    colors = TextFieldDefaults.textFieldColors(
+
+                    colors = OutlinedTextFieldDefaults.colors(
                         focusedTextColor = MaterialTheme.colorScheme.onSurface,
                         unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                        disabledTextColor = MaterialTheme.colorScheme.onSurface,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline
                     )
                 )
+
+                val filteredCountries = remember(countryQuery, countries) {
+                    countries.filter { it.getDisplayName().contains(countryQuery, ignoreCase = true) }
+                }
+
                 ExposedDropdownMenu(
-                    expanded = countryOpen,
+                    expanded = countryOpen && filteredCountries.isNotEmpty(),
                     onDismissRequest = { onOpenChange(false) }
                 ) {
-                    countries.filter { it.getDisplayName().contains(countryQuery, ignoreCase = true) }.forEach { country ->
+                    filteredCountries.forEach { country ->
                         DropdownMenuItem(
                             text = { Text(country.getDisplayName()) },
                             onClick = {
@@ -470,7 +492,6 @@ fun CountryCard(selectedCountry: Country?, countryOpen: Boolean, onSelectedCount
         }
     }
 }
-
 
 @Composable
 fun VideoCard(selectedVideoUri: Uri?, exoPlayer: ExoPlayer?, onSelectVideoClick: () -> Unit) {
