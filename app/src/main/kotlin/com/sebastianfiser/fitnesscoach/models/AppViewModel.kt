@@ -390,17 +390,20 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     suspend fun uploadImage(context: Context, uri: Uri, userId: String): Result<String> {
+        _imageState.value = ProfileImageState.Loading
         val result = repository.uploadImage(context, uri, userId)
         if (result.isSuccess) {
             val fileId = result.getOrNull()
             if (fileId != null) {
                 userIconId = fileId
                 updateUserSettings()
+                loadProfileImage(userId)
             }
         } else {
             val e = result.exceptionOrNull()
             Log.d("AppViewModel", "Failed to upload image: ${e?.message}")
             snackbarHostState.showSnackbar("Failed to upload image, check your internet connection DEBUG: ${e?.message}")
+            _imageState.value = ProfileImageState.Error
         }
 
         return result

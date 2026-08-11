@@ -51,6 +51,8 @@ import com.sebastianfiser.fitnesscoach.screens.LoginScreen
 import com.sebastianfiser.fitnesscoach.screens.RegisterScreen
 import com.sebastianfiser.fitnesscoach.screens.ExercisePickScreen
 import com.sebastianfiser.fitnesscoach.screens.SubmissionScreen
+import com.sebastianfiser.fitnesscoach.screens.EditScreen
+
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -129,6 +131,7 @@ fun StartContent(viewModel: AppViewModel) {
                 composable(Screen.ExercisePick.route) { ExercisePickScreen(navController = navController, viewModel = viewModel) }
                 composable(Screen.Submission.route) { SubmissionScreen(navController = navController, viewModel = viewModel) }
                 composable(Screen.Reviewer.route) { ReviewerScreen(navController = navController, viewModel = viewModel) }
+                composable(Screen.Edit.route) { EditScreen(navController = navController, viewModel = viewModel) }
             }
         }
     }
