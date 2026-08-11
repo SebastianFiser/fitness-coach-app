@@ -27,7 +27,7 @@ import com.sebastianfiser.fitnesscoach.models.ProfileImageState
 
 sealed interface ProfileImageState {
     object Loading: ProfileImageState
-    data class Sucess(val bitmap: Bitmap): ProfileImageState
+    data class Success(val bitmap: Bitmap): ProfileImageState
     data class Error(val message: String): ProfileImageState
 }
 

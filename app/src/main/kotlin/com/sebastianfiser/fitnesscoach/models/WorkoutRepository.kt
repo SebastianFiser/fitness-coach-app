@@ -39,9 +39,9 @@ class WorkoutRepository(client: Client, private val imageCacheManager: ImageCach
         if (userSettings == null) {
             return@withContext null
         }
-        val imageFileId = userSettings.profileIconId
+        val imageFileId = userSettings.userIconId
 
-        val ramBitmap = cacheManager.getFromMemory(userId)
+        val ramBitmap = imageCacheManager.getFromMemory(userId)
         if (ramBitmap != null) {
             return@withContext ramBitmap
         }
