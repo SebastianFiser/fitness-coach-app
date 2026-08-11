@@ -40,7 +40,7 @@ class WorkoutRepository(client: Client, private val imageCacheManager: ImageCach
             return@withContext null
         }
         val document = result.getOrNull() ?: return@withContext null
-        val imageFileId = document.data["userIconId"] as? String ?: return@withContext null
+        val imageFileId = document.data["profileIconId"] as? String ?: return@withContext null
 
         val ramBitmap = imageCacheManager.getFromMemory(imageFileId)
         if (ramBitmap != null) {
