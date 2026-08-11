@@ -56,16 +56,12 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
     var userIcUri by remember { mutableStateOf(Uri.EMPTY) }
     val context = LocalContext.current
 
+    val imageState by viewModel.imageState.collectAsState()
+
     val pickMedia = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         userIcUri = uri ?: Uri.EMPTY
-    }
-
-    val bitmap = remember(viewModel.userIcon) {
-        viewModel.userIcon?.let {
-            BitmapFactory.decodeByteArray(it, 0, it.size).asImageBitmap()
-        }
     }
 
     LaunchedEffect(Unit) {
@@ -74,9 +70,7 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
             userName = currentUser?.name ?: "User"
             userEmail = currentUser?.email ?: "user@email.com"
 
-            if (viewModel.userIcon == null && viewModel.userIconId != null) {
-                viewModel.getImage(viewModel.userIconId!!)
-            }
+            viewModel.loadProfileImage()
         }
     }
 
@@ -138,27 +132,41 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
                 contentAlignment = Alignment.Center
             ) {
                 val capedFirLetUname = userName.firstOrNull()?.uppercase() ?: "U"
-                if (bitmap == null) {
-                    Box(
-                        modifier = Modifier
-                            .size(80.dp)
-                            .clip(CircleShape)
-                            .border(3.dp, Color(0xFFD4B896), CircleShape)
-                            .background(Color.Gray),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("${capedFirLetUname}", color = Color.White, style = MaterialTheme.typography.headlineLarge)
+
+                when (val state = imageState) {
+                    is ProfileImageState.Loading -> {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(40.dp),
+                            color = Color(0xFFD4B896)
+                        )
                     }
-                } else {
-                    Image(
-                        bitmap = bitmap,
-                        contentDescription = "User Icon",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .size(80.dp)
-                            .clip(CircleShape)
-                            .border(3.dp, Color(0xFFD4B896), CircleShape)
-                    )
+                    is ProfileImageState.Sucess -> {
+                        Image(
+                            bitmap = state.bitmap.asImageBitmap(),
+                            contentDescription = "User Icon",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .size(80.dp)
+                                .clip(CircleShape)
+                                .border(3.dp, Color(0xFFD4B896), CircleShape)
+                        )
+                    }
+                    is ProfileImageState.Error -> {
+                        Box (
+                            modifier = Modifier
+                                .size(80.dp)
+                                .clip(CircleShape)
+                                .border(3.dp, Color(0xFFD4B896), CircleShape)
+                                .background(Color.Gray),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text (
+                                text = capedFirLetUname,
+                                color = Color.White,
+                                style = MaterialTheme.typography.headlineLarge
+                            )
+                        }
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))

@@ -19,6 +19,16 @@ import kotlinx.serialization.json.Json
 import androidx.lifecycle.AndroidViewModel
 import android.app.Application
 import java.io.File
+import android.graphics.Bitmap
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+
+sealed interface ProfileImageState {
+    object Loading: ProfileImageState
+    data class Sucess(val bitmap: Bitmap): ProfileImageState
+    data class Error(val message: String): ProfileImageState
+}
 
 class AppViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = WorkoutRepository(Appwrite.client)
@@ -471,6 +481,23 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             } catch (e: Exception) {
                 Log.d("AppViewModel", "Failed to execute delete account function: ${e.message}")
                 snackbarHostState.showSnackbar("Failed to delete account error code ${e.message}")
+            }
+        }
+    }
+
+    private val _imageState = MutableStateFlow<ProfileImageState>(ProfileImageState.Loading)
+    val imageState: StateFlow<ProfileImageState> = _imageState.asStateFlow()
+
+    fun loadProfileImage() {
+        viewModelScope.launch {
+            _imageState.value = ProfileImageState.Loading
+
+            val bitmap = repository.getProfileImage()
+
+            if (bitmap != null) {
+                _imageState.value = ProfileImageState.Success(bitmap)
+            } else {
+                _imageState.value = ProfileImageState.Error("Failed to load image")
             }
         }
     }

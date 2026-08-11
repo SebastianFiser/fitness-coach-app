@@ -4,10 +4,15 @@ import io.appwrite.Client
 import android.content.Context
 import android.net.Uri
 import io.appwrite.ID
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class WorkoutRepository(client: Client) {
     private val db = AppwriteDB(client)
     private val storage = AppwriteStorage(client)
+    private val cacheManager = ImageCacheManager
 
     suspend fun saveWorkout(userId: String, date: String) = db.saveWorkout(userId, date)
     suspend fun saveSet(workoutId: String, userId: String, exerciseName: String, weight: Float, reps: Int) = db.saveSet(workoutId, userId, exerciseName, weight, reps)
@@ -28,4 +33,37 @@ class WorkoutRepository(client: Client) {
     suspend fun getUserSettings(userId: String) = db.getUserSettings(userId)
     suspend fun getImage(fileId: String) = storage.getImage(fileId)
     suspend fun createUserSettings(userId: String) = db.createUserSettings(userId)
+
+    suspend fun getProfileImage(userId: String): Bitmap? = withContext(Dispatchers.IO) {
+
+        val userSettings = getUserSettings(userId)
+        if (userSettings == null) {
+            return@withContext null
+        }
+        val imageFileId = userSettings.profileIconId
+
+        val ramBitmap = cacheManager.getFromMemory(userId)
+        if (ramBitmap != null) {
+            return@withContext ramBitmap
+        }
+
+        val diskBitmap = cacheManager.getFromDisk(userId)
+        if (diskBitmap != null) {
+            cacheManager.saveToMemory(userId, diskBitmap)
+            return@withContext diskBitmap
+        }
+
+        val bytes = getImage(imageFileId)
+        if (bytes == null) {
+            return@withContext null
+        }
+        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+
+        bitmap.let {
+            cacheManager.saveToMemory(imageFileId, it)
+            cacheManager.saveToDisk(imageFileId, it)
+        }
+
+        return@withContext bitmap
+    }
 }
