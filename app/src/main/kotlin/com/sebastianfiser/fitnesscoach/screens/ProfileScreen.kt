@@ -71,9 +71,10 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
             val currentUser = Appwrite.getCurrentUser()
             userName = currentUser?.name ?: "User"
             userEmail = currentUser?.email ?: "user@email.com"
-            val userId = currentUser?.id ?: return@LaunchedEffect
-
-            viewModel.loadProfileImage(userId)
+            val userId = currentUser?.id
+            if (userId != null) {
+                viewModel.loadProfileImage(userId)
+            }
         }
     }
 

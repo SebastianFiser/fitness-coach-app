@@ -23,6 +23,7 @@ import android.graphics.Bitmap
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import com.sebastianfiser.fitnesscoach.models.ProfileImageState
 
 sealed interface ProfileImageState {
     object Loading: ProfileImageState

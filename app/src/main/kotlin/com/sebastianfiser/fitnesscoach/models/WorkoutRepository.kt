@@ -46,23 +46,30 @@ class WorkoutRepository(client: Client, private val imageCacheManager: ImageCach
             return@withContext ramBitmap
         }
 
-        val diskBitmap = cacheManager.getFromDisk(userId)
+        val diskBitmap = imageCacheManager.getFromDisk(userId)
         if (diskBitmap != null) {
-            cacheManager.saveToMemory(userId, diskBitmap)
+            imageCacheManager.saveToMemory(userId, diskBitmap)
             return@withContext diskBitmap
         }
 
-        val bytes = getImage(imageFileId)
-        if (bytes == null) {
-            return@withContext null
-        }
-        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+        try {
 
-        bitmap.let {
-            cacheManager.saveToMemory(imageFileId, it)
-            cacheManager.saveToDisk(imageFileId, it)
+            val result: Result<ByteArray> = getImage(imageFileId)
+            val imageBytes: ByteArray? = result.getOrNull()
+
+            if (imageBytes != null) {
+                val networkBitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+
+                if (networkBitmap != null) {
+                    imageCacheManager.saveToMemory(userId, networkBitmap)
+                    imageCacheManager.saveToDisk(userId, networkBitmap)
+                    return@withContext networkBitmap
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
-        return@withContext bitmap
+        return@withContext null
     }
 }
