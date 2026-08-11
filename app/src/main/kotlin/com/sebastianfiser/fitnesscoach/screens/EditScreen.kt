@@ -30,9 +30,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.LaunchedEffect
-
+import com.sebastianfiser.fitnesscoach.models.Appwrite
+import androidx.compose.runtime.collectAsState
+import com.sebastianfiser.fitnesscoach.models.ProfileImageState
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.PickVisualMediaRequest
+import android.net.Uri
+import androidx.compose.ui.unit.sp
 
 //Pfp on top, info, and buttons to change next to all of them.
 
