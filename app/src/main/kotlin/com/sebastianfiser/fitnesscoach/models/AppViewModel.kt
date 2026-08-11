@@ -31,7 +31,8 @@ sealed interface ProfileImageState {
 }
 
 class AppViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = WorkoutRepository(Appwrite.client)
+    private val imageCacheManager = ImageCacheManager(application.applicationContext)
+    private val repository = WorkoutRepository(Appwrite.client, imageCacheManager)
     var workouts by mutableStateOf<List<Document<Map<String, Any>>>>(
         emptyList()
     )
@@ -488,11 +489,11 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     private val _imageState = MutableStateFlow<ProfileImageState>(ProfileImageState.Loading)
     val imageState: StateFlow<ProfileImageState> = _imageState.asStateFlow()
 
-    fun loadProfileImage() {
+    fun loadProfileImage(userId: String) {
         viewModelScope.launch {
             _imageState.value = ProfileImageState.Loading
 
-            val bitmap = repository.getProfileImage()
+            val bitmap = repository.getProfileImage(userId)
 
             if (bitmap != null) {
                 _imageState.value = ProfileImageState.Success(bitmap)

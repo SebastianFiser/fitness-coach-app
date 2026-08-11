@@ -9,10 +9,9 @@ import android.graphics.BitmapFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class WorkoutRepository(client: Client) {
+class WorkoutRepository(client: Client, private val imageCacheManager: ImageCacheManager) {
     private val db = AppwriteDB(client)
     private val storage = AppwriteStorage(client)
-    private val cacheManager = ImageCacheManager
 
     suspend fun saveWorkout(userId: String, date: String) = db.saveWorkout(userId, date)
     suspend fun saveSet(workoutId: String, userId: String, exerciseName: String, weight: Float, reps: Int) = db.saveSet(workoutId, userId, exerciseName, weight, reps)

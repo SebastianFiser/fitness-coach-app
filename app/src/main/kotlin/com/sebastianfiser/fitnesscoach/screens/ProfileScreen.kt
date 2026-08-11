@@ -45,6 +45,8 @@ import androidx.compose.ui.graphics.asImageBitmap
 import android.graphics.BitmapFactory
 import androidx.compose.ui.layout.ContentScale
 import com.sebastianfiser.fitnesscoach.ui.components.ComingSoonOverlay
+import androidx.compose.runtime.collectAsState
+import com.sebastianfiser.fitnesscoach.models.ProfileImageState
 
 @Composable
 fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
@@ -69,8 +71,9 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
             val currentUser = Appwrite.getCurrentUser()
             userName = currentUser?.name ?: "User"
             userEmail = currentUser?.email ?: "user@email.com"
+            val userId = currentUser?.id ?: return@LaunchedEffect
 
-            viewModel.loadProfileImage()
+            viewModel.loadProfileImage(userId)
         }
     }
 
