@@ -35,20 +35,21 @@ class WorkoutRepository(client: Client, private val imageCacheManager: ImageCach
 
     suspend fun getProfileImage(userId: String): Bitmap? = withContext(Dispatchers.IO) {
 
-        val userSettings = getUserSettings(userId)
-        if (userSettings == null) {
+        val result = getUserSettings(userId)
+        if (result == null) {
             return@withContext null
         }
-        val imageFileId = userSettings.userIconId
+        val document = result.getOrNull() ?: return@withContext null
+        val imageFileId = document.data["userIconId"] as? String ?: return@withContext null
 
-        val ramBitmap = imageCacheManager.getFromMemory(userId)
+        val ramBitmap = imageCacheManager.getFromMemory(imageFileId)
         if (ramBitmap != null) {
             return@withContext ramBitmap
         }
 
-        val diskBitmap = imageCacheManager.getFromDisk(userId)
+        val diskBitmap = imageCacheManager.getFromDisk(imageFileId)
         if (diskBitmap != null) {
-            imageCacheManager.saveToMemory(userId, diskBitmap)
+            imageCacheManager.saveToMemory(imageFileId, diskBitmap)
             return@withContext diskBitmap
         }
 
@@ -61,8 +62,8 @@ class WorkoutRepository(client: Client, private val imageCacheManager: ImageCach
                 val networkBitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
 
                 if (networkBitmap != null) {
-                    imageCacheManager.saveToMemory(userId, networkBitmap)
-                    imageCacheManager.saveToDisk(userId, networkBitmap)
+                    imageCacheManager.saveToMemory(imageFileId, networkBitmap)
+                    imageCacheManager.saveToDisk(imageFileId, networkBitmap)
                     return@withContext networkBitmap
                 }
             }

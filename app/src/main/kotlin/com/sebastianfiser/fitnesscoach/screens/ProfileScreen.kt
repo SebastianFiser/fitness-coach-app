@@ -144,7 +144,7 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
                             color = Color(0xFFD4B896)
                         )
                     }
-                    is ProfileImageState.Sucess -> {
+                    is ProfileImageState.Success -> {
                         Image(
                             bitmap = state.bitmap.asImageBitmap(),
                             contentDescription = "User Icon",
