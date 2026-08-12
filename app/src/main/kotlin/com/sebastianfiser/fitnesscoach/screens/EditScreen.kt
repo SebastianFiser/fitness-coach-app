@@ -33,6 +33,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.foundation.focusable
 
 @Composable
 fun EditScreen(
