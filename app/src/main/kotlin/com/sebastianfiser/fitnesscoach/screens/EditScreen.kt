@@ -30,7 +30,9 @@ import com.sebastianfiser.fitnesscoach.models.ProfileImageState
 import kotlinx.coroutines.launch
 import com.sebastianfiser.fitnesscoach.models.Appwrite
 import androidx.compose.material3.AlertDialog
-import androidx.compose.ui.text.input.PasswordInputVisualTransformation
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 
 @Composable
 fun EditScreen(
@@ -118,7 +120,7 @@ fun EditScreen(
 
         if (showDialog) {
             AlertDialog (
-                onDissmissRequest = {
+                onDismissRequest = {
                     showDialog = false
                     isSaving = true
                 },
@@ -145,10 +147,7 @@ fun EditScreen(
                             showDialog = false
                             isSaving = true
                             coroutineScope.launch {
-                                viewModel.updateUserData(userName, userEmail, userPassword) { success ->
-                                    isSaving = false
-                                    if (success) navController.popBackStack()
-                                }
+                                viewModel.updateUserData(userName, userEmail, userPassword)
                             }
                         }
                     ) {
