@@ -28,6 +28,9 @@ import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import com.sebastianfiser.fitnesscoach.models.ProfileImageState
 import kotlinx.coroutines.launch
+import com.sebastianfiser.fitnesscoach.models.Appwrite
+import androidx.compose.material3.AlertDialog
+import androidx.compose.ui.text.input.PasswordInputVisualTransformation
 
 @Composable
 fun EditScreen(
@@ -40,10 +43,21 @@ fun EditScreen(
 
     var userName by remember { mutableStateOf("") }
     var userEmail by remember { mutableStateOf("") }
+    var userPassword by remember { mutableStateOf("") }
     var isSaving by remember { mutableStateOf(false) }
 
+    var editNameEnabled by remember { mutableStateOf(false) }
+    var editEmailEnabled by remember { mutableStateOf(false) }
+
+    val focusRequester1 = remember { FocusRequester() }
+    val focusRequester2 = remember { FocusRequester() }
+
+    var showDialog by remember { mutableStateOf(false) }
+    var passwordInput by remember { mutableStateOf("") }
+
+
     LaunchedEffect(Unit) {
-        val currentUser = viewModel.getCurrentUser()
+        val currentUser = Appwrite.getCurrentUser()
         userName = currentUser?.name ?: ""
         userEmail = currentUser?.email ?: ""
     }
@@ -53,7 +67,7 @@ fun EditScreen(
     ) { uri: Uri? ->
         uri?.let { newUri ->
             coroutineScope.launch {
-                val currentUser = viewModel.getCurrentUser()
+                val currentUser = Appwrite.getCurrentUser()
                 val userId = currentUser?.id ?: ""
                 if (userId.isNotEmpty()) {
                     viewModel.uploadImage(context, newUri, userId)
@@ -97,13 +111,59 @@ fun EditScreen(
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.clickable(enabled = !isSaving) {
                     isSaving = true
-                    coroutineScope.launch {
-                        viewModel.updateUserData(userName, userEmail) { success ->
-                            isSaving = false
-                            if (success) navController.popBackStack()
-                        }
-                    }
+                    showDialog = true
                 }
+            )
+        }
+
+        if (showDialog) {
+            AlertDialog (
+                onDissmissRequest = {
+                    showDialog = false
+                    isSaving = true
+                },
+                title = {
+                    Text(text = "Confirm with password")
+                },
+                text = {
+                    Column {
+                        Text("To save changes please enter your password")
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        OutlinedTextField(
+                            value = passwordInput,
+                            onValueChange = { passwordInput = it },
+                            label = { Text("Password") },
+                            singleLine = true,
+                            visualTransformation = PasswordVisualTransformation(),
+                        )
+                    }
+                },
+                confirmButton = {
+                    Button (
+                        onClick = {
+                            showDialog = false
+                            isSaving = true
+                            coroutineScope.launch {
+                                viewModel.updateUserData(userName, userEmail, userPassword) { success ->
+                                    isSaving = false
+                                    if (success) navController.popBackStack()
+                                }
+                            }
+                        }
+                    ) {
+                        Text("Confirm")
+                    }
+                },
+                dismissButton = {
+                    Button(
+                        onClick = {
+                            showDialog = false
+                        }
+                    ) {
+                        Text("Cancel")
+                    }
+                },
             )
         }
 
@@ -192,7 +252,11 @@ fun EditScreen(
             Text(
                 text = "EDIT",
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = 14.sp
+                fontSize = 14.sp,
+                modifier = Modifier.clickable {
+                    focusRequester1.requestFocus()
+                    editNameEnabled = true
+                }
             )
         }
 
@@ -202,13 +266,17 @@ fun EditScreen(
             value = userName,
             onValueChange = { userName = it },
             singleLine = true,
+            enabled = editNameEnabled,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = MaterialTheme.colorScheme.primary,
                 unfocusedBorderColor = MaterialTheme.colorScheme.outline,
                 focusedTextColor = MaterialTheme.colorScheme.onBackground,
                 unfocusedTextColor = MaterialTheme.colorScheme.onBackground
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .focusRequester(focusRequester1)
+                .focusable(editNameEnabled)
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -226,7 +294,11 @@ fun EditScreen(
             Text(
                 text = "Edit",
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = 14.sp
+                fontSize = 14.sp,
+                modifier = Modifier.clickable {
+                    focusRequester2.requestFocus()
+                    editEmailEnabled = true
+                }
             )
         }
 
@@ -236,13 +308,17 @@ fun EditScreen(
             value = userEmail,
             onValueChange = { userEmail = it },
             singleLine = true,
+            enabled = editEmailEnabled,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = MaterialTheme.colorScheme.primary,
                 unfocusedBorderColor = MaterialTheme.colorScheme.outline,
                 focusedTextColor = MaterialTheme.colorScheme.onBackground,
                 unfocusedTextColor = MaterialTheme.colorScheme.onBackground
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .focusRequester(focusRequester2)
+                .focusable(editEmailEnabled)
         )
     }
 }

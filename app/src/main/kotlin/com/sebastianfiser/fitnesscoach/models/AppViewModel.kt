@@ -403,7 +403,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             val e = result.exceptionOrNull()
             Log.d("AppViewModel", "Failed to upload image: ${e?.message}")
             snackbarHostState.showSnackbar("Failed to upload image, check your internet connection DEBUG: ${e?.message}")
-            _imageState.value = ProfileImageState.Error
+            _imageState.value = ProfileImageState.Error("Failed to upload Image")
         }
 
         return result
@@ -503,6 +503,23 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
                 _imageState.value = ProfileImageState.Success(bitmap)
             } else {
                 _imageState.value = ProfileImageState.Error("Failed to load image")
+            }
+        }
+    }
+
+    fun updateUserData(name: String, email: String, password: String) {
+
+        viewModelScope.launch {
+            try {
+                repository.changeUserName(name)
+            } catch (e: Exception) {
+                snackbarHostState.showSnackbar("Failed to change user name: ${e.message}")
+            }
+
+            try {
+                repository.changeUserEmail(email, password)
+            } catch (e: Exception) {
+                snackbarHostState.showSnackbar("Failed to change user email: ${e.message}")
             }
         }
     }
