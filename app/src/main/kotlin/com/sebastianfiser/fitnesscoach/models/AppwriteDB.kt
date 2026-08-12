@@ -9,7 +9,6 @@ import io.appwrite.Permission
 import io.appwrite.Role
 import io.appwrite.Query
 import com.sebastianfiser.fitnesscoach.models.Appwrite
-import com.sebastianfiser.fitnesscoach.models.AppwriteClient
 import io.appwrite.services.Account
 import io.appwrite.exceptions.AppwriteException
 
@@ -275,13 +274,13 @@ class AppwriteDB(private val client: Client) {
 
     suspend fun changeUserName(newName: String): Result<Account> {
         return runCatching {
-            AppwriteClient.account.updateName(name = newName)
+            Appwrite.account.updateName(name = newName)
         }
     }
 
     suspend fun changeUserEmail(newEmail: String, currentEmail: String): Result<Account> {
         return runCatching {
-            AppwriteClient.account.updateEmail(email = newEmail, currentEmail = currentEmail)
+            Appwrite.account.updateEmail(email = newEmail, currentEmail = currentEmail)
         }
     }
 
