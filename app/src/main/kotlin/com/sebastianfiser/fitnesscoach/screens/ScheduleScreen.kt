@@ -201,7 +201,7 @@ fun scheduleExerciseRow(exercise: Document<Map<String, Any>>, unit: String, view
         Text(
             "${viewModel.GetWeightDisplay(weight)} ${if (unit == "kg") "kg" else "lbs"}",
             fontSize = 14.sp,
-            fontWeight = FontWeight.Semibold,
+            fontWeight = FontWeight.SemiBold,
             color = if (weight > 0f) {
                 MaterialTheme.colorScheme.primary
             } else {
@@ -237,7 +237,7 @@ fun DayItem(
         ) {
             Text(
                 text = dayName,
-                fontSize = 13.dp,
+                fontSize = 13.sp,
                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                 color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
             )

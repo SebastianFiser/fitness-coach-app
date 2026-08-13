@@ -171,7 +171,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 style = MaterialTheme.typography.bodyMedium
                             )
-                            val weight = currentExercise?.weight?.let { convertUnit(it, viewModel.unit) } ?: 0f
+                            val weight = currentExercise?.weight?.let { viewModel.convertUnit(it, viewModel.unit) } ?: 0f
                             Text(
                                 "@ $weight ${viewModel.unit}",
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
