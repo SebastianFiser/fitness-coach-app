@@ -118,7 +118,7 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
                     imeAction = ImeAction.Next
                 ),
                 keyboardActions = KeyboardActions(
-                    onNext = { passwordFocusRequester.requestFocus() }
+                    onNext = { passwordFocusManager.requestFocus() }
                 )
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -140,7 +140,7 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
                         Icon(icon, contentDescription = "Toggle password visibility")
                     }
                 },
-                modifier = Modifier.focusRequester(passwordFocusRequester)
+                modifier = Modifier.focusRequester(passwordFocusManager)
             )
             Spacer(modifier = Modifier.height(24.dp))
             Button(
