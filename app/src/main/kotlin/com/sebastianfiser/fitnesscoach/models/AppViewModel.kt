@@ -31,9 +31,16 @@ sealed interface ProfileImageState {
     data class Error(val message: String): ProfileImageState
 }
 
+data class LoginUiState(
+    val isLoading: Boolean = false,
+    val error: String? = null,
+)
+
 class AppViewModel(application: Application) : AndroidViewModel(application) {
     private val imageCacheManager = ImageCacheManager(application.applicationContext)
     private val repository = WorkoutRepository(Appwrite.client, imageCacheManager)
+    private val _loginUiState = MutableStateFlow(LoginUiState())
+    val loginUiState: StateFlow<LoginUiState> = _loginUiState.asStateFlow()
     var workouts by mutableStateOf<List<Document<Map<String, Any>>>>(
         emptyList()
     )
@@ -78,6 +85,31 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     var testResult by mutableStateOf<String?>(null)
     var accountDeleted by mutableStateOf(false)
 
+    fun login(email: String, password: String, onSuccess: () -> Unit ) {
+        viewModelScope.launch {
+            _loginUiState.value = LoginUiState(isLoading = true)
+
+            try {
+                Appwrite.onLogin(email, password)
+                val currentUser = Appwrite.getCurrentUser()
+                val userId = currentUser?.id ?: throw Exception("User ID was not found")
+
+                seedSchedule(userId)
+                loadSchedule(userId)
+                checkReviewerStatus()
+
+                _loginUiState.value = LoginUiState(isLoading = false)
+                onSuccess()
+            } catch (e: Throwable) {
+                val errorMsg = Appwrite.ParseErrorMsg(e.message)
+                _loginUiState.value = LoginUiState(isLoading = false, error = errorMsg)
+            }
+        }
+    }
+
+    fun clearError() {
+        _loginUiState.value = _loginUiState.value.copy(error = null)
+    }
 
     suspend fun checkReviewerStatus() {
         isReviewer = Appwrite.isReviewer()

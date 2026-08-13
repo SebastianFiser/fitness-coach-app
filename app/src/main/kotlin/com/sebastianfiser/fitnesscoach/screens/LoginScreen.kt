@@ -11,7 +11,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.graphics.Color 
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.sebastianfiser.fitnesscoach.navigation.Screen
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
@@ -20,18 +20,55 @@ import kotlinx.coroutines.launch
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.BorderStroke
 import androidx.activity.compose.BackHandler
+import com.sebastianfiser.fitnesscoach.ui.components.AppTextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import android.util.Patters
 
 
 @Composable
 fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    val scope = rememberCoroutineScope()
-    var errorMessage by remember { mutableStateOf("")}
+    var isPasswordVisible by remember { mutableStateOf(false) }
+
+    val isEmailValid = remember(email) {
+        email.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    val isPasswordValid = remember(password) {
+        password.lenght >= 6
+    }
+    val isFormValid = isEmailValid && isPasswordValid
+
+    val uiState by viewModel.loginUiState.collectAsState()
+
     val snackbarHostState = remember { SnackbarHostState() }
+    val focusManager = LocalFocusManager.current
+    val passwordFocusManager = remember { FocusRequester() }
     BackHandler(enabled = true) {
         //ignore the action
     }
+
+    LaunchedEffect(uiState.error) {
+        uiState.error?.let { message ->
+            snackbarHostState.showSnackbar(message)
+            viewModel.clearError()
+        }
+    }
+
+    val performLogin = {
+        if (isFormValid && !uiState.isLoading) {
+            focusManager.clearFocus()
+            viewModel.login(email, password)
+            navController.navigate(Screen.Overview.route)
+            popUpTo(Screen.Login.route) { inclusive = true }
+        }
+    }
+
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) { data ->
             Surface(
@@ -59,61 +96,56 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
         ) {
             Text("Welcome", fontSize = 42.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)
             Spacer(modifier = Modifier.height(32.dp))
-            OutlinedTextField(
+            AppTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Email") },
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                    unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    focusedBorderColor = MaterialTheme.colorScheme.primary,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                    focusedLabelColor = MaterialTheme.colorScheme.primary,
-                    unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
+                label = "Email",
+                enabled = !uiState.isLoading,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = { passwordField.requestFocus() }
                 )
             )
             Spacer(modifier = Modifier.height(16.dp))
-            OutlinedTextField(
+            AppTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Password") },
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                    unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    focusedBorderColor = MaterialTheme.colorScheme.primary,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                    focusedLabelColor = MaterialTheme.colorScheme.primary,
-                    unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
+                label = "Password",
+                enabled = !uiState.isLoading,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done
                 ),
-                visualTransformation = PasswordVisualTransformation()
+                keyboardActions = KeyboardActions(
+                    onDone = { performLogin() }
+                ),
+                trailingIcon = {
+                    val icon = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
+                    IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                        Icon(icon, contentDescription = "Toggle password visibility")
+                    }
+                }
+                modifier = Modifier.focusRequester(passwordFocusRequester)
             )
             Spacer(modifier = Modifier.height(24.dp))
             Button(
-                onClick = { scope.launch {
-                    try {
-                        Appwrite.onLogin(email, password)
-                        val currentUser = Appwrite.getCurrentUser()
-                        val userId = currentUser?.id ?: return@launch
-                        viewModel.seedSchedule(userId)
-                        viewModel.loadSchedule(userId)
-                        viewModel.checkReviewerStatus()
-                        navController.navigate(Screen.Overview.route)
-                    } catch (e: Throwable) {
-                        scope.launch {
-                            var errorMsg = Appwrite.ParseErrorMsg(e.message ?: "")
-                            snackbarHostState.showSnackbar("Login failed: ${errorMsg}")
-                        }
-                    }
-                } },
+                onClick = { performLogin() },
+                enabled = isFormValid && !uiState.isLoading,
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
             ) {
-                Text("Login", color = MaterialTheme.colorScheme.onPrimary)
+                if (uiState.isLoading) {
+                    CircularProgressIndicator(modifier = Modifier.size(24.dp), color = MaterialTheme.colorScheme.onPrimary, strokeWidth = 2.5.dp)
+                } else {
+                    Text("Login", color = MaterialTheme.colorScheme.onPrimary)
+                }
             }
             TextButton(
                 onClick = { navController.navigate(Screen.Register.route) },
+                enabled = !uiState.isLoading,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Don't have an account? Register", color = MaterialTheme.colorScheme.onBackground)
