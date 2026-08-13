@@ -92,7 +92,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             try {
                 Appwrite.onLogin(email, password)
                 val currentUser = Appwrite.getCurrentUser()
-                val userId = currentUser?.id ?: throw Exception("User ID was not found")
+                val userId: String = currentUser?.id ?: throw Exception("User ID was not found")
 
                 seedSchedule(userId)
                 loadSchedule(userId)
@@ -101,7 +101,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
                 _loginUiState.value = LoginUiState(isLoading = false)
                 onSuccess()
             } catch (e: Throwable) {
-                val errorMsg = Appwrite.ParseErrorMsg(e.message)
+                val errorMsg = Appwrite.ParseErrorMsg(e.message ?: "")
                 _loginUiState.value = LoginUiState(isLoading = false, error = errorMsg)
             }
         }

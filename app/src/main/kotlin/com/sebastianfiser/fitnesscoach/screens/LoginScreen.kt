@@ -26,7 +26,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import android.util.Patters
+import android.util.Patterns
 
 
 @Composable
@@ -40,7 +40,7 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
     }
 
     val isPasswordValid = remember(password) {
-        password.lenght >= 6
+        password.length >= 6
     }
     val isFormValid = isEmailValid && isPasswordValid
 
@@ -106,7 +106,7 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
                     imeAction = ImeAction.Next
                 ),
                 keyboardActions = KeyboardActions(
-                    onNext = { passwordField.requestFocus() }
+                    onNext = { passwordFocusRequester.requestFocus() }
                 )
             )
             Spacer(modifier = Modifier.height(16.dp))
