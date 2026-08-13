@@ -117,7 +117,7 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
                 horizontalArrangement = Arrangement.End
             ) {
 
-                TextButton(onClick = {navController.navigate(Screen.Edit.Route)}) {
+                TextButton(onClick = {navController.navigate(Screen.Edit.route)}) {
                     Icon(Icons.Default.Create, contentDescription = null, tint = MaterialTheme.colorScheme.onBackground)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("Edit Profile", color = MaterialTheme.colorScheme.onBackground)
