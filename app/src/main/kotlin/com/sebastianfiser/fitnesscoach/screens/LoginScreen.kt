@@ -57,13 +57,10 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
         //ignore the action
     }
 
-    val errorPrefix = stringResource(R.string.error_login_failed)
-    val showPasswordDesc = stringResource(R.string.show_password)
-    val hidePasswordDesc = stringResource(R.string.hide_password)
 
     LaunchedEffect(uiState.error) {
         uiState.error?.let { message ->
-            snackbarHostState.showSnackbar(message)
+            snackbarHostState.showSnackbar("Login failed: $message")
             viewModel.clearError()
         }
     }
