@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.foundation.border
 import androidx.compose.ui.text.font.fontWeight
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
@@ -198,7 +199,7 @@ fun scheduleExerciseRow(exercise: Document<Map<String, Any>>, unit: String, view
         )
 
         Text(
-            "${convertUnit(weight, unit, viewModel)} ${if (unit == "kg") "kg" else "lbs"}",
+            "${viewModel.GetWeightDisplay(weight)} ${if (unit == "kg") "kg" else "lbs"}",
             fontSize = 14.sp,
             fontWeight = FontWeight.Semibold,
             color = if (weight > 0f) {
@@ -210,14 +211,6 @@ fun scheduleExerciseRow(exercise: Document<Map<String, Any>>, unit: String, view
             modifier = Modifier.padding(end = 8.dp)
         )
 
-    }
-}
-
-fun convertUnit( weight: Float, unit: String, viewModel: AppViewModel): Float {
-    if (unit != "kg") {
-        return viewModel.GetWeightDisplay(weight * 2.20462f)
-    } else {
-        return viewModel.GetWeightDisplay(weight)
     }
 }
 
