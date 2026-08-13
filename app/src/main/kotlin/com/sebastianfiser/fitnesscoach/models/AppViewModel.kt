@@ -568,7 +568,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         return if (weight <= 0f) {
             "Bw/Ud"
         } else {
-            "${FormateWeight(weight)} kg"
+            "${FormateWeight(weight)}"
         }
     }
 

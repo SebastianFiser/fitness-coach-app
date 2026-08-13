@@ -22,6 +22,8 @@ import com.sebastianfiser.fitnesscoach.navigation.Screen
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.foundation.border
+import androidx.compose.ui.text.font.fontWeight
+import androidx.compose.ui.unit.sp
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
