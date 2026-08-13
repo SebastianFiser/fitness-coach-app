@@ -27,6 +27,10 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import android.util.Patterns
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.foundation.text.KeyboardActions
 
 
 @Composable
@@ -52,6 +56,10 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
     BackHandler(enabled = true) {
         //ignore the action
     }
+
+    val errorPrefix = stringResource(R.string.error_login_failed)
+    val showPasswordDesc = stringResource(R.string.show_password)
+    val hidePasswordDesc = stringResource(R.string.hide_password)
 
     LaunchedEffect(uiState.error) {
         uiState.error?.let { message ->
@@ -127,7 +135,7 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
                     IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
                         Icon(icon, contentDescription = "Toggle password visibility")
                     }
-                }
+                },
                 modifier = Modifier.focusRequester(passwordFocusRequester)
             )
             Spacer(modifier = Modifier.height(24.dp))
