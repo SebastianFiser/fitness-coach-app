@@ -29,6 +29,7 @@ import androidx.compose.material3.IconButton
 import android.util.Patterns
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.foundation.text.KeyboardActions
 
@@ -68,9 +69,15 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
     val performLogin = {
         if (isFormValid && !uiState.isLoading) {
             focusManager.clearFocus()
-            viewModel.login(email, password)
-            navController.navigate(Screen.Overview.route)
-            popUpTo(Screen.Login.route) { inclusive = true }
+            viewModel.login(
+                email = email,
+                password = password,
+                onSuccess = {
+                    navController.navigate(Screen.Overview.route){
+                        popUpTo(Screen.Login.route) { inclusive = true }
+                    }
+                }
+            )
         }
     }
 
