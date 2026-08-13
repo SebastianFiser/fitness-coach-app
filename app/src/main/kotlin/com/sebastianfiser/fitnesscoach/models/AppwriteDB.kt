@@ -272,15 +272,15 @@ class AppwriteDB(private val client: Client) {
         }
     }
 
-    suspend fun changeUserName(newName: String): Result<Account> {
+    suspend fun changeUserName(newName: String): Result<User<Map<String, Any>>> {
         return runCatching {
             Appwrite.account.updateName(name = newName)
         }
     }
 
-    suspend fun changeUserEmail(newEmail: String, currentEmail: String): Result<Account> {
+    suspend fun changeUserEmail(newEmail: String, password: String): Result<User<Map<String, Any>>> {
         return runCatching {
-            Appwrite.account.updateEmail(email = newEmail, currentEmail = currentEmail)
+            Appwrite.account.updateEmail(email = newEmail, password = password)
         }
     }
 

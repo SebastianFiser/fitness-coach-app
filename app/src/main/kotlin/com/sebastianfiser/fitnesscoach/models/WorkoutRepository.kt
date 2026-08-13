@@ -33,7 +33,7 @@ class WorkoutRepository(client: Client, private val imageCacheManager: ImageCach
     suspend fun getImage(fileId: String) = storage.getImage(fileId)
     suspend fun createUserSettings(userId: String) = db.createUserSettings(userId)
     suspend fun changeUserName(newName: String) = db.changeUserName(newName)
-    suspend fun changeUserEmail(newEmail: String, currentEmail: String) = db.changeUserEmail(newEmail, currentEmail)
+    suspend fun changeUserEmail(newEmail: String, password: String) = db.changeUserEmail(newEmail, password)
 
     suspend fun getProfileImage(userId: String): Bitmap? = withContext(Dispatchers.IO) {
 
