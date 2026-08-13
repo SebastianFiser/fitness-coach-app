@@ -116,13 +116,13 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                ComingSoonOverlay {
-                    TextButton(onClick = {}) {
-                        Icon(Icons.Default.Create, contentDescription = null, tint = MaterialTheme.colorScheme.onBackground)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("Edit Profile", color = MaterialTheme.colorScheme.onBackground)
-                    }
+
+                TextButton(onClick = {navController.navigate("edit")}) {
+                    Icon(Icons.Default.Create, contentDescription = null, tint = MaterialTheme.colorScheme.onBackground)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Edit Profile", color = MaterialTheme.colorScheme.onBackground)
                 }
+
             }
             Spacer(modifier = Modifier.height(8.dp))
             Box(
