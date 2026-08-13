@@ -127,6 +127,7 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
                 onValueChange = { password = it },
                 label = "Password",
                 enabled = !uiState.isLoading,
+                visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
@@ -141,6 +142,7 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
                     }
                 },
                 modifier = Modifier.focusRequester(passwordFocusManager)
+
             )
             Spacer(modifier = Modifier.height(24.dp))
             Button(
