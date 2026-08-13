@@ -60,7 +60,7 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
                 }
 
                 TextButton(
-                    onClick = { 
+                    onClick = {
                         viewModel.isEditing = true
                         navController.navigate(Screen.SetupSchedule.route)
                     },
@@ -77,7 +77,7 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
             DrawDayrow()
         }
         items(sortedEntries) { day ->
-            displayDaySchedule(day.value, day.key, unit)
+            displayDaySchedule(day.value, day.key, unit, viewModel)
         }
     }
 }
@@ -132,10 +132,10 @@ fun DrawDayrow() {
 }
 
 @Composable
-fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String, unit: String) {
+fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String, unit: String, viewModel: AppViewModel) {
     //var day = LocalDate.now().dayOfWeek
     //var dayNuminMonth = LocalDate.now().dayOfMonth
-    var month = LocalDate.now().monthValue 
+    var month = LocalDate.now().monthValue
     val dayLabels = mapOf(
         "Mo" to "Monday",
         "Tu" to "Tuesday",
@@ -166,14 +166,14 @@ fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String, 
             )
             Spacer(modifier = Modifier.height(8.dp))
             exercise.forEach { exercise ->
-                    scheduleExerciseRow(exercise, unit)
+                    scheduleExerciseRow(exercise, unit, viewModel)
                 }
         }
     }
 }
 
 @Composable
-fun scheduleExerciseRow(exercise: Document<Map<String, Any>>, unit: String) {
+fun scheduleExerciseRow(exercise: Document<Map<String, Any>>, unit: String, viewModel: AppViewModel) {
     val weight = when (val w = exercise.data["weight"]) {
         is Double -> w.toFloat()
         is Long -> w.toFloat()
@@ -184,27 +184,81 @@ fun scheduleExerciseRow(exercise: Document<Map<String, Any>>, unit: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .padding(vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = exercise.data["exerciseName"] as String, color = MaterialTheme.colorScheme.onSurface)
+        Text(
+            text = exercise.data["exerciseName"] as String,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Medium,
+            color = MaterialTheme.colorScheme.onSurface
+        )
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                "${convertUnit(weight, unit)} ${if (unit == "kg") "kg" else "lbs"}",
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(end = 8.dp)
-            )
-        }
+        Text(
+            "${convertUnit(weight, unit, viewModel)} ${if (unit == "kg") "kg" else "lbs"}",
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Semibold,
+            color = if (weight > 0f) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
+            },
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(end = 8.dp)
+        )
+
     }
 }
 
-fun convertUnit( weight: Float, unit: String): Float {
+fun convertUnit( weight: Float, unit: String, viewModel: AppViewModel): Float {
     if (unit != "kg") {
-        return weight * 2.20462f
+        return viewModel.GetWeightDisplay(weight * 2.20462f)
     } else {
-        return weight
+        return viewModel.GetWeightDisplay(weight)
+    }
+}
+
+@Composable
+fun DayItem(
+    dayName: String,
+    isSelected: Boolean = false,
+    hasWorkout: Boolean = false,
+    onClick: () -> Unit
+) {
+    Surface(
+        onClick = onClick,
+        shape = RoundedCornerShape(16.dp),
+        color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
+        modifier = Modifier
+            .padding(horizontal = 2.dp)
+            .width(44.dp)
+            .height(64.dp)
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.padding(vertical = 6.dp)
+        ) {
+            Text(
+                text = dayName,
+                fontSize = 13.dp,
+                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
+            )
+
+            Box (
+                modifier = Modifier
+                    .size(6.dp)
+                    .background(
+                        color = when {
+                            isSelected -> MaterialTheme.colorScheme.onPrimary
+                            hasWorkout -> MaterialTheme.colorScheme.primary
+                            else -> Color.Transparent
+                        },
+                        shape = CircleShape
+                    )
+            )
+        }
     }
 }

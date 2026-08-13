@@ -556,4 +556,20 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun FormatWeight(weight: Float): String {
+        return if (weight % 1f == 0f) {
+            weight.toInt().toString()
+        } else {
+            weight.toString()
+        }
+    }
+
+    fun GetWeightDisplay(weight: Float): String {
+        return if (weight <= 0f) {
+            "Bw/Ud"
+        } else {
+            "${FormateWeight(weight)} kg"
+        }
+    }
+
 }
