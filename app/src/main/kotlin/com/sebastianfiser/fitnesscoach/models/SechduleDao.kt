@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import com.sebastianfiser.fitnesscoach.models.ScheduleItemEntity
+import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
 
 @Dao
 interface ScheduleDao {
