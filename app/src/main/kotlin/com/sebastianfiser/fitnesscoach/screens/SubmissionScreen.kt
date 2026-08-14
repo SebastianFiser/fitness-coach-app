@@ -263,7 +263,7 @@ fun CardLift(liftOpen: Boolean, selectedLift: String?, onOpenChange: (Boolean) -
                     readOnly = true,
                     label = { Text("Lift", color = MaterialTheme.colorScheme.onSurface) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = liftOpen) },
-                    colors = TextFieldDefaults.textFieldColors(
+                    colors = TextFieldDefaults.colors(
                         focusedTextColor = MaterialTheme.colorScheme.onSurface,
                         unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                         disabledTextColor = MaterialTheme.colorScheme.onSurface,
@@ -322,7 +322,7 @@ fun CardWeight(prWeight: String, onWeightChange: (String) -> Unit) {
                 onValueChange = { onWeightChange(it) },
                 label = { Text("PR Weight", color = MaterialTheme.colorScheme.onSurface) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                colors = TextFieldDefaults.textFieldColors(
+                colors = TextFieldDefaults.colors(
                     focusedTextColor = MaterialTheme.colorScheme.onSurface,
                     unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                     disabledTextColor = MaterialTheme.colorScheme.onSurface,
@@ -583,7 +583,7 @@ fun AgeCard(ageGroupOpen: Boolean, onAgeGroupOpen: (Boolean) -> Unit, selectedAg
                     readOnly = true,
                     label = { Text("Age Group", color = MaterialTheme.colorScheme.onSurface) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = ageGroupOpen) },
-                    colors = TextFieldDefaults.textFieldColors(
+                    colors = TextFieldDefaults.colors(
                         focusedTextColor = MaterialTheme.colorScheme.onSurface,
                         unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                         disabledTextColor = MaterialTheme.colorScheme.onSurface,
@@ -642,7 +642,7 @@ fun BodywCard(bodyweight: String, onBodyweight: (String) -> Unit) {
                 onValueChange = { onBodyweight(it) },
                 label = { Text("Bodyweight", color = MaterialTheme.colorScheme.onSurface) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                colors = TextFieldDefaults.textFieldColors(
+                colors = TextFieldDefaults.colors(
                     focusedTextColor = MaterialTheme.colorScheme.onSurface,
                     unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                     disabledTextColor = MaterialTheme.colorScheme.onSurface,
