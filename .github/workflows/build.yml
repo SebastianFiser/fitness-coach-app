@@ -15,8 +15,11 @@ jobs:
     steps:
       - name: Checkout projektu
         uses: actions/checkout@v4
-        with:
-          submodules: true
+
+      - name: Clone KCountries Dependency
+        run: |
+          mkdir -p libs
+          git clone https://github.com/Kimplify/KCountries.git libs/KCountries
 
       - name: Nastavení Java JDK
         uses: actions/setup-java@v5
