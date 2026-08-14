@@ -2,6 +2,7 @@ package com.sebastianfiser.fitnesscoach.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import io.appwrite.models.Document
 
 @Entity(tableName = "schedule_items")
 data class ScheduleEntity(
@@ -17,8 +18,6 @@ data class ScheduleEntity(
     val lastSyncedAt: Long = System.currentTimeMillis(),
     val isDirty: Boolean = false
 )
-
-import io.appwrite.models.Document
 
 fun Document<Map<String, Any>>.toEntity(): ScheduleEntity {
     return ScheduleEntity(
