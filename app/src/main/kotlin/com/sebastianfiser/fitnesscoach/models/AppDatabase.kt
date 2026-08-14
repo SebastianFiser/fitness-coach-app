@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
+import com.sebastianfiser.fitnesscoach.models.ScheduleDao
 
 @Database(
     entities = [ScheduleEntity::class],
