@@ -5,7 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("com.google.detools.ksp")
+    id("com.google.devtools.ksp")
 }
 
 kotlin {
