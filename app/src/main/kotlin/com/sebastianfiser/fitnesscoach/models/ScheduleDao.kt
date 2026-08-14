@@ -8,9 +8,10 @@ import kotlinx.coroutines.flow.Flow
 import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
 
 @Dao
-Interface ScheduleDao {
-    @Query("SELECT * FROM schedule_items WHERE userId = :userId ORDER BYday ASC")
-    fun getSchduleForUser(userId: String): Flow<List<ScheduleItemEntity>>
+interface ScheduleDao {
+
+    @Query("SELECT * FROM schedule_items WHERE userId = :userId ORDER BY day ASC")
+    fun getScheduleForUser(userId: String): Flow<List<ScheduleItemEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrUpdateAll(items: List<ScheduleItemEntity>)
