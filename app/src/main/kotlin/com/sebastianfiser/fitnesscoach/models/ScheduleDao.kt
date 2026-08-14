@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
 
 @Dao
-interface ScheduleDao {
+Interface ScheduleDao {
     @Query("SELECT * FROM schedule_items WHERE userId = :userId ORDER BYday ASC")
     fun getSchduleForUser(userId: String): Flow<List<ScheduleItemEntity>>
 
