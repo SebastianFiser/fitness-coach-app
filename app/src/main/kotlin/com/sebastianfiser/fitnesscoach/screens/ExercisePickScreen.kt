@@ -49,7 +49,7 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
     BackHandler(enabled = true) {
         navController.popBackStack()
     }
-    Scaffold { paddingValues -> 
+    Scaffold { paddingValues ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -77,8 +77,8 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                     shape = RoundedCornerShape(8.dp),
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurfaceVariant),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                    onClick = { 
-                        showDialog = true 
+                    onClick = {
+                        showDialog = true
                         clickedExercise = exercise
                         android.util.Log.d("DEBUG", "Clicked: $exercise")
                         }
@@ -87,7 +87,7 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                 }
             }
         }
-    
+
         if(showDialog) {
             AlertDialog(
                 onDismissRequest = { showDialog = false },
@@ -102,19 +102,21 @@ fun ExercisePickScreen(navController: NavController, viewModel: AppViewModel) {
                             focusedTextColor = MaterialTheme.colorScheme.onSurface,
                             unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
                             focusedBorderColor = MaterialTheme.colorScheme.onSurface,
-                            unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant   
+                            unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     )
                 },
                 confirmButton = {
                     Button(onClick = {
                         showDialog = false
-                        val newExercise = Exercise(name = clickedExercise, sets = sets.toIntOrNull() ?: 0, reps = 10, weight = 0f)
+                        val parsedSets = sets.toIntOrNull() ?: 0
+                        val newExercise = Exercise(name = clickedExercise, sets = parsedSets, reps = 10, weight = 0f)
                         val key = dayMap[viewModel.selectedDay ?: ""] ?: "Mo"
-                        val current = viewModel.scheduleSetup[key] ?: mutableListOf()
-                        current.add(newExercise)
-                        viewModel.scheduleSetup[key] = current.toMutableList()
-                        android.util.Log.d("DEBUG", "scheduleSetup: ${viewModel.scheduleSetup}")
+
+                        val currentList = viewModel.scheduleSetup[key] ?: emptyList()
+                        viewModel.scheduleSetup[key] = (currentList + newExercise).toMutableList()
+
+                        sets = ""
                         navController.popBackStack()
                     }) {
                         Text("Add")

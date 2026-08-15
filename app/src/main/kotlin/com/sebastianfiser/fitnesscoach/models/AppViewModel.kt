@@ -24,11 +24,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import com.sebastianfiser.fitnesscoach.models.ProfileImageState
+import com.sebastianfiser.fitnesscoach.models.ScheduleDao
 
 sealed interface ProfileImageState {
     object Loading: ProfileImageState
     data class Success(val bitmap: Bitmap): ProfileImageState
     data class Error(val message: String): ProfileImageState
+}
+
+sealed class SyncState {
+    object Idle : SyncState()
+    object Syncing : SyncState()
+    object Synced : SyncState()
+    data class Error(val message: String) : SyncState()
 }
 
 data class LoginUiState(
@@ -37,8 +45,10 @@ data class LoginUiState(
 )
 
 class AppViewModel(application: Application) : AndroidViewModel(application) {
+    private val _syncState = MutableStateFlow<SyncState>(SyncState.Idle)
+    val syncState: StateFlow<SyncState> = _syncState.asStateFlow()
     private val imageCacheManager = ImageCacheManager(application.applicationContext)
-    private val repository = WorkoutRepository(Appwrite.client, imageCacheManager)
+    private val repository = WorkoutRepository(Appwrite.client, imageCacheManager, ScheduleDao)
     private val _loginUiState = MutableStateFlow(LoginUiState())
     val loginUiState: StateFlow<LoginUiState> = _loginUiState.asStateFlow()
     var workouts by mutableStateOf<List<Document<Map<String, Any>>>>(
@@ -84,6 +94,56 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     var leaderboardList by mutableStateOf<List<LeaderBoardEntry>>(emptyList())
     var testResult by mutableStateOf<String?>(null)
     var accountDeleted by mutableStateOf(false)
+
+    fun saveSetupSchedule(userId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val newEntities = mutableListOf<ScheduileEntity>()
+            scheduleSetup.forEach { (dayKey, exercises) ->
+                exercises.forEach { ex ->
+                    newEntities.add(
+                        ScheduleEntity(
+                            id = java.util.UUID.randomUUID().toString(),
+                            userId = userId,
+                            day = dayKey,
+                            exerciseName = ex.name,
+                            sets = ex.sets,
+                            reps = ex.reps,
+                            weight = ex.weight,
+                            isDirty = true
+                        )
+                    )
+                }
+            }
+
+            scheduleDao.replaceUserSchedule(userId, newEntities)
+
+            scheduleSetup.clear()
+            scheduleSetupLoaded = false
+
+            repository.syncSchedule(userId)
+        }
+    }
+
+    fun getScheduleState(userId: String): StateFlow<List<ScheduleEntity>> {
+        return repository.getScheduleFow(userId)
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = emptyList()
+            )
+    }
+
+    fun syncSchedule(userId: String) {
+        viewModelScope.launch {
+            _syncState.value = SyncState.Loading
+            try {
+                repository.syncState(userId)
+                _syncState.value = SyncState.Success
+            } catch (e: Throwable) {
+                _syncState.value = SyncState.Error(e.message ?: "Synchronization failed")
+            }
+        }
+    }
 
     fun login(email: String, password: String, onSuccess: () -> Unit ) {
         viewModelScope.launch {

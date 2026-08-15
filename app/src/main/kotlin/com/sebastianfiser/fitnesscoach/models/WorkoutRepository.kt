@@ -8,8 +8,11 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class WorkoutRepository(client: Client, private val imageCacheManager: ImageCacheManager) {
+class WorkoutRepository(client: Client, private val imageCacheManager: ImageCacheManager, private val scheduleDao: ScheduleDao) {
     private val db = AppwriteDB(client)
     private val storage = AppwriteStorage(client)
 
@@ -74,5 +77,56 @@ class WorkoutRepository(client: Client, private val imageCacheManager: ImageCach
         }
 
         return@withContext null
+    }
+
+    fun getScheduleFlow(userId: String): Flow<List<ScheduleEntry>> {
+        return scheduleDao.getScheduleFlow(userId)
+    }
+
+    suspend fun syncSchedule(userId: String) = withContext(Dispatchers.IO) {
+        val dirtyItems = scheduleDao.getDirtyScheduleItems(userId)
+        for (item in dirtyItems) {
+            db.saveScheduleItem(
+                userId = item.userId,
+                day = item.day,
+                exerciseName = item.exerciseName,
+                sets = item.sets,
+                reps = item.reps,
+                weight = item.weight
+            )
+
+            scheduleDao.insertOrUpdate(
+                item.copy(isDirty = false, lastSyncedAt = System.currentTimeMillis())
+            )
+        }
+
+        val remoteResult = db.getSchedule(userId)
+        val remoteDocs = remoteResult.getOrThrow()
+        val entities = remoteDocs.map { it.toEntity() }
+
+        scheduleDao.insertOrUpdateAll(entities)
+    }
+
+    suspend fun saveScheduleItem(
+        userId: String,
+        day: String,
+        exerciseName: String,
+        sets: Int,
+        reps: Int,
+        weight: Float
+    ) = withContext(Dispatchers.IO) {
+        val newItem = ScheduleEntity(
+            id = java.util.UUID.randomUUID().toString(),
+            userId = userId,
+            day = day,
+            exerciseName = exerciseName,
+            sets = sets,
+            reps = reps,
+            weight = weight,
+            lastSyncedAt = System.currentTimeMillis(),
+            isDirty = true
+        )
+        scheduleDao.insertOrUpdate(newItem)
+        syncSchedule(userId)
     }
 }

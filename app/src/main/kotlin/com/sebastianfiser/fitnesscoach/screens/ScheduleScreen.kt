@@ -28,58 +28,86 @@ import androidx.compose.ui.text.font.FontWeight
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
 fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
+    val userId: String
     val allDays = listOf("Mo", "Tu", "We", "Th", "Fr", "Sa", "Su")
     val todayIndex = LocalDate.now().dayOfWeek.value - 1
     val orderedDays = allDays.drop(todayIndex) + allDays.take(todayIndex)
     val sortedEntries = viewModel.scheduleByDay.entries.toList().sortedBy { orderedDays.indexOf(it.key) }
     val unit = viewModel.unit
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(top = 48.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        contentPadding = PaddingValues(bottom = 90.dp),
+
+    val scheduleItems by viewModel.getScheduleState(userId)
+    val syncState by viewModel.syncState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    val scheduleByDay = scheduleItems.groupBy { it.day }
+
+    LaunchedEffect(userId) {
+        viewModel.syncSchedule(userId)
+    }
+
+    LaunchedEffect(syncState) {
+        var message: String = ""
+        if (syncState == SyncState.Success) {
+            message = "Schedule synced successfully"
+        } else if (syncState == SyncState.Error) {
+            message = "Failed to sync schedule"
+        } else if (syncState == SyncState.Loading) {
+            message = "Syncing schedule..."
+        }
+        snackbarHostState.showSnackbar(message)
+    }
+
+    Scaffold (
+        snackbarHost = { SnackbarHost(snackbarHostState) },
     ) {
-        item {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Box (
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(top = 48.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            contentPadding = PaddingValues(bottom = 90.dp),
+        ) {
+            item {
+                Row(
                     modifier = Modifier
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.surface)
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    Text(
-                        "Your Schedule",
-                        color = MaterialTheme.colorScheme.onSurface,
-                        style = MaterialTheme.typography.headlineMedium,
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-                    )
-                }
+                    Box (
+                        modifier = Modifier
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(MaterialTheme.colorScheme.surface)
+                    ) {
+                        Text(
+                            "Your Schedule",
+                            color = MaterialTheme.colorScheme.onSurface,
+                            style = MaterialTheme.typography.headlineMedium,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                        )
+                    }
 
-                TextButton(
-                    onClick = {
-                        viewModel.isEditing = true
-                        navController.navigate(Screen.SetupSchedule.route)
-                    },
-                    colors = ButtonDefaults.textButtonColors(contentColor = Color.White),
-                    modifier = Modifier.padding(start = 16.dp)
-                ) {
-                    Icon(Icons.Default.Edit, contentDescription = "Edit Schedule", tint = MaterialTheme.colorScheme.onBackground)
-                    Text("Edit", color = MaterialTheme.colorScheme.onBackground)
-                }
+                    TextButton(
+                        onClick = {
+                            viewModel.isEditing = true
+                            navController.navigate(Screen.SetupSchedule.route)
+                        },
+                        colors = ButtonDefaults.textButtonColors(contentColor = Color.White),
+                        modifier = Modifier.padding(start = 16.dp)
+                    ) {
+                        Icon(Icons.Default.Edit, contentDescription = "Edit Schedule", tint = MaterialTheme.colorScheme.onBackground)
+                        Text("Edit", color = MaterialTheme.colorScheme.onBackground)
+                    }
 
+                }
             }
-        }
-        stickyHeader {
-            DrawDayrow()
-        }
-        items(sortedEntries) { day ->
-            displayDaySchedule(day.value, day.key, unit, viewModel)
+            stickyHeader {
+                DrawDayrow()
+            }
+            items(sortedEntries) { day ->
+                displayDaySchedule(day.value, day.key, unit, viewModel)
+            }
         }
     }
 }
@@ -134,7 +162,7 @@ fun DrawDayrow() {
 }
 
 @Composable
-fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String, unit: String, viewModel: AppViewModel) {
+fun displayDaySchedule(exercise: List<ScheduleEntity>, day: String, unit: String, viewModel: AppViewModel) {
     //var day = LocalDate.now().dayOfWeek
     //var dayNuminMonth = LocalDate.now().dayOfMonth
     var month = LocalDate.now().monthValue
@@ -175,13 +203,7 @@ fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String, 
 }
 
 @Composable
-fun scheduleExerciseRow(exercise: Document<Map<String, Any>>, unit: String, viewModel: AppViewModel) {
-    val weight = when (val w = exercise.data["weight"]) {
-        is Double -> w.toFloat()
-        is Long -> w.toFloat()
-        is Float -> w
-        else -> 0f
-    }
+fun scheduleExerciseRow(exercise: ScheduleEntity, unit: String, viewModel: AppViewModel) {
     HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 8.dp))
     Row(
         modifier = Modifier
@@ -191,17 +213,17 @@ fun scheduleExerciseRow(exercise: Document<Map<String, Any>>, unit: String, view
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = exercise.data["exerciseName"] as String,
+            text = exercise.exerciseName as String,
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.onSurface
         )
 
         Text(
-            "${viewModel.GetWeightDisplay(weight)} ${if (unit == "kg") "kg" else "lbs"}",
+            "${viewModel.GetWeightDisplay(exercise.weight)} ${if (unit == "kg") "kg" else "lbs"}",
             fontSize = 14.sp,
             fontWeight = FontWeight.SemiBold,
-            color = if (weight > 0f) {
+            color = if (exercise.weight > 0f) {
                 MaterialTheme.colorScheme.primary
             } else {
                 MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)

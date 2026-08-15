@@ -23,4 +23,10 @@ interface ScheduleDao {
 
     @Query("SELECT * FROM schedule_items WHERE isDirty = 1")
     suspend fun getDirtyScheduleItems(): List<ScheduleEntity>
+
+    @Transaction
+    suspend fun replaceUserSchedule(userId: String, items: List<ScheduleEntity>) {
+        deleteScheduleForUser(userId)
+        insertOrUpdateAll(items)
+    }
 }
