@@ -92,6 +92,11 @@ jobs:
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > "app/fitcoach-release.keystore"
 
+      - name: Clone KCountries Dependency
+        run: |
+          mkdir -p libs
+          git clone https://github.com/Kimplify/KCountries.git libs/KCountries
+
       - name: Build s Gradle
         run: ./gradlew assembleRelease
 
