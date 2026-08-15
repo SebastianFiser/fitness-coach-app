@@ -213,7 +213,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             shape = RoundedCornerShape(14.dp),
-                            colors = TextFieldDefaults.colors(
+                            colors = OutlinedTextFieldDefaults.colors(
                                 focusedTextColor = MaterialTheme.colorScheme.onSurface,
                                 unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                                 focusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -233,7 +233,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             shape = RoundedCornerShape(14.dp),
-                            colors = TextFieldDefaults.colors(
+                            colors = OutlinedTextFieldDefaults.colors(
                                 focusedTextColor = MaterialTheme.colorScheme.onSurface,
                                 unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                                 focusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
