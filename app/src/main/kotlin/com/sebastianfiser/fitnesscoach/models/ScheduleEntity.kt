@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import io.appwrite.models.Document
 
 @Entity(tableName = "schedule_items")
-data class ScheduleItemEntity(
+data class ScheduleEntity(
     @PrimaryKey
     val id: String,
     val userId: String,
