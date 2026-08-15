@@ -30,11 +30,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.LaunchedEffect
 import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
 import com.sebastianfiser.fitnesscoach.models.SyncState
+import com.sebastianfiser.fitnesscoach.models.Appwrite
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
 fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
-    val userId: String
+    val userId: String = Appwrite.getCurrentUser()?.id ?: ""
     val allDays = listOf("Mo", "Tu", "We", "Th", "Fr", "Sa", "Su")
     val todayIndex = LocalDate.now().dayOfWeek.value - 1
     val orderedDays = allDays.drop(todayIndex) + allDays.take(todayIndex)
@@ -52,15 +53,12 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
     }
 
     LaunchedEffect(syncState) {
-        var message: String = ""
-        if (syncState == SyncState.Success) {
-            message = "Schedule synced successfully"
-        } else if (syncState == SyncState.Error) {
-            message = "Failed to sync schedule"
-        } else if (syncState == SyncState.Loading) {
-            message = "Syncing schedule..."
+        when (val state = syncState) {
+            is SyncState.Loading -> snackbarHostState.showSnackbar("Syncing schedule...")
+            is SyncState.Success -> snackbarHostState.showSnackbar("Schedule synced successfully")
+            is SyncState.Error -> snackbarHostState.showSnackbar("Failed to sync schedule")
+            else -> {}
         }
-        snackbarHostState.showSnackbar(message)
     }
 
     Scaffold (

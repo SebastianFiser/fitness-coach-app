@@ -18,7 +18,6 @@ class WorkoutRepository(client: Client, private val imageCacheManager: ImageCach
     suspend fun saveSet(workoutId: String, userId: String, exerciseName: String, weight: Float, reps: Int) = db.saveSet(workoutId, userId, exerciseName, weight, reps)
     suspend fun getWorkouts(userId: String) = db.getWorkouts(userId)
     suspend fun getSets(workoutId: String) = db.getSets(workoutId)
-
     suspend fun getSchedule(userId: String) = db.getSchedule(userId)
     suspend fun deleteScheduleItem(itemId: String, userId: String) = db.deleteScheduleItem(itemId, userId)
     suspend fun getSetByUser(userId: String) = db.getSetByUser(userId)
@@ -78,7 +77,7 @@ class WorkoutRepository(client: Client, private val imageCacheManager: ImageCach
     }
 
     fun getScheduleFlow(userId: String): Flow<List<ScheduleEntity>> {
-        return scheduleDao.getScheduleFlow(userId)
+        return scheduleDao.getScheduleForUser(userId)
     }
 
     suspend fun syncSchedule(userId: String) = withContext(Dispatchers.IO) {

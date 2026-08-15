@@ -27,7 +27,8 @@ import com.sebastianfiser.fitnesscoach.models.ProfileImageState
 import com.sebastianfiser.fitnesscoach.models.ScheduleDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.stateIn
+import com.sebastianfiser.fitnesscoach.models.SyncState
 import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
 
 sealed interface ProfileImageState {
@@ -48,11 +49,11 @@ data class LoginUiState(
     val error: String? = null,
 )
 
-class AppViewModel(application: Application) : AndroidViewModel(application) {
+class AppViewModel(application: Application, private val scheduleDao: ScheduleDao) : AndroidViewModel(application) {
     private val _syncState = MutableStateFlow<SyncState>(SyncState.Idle)
     val syncState: StateFlow<SyncState> = _syncState.asStateFlow()
     private val imageCacheManager = ImageCacheManager(application.applicationContext)
-    private val repository = WorkoutRepository(Appwrite.client, imageCacheManager, ScheduleDao)
+    private val repository = WorkoutRepository(Appwrite.client, imageCacheManager, scheduleDao)
     private val _loginUiState = MutableStateFlow(LoginUiState())
     val loginUiState: StateFlow<LoginUiState> = _loginUiState.asStateFlow()
     var workouts by mutableStateOf<List<Document<Map<String, Any>>>>(
