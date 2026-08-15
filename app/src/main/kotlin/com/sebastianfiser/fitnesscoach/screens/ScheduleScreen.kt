@@ -32,6 +32,8 @@ import androidx.compose.runtime.LaunchedEffect
 import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
 import com.sebastianfiser.fitnesscoach.models.SyncState
 import com.sebastianfiser.fitnesscoach.models.Appwrite
+import com.sebastianfiser.fitnesscoach.models.toEntity
+
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
