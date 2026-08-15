@@ -28,7 +28,6 @@ import com.sebastianfiser.fitnesscoach.models.ScheduleDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
-import com.sebastianfiser.fitnesscoach.models.SyncState
 import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
 
 sealed interface ProfileImageState {
@@ -140,10 +139,10 @@ class AppViewModel(application: Application, private val scheduleDao: ScheduleDa
 
     fun syncSchedule(userId: String) {
         viewModelScope.launch {
-            _syncState.value = SyncState.Loading
+            _syncState.value = SyncState.Syncing
             try {
                 repository.syncState(userId)
-                _syncState.value = SyncState.Success
+                _syncState.value = SyncState.Synced
             } catch (e: Throwable) {
                 _syncState.value = SyncState.Error(e.message ?: "Synchronization failed")
             }

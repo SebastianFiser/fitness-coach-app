@@ -54,8 +54,8 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
 
     LaunchedEffect(syncState) {
         when (val state = syncState) {
-            is SyncState.Loading -> snackbarHostState.showSnackbar("Syncing schedule...")
-            is SyncState.Success -> snackbarHostState.showSnackbar("Schedule synced successfully")
+            is SyncState.Syncing -> snackbarHostState.showSnackbar("Syncing schedule...")
+            is SyncState.Synced -> snackbarHostState.showSnackbar("Schedule synced successfully")
             is SyncState.Error -> snackbarHostState.showSnackbar("Failed to sync schedule")
             else -> {}
         }
