@@ -60,7 +60,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
             viewModel.scheduleSetup.clear()
             viewModel.schedule.groupBy { it.day }.forEach { (day, docs) ->
                 val exercises = docs.map { doc ->
-                    val entity = doc.toEntity
+                    val entity = doc.toEntity()
                     Exercise(
                         name = entity.exerciseName,
                         sets = entity.sets,

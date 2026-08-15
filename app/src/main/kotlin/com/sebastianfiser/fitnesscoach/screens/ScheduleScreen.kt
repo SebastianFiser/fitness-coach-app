@@ -43,7 +43,7 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
     val sortedEntries = viewModel.scheduleByDay.entries.toList().sortedBy { orderedDays.indexOf(it.key) }
     val unit = viewModel.unit
 
-    val scheduleItems by viewModel.getScheduleState(userId)
+    val scheduleItems by viewModel.getScheduleState(userId).collectAsState(initial = emptyList())
     val syncState by viewModel.syncState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -116,7 +116,12 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
                 DrawDayrow()
             }
             items(sortedEntries) { day ->
-                displayDaySchedule(day.value, day.key, unit, viewModel)
+                displayDaySchedule(
+                    exercise = day.value.map { it.toEntity() },
+                    day = day.key,
+                    unit = unit,
+                    viewModel = viewModel
+                )
             }
         }
     }
