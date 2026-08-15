@@ -80,6 +80,8 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
     val exerciseProgress = remember {
         mutableStateListOf(*Array(exercises.size) { ExerciseProgress() })
     }
+    val unfinishedIndices: List<Int> = exerciseProgress.indices.filter { !exerciseProgress[it].isDone }
+    val allExercisesDone = exerciseProgress.isNotEmpty() && exerciseProgress.all { it.isDone }
 
     BackHandler { showExitDialog = true }
     Column(
@@ -169,13 +171,13 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 style = MaterialTheme.typography.bodyMedium
                             )
-                            val weight = currentExercise?.weight?.let { convertUnit(it, viewModel.unit) } ?: 0f
+                            val weight = currentExercise?.weight?.let { viewModel.convertUnit(it, viewModel.unit) } ?: 0f
                             Text(
                                 "@ $weight ${viewModel.unit}",
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 style = MaterialTheme.typography.bodyMedium
                             )
-                        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+                        }
                     }
                 }
             }
@@ -211,7 +213,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             shape = RoundedCornerShape(14.dp),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                            colors = OutlinedTextFieldDefaults.colors(
                                 focusedTextColor = MaterialTheme.colorScheme.onSurface,
                                 unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                                 focusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -231,7 +233,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             shape = RoundedCornerShape(14.dp),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                            colors = OutlinedTextFieldDefaults.colors(
                                 focusedTextColor = MaterialTheme.colorScheme.onSurface,
                                 unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                                 focusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -245,11 +247,11 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                         )
                         TextButton(
                             enabled = entryWeight.isNotEmpty() && entryReps.isNotEmpty() && !isDone && (setIndex == 0 || setData[setIndex - 1].isDone ) && timerRunningForSet == -1,
-                            onClick = { 
+                            onClick = {
                                 restTimeSeconds = 90
                                 timerRunningForSet = setIndex
                                 setData[setIndex] = setData[setIndex].copy(isDone = true)
-                                
+
                                 if (setData.all {it.isDone}) {
                                     exerciseProgress[currentExerciseIndex] = exerciseProgress[currentExerciseIndex].copy(isDone = true)
                                 }
@@ -267,7 +269,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                                         weight = entryWeight.toFloatOrNull() ?: 0f,
                                         reps = entryReps.toIntOrNull() ?: 0
                                     )
-                                } 
+                                }
                             },
                             colors = ButtonDefaults.buttonColors(
                                 contentColor = MaterialTheme.colorScheme.onSurface,
@@ -294,41 +296,40 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            val unfinishedCount = unfinishedIndices.size
             OutlinedButton(
-                onClick = { 
-                    if(currentExerciseIndex < totalExercises - 1) {
+                onClick = {
+                    if(unfinishedCount > 1) {
                         exerciseProgress[currentExerciseIndex] = exerciseProgress[currentExerciseIndex].copy(isSkipped = true)
-                        currentExerciseIndex++
+                        val nextUnfinished: Int? = unfinishedIndices.firstOrNull { it > currentExerciseIndex} ?: unfinishedIndices.firstOrNull()
+                        if (nextUnfinished != null) {
+                            currentExerciseIndex = nextUnfinished
+                        }
                         timerRunningForSet = -1
                         restTimeSeconds = viewModel.restTime
                     }
                  },
                 colors = ButtonDefaults.outlinedButtonColors(containerColor = MaterialTheme.colorScheme.background, contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
-            ) { 
+                enabled = unfinishedCount > 1
+            ) {
                 Text("Skip exercise", style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.width(4.dp))
                 Icon(Icons.Default.Book, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             ElevatedButton(
-                onClick = {  
-                    val nextIncomplete = exerciseProgress
-                        .withIndex()
-                        .drop(currentExerciseIndex + 1)
-                        .firstOrNull { !it.value.isDone && !it.value.isSkipped }?.index
-                    if (nextIncomplete != null) {
-                        currentExerciseIndex = nextIncomplete
+                onClick = {
+                    if (allExercisesDone) {
+                        onFinish()
                     } else {
-                        val anyIncomplete = exerciseProgress.indexOfFirst { !it.isDone }
-                        if( anyIncomplete == -1 ) {
-                            onFinish()
-                        } else {
-                            currentExerciseIndex = anyIncomplete
+                        val nextUnfinished: Int?  = unfinishedIndices.firstOrNull { it > currentExerciseIndex } ?: unfinishedIndices.firstOrNull()
+                        if (nextUnfinished != null) {
+                            currentExerciseIndex = nextUnfinished
                         }
                     }
                     timerRunningForSet = -1
                     restTimeSeconds = viewModel.restTime
                 },
-                enabled = (setData.all { it.isDone } && timerRunningForSet == -1),
+                enabled = allExercisesDone || (setData.all { it.isDone } && timerRunningForSet == -1),
                 colors = ButtonDefaults.elevatedButtonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -336,7 +337,7 @@ fun WorkoutScreen(onFinish: () -> Unit, navController: NavController, viewModel:
                     disabledContentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
                     )
             ) {
-                Text(if (exerciseProgress.all { it.isDone }) "Next Exercise" else "Finish Workout")
+                Text(if (exerciseProgress.all { it.isDone }) "Next Exercise" else "Next Exercise")
             }
         }
         LaunchedEffect(timerRunningForSet) {
@@ -391,7 +392,7 @@ fun TimerCard(
                     )
                 }
                 ElevatedButton(
-                    onClick = { onAdd30Seconds() }, 
+                    onClick = { onAdd30Seconds() },
                     colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Transparent, contentColor = MaterialTheme.colorScheme.onSurface )
                 ) {
                     Icon(Icons.Default.Add, contentDescription = null)

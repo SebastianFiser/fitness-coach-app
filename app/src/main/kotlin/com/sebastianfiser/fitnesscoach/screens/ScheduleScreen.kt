@@ -22,62 +22,109 @@ import com.sebastianfiser.fitnesscoach.navigation.Screen
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.foundation.border
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
+import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
+import com.sebastianfiser.fitnesscoach.models.SyncState
+import com.sebastianfiser.fitnesscoach.models.Appwrite
+import com.sebastianfiser.fitnesscoach.models.toEntity
+
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
 fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
+    var userId: String = ""
     val allDays = listOf("Mo", "Tu", "We", "Th", "Fr", "Sa", "Su")
     val todayIndex = LocalDate.now().dayOfWeek.value - 1
     val orderedDays = allDays.drop(todayIndex) + allDays.take(todayIndex)
     val sortedEntries = viewModel.scheduleByDay.entries.toList().sortedBy { orderedDays.indexOf(it.key) }
     val unit = viewModel.unit
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(top = 48.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        contentPadding = PaddingValues(bottom = 90.dp),
+
+    val scheduleItems by viewModel.getScheduleState(userId).collectAsState(initial = emptyList())
+    val syncState by viewModel.syncState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    val scheduleByDay = scheduleItems.groupBy { it.day }
+
+    LaunchedEffect(Unit) {
+        val user = Appwrite.getCurrentUser()
+        userId = user?.id ?: ""
+    }
+
+    LaunchedEffect(userId) {
+        viewModel.syncSchedule(userId)
+    }
+
+    LaunchedEffect(syncState) {
+        when (val state = syncState) {
+            is SyncState.Syncing -> snackbarHostState.showSnackbar("Syncing schedule...")
+            is SyncState.Synced -> snackbarHostState.showSnackbar("Schedule synced successfully")
+            is SyncState.Error -> snackbarHostState.showSnackbar("Failed to sync schedule")
+            else -> {}
+        }
+    }
+
+    Scaffold (
+        snackbarHost = { SnackbarHost(snackbarHostState) },
     ) {
-        item {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Box (
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(top = 48.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            contentPadding = PaddingValues(bottom = 90.dp),
+        ) {
+            item {
+                Row(
                     modifier = Modifier
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.surface)
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    Text(
-                        "Your Schedule",
-                        color = MaterialTheme.colorScheme.onSurface,
-                        style = MaterialTheme.typography.headlineMedium,
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-                    )
-                }
+                    Box (
+                        modifier = Modifier
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(MaterialTheme.colorScheme.surface)
+                    ) {
+                        Text(
+                            "Your Schedule",
+                            color = MaterialTheme.colorScheme.onSurface,
+                            style = MaterialTheme.typography.headlineMedium,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                        )
+                    }
 
-                TextButton(
-                    onClick = { 
-                        viewModel.isEditing = true
-                        navController.navigate(Screen.SetupSchedule.route)
-                    },
-                    colors = ButtonDefaults.textButtonColors(contentColor = Color.White),
-                    modifier = Modifier.padding(start = 16.dp)
-                ) {
-                    Icon(Icons.Default.Edit, contentDescription = "Edit Schedule", tint = MaterialTheme.colorScheme.onBackground)
-                    Text("Edit", color = MaterialTheme.colorScheme.onBackground)
-                }
+                    TextButton(
+                        onClick = {
+                            viewModel.isEditing = true
+                            navController.navigate(Screen.SetupSchedule.route)
+                        },
+                        colors = ButtonDefaults.textButtonColors(contentColor = Color.White),
+                        modifier = Modifier.padding(start = 16.dp)
+                    ) {
+                        Icon(Icons.Default.Edit, contentDescription = "Edit Schedule", tint = MaterialTheme.colorScheme.onBackground)
+                        Text("Edit", color = MaterialTheme.colorScheme.onBackground)
+                    }
 
+                }
             }
-        }
-        stickyHeader {
-            DrawDayrow()
-        }
-        items(sortedEntries) { day ->
-            displayDaySchedule(day.value, day.key, unit)
+            stickyHeader {
+                DrawDayrow()
+            }
+            items(sortedEntries) { day ->
+                displayDaySchedule(
+                    exercise = day.value.map { it.toEntity() },
+                    day = day.key,
+                    unit = unit,
+                    viewModel = viewModel
+                )
+            }
         }
     }
 }
@@ -132,10 +179,10 @@ fun DrawDayrow() {
 }
 
 @Composable
-fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String, unit: String) {
+fun displayDaySchedule(exercise: List<ScheduleEntity>, day: String, unit: String, viewModel: AppViewModel) {
     //var day = LocalDate.now().dayOfWeek
     //var dayNuminMonth = LocalDate.now().dayOfMonth
-    var month = LocalDate.now().monthValue 
+    var month = LocalDate.now().monthValue
     val dayLabels = mapOf(
         "Mo" to "Monday",
         "Tu" to "Tuesday",
@@ -166,45 +213,85 @@ fun displayDaySchedule(exercise: List<Document<Map<String, Any>>>, day: String, 
             )
             Spacer(modifier = Modifier.height(8.dp))
             exercise.forEach { exercise ->
-                    scheduleExerciseRow(exercise, unit)
+                    scheduleExerciseRow(exercise, unit, viewModel)
                 }
         }
     }
 }
 
 @Composable
-fun scheduleExerciseRow(exercise: Document<Map<String, Any>>, unit: String) {
-    val weight = when (val w = exercise.data["weight"]) {
-        is Double -> w.toFloat()
-        is Long -> w.toFloat()
-        is Float -> w
-        else -> 0f
-    }
+fun scheduleExerciseRow(exercise: ScheduleEntity, unit: String, viewModel: AppViewModel) {
     HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp, modifier = Modifier.padding(vertical = 8.dp))
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .padding(vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = exercise.data["exerciseName"] as String, color = MaterialTheme.colorScheme.onSurface)
+        Text(
+            text = exercise.exerciseName as String,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Medium,
+            color = MaterialTheme.colorScheme.onSurface
+        )
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                "${convertUnit(weight, unit)} ${if (unit == "kg") "kg" else "lbs"}",
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(end = 8.dp)
-            )
-        }
+        Text(
+            "${viewModel.GetWeightDisplay(exercise.weight)} ${if (unit == "kg") "kg" else "lbs"}",
+            fontSize = 14.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = if (exercise.weight > 0f) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
+            },
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(end = 8.dp)
+        )
+
     }
 }
 
-fun convertUnit( weight: Float, unit: String): Float {
-    if (unit != "kg") {
-        return weight * 2.20462f
-    } else {
-        return weight
+@Composable
+fun DayItem(
+    dayName: String,
+    isSelected: Boolean = false,
+    hasWorkout: Boolean = false,
+    onClick: () -> Unit
+) {
+    Surface(
+        onClick = onClick,
+        shape = RoundedCornerShape(16.dp),
+        color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
+        modifier = Modifier
+            .padding(horizontal = 2.dp)
+            .width(44.dp)
+            .height(64.dp)
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.padding(vertical = 6.dp)
+        ) {
+            Text(
+                text = dayName,
+                fontSize = 13.sp,
+                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
+            )
+
+            Box (
+                modifier = Modifier
+                    .size(6.dp)
+                    .background(
+                        color = when {
+                            isSelected -> MaterialTheme.colorScheme.onPrimary
+                            hasWorkout -> MaterialTheme.colorScheme.primary
+                            else -> Color.Transparent
+                        },
+                        shape = CircleShape
+                    )
+            )
+        }
     }
 }

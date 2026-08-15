@@ -45,6 +45,8 @@ import androidx.compose.ui.graphics.asImageBitmap
 import android.graphics.BitmapFactory
 import androidx.compose.ui.layout.ContentScale
 import com.sebastianfiser.fitnesscoach.ui.components.ComingSoonOverlay
+import androidx.compose.runtime.collectAsState
+import com.sebastianfiser.fitnesscoach.models.ProfileImageState
 
 @Composable
 fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
@@ -56,16 +58,12 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
     var userIcUri by remember { mutableStateOf(Uri.EMPTY) }
     val context = LocalContext.current
 
+    val imageState by viewModel.imageState.collectAsState()
+
     val pickMedia = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         userIcUri = uri ?: Uri.EMPTY
-    }
-
-    val bitmap = remember(viewModel.userIcon) {
-        viewModel.userIcon?.let {
-            BitmapFactory.decodeByteArray(it, 0, it.size).asImageBitmap()
-        }
     }
 
     LaunchedEffect(Unit) {
@@ -73,9 +71,9 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
             val currentUser = Appwrite.getCurrentUser()
             userName = currentUser?.name ?: "User"
             userEmail = currentUser?.email ?: "user@email.com"
-
-            if (viewModel.userIcon == null && viewModel.userIconId != null) {
-                viewModel.getImage(viewModel.userIconId!!)
+            val userId = currentUser?.id
+            if (userId != null) {
+                viewModel.loadProfileImage(userId)
             }
         }
     }
@@ -118,13 +116,13 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                ComingSoonOverlay {
-                    TextButton(onClick = {}) {
-                        Icon(Icons.Default.Create, contentDescription = null, tint = MaterialTheme.colorScheme.onBackground)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("Edit Profile", color = MaterialTheme.colorScheme.onBackground)
-                    }
+
+                TextButton(onClick = {navController.navigate(Screen.Edit.route)}) {
+                    Icon(Icons.Default.Create, contentDescription = null, tint = MaterialTheme.colorScheme.onBackground)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Edit Profile", color = MaterialTheme.colorScheme.onBackground)
                 }
+
             }
             Spacer(modifier = Modifier.height(8.dp))
             Box(
@@ -138,27 +136,41 @@ fun ProfileScreen(navController: NavController, viewModel: AppViewModel) {
                 contentAlignment = Alignment.Center
             ) {
                 val capedFirLetUname = userName.firstOrNull()?.uppercase() ?: "U"
-                if (bitmap == null) {
-                    Box(
-                        modifier = Modifier
-                            .size(80.dp)
-                            .clip(CircleShape)
-                            .border(3.dp, Color(0xFFD4B896), CircleShape)
-                            .background(Color.Gray),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("${capedFirLetUname}", color = Color.White, style = MaterialTheme.typography.headlineLarge)
+
+                when (val state = imageState) {
+                    is ProfileImageState.Loading -> {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(40.dp),
+                            color = Color(0xFFD4B896)
+                        )
                     }
-                } else {
-                    Image(
-                        bitmap = bitmap,
-                        contentDescription = "User Icon",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .size(80.dp)
-                            .clip(CircleShape)
-                            .border(3.dp, Color(0xFFD4B896), CircleShape)
-                    )
+                    is ProfileImageState.Success -> {
+                        Image(
+                            bitmap = state.bitmap.asImageBitmap(),
+                            contentDescription = "User Icon",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .size(80.dp)
+                                .clip(CircleShape)
+                                .border(3.dp, Color(0xFFD4B896), CircleShape)
+                        )
+                    }
+                    is ProfileImageState.Error -> {
+                        Box (
+                            modifier = Modifier
+                                .size(80.dp)
+                                .clip(CircleShape)
+                                .border(3.dp, Color(0xFFD4B896), CircleShape)
+                                .background(Color.Gray),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text (
+                                text = capedFirLetUname,
+                                color = Color.White,
+                                style = MaterialTheme.typography.headlineLarge
+                            )
+                        }
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))

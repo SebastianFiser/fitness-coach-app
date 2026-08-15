@@ -51,6 +51,8 @@ import com.sebastianfiser.fitnesscoach.screens.LoginScreen
 import com.sebastianfiser.fitnesscoach.screens.RegisterScreen
 import com.sebastianfiser.fitnesscoach.screens.ExercisePickScreen
 import com.sebastianfiser.fitnesscoach.screens.SubmissionScreen
+import com.sebastianfiser.fitnesscoach.screens.EditScreen
+
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -63,16 +65,19 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import com.sebastianfiser.fitnesscoach.models.Appwrite
 import androidx.compose.runtime.LaunchedEffect
 import com.sebastianfiser.fitnesscoach.ui.theme.FitCoachTheme
+import android.content.Context
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val prefs = getSharedPreferences("settings_prefs", Context.MODE_PRIVATE)
+        val isDarkTheme = prefs.getBoolean("is_dark_theme", false)
         Appwrite.init(applicationContext)
         // Edge-to-edge režim (pod hodiny a navigaci)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             val viewModel: AppViewModel = viewModel()
-            FitCoachTheme(viewModel = viewModel) {
+            FitCoachTheme(viewModel = viewModel, darkTheme = isDarkTheme) {
                 StartContent(viewModel = viewModel)
             }
         }
@@ -94,7 +99,7 @@ fun StartContent(viewModel: AppViewModel) {
             viewModel.getUserSettings(userId)
         }
     }
-    
+
     Scaffold(
         snackbarHost = { SnackbarHost(viewModel.snackbarHostState)},
         bottomBar = {
@@ -126,6 +131,7 @@ fun StartContent(viewModel: AppViewModel) {
                 composable(Screen.ExercisePick.route) { ExercisePickScreen(navController = navController, viewModel = viewModel) }
                 composable(Screen.Submission.route) { SubmissionScreen(navController = navController, viewModel = viewModel) }
                 composable(Screen.Reviewer.route) { ReviewerScreen(navController = navController, viewModel = viewModel) }
+                composable(Screen.Edit.route) { EditScreen(navController = navController, viewModel = viewModel) }
             }
         }
     }
@@ -134,7 +140,7 @@ fun StartContent(viewModel: AppViewModel) {
 @Composable
 fun BottomNav(modifier: Modifier = Modifier, navController: NavController, viewModel: AppViewModel) {
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-    val outline = MaterialTheme.colorScheme.outline 
+    val outline = MaterialTheme.colorScheme.outline
     NavigationBar(
         modifier = modifier.drawBehind {
             val strokeWidth = 0.5.dp.toPx()
@@ -147,11 +153,11 @@ fun BottomNav(modifier: Modifier = Modifier, navController: NavController, viewM
         },
         containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 0.dp,
-        windowInsets = NavigationBarDefaults.windowInsets 
+        windowInsets = NavigationBarDefaults.windowInsets
     ) {
 
         val colors = navItemColors()
-        
+
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = null) },
             label = { Text("Overview") },
@@ -159,7 +165,7 @@ fun BottomNav(modifier: Modifier = Modifier, navController: NavController, viewM
             onClick = { navController.navigate(Screen.Overview.route) },
             colors = colors
         )
-        
+
         NavigationBarItem(
             icon = { Icon(Icons.Default.DateRange, contentDescription = null) },
             label = { Text("Schedule") },
@@ -204,9 +210,9 @@ data class LeaderBoardEntry(
 
 @Composable
 fun navItemColors() = NavigationBarItemDefaults.colors(
-    selectedIconColor = MaterialTheme.colorScheme.primary,
+    selectedIconColor = MaterialTheme.colorScheme.onPrimary,
     unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-    selectedTextColor = MaterialTheme.colorScheme.onPrimary,
+    selectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
     unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
     indicatorColor = MaterialTheme.colorScheme.primary
 )

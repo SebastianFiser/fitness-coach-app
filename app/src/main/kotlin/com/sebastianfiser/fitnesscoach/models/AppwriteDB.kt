@@ -9,6 +9,8 @@ import io.appwrite.Permission
 import io.appwrite.Role
 import io.appwrite.Query
 import com.sebastianfiser.fitnesscoach.models.Appwrite
+import io.appwrite.services.Account
+import io.appwrite.exceptions.AppwriteException
 
 
 class AppwriteDB(private val client: Client) {
@@ -151,7 +153,7 @@ class AppwriteDB(private val client: Client) {
     }
 
     suspend fun saveSubmission(userId: String, exerciseName: String, weight: Float, reps: Int, videoFileId: String, country: String?, isNatural: Boolean, age: String, gender: String ): Result<Document<Map<String, Any>>> {
-        val status = "pending" 
+        val status = "pending"
         val user = Appwrite.getCurrentUser()
         val userName = user?.name ?: "Unknown"
         return runCatching {
@@ -269,5 +271,18 @@ class AppwriteDB(private val client: Client) {
             )
         }
     }
+
+    suspend fun changeUserName(newName: String): Result<User<Map<String, Any>>> {
+        return runCatching {
+            Appwrite.account.updateName(name = newName)
+        }
+    }
+
+    suspend fun changeUserEmail(newEmail: String, password: String): Result<User<Map<String, Any>>> {
+        return runCatching {
+            Appwrite.account.updateEmail(email = newEmail, password = password)
+        }
+    }
+
 
 }

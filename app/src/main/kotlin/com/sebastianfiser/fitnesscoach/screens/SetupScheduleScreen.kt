@@ -30,6 +30,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
+import com.sebastianfiser.fitnesscoach.models.SyncState
+import com.sebastianfiser.fitnesscoach.models.toEntity
 
 @Composable
 fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
@@ -55,18 +58,13 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
             val userId = currentUser?.id ?: return@LaunchedEffect
             viewModel.loadSchedule(userId)
             viewModel.scheduleSetup.clear()
-            viewModel.schedule.groupBy { it.data["day"] as String }.forEach { (day, docs) -> 
-                val exercises = docs.map { doc -> 
+            viewModel.schedule.map { it.toEntity() }.groupBy { it.day }.forEach { (day, entities) ->
+                val exercises = entities.map { entity ->
                     Exercise(
-                        name = doc.data["exerciseName"] as? String ?: "",
-                        sets = (doc.data["sets"] as? Long)?.toInt() ?: 0,
-                        reps = (doc.data["reps"] as? Long)?.toInt() ?: 0,
-                        weight = when (val w = doc.data["weight"]) {
-                            is Double -> w.toFloat()
-                            is Float -> w
-                            is Long -> w.toFloat()
-                            else -> 0f
-                        }
+                        name = entity.exerciseName,
+                        sets = entity.sets,
+                        reps = entity.reps,
+                        weight = entity.weight
                     )
                 }
                 viewModel.scheduleSetup[day] = exercises.toMutableList()
@@ -87,22 +85,25 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                 colors = CardDefaults.cardColors(if (isSaving) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)),
                 enabled = if(isSaving) false else true,
-                onClick = { 
+                onClick = {
                     scope.launch {
                         if (isSaving) return@launch
                         isSaving = true
                         try {
                             val currentUser = Appwrite.getCurrentUser()
                             val userId = currentUser?.id ?: return@launch
-                            if (viewModel.isEditing) {
-                                viewModel.deleteAllSchedule(userId)
-                            }
+
                             viewModel.saveSetupSchedule(userId)
-                            viewModel.loadSchedule(userId)
+
                             val destination = if (viewModel.isEditing) Screen.Schedule.route else Screen.Overview.route
                             viewModel.isEditing = false
                             viewModel.scheduleSetupLoaded = false
-                            navController.navigate(destination)
+
+                            navController.navigate(destination) {
+                                popUpTo(Screen.SetupSchedule.route) {
+                                    inclusive = true
+                                }
+                            }
                         } finally {
                             isSaving = false
                         }
@@ -142,7 +143,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                 ) {
                     Row(
                         modifier = Modifier
-                            .clickable { 
+                            .clickable {
                                 viewModel.selectedDay = day
                                 navController.navigate(Screen.ExercisePick.route)
                             }
@@ -178,7 +179,7 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
                             )
                         }
                         HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp, modifier = Modifier.padding(horizontal = 32.dp))
-                    }                
+                    }
                 }
             }
         }

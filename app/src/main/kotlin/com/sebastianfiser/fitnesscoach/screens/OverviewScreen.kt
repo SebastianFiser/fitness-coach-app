@@ -23,6 +23,9 @@ import androidx.compose.foundation.border
 import androidx.activity.compose.BackHandler
 import com.sebastianfiser.fitnesscoach.models.AppViewModel
 import com.sebastianfiser.fitnesscoach.ui.components.ComingSoonOverlay
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
+
 
 @Composable
 fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewModel: AppViewModel) {
@@ -127,12 +130,16 @@ fun MainWorkoutCard(onStartWorkout: () -> Unit, isWorkoutDone: Boolean, viewMode
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
+                .wrapContentSize()
                 .border(2.dp, if (isWorkoutDone) Color.Green else MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                 .alpha(if (isWorkoutDone) 0.4f else 1f),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
             shape = RoundedCornerShape(14.dp)
         ) {
-            Column(modifier = Modifier.padding(20.dp)) {
+            Column(modifier = Modifier
+                .padding(20.dp)
+                .verticalScroll(rememberScrollState())
+            ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,

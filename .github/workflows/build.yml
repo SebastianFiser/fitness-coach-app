@@ -7,7 +7,7 @@ on:
 
 permissions:
   contents: write
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,8 +16,13 @@ jobs:
       - name: Checkout projektu
         uses: actions/checkout@v4
 
+      - name: Clone KCountries Dependency
+        run: |
+          mkdir -p libs
+          git clone https://github.com/Kimplify/KCountries.git libs/KCountries
+
       - name: Nastavení Java JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '17' # Většina moderních Android projektů vyžaduje 17+
           distribution: 'temurin'
@@ -60,7 +65,7 @@ jobs:
   buildSignedRelease:
     runs-on: ubuntu-latest
     if: contains(github.event.head_commit.message, '__release__')
-    steps: 
+    steps:
       - name: Checkout projektu
         uses: actions/checkout@v4
 

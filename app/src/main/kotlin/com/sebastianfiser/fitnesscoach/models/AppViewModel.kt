@@ -14,9 +14,47 @@ import androidx.compose.material3.SnackbarHostState
 import com.sebastianfiser.fitnesscoach.models.LeaderBoardEntry
 import kotlinx.coroutines.launch
 import androidx.lifecycle.viewModelScope
+import com.sebastianfiser.fitnesscoach.models.PersistentData
+import kotlinx.serialization.json.Json
+import androidx.lifecycle.AndroidViewModel
+import android.app.Application
+import java.io.File
+import android.graphics.Bitmap
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import com.sebastianfiser.fitnesscoach.models.ProfileImageState
+import com.sebastianfiser.fitnesscoach.models.ScheduleDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
 
-class AppViewModel : ViewModel() {
-    private val repository = WorkoutRepository(Appwrite.client)
+sealed interface ProfileImageState {
+    object Loading: ProfileImageState
+    data class Success(val bitmap: Bitmap): ProfileImageState
+    data class Error(val message: String): ProfileImageState
+}
+
+sealed class SyncState {
+    object Idle : SyncState()
+    object Syncing : SyncState()
+    object Synced : SyncState()
+    data class Error(val message: String) : SyncState()
+}
+
+data class LoginUiState(
+    val isLoading: Boolean = false,
+    val error: String? = null,
+)
+
+class AppViewModel(application: Application, private val scheduleDao: ScheduleDao) : AndroidViewModel(application) {
+    private val _syncState = MutableStateFlow<SyncState>(SyncState.Idle)
+    val syncState: StateFlow<SyncState> = _syncState.asStateFlow()
+    private val imageCacheManager = ImageCacheManager(application.applicationContext)
+    private val repository = WorkoutRepository(Appwrite.client, imageCacheManager, scheduleDao)
+    private val _loginUiState = MutableStateFlow(LoginUiState())
+    val loginUiState: StateFlow<LoginUiState> = _loginUiState.asStateFlow()
     var workouts by mutableStateOf<List<Document<Map<String, Any>>>>(
         emptyList()
     )
@@ -61,7 +99,82 @@ class AppViewModel : ViewModel() {
     var testResult by mutableStateOf<String?>(null)
     var accountDeleted by mutableStateOf(false)
 
-    
+    fun saveSetupSchedule(userId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val newEntities = mutableListOf<ScheduleEntity>()
+            scheduleSetup.forEach { (dayKey, exercises) ->
+                exercises.forEach { ex ->
+                    newEntities.add(
+                        ScheduleEntity(
+                            id = java.util.UUID.randomUUID().toString(),
+                            userId = userId,
+                            day = dayKey,
+                            exerciseName = ex.name,
+                            sets = ex.sets,
+                            reps = ex.reps,
+                            weight = ex.weight,
+                            isDirty = true
+                        )
+                    )
+                }
+            }
+
+            scheduleDao.replaceUserSchedule(userId, newEntities)
+
+            scheduleSetup.clear()
+            scheduleSetupLoaded = false
+
+            repository.syncSchedule(userId)
+        }
+    }
+
+    fun getScheduleState(userId: String): StateFlow<List<ScheduleEntity>> {
+        return repository.getScheduleFlow(userId)
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = emptyList()
+            )
+    }
+
+    fun syncSchedule(userId: String) {
+        viewModelScope.launch {
+            _syncState.value = SyncState.Syncing
+            try {
+                repository.syncSchedule(userId)
+                _syncState.value = SyncState.Synced
+            } catch (e: Throwable) {
+                _syncState.value = SyncState.Error(e.message ?: "Synchronization failed")
+            }
+        }
+    }
+
+    fun login(email: String, password: String, onSuccess: () -> Unit ) {
+        viewModelScope.launch {
+            _loginUiState.value = LoginUiState(isLoading = true)
+
+            try {
+                Appwrite.onLogin(email, password)
+                val currentUser = Appwrite.getCurrentUser()
+                val userId: String = currentUser?.id ?: throw Exception("User ID was not found")
+
+                seedSchedule(userId)
+                loadSchedule(userId)
+                checkReviewerStatus()
+
+                _loginUiState.value = LoginUiState(isLoading = false)
+                onSuccess()
+            } catch (e: Throwable) {
+                val errorMsg = Appwrite.ParseErrorMsg(e.message ?: "")
+                _loginUiState.value = LoginUiState(isLoading = false, error = errorMsg)
+            }
+        }
+    }
+
+    fun clearError() {
+        _loginUiState.value = _loginUiState.value.copy(error = null)
+    }
+
     suspend fun checkReviewerStatus() {
         isReviewer = Appwrite.isReviewer()
     }
@@ -69,7 +182,7 @@ class AppViewModel : ViewModel() {
     suspend fun loadWorkouts(userId: String) {
         repository.getWorkouts(userId)
             .onSuccess { workouts -> this.workouts = workouts}
-            .onFailure { e -> 
+            .onFailure { e ->
                 Log.d("AppViewModel", "Failed to load workouts: ${e.message}")
                 snackbarHostState.showSnackbar("Failed to load workouts, check your internet connection")
             }
@@ -78,7 +191,7 @@ class AppViewModel : ViewModel() {
     suspend fun saveWorkout(userId: String, date: String) {
         repository.saveWorkout(userId, date)
             .onSuccess { loadWorkouts(userId) }
-            .onFailure { e -> 
+            .onFailure { e ->
                 Log.d("AppViewModel", "Failed to save workout: ${e.message}")
                 snackbarHostState.showSnackbar("Failed to save workout, check your internet connection")
             }
@@ -86,7 +199,7 @@ class AppViewModel : ViewModel() {
 
     suspend fun saveSet(workoutId: String, userId: String, exerciseName: String, weight: Float, reps: Int) {
         repository.saveSet(workoutId, userId, exerciseName, weight, reps)
-            .onFailure { e -> 
+            .onFailure { e ->
                 Log.d("AppViewModel", "Failed to save set: ${e.message}")
                 snackbarHostState.showSnackbar("Failed to save set, check your internet connection")
             }
@@ -97,7 +210,7 @@ class AppViewModel : ViewModel() {
         val date = LocalDate.now().toString()
         return repository.saveWorkout(userId, date)
             .onSuccess { loadWorkouts(userId) }
-            .onFailure { e -> 
+            .onFailure { e ->
                 Log.d("AppViewModel", "Failed to create workout: ${e.message}")
                 snackbarHostState.showSnackbar("Failed to create workout, check your internet connection")
             }
@@ -107,7 +220,7 @@ class AppViewModel : ViewModel() {
     suspend fun loadSchedule(userId: String) {
         repository.getSchedule(userId)
             .onSuccess { schedule -> this.schedule = schedule }
-            .onFailure { e -> 
+            .onFailure { e ->
                 Log.d("AppViewModel", "Failed to load schedule: ${e.message}")
                 snackbarHostState.showSnackbar("Failed to load schedule, check your internet connection")
             }
@@ -125,7 +238,6 @@ class AppViewModel : ViewModel() {
         )
         loadSchedule(userId)
         if (schedule.isEmpty()) {
-            var failCount = 0
             weekData.forEach { day ->
                 day.exercises.forEach { exercise ->
                     repository.saveScheduleItem(
@@ -135,45 +247,18 @@ class AppViewModel : ViewModel() {
                         sets = exercise.sets,
                         reps = exercise.reps,
                         weight = exercise.weight
-                    ).onFailure { e -> 
-                        Log.d("AppViewModel", "Failed to seed schedule item: ${e.message}")
-                        failCount++
-                    }
+                    )
                 }
-            }
-            if (failCount > 0) {
-                snackbarHostState.showSnackbar("Failed to seed $failCount schedule items, check your internet connection")
             }
             loadSchedule(userId)
         }
     }
 
-    suspend fun saveSetupSchedule(userId: String) {
-        var failSetupCount = 0
-        scheduleSetup.forEach { (day, exercises) ->
-            exercises.forEach { exercise ->
-                repository.saveScheduleItem(
-                    userId = userId,
-                    day = day,
-                    exerciseName = exercise.name,
-                    sets = exercise.sets,
-                    reps = exercise.reps,
-                    weight = exercise.weight
-                ).onFailure { e ->
-                    failSetupCount++
-                    Log.d("AppViewModel", "Failed to save setup schedule item: ${e.message}")
-                }
-            }
-        }
-        if (failSetupCount > 0) {
-            snackbarHostState.showSnackbar("Failed to save $failSetupCount schedule items, check your internet connection")
-        }
-    }
-    
+
     suspend fun deleteAllSchedule(userId: String) {
         schedule.forEach { doc ->
             repository.deleteScheduleItem(doc.id, userId)
-                .onFailure { e -> 
+                .onFailure { e ->
                     Log.d("AppViewModel", "Failed to delete schedule item: ${e.message}")
                     snackbarHostState.showSnackbar("Failed to delete schedule item, check your internet connection")
                 }
@@ -324,7 +409,7 @@ class AppViewModel : ViewModel() {
         } else {
             weight * 2.20462f
         }
-    } 
+    }
 
     fun updateUserSettingsAsync() {
         viewModelScope.launch {
@@ -333,6 +418,28 @@ class AppViewModel : ViewModel() {
     }
 
     suspend fun updateUserSettings() {
+
+        val persistentData = PersistentData(
+            isDarkTheme = isDarkTheme,
+            unit = unit,
+            restTimeSeconds = restTime
+        )
+
+        val json = Json.encodeToString(PersistentData.serializer(), persistentData)
+
+        getApplication<Application>().openFileOutput("settings.json", Context.MODE_PRIVATE).use { outputStream ->
+            outputStream.write(json.toByteArray())
+        }
+
+        val prefs = getApplication<Application>().getSharedPreferences("settings_prefs", Context.MODE_PRIVATE)
+        if (isDarkTheme != null) {
+            if (isDarkTheme == true) {
+                prefs.edit().putBoolean("is_dark_theme", true).apply()
+            } else {
+                prefs.edit().putBoolean("is_dark_theme", false).apply()
+            }
+        }
+
         val userId = Appwrite.account.get().id
         repository.updateUserSettings(
             userId = userId,
@@ -345,26 +452,58 @@ class AppViewModel : ViewModel() {
             Log.d("AppViewModel", "Failed to update user settings: ${e.message}")
             snackbarHostState.showSnackbar("Failed to update user settings, check your internet connection DEBUG: ${e.message}")
         }
+
+
+
     }
 
     suspend fun uploadImage(context: Context, uri: Uri, userId: String): Result<String> {
+        _imageState.value = ProfileImageState.Loading
         val result = repository.uploadImage(context, uri, userId)
         if (result.isSuccess) {
             val fileId = result.getOrNull()
             if (fileId != null) {
                 userIconId = fileId
                 updateUserSettings()
+                loadProfileImage(userId)
             }
         } else {
             val e = result.exceptionOrNull()
             Log.d("AppViewModel", "Failed to upload image: ${e?.message}")
             snackbarHostState.showSnackbar("Failed to upload image, check your internet connection DEBUG: ${e?.message}")
+            _imageState.value = ProfileImageState.Error("Failed to upload Image")
         }
 
         return result
     }
 
     suspend fun getUserSettings(userId: String) {
+
+        var persistentSettings = PersistentData(
+            isDarkTheme = false,
+            unit = "kg",
+            restTimeSeconds = 90
+        )
+
+        val contexter = getApplication<Application>()
+        val file = File(contexter.filesDir, "settings.json")
+
+        if (file.exists()) {
+            val json = file.readText()
+            persistentSettings = Json.decodeFromString(PersistentData.serializer(), json)
+
+        } else {
+            persistentSettings = PersistentData(
+                isDarkTheme = false,
+                unit = "kg",
+                restTimeSeconds = 90
+            )
+        }
+
+        isDarkTheme = persistentSettings.isDarkTheme
+        unit = persistentSettings.unit
+        restTime = persistentSettings.restTimeSeconds
+
         repository.getUserSettings(userId)
             .onSuccess { document ->
                 restTime = (document.data["restTime"] as? Number)?.toInt() ?: 90
@@ -407,7 +546,7 @@ class AppViewModel : ViewModel() {
                 if(execution.responseStatusCode == 200L) {
                     clearUserState()
                     snackbarHostState.showSnackbar("Account deleted successfully")
-                    accountDeleted = true 
+                    accountDeleted = true
                 } else {
                     Log.d("AppViewModel", "Failed to delete account, status code: ${execution.responseStatusCode}")
                     snackbarHostState.showSnackbar("Failed to delete account, error code ${execution.responseStatusCode}")
@@ -416,6 +555,57 @@ class AppViewModel : ViewModel() {
                 Log.d("AppViewModel", "Failed to execute delete account function: ${e.message}")
                 snackbarHostState.showSnackbar("Failed to delete account error code ${e.message}")
             }
+        }
+    }
+
+    private val _imageState = MutableStateFlow<ProfileImageState>(ProfileImageState.Loading)
+    val imageState: StateFlow<ProfileImageState> = _imageState.asStateFlow()
+
+    fun loadProfileImage(userId: String) {
+        viewModelScope.launch {
+            _imageState.value = ProfileImageState.Loading
+
+            val bitmap = repository.getProfileImage(userId)
+
+            if (bitmap != null) {
+                _imageState.value = ProfileImageState.Success(bitmap)
+            } else {
+                _imageState.value = ProfileImageState.Error("Failed to load image")
+            }
+        }
+    }
+
+    fun updateUserData(name: String, email: String, password: String) {
+
+        viewModelScope.launch {
+            try {
+                repository.changeUserName(name)
+            } catch (e: Exception) {
+                snackbarHostState.showSnackbar("Failed to change user name: ${e.message}")
+            }
+
+            try {
+                repository.changeUserEmail(email, password)
+            } catch (e: Exception) {
+                snackbarHostState.showSnackbar("Failed to change user email: ${e.message}")
+            }
+        }
+    }
+
+    fun FormatWeight(weight: Float): String {
+        return if (weight % 1f == 0f) {
+            weight.toInt().toString()
+        } else {
+            weight.toString()
+        }
+    }
+
+    fun GetWeightDisplay(weight: Float): String {
+        return if (weight <= 0f) {
+            "Bw/Ud"
+        } else {
+            val converted = convertUnit(weight, unit)
+            "${FormatWeight(converted)}"
         }
     }
 

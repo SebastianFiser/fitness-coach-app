@@ -1,3 +1,11 @@
 local.properities
 *.gz
 app/*.keystore
+local.properties
+*.gradle/
+**/build/
+build/
+
+libs/
+
+libs/
