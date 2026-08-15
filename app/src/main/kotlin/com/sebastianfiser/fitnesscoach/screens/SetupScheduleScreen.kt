@@ -30,6 +30,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
+import com.sebastianfiser.fitnesscoach.models.SyncState
 
 @Composable
 fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {

@@ -9,8 +9,6 @@ import android.graphics.BitmapFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class WorkoutRepository(client: Client, private val imageCacheManager: ImageCacheManager, private val scheduleDao: ScheduleDao) {
     private val db = AppwriteDB(client)
@@ -20,7 +18,7 @@ class WorkoutRepository(client: Client, private val imageCacheManager: ImageCach
     suspend fun saveSet(workoutId: String, userId: String, exerciseName: String, weight: Float, reps: Int) = db.saveSet(workoutId, userId, exerciseName, weight, reps)
     suspend fun getWorkouts(userId: String) = db.getWorkouts(userId)
     suspend fun getSets(workoutId: String) = db.getSets(workoutId)
-    suspend fun saveScheduleItem(userId: String, day: String, exerciseName: String, sets: Int, reps: Int, weight: Float) = db.saveScheduleItem(userId, day, exerciseName, sets, reps, weight)
+
     suspend fun getSchedule(userId: String) = db.getSchedule(userId)
     suspend fun deleteScheduleItem(itemId: String, userId: String) = db.deleteScheduleItem(itemId, userId)
     suspend fun getSetByUser(userId: String) = db.getSetByUser(userId)
@@ -79,12 +77,12 @@ class WorkoutRepository(client: Client, private val imageCacheManager: ImageCach
         return@withContext null
     }
 
-    fun getScheduleFlow(userId: String): Flow<List<ScheduleEntry>> {
+    fun getScheduleFlow(userId: String): Flow<List<ScheduleEntity>> {
         return scheduleDao.getScheduleFlow(userId)
     }
 
     suspend fun syncSchedule(userId: String) = withContext(Dispatchers.IO) {
-        val dirtyItems = scheduleDao.getDirtyScheduleItems(userId)
+        val dirtyItems = scheduleDao.getDirtyScheduleItems()
         for (item in dirtyItems) {
             db.saveScheduleItem(
                 userId = item.userId,

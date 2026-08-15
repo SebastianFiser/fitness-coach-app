@@ -25,6 +25,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import com.sebastianfiser.fitnesscoach.models.ProfileImageState
 import com.sebastianfiser.fitnesscoach.models.ScheduleDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.shareIn
+import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
 
 sealed interface ProfileImageState {
     object Loading: ProfileImageState
@@ -97,7 +101,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     fun saveSetupSchedule(userId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val newEntities = mutableListOf<ScheduileEntity>()
+            val newEntities = mutableListOf<ScheduleEntity>()
             scheduleSetup.forEach { (dayKey, exercises) ->
                 exercises.forEach { ex ->
                     newEntities.add(
@@ -125,7 +129,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getScheduleState(userId: String): StateFlow<List<ScheduleEntity>> {
-        return repository.getScheduleFow(userId)
+        return repository.getScheduleFlow(userId)
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
@@ -257,27 +261,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    suspend fun saveSetupSchedule(userId: String) {
-        var failSetupCount = 0
-        scheduleSetup.forEach { (day, exercises) ->
-            exercises.forEach { exercise ->
-                repository.saveScheduleItem(
-                    userId = userId,
-                    day = day,
-                    exerciseName = exercise.name,
-                    sets = exercise.sets,
-                    reps = exercise.reps,
-                    weight = exercise.weight
-                ).onFailure { e ->
-                    failSetupCount++
-                    Log.d("AppViewModel", "Failed to save setup schedule item: ${e.message}")
-                }
-            }
-        }
-        if (failSetupCount > 0) {
-            snackbarHostState.showSnackbar("Failed to save $failSetupCount schedule items, check your internet connection")
-        }
-    }
 
     suspend fun deleteAllSchedule(userId: String) {
         schedule.forEach { doc ->

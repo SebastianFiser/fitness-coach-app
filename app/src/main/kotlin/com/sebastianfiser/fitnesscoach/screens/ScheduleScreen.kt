@@ -24,6 +24,12 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.foundation.border
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
+import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
+import com.sebastianfiser.fitnesscoach.models.SyncState
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
