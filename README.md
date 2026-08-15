@@ -4,7 +4,7 @@
 A gamified Android fitness helper -plan your weekly schedule, track sets and prs, and compete on the leaderboard
 ## Badges
 
-![Platform](https://img.shields.io/badge/Platform-Android-green) ![Kotlin](https://img.shields.io/badge/Kotlin-2.0-blue) ![License](https://img.shields.io/badge/License-Custom-red)
+![Platform](https://img.shields.io/badge/Platform-Android-green) ![Kotlin](https://img.shields.io/badge/Kotlin-2.0-blue) ![License](https://img.shields.io/badge/License-Custom-red) ![Hackatime](https://hackatime.hackclub.com/api/v1/badge/U0A1K3P66FP/SebastianFiser/fitness-coach-app)
 
 ## Screenshots
 
