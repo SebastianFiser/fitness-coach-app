@@ -32,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import com.sebastianfiser.fitnesscoach.models.ScheduleEntity
 import com.sebastianfiser.fitnesscoach.models.SyncState
+import com.sebastianfiser.fitnesscoach.models.toEntity
 
 @Composable
 fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
@@ -58,7 +59,8 @@ fun SetupSchedule(navController: NavController, viewModel: AppViewModel) {
             viewModel.loadSchedule(userId)
             viewModel.scheduleSetup.clear()
             viewModel.schedule.groupBy { it.day }.forEach { (day, docs) ->
-                val exercises = entities.map { entity ->
+                val exercises = docs.map { doc ->
+                    val entity = doc.toEntity
                     Exercise(
                         name = entity.exerciseName,
                         sets = entity.sets,

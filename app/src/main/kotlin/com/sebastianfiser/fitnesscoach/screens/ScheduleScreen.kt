@@ -25,6 +25,7 @@ import androidx.compose.foundation.border
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.LaunchedEffect
@@ -35,7 +36,7 @@ import com.sebastianfiser.fitnesscoach.models.Appwrite
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
 fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
-    val userId: String = Appwrite.getCurrentUser()?.id ?: ""
+    var userId: String = ""
     val allDays = listOf("Mo", "Tu", "We", "Th", "Fr", "Sa", "Su")
     val todayIndex = LocalDate.now().dayOfWeek.value - 1
     val orderedDays = allDays.drop(todayIndex) + allDays.take(todayIndex)
@@ -47,6 +48,11 @@ fun schduleScreen( viewModel: AppViewModel, navController: NavController) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     val scheduleByDay = scheduleItems.groupBy { it.day }
+
+    LaunchedEffect(Unit) {
+        val user = Appwrite.getCurrentUser()
+        userId = user?.id ?: ""
+    }
 
     LaunchedEffect(userId) {
         viewModel.syncSchedule(userId)

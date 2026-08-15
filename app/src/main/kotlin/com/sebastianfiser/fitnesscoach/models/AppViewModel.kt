@@ -141,7 +141,7 @@ class AppViewModel(application: Application, private val scheduleDao: ScheduleDa
         viewModelScope.launch {
             _syncState.value = SyncState.Syncing
             try {
-                repository.syncState(userId)
+                repository.syncSchedule(userId)
                 _syncState.value = SyncState.Synced
             } catch (e: Throwable) {
                 _syncState.value = SyncState.Error(e.message ?: "Synchronization failed")
@@ -238,7 +238,6 @@ class AppViewModel(application: Application, private val scheduleDao: ScheduleDa
         )
         loadSchedule(userId)
         if (schedule.isEmpty()) {
-            var failCount = 0
             weekData.forEach { day ->
                 day.exercises.forEach { exercise ->
                     repository.saveScheduleItem(
@@ -248,14 +247,8 @@ class AppViewModel(application: Application, private val scheduleDao: ScheduleDa
                         sets = exercise.sets,
                         reps = exercise.reps,
                         weight = exercise.weight
-                    ).onFailure { e ->
-                        Log.d("AppViewModel", "Failed to seed schedule item: ${e.message}")
-                        failCount++
-                    }
+                    )
                 }
-            }
-            if (failCount > 0) {
-                snackbarHostState.showSnackbar("Failed to seed $failCount schedule items, check your internet connection")
             }
             loadSchedule(userId)
         }
